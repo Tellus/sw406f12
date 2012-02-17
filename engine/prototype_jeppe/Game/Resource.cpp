@@ -5,7 +5,12 @@
  *      Author: Ezphares
  */
 
-#include "Headers/Resource.h"
+#include "../Headers/Resource.h"
+
+double Resource::percent()
+{
+	return this->current / this->maximum;
+}
 
 void Resource::init(double value)
 {
@@ -13,18 +18,18 @@ void Resource::init(double value)
 	Attribute::init(value);
 }
 
-Resource::Resource(string name, double value)
+Resource::Resource(string name) : Attribute(name)
+{
+}
+
+Resource::Resource(string name, double value) : Attribute(name)
 {
 	this->init(value);
 }
 
-Resource::Resource(Resource *copy)
+Resource::Resource(Resource *copy) : Attribute(copy->name)
 {
 	this->init(copy->initial);
-}
-
-Resource::Resource() {
-	// TODO Auto-generated constructor stub
 }
 
 Resource::~Resource() {

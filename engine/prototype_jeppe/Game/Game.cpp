@@ -5,7 +5,7 @@
  *      Author: Ezphares
  */
 
-#include "Headers/Game.h"
+#include "../Headers/Game.h"
 
 Game::Game() {
 	// TODO Auto-generated constructor stub

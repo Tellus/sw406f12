@@ -5,7 +5,7 @@
  *      Author: Ezphares
  */
 
-#include "Headers/Character.h"
+#include "../Headers/Character.h"
 
 Character::Character() {
 	// TODO Auto-generated constructor stub

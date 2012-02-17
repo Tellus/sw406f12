@@ -10,6 +10,7 @@
 
 #include <list>
 #include <string>
+#include "Ability.h"
 #include "Attribute.h"
 #include "Resource.h"
 
@@ -20,6 +21,7 @@ public:
 	list<Attribute*> attributes;
 	list<Resource*> resources;
 	list<Ability*> abilities;
+	string name;
 
 	Character();
 	virtual ~Character();

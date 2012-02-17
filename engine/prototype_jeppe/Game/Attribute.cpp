@@ -5,7 +5,7 @@
  *      Author: Ezphares
  */
 
-#include "Headers/Attribute.h"
+#include "../Headers/Attribute.h"
 
 void Attribute::init(double value)
 {

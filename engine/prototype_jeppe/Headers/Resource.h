@@ -15,6 +15,7 @@ public:
 	double maximum;
 
 	virtual void init(double value);
+	double percent();
 
 	Resource(string name);
 	Resource(string name, double value);

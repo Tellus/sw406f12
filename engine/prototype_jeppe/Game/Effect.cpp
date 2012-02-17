@@ -5,7 +5,7 @@
  *      Author: Ezphares
  */
 
-#include "Headers/Effect.h"
+#include "../Headers/Effect.h"
 
 Effect::Effect() {
 	// TODO Auto-generated constructor stub

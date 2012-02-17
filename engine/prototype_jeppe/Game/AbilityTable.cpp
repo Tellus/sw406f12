@@ -5,7 +5,7 @@
  *      Author: Ezphares
  */
 
-#include "Headers/AbilityTable.h"
+#include "../Headers/AbilityTable.h"
 
 AbilityTable::AbilityTable() {
 	// TODO Auto-generated constructor stub
