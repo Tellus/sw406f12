@@ -1,18 +1,18 @@
 /*
- * Character.cpp
+ * Action.cpp
  *
- *  Created on: 14/02/2012
+ *  Created on: 17/02/2012
  *      Author: Ezphares
  */
 
-#include "Character.h"
+#include "Headers/Action.h"
 
-Character::Character() {
+Action::Action() {
 	// TODO Auto-generated constructor stub
 
 }
 
-Character::~Character() {
+Action::~Action() {
 	// TODO Auto-generated destructor stub
 }
 
