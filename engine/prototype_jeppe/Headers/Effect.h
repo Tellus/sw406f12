@@ -15,6 +15,8 @@ public:
 	Character *source;
 	Character *target;
 
+	virtual void execute(bool verbose);
+
 	Effect();
 	virtual ~Effect();
 };

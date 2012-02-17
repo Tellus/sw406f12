@@ -9,17 +9,21 @@
 #define ACTION_H_
 
 #include <list>
+#include <iostream>
 #include "Effect.h"
 
 using namespace std;
 
 class Action {
 public:
-	list<Effect> effects;
+	list<Effect*> effects;
+	string output;
 
-	void execute();
+	void add_effect(Effect* effect);
+	void execute(bool verbose);
 
 	Action();
+	Action(string output);
 	virtual ~Action();
 };
 

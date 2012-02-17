@@ -7,6 +7,11 @@
 
 #include "../Headers/Effect.h"
 
+void Effect::execute(bool verbose)
+{
+
+}
+
 Effect::Effect() {
 	// TODO Auto-generated constructor stub
 

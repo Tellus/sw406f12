@@ -9,15 +9,17 @@
 #define ABILITYTABLE_H_
 
 #include <list>
+#include <string>
 #include "Action.h"
 #include "Ability.h"
 #include "Character.h"
+#include "Effects.h"
 
 using namespace std;
 
 class AbilityTable {
 public:
-	list<Action*> *generate(Character *source, list<Character*> *characters,
+	list<Action*> generate(Character *source, list<Character*> characters,
 			Ability *ability);
 
 	AbilityTable();

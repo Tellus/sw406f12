@@ -10,7 +10,8 @@
 
 #include <list>
 #include <string>
-#include "Ability.h"
+#include <iostream>
+#include "Abilities.h"
 #include "Attribute.h"
 #include "Resource.h"
 
@@ -22,8 +23,15 @@ public:
 	list<Resource*> resources;
 	list<Ability*> abilities;
 	string name;
+	bool dead;
+
+	double attribute(string id);
+	double resource(string id);
+	void resource_deplete(string id, double amount, bool verbose);
+	void turnover(bool verbose);
 
 	Character();
+	Character(string name, double health, double attack, double defense);
 	virtual ~Character();
 };
 
