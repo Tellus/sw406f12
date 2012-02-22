@@ -28,6 +28,7 @@ Attribute::Attribute(Attribute *copy)
 {
 	this->name = copy->name;
 	this->init(copy->initial);
+	this->current = copy->current;
 }
 
 Attribute::~Attribute() {

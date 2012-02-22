@@ -48,6 +48,21 @@ void Character::resource_deplete(string id, double amount, bool verbose)
 	}
 }
 
+void Character::resource_regain(string id, double amount, bool verbose)
+{
+	for (list<Resource*>::iterator it = this->resources.begin();
+			it != this->resources.end(); it++)
+	{
+		if ((*it)->name.compare(id) == 0)
+		{
+			(*it)->regain(amount);
+			if (verbose)
+				cout << this->name << " gained " << amount << " " << id
+						<< "! (up to " << (*it)->current << ")" << endl;
+		}
+	}
+}
+
 void Character::turnover(bool verbose)
 {
 	if (this->resource("health") <= 0.0)

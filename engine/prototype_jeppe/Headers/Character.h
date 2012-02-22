@@ -28,6 +28,7 @@ public:
 	double attribute(string id);
 	double resource(string id);
 	void resource_deplete(string id, double amount, bool verbose);
+	void resource_regain(string id, double amount, bool verbose);
 	void turnover(bool verbose);
 
 	Character();

@@ -17,6 +17,7 @@ public:
 	virtual void init(double value);
 	double percent();
 	void deplete(double amount);
+	void regain(double amount);
 
 	Resource(string name);
 	Resource(string name, double value);

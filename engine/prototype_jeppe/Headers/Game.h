@@ -11,6 +11,7 @@
 #include <list>
 #include <time.h>
 #include <cstdlib>
+#include <windows.h>
 #include "Character.h"
 #include "AbilityTable.h"
 #include "Action.h"

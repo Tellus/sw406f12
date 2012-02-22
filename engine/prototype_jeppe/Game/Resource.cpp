@@ -25,6 +25,11 @@ void Resource::deplete(double amount)
 	this->current = max(0.0, this->current - amount);
 }
 
+void Resource::regain(double amount)
+{
+	this->current = min(this->maximum, this->current + amount);
+}
+
 Resource::Resource(string name) : Attribute(name)
 {
 }
@@ -37,6 +42,8 @@ Resource::Resource(string name, double value) : Attribute(name)
 Resource::Resource(Resource *copy) : Attribute(copy->name)
 {
 	this->init(copy->initial);
+	this->current = copy->current;
+	this->maximum = copy->maximum;
 }
 
 Resource::~Resource() {

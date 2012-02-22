@@ -21,10 +21,12 @@ public:
 		enemy,
 		ally,
 		team_enemy,
-		team_ally
+		team_ally,
+		all
 	};
 
 	string id;
+	string output;
 	list<target> targets;
 
 	Ability();

@@ -21,6 +21,8 @@ class AbilityTable {
 public:
 	list<Action*> generate(Character *source, list<Character*> characters,
 			Ability *ability);
+	Effect *generate_effect(Character *source, Character *target, string id);
+	string generate_output(string base, string source, string target);
 
 	AbilityTable();
 	virtual ~AbilityTable();

@@ -83,6 +83,7 @@ void Game::resolve()
 	while (this->characters.size() > 1)
 	{
 		this->turn();
+		Sleep(500);
 	}
 }
 
