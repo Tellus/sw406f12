@@ -1,0 +1,93 @@
+\input{preamble}
+\begin{document}
+
+\input{tex/frontpage}
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\clearpage
+
+\input{tex/titelblad}
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+\input{tex/preface}
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+%\newpage
+%\thispagestyle{empty}
+%\mbox{}
+
+%\newpage
+%\thispagestyle{empty}
+%\mbox{}
+%\fancyhead{}
+%\fancyfoot{}
+%\fancyhead[RO,LE]{\leftmark\\\rightmark}
+%\fancyfoot[C]{\thepage}
+%\setlength{\headheight}{23pt}
+
+% Fjern headeren for indholdsfortegnelsen.
+%\fancyhead{}
+%\fancyfoot{}
+%\fancyhead[RO,LE]{\leftmark}
+%\fancyfoot[C]{\thepage}
+%\setlength{\headheight}{23pt}% Indholdsfortegnelser etc.
+% Dybde for visning af niveauer.
+% Dybde af niveaut�lling generelt.
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{1}
+
+\tableofcontents
+
+% 1. Intro
+
+% 2. Analysis (RPG games and target audience)
+
+% 3. Language definition.
+\input{tex/language_constructs}
+
+% 4. Engine construction.
+
+% 5. Evaluation
+
+% 6. Conclusion
+
+\addcontentsline{toc}{part}{Listings}
+\listoffigures
+\lstlistoflistings
+%\listoftodos
+\label{lastpage}
+
+% Change headings for bibliography. Looks fucked otherwise, I think.
+% Page design from fancyhdr.
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[RO,LE]{\leftmark}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{23pt}
+
+% Afslut med bibliografien
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{part}{Bibliography}
+\bibliography{bib/bibliografi}
+
+% 4. Bilag
+\appendix{}
+\addcontentsline{toc}{part}{Appendix}
+\input{tex/diagram_Appendix.tex}
+\input{tex/design/appendixAndroid.tex}
+\input{tex/lighttpd_conf_appendix.tex}
+\input{tex/appendix_interview}
+\input{tex/interview_1}
+\input{tex/interview_2}
+\input{tex/interview_3}
+
+\end{document}
+

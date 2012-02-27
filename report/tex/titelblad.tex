@@ -1,0 +1,102 @@
+% Dette er LaTeX-versionen af titelbladet for tek-nat-basis-rapporter 2004 efterï¿½r
+% Filen krï¿½ver:
+% Universitetets logo:  aau-logo.png (for LaTeX) eller aau-logo.ps (for LaTeX)
+% Synopsis: En fil ved navn synopsis.tex
+
+% Udarbejdet af: Hans Hï¿½ttel (hans@cs.auc.dk) 21. maj 2003
+% Rettet af Morten Christophersen (mortench@tnb.aau.dk) 30. nov 2004(ï¿½ndret til nyt design 2004 efterï¿½r)
+
+%\documentclass[11pt]{article}
+%\ifx\pdfoutput\undefined 
+%\usepackage[dvips]{graphicx}
+%\else
+%\usepackage[pdftex]{graphicx} 
+%\usepackage{type1cm} \fi
+%    \usepackage[ansinew]{inputenc}
+%    \usepackage{a4}
+
+%\begin{document} 
+\phantomsection
+\pdfbookmark[0]{Titelblad}{titelblad}
+\thispagestyle{empty}
+%\begin{titlepage}
+\begin{nopagebreak}
+{\samepage 
+\begin{tabular}{r}
+\parbox{\textwidth}{\begin{tabular}{l}
+{ \raisebox{15mm} {\includegraphics[height=1.2cm]{img/aau-logo.pdf}} }\\
+{\textbf{Studenterrapport}}
+\end{tabular}
+\hfill \parbox{8cm}{\begin{tabular}{l} %4.90
+{\small \textbf{Department of Computer Science}}\\
+{\small Selma Lagerlöfs Vej 300} \\
+{\small DK-9220 Aalborg Øst} \\
+{\small Telephone +45 9940 9940} \\
+{\small Telefax +45 9940 9798} \\
+{\small http://cs.aau.dk} 
+\end{tabular}}}
+\end{tabular}
+
+
+\begin{tabular}{cc}
+\parbox{7cm}{
+\begin{description}
+
+\item { Title:} 
+
+A proof-of-concept implementation of a contact book in the GIRAF web framework \\
+  
+\item { Theme:} 
+
+Developing applications – from users to data, algorithms and tests – 
+and back again
+
+\end{description}
+
+\parbox{8cm}{
+
+\begin{description}
+\item { Project period:}\\
+   3rd semester 2011 SW
+  \hspace{4cm}
+\item { Project group:}\\
+  SW305e11
+  \hspace{4cm}
+\item { Group members:}\\
+Birgir M. Eliasson \\
+Christoffer Kjeldgaard \\
+Johannes L. Borresen\\
+Lisbeth Nielsen\\
+René K. H. Andersen\\
+Toke N. Olsen\\
+  \hspace{2cm}
+\item { Supervisor:}\\
+Ulrik Nyman\\
+  
+\end{description}
+}
+\begin{description}
+\item { Circulation: 8 }
+\item { Number of pages: \pageref{LastPage} } 
+\item { Number of Appendices: 4 } 
+\item { Finished: 19-12-2011 }
+\end{description}
+\vfill } &
+\parbox{7cm}{
+  \vspace{.15cm}
+  \hfill 
+  \begin{tabular}{l}
+  { Synopsis:}\bigskip \\
+  \fbox{
+    \parbox{8.2cm}{\bigskip
+     {\vfill{\small \input{tex/synopsis.tex}
+     \bigskip}}
+     }}
+   \end{tabular}}
+\end{tabular}}
+\\ \\\\\\
+\noindent{\footnotesize{\textit{ This report is produced by students at AAU. The content of the report is freely accessible,
+but publication (with source) may only be made with the authors consent}}}
+\end{nopagebreak}
+%\end{titlepage}
+%\end{document}
