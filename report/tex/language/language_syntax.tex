@@ -2,10 +2,10 @@
 \chapter{Language definition}
 \section{Language syntax}
 
-The programming language `RPG-script' is developed for defining a character, ability, attributes, resources, items and behaviour belonging to the character. Besides the user of the language can define events, which are triggered by some conditions and uses some ability.
+The programming language `RPG-script' is developed \todo{Specifically, rather. We are in a very small domain of programming problems, sufficiently well-defined to use exactly these Primarchs (archetypes)} for defining a character, ability, attributes, resources, items and behaviour belonging to the character. \todo{How about simply noting that our final two language features are generic AI value-based decision-making definitions (Behvaiour) as well as reactive AI code in the form of Event subtypes} Besides the user of the language can define events, which are triggered by some conditions and uses some ability.
 
-To define a character in the language, the user makes some primarchs, which is superclass, which not inherit from any other classes. The primarchs will be used for defining characters, abilities, attributes, resources, items, behaviours and effects.
-Each primarch have members which may be references to an other primarch. The members of the primarch is enclosed in a block by using the symbols ``\{'' and ``\}''. To define a primarch the keyword \emph{core} is used.
+To define a character in the language, the user makes some primarchs, which is superclass, which not inherit from any other classes \todo{Primarchs are a type of primitive (basest of base classes), the real implementation of which is based on the external ruleset file}. The primarchs will be used for defining characters, abilities, attributes, resources, items, behaviours and effects.
+Each primarch have members which may be references to an other primarch. The members of the primarch is enclosed in a block by using the symbols ``\{'' and ``\}''. To define a primarch the keyword \emph{core} is used \todo{Outphased. All "core" Primarchs are defined externally, and RPG-script exclusively defines the subtypes/inheritance}.
 Let's consider the following code example 
 \begin{lstlisting}
 	core Character //Make a primarch called Character
@@ -23,6 +23,17 @@ To make member of a primarch, or class, a collections is used, which is declared
 				Attack ]; 
 	}
 \end{lstlisting}
+\emph{Fixed version here.}
+\begin{lstlisting}
+	make Wizard from Character
+	{	
+		// Attributes: // attributes, together with resources, are now defined exclusively in the external ruleset.
+		Abilities:
+			[ FireBall, //Make a collections of attributes as a member of the primarch
+				Heal,
+				Attack ]; 
+	}
+\end{lstlisting}
 Because whitespaces has no function in the `RPG-script' language there is no deference between writing the code above, or writing:
 \begin{lstlisting}
 	core Character
@@ -30,8 +41,13 @@ Because whitespaces has no function in the `RPG-script' language there is no def
 		Attributes:[ FireBall, Heal, Attack ];
 	}
 \end{lstlisting}
-
-The language allow the user to inherit from a primarch or an other class, e.g. if the user want to make a `FireBall' ability, it can be made as a subclass of the primarch `Ability'. To inherit from a primarch, or an other class which not is a primarch, two keywords are used; \emph{make} and \emph{from}.
+\begin{lstlisting}
+	make Wizard from Character
+	{
+		Abilities:[ FireBall, Heal, Attack ];
+	}
+\end{lstlisting}
+The language allow the user to inherit from a primarch or an other class, e.g. if the user want to make a `FireBall' ability, it can be made as a subclass of the primarch `Ability'. To inherit from a primarch, or an other class which not is a primarch, two keywords are used; \emph{make} and \emph{from} \todo{ALL inheritance is done this way, and only Primarchs (and their subtypes) can be inherited :)}.
 Let's consider the following code example
 \begin{lstlisting}
 	make Strength from Attribute //Makes a subclass of Attributes which is named Strength
