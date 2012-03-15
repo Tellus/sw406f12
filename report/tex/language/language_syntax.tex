@@ -30,6 +30,7 @@ Inheriting in the `RPG-script' language two keyword are used; \emph{make} and \e
 	}
 \end{lstlisting}
 In the example above the `class' \emph{Human} inherits from the predefined `class' \emph{Character}.
+
 \subsubsection*{Members in classes}
 Like in the C++ language, it is in `RPG-script' possible to make members of a class by enclosing the members in a block, by using the symbols ``\{'' and ``\}''.
 \begin{lstlisting}
@@ -39,7 +40,7 @@ Like in the C++ language, it is in `RPG-script' possible to make members of a cl
 	}
 \end{lstlisting}
 In the example above, the class \emph{Animal} has the member \emph{name} which is a string, and the line is ended by the symbol `;'.
-In RPG-script, the members are declared as collections, by using the symbols ``['' and ``]'', and separate the members of the collections with a comma `,', and ending the line 
+In RPG-script, the members are declared as collections, by using the symbols ``['' and ``]'', and separate the members of the collections with a comma `,', and ending the line with the symbol `;' like in C++.
 \begin{lstlisting}
 	make Human from Character
 	{	
@@ -50,57 +51,21 @@ In RPG-script, the members are declared as collections, by using the symbols ``[
 	}
 \end{lstlisting}
 The example above makes a \emph{Human} class, with its members, which is a collections of abilities.
-\subsubsection*{References}
-In Object-Orientated programming languages, it is possible to make references to the classes, with the keyword \emph{this} and the operator \emph{->}. 
-To define a character in the language, the user makes some primarchs, which is superclass, which not inherit from any other classes \todo{Primarchs are a type of primitive (basest of base classes), the real implementation of which is based on the external ruleset file}. The primarchs will be used for defining characters, abilities, attributes, resources, items, behaviours and effects.
-Each primarch have members which may be references to an other primarch. The members of the primarch is enclosed in a block by using the symbols ``\{'' and ``\}''. To define a primarch the keyword \emph{core} is used \todo{Outphased. All "core" Primarchs are defined externally, and RPG-script exclusively defines the subtypes/inheritance}.
-Let's consider the following code example 
-\begin{lstlisting}
-	core Character //Make a primarch called Character \emph{character, ability, attribute, resource, item, behaviour}
-	{
-	}
-\end{lstlisting}
-The code example above, makes a primarch with the name `Character'. 
-To make member of a primarch, or class, a collections is used, which is declared by using the symbols ``['' and ``]'', and separate the members of the collections with a comma `,'.
-\begin{lstlisting}
-	core Character
-	{
-		Attributes:
-			[ FireBall, //Make a collections of attributes as a member of the primarch
-				Heal,
-				Attack ]; 
-	}
-\end{lstlisting}
-\emph{Fixed version here.}
-\begin{lstlisting}
-	make Wizard from Character
-	{	
-		// Attributes: // attributes, together with resources, are now defined exclusively in the external ruleset.
-		Abilities:
-			[ FireBall, //Make a collections of attributes as a member of the primarch
-				Heal,
-				Attack ]; 
-	}
-\end{lstlisting}
-Because whitespaces has no function in the `RPG-script' language there is no deference between writing the code above, or writing:
-\begin{lstlisting}
-	core Character
-	{
-		Attributes:[ FireBall, Heal, Attack ];
-	}
-\end{lstlisting}
-\begin{lstlisting}
-	make Wizard from Character
-	{
-		Abilities:[ FireBall, Heal, Attack ];
-	}
-\end{lstlisting}
-The language allow the user to inherit from a primarch or an other class, e.g. if the user want to make a `FireBall' ability, it can be made as a subclass of the primarch `Ability'. To inherit from a primarch, or an other class which not is a primarch, two keywords are used; \emph{make} and \emph{from} \todo{ALL inheritance is done this way, and only Primarchs (and their subtypes) can be inherited :)}.
-Let's consider the following code example
-\begin{lstlisting}
-	make Strength from Attribute //Makes a subclass of Attributes which is named Strength
-	{
-		//Set relevant modifiers et al for this attribute.
-	}
-\end{lstlisting}
 
+\subsubsection*{References}
+In Object-Orientated programming languages, it is possible to make references to the classes, with the keywords \emph{this} and \emph{parent} and the operator \emph{`-$>$'}.
+\begin{lstlisting}
+	class Animal
+	{
+		string name;
+		this->name = "Birgir";
+	}
+\end{lstlisting}
+ In RPG-script references is declared by using the keywords \emph{owner} and \emph{this} and the operator \emph{`.'} The keyword \emph{this} refer to the class the keyword declared in and the keyword \emph{owner} refer to the super class, which is the top of the inheriting. 
+\begin{lstlisting}
+	make HealthPoints from Resource
+	{
+		this.health: 100;
+	}
+\end{lstlisting}
+The example above sets the health of the class to be 100.
