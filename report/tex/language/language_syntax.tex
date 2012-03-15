@@ -1,16 +1,62 @@
-The programming language `RPG-script' is specifically developed for defining characters and abilities, attributes, resources, items and behaviour belonging to a character and the user of the language can define events, which are triggered by some conditions and uses some ability and finally the user can define that an ability triggers some rulebook defined effect. 
-In addition to the programming language is a game engine, which will simulate a turn based fight between the characters defined in the language. 
+The programming language `RPG-script' is specifically developed for defining RPG(Role Playing Games) characters and abilities, attributes, resources, items and behaviour belonging to a character and the user of the language can define events, which are triggered by some conditions and uses some ability and finally the user can define that an ability triggers some rulebook defined effect. . 
+In addition to the programming language is a game engine, which will simulate a turn based fight between the characters defined in the language. The engine also a predefined rulebook, where the core rules of the RPG-system is defined. 
+
 The behaviour of a user defined character is A.I.(Artificial Intelligence) based, which means it is based at a value called \emph{piggy rate}, the character will consider its possible moves, and by an user defined priority, decide the move that will give the character the highest piggy rate at the end of the turn.
 
 \section{Language syntax}
 This section focuses at describing the general syntax of the `RPG-script' languages. The description will include a comparison of the `RPG-script' language and the `C++' language, in specially the parallels between inheriting of classes in the two programming languages. 
 
-
+\subsection{Classes}
+As mentioned above, the rules of the RPG system matching the `RPG-script' language is defined in the game engine, used for simulation a fight between characters.
+Defining a character in the `RPG-script' language, is like inheriting a class in C++.
+Lets see an example of inherit in C++:
+\begin{lstlisting}
+	class Animal
+	{
+		//Some members are put here
+	}
+	
+	class Cat :: Animal
+	{
+		//Some members are put here
+	}
+\end{lstlisting}
+In the example above the class \emph{Cat} inherit from the class \emph{Animal}. In the `RPG-script' language, the class, which is to inherit from is hard coded and the user may therefore define classes to inherit from, instead the definition of a class is an inheriting from the base classes; \emph{character, ability, attribute, resource, item, behaviour}.
+Inheriting in the `RPG-script' language two keyword are used; \emph{make} and \emph{from}
+\begin{lstlisting}
+	make Human from Character
+	{
+		//Some members are put here
+	}
+\end{lstlisting}
+In the example above the `class' \emph{Human} inherits from the predefined `class' \emph{Character}.
+\subsubsection*{Members in classes}
+Like in the C++ language, it is in `RPG-script' possible to make members of a class by enclosing the members in a block, by using the symbols ``\{'' and ``\}''.
+\begin{lstlisting}
+	class Animal
+	{
+		string name;
+	}
+\end{lstlisting}
+In the example above, the class \emph{Animal} has the member \emph{name} which is a string, and the line is ended by the symbol `;'.
+In RPG-script, the members are declared as collections, by using the symbols ``['' and ``]'', and separate the members of the collections with a comma `,', and ending the line 
+\begin{lstlisting}
+	make Human from Character
+	{	
+		Abilities:
+			[ Pray, 
+				Heal,
+				Attack ];
+	}
+\end{lstlisting}
+The example above makes a \emph{Human} class, with its members, which is a collections of abilities.
+\subsubsection*{References}
+In Object-Orientated programming languages, it is possible to make references to the classes, with the keyword \emph{this} and the operator \emph{->}. 
 To define a character in the language, the user makes some primarchs, which is superclass, which not inherit from any other classes \todo{Primarchs are a type of primitive (basest of base classes), the real implementation of which is based on the external ruleset file}. The primarchs will be used for defining characters, abilities, attributes, resources, items, behaviours and effects.
 Each primarch have members which may be references to an other primarch. The members of the primarch is enclosed in a block by using the symbols ``\{'' and ``\}''. To define a primarch the keyword \emph{core} is used \todo{Outphased. All "core" Primarchs are defined externally, and RPG-script exclusively defines the subtypes/inheritance}.
 Let's consider the following code example 
 \begin{lstlisting}
-	core Character //Make a primarch called Character
+	core Character //Make a primarch called Character \emph{character, ability, attribute, resource, item, behaviour}
 	{
 	}
 \end{lstlisting}
