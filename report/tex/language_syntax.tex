@@ -1,15 +1,42 @@
 %Language syntax 27-02-2012
+\chapter{Language definition}
 \section{Language syntax}
 
-The programming language `RPG-script' is designed, such that it can be used to define a character, ability, attributes, resources, items and behaviour belonging to the character. Besides the user of the language can define events, which are triggered by some conditions and uses some ability, e.g. 
+The programming language `RPG-script' is developed for defining a character, ability, attributes, resources, items and behaviour belonging to the character. Besides the user of the language can define events, which are triggered by some conditions and uses some ability.
 
-\begin{quote}
-	let's say that the trigger is when health goes below 50 \% \\
-	and let's say that the condition is health below 50\% \\
-	and let's say that the ability is `FireBall' \\
-\end{quote}
+To define a character in the language, the user makes some primarchs, which is superclass, which not inherit from any other classes. The primarchs will be used for defining characters, abilities, attributes, resources, items, behaviours and effects.
+Each primarch have members which may be references to an other primarch. The members of the primarch is enclosed in a block by using the symbols ``\{'' and ``\}''. To define a primarch the keyword \emph{core} is used.
+Let's consider the following code example 
+\begin{lstlisting}
+	core Character //Make a primarch called Character
+	{
+	}
+\end{lstlisting}
+The code example above, makes a primarch with the name `Character'. 
+To make member of a primarch, or class, a collections is used, which is declared by using the symbols ``['' and ``]'', and separate the members of the collections with a comma `,'.
+\begin{lstlisting}
+	core Character
+	{
+		Attributes:
+			[ FireBall, //Make a collections of attributes as a member of the primarch
+				Heal,
+				Attack ]; 
+	}
+\end{lstlisting}
+Because whitespaces has no function in the `RPG-script' language there is no deference between writing the code above, or writing:
+\begin{lstlisting}
+	core Character
+	{
+		Attributes:[ FireBall, Heal, Attack ];
+	}
+\end{lstlisting}
 
-In the example above, the character would fire a `FireBall' as long as its health would be below 50 \%, when its health goes above 50 \% the the event would no longer be triggered. \\
-Written in code of the `RPG-script' language the event would look like
-
+The language allow the user to inherit from a primarch or an other class, e.g. if the user want to make a `FireBall' ability, it can be made as a subclass of the primarch `Ability'. To inherit from a primarch, or an other class which not is a primarch, two keywords are used; \emph{make} and \emph{from}.
+Let's consider the following code example
+\begin{lstlisting}
+	make Strength from Attribute //Makes a subclass of Attributes which is named Strength
+	{
+		//Set relevant modifiers et al for this attribute.
+	}
+\end{lstlisting}
 
