@@ -1,8 +1,10 @@
-%Language syntax 27-02-2012
-\chapter{Language definition}
-\section{Language syntax}
+The programming language `RPG-script' is specifically developed for defining characters and abilities, attributes, resources, items and behaviour belonging to a character and the user of the language can define events, which are triggered by some conditions and uses some ability and finally the user can define that an ability triggers some rulebook defined effect. 
+In addition to the programming language is a game engine, which will simulate a turn based fight between the characters defined in the language. 
+The behaviour of a user defined character is A.I.(Artificial Intelligence) based, which means it is based at a value called \emph{piggy rate}, the character will consider its possible moves, and by an user defined priority, decide the move that will give the character the highest piggy rate at the end of the turn.
 
-The programming language `RPG-script' is developed \todo{Specifically, rather. We are in a very small domain of programming problems, sufficiently well-defined to use exactly these Primarchs (archetypes)} for defining a character, ability, attributes, resources, items and behaviour belonging to the character. \todo{How about simply noting that our final two language features are generic AI value-based decision-making definitions (Behvaiour) as well as reactive AI code in the form of Event subtypes} Besides the user of the language can define events, which are triggered by some conditions and uses some ability.
+\section{Language syntax}
+This section focuses at describing the general syntax of the `RPG-script' languages. The description will include a comparison of the `RPG-script' language and the `C++' language, in specially the parallels between inheriting of classes in the two programming languages. 
+
 
 To define a character in the language, the user makes some primarchs, which is superclass, which not inherit from any other classes \todo{Primarchs are a type of primitive (basest of base classes), the real implementation of which is based on the external ruleset file}. The primarchs will be used for defining characters, abilities, attributes, resources, items, behaviours and effects.
 Each primarch have members which may be references to an other primarch. The members of the primarch is enclosed in a block by using the symbols ``\{'' and ``\}''. To define a primarch the keyword \emph{core} is used \todo{Outphased. All "core" Primarchs are defined externally, and RPG-script exclusively defines the subtypes/inheritance}.
