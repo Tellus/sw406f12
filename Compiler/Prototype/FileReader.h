@@ -27,6 +27,7 @@ namespace lexer
         char buffer[BUFFERSIZE];
         unsigned int buffered;
 
+        void open();
         void close();
         char peek(unsigned int lookahead = 0);
         /*This reads the first characters from the buffer*/

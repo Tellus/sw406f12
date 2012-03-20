@@ -11,6 +11,27 @@ using namespace std;
 
 namespace lexer
 {
+    void FileReader::open()
+    {
+        if (this->filestream.good() && this->filestream.is_open())
+        {
+            return;
+        }
+
+        this->filestream.close();
+
+        if (this->filelist.empty())
+        {
+            return;
+        }
+
+        this->filestream.open(this->filelist.front().c_str(), std::ios::in);
+        this->filelist.pop_front();
+
+        if(!this->filestream.good())
+            throw 404;
+    }
+
     void FileReader::close()
     {
         this->filestream.close();
@@ -51,24 +72,21 @@ namespace lexer
 
     void FileReader::read()
     {
-        int temp = BUFFERSIZE-this->buffered;
-        while (this->filestream.good() && temp > 0)
-            {
-                this->filestream.read((this->buffer)+(this->buffered), temp);
-                this->buffered += this->filestream.gcount();
-                temp = BUFFERSIZE - this->buffered;
 
-                if(!this->filestream.good())
-                {
-                    this->filestream.close();
-                    if (this->filelist.empty())
-                    {
-                        return;
-                    }
-                    this->filestream.open(this->filelist.front().c_str(), std::ios::in);
-                    this->filelist.pop_front();
-                }
+        this->open();
+        while (this->buffered < BUFFERSIZE && this->filestream.good())
+        {
+            if (this->filestream.good() && (int)(this->filestream.peek()) != -1)
+            {
+                this->filestream.get(this->buffer[this->buffered++]);
             }
+            else
+            {
+                this->buffer[this->buffered++] = 0x1C; // File Seperator
+                this->filestream.close();
+                this->open();
+            }
+        }
     }
 
     FileReader::FileReader()
