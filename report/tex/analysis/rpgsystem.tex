@@ -1,5 +1,5 @@
-\section{Analysis of RPG systems}
-After analysing the question sheets sent to a part of the target-group we decided to take a closer look at \emph{WoD}(d10), \emph{DnD 3.5}(d20) and \emph{Cyberpunk}(d10). The reason for this, is to find common characteristics and try to adjust our language to the basic needs of these popular role-playing games.
+\section{Analysis of Role-playing systems}
+After analysing the question sheets, see example in appendix \vref{qsheets}, sent to a part of our target-group. Our target-group consists of people experienced in role-playing, both digital games and so called \emph{pen \& paper} games. We decided to take a closer look at three systems, described in the next section. The reason for this, is to find common characteristics and try to adjust our language to the basic needs of these popular role-playing games.
 
 \subsection*{Role-playing games}
 The World Of Darkness (WoD) is a supernatural horror role-playing game, which incorporates a system called \emph{Storytelling System} developed by \emph{White Wolf Inc}.
@@ -11,13 +11,15 @@ The systems have some basic \emph{needs}, such as:
 Character classes, attributes, effects, abilities, resources, modifiers and variation (dice rolls).
 Their dice sizes and quantity differ, but are derived from the same concept: \textit{''To decide the outcome of a given task, you must roll a dice of a specific size, add modifiers, calculate the result and compare to the task's difficulty. If your result is higher, you succeed''}
 
-What these systems have in common, and is implemented differently in each, is health points, damage and their calculations. This results in another approach to our engine?s damage calculations. While WoD and Cyberpunk have some very convenient representations for \emph{pen \& paper} role-play, they are not suitable for our engine.
+What these systems have in common, and is implemented differently in each, is health points, damage and their calculations. This results in a different approach to our engine's damage calculations. While \emph{WoD} and \emph{Cyberpunk} have some very convenient representations for \emph{pen \& paper} role-play, they are not suitable for our engine.
 
 \subsection*{Conclusion}
-As a proof of concept, we choose the common characteristics of these systems for constructing the rulebook, which the engine will abide by. The Event system and fight simulation will be based on the older versions of the computer game \emph{Final Fantasy} (1-5) to simplify the implementation.
+As a proof of concept, we choose the common characteristics of these systems for constructing the rulebook, common characteristics being the before mentioned \emph{needs} of the systems.
+The Event system and fight simulation will be based on the older versions of the computer game \emph{Final Fantasy} (1-5) to simplify the implementation.
 
+\subsubsection*{''Final Fantasy'' \& engine specifics}
 The Final Fantasy games have implemented various combat systems, turn-based and real-time.
-Since our engine simulates battle and provides fairness through modifiers, we choose turn-based combat, where a battle is measured in turns, where a \emph{dexterity} or \emph{speed} modifiers can have effect on how many actions, a character is allowed each turn.
+Since our engine simulates battle and provides fairness through modifiers, we choose turn-based combat, where a battle is measured in turns.
 For simplicity we also choose to restrict the number of contestants to two.
 
 
