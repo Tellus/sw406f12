@@ -13,7 +13,18 @@ using namespace std;
 
 namespace lexer
 {
-    enum token_type{SEMICOLON};
+    enum token_type{$,
+    			SEMICOLON, COMMA, DOT,
+    			LBRACE, RBRACE, LBRACKET, RBRACKET, LPARAN, RPARAN,
+    			IDENTIFIER, NUMBER, STRING, BOOL,
+    			PLUS, MINUS, DIVIDE, MULTIPLY,
+    			ASSIGN, PLUS_ASSIGN, MINUS_ASSIGN, DIVIDE_ASSIGN, MULTIPLY_ASSIGN,
+    			EQUAL, NOTEQUAL, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL,
+    			COMMENT,
+    			MAKE, FROM,
+    			REFERENCE_KEYWORD,
+    			VALUE_KEYWORD
+    	};
 
     class Token
     {

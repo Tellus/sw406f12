@@ -19,20 +19,24 @@ namespace lexer
     class Scanner
     {
     public:
+        Token* scan();
+        void add_file(string filename);
 
+        Scanner();
+        virtual ~Scanner();
+
+    private:
         FileReader *filereader;
         Token *first;
         Token *last;
         unsigned int file, line;
 
-        Token* scan();
         Token* make_token();
-        void add_file(string filename);
-
+        Token* read_identifier();
+        Token* read_number();
+        Token* read_string(char delimiter);
+        Token* read_comment(bool block);
         void generalize(char* c);
-
-        Scanner();
-        virtual ~Scanner();
     };
 
 }

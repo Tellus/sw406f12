@@ -8,6 +8,7 @@
 #ifndef FILEREADER_H_
 #define FILEREADER_H_
 #define BUFFERSIZE 512
+#define CHUNKSIZE BUFFERSIZE / 2
 
 #include <fstream>
 #include <list>
@@ -22,6 +23,15 @@ namespace lexer
     class FileReader
     {
     public:
+        char peek(unsigned int lookahead = 0);
+        /*This reads the first characters from the buffer*/
+        char* devour(unsigned int length = 1);
+        void add_file(string filename);
+
+        FileReader();
+        virtual ~FileReader();
+
+    private:
         ifstream filestream;
         list<string> filelist;
         char buffer[BUFFERSIZE];
@@ -29,14 +39,7 @@ namespace lexer
 
         void open();
         void close();
-        char peek(unsigned int lookahead = 0);
-        /*This reads the first characters from the buffer*/
-        char* devour(unsigned int length = 1);
-        void add_file(string filename);
         void read();
-
-        FileReader();
-        virtual ~FileReader();
     };
 
 }
