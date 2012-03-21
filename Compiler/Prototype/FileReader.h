@@ -8,6 +8,7 @@
 #ifndef FILEREADER_H_
 #define FILEREADER_H_
 #define BUFFERSIZE 512
+#define CHUNKSIZE BUFFERSIZE / 2
 
 #include <fstream>
 #include <list>
