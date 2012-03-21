@@ -1,27 +1,51 @@
 \section{Language constructs}
-The \langname language has resulted in a highly declarative style of programming, focusing on what is to be done, but not how. While several of the concepts are widely used (events/signaling, class definitions, several design patterns), they have been modified to more specifically target the domain of role-playing games. This chapter focuses on describing and arguing for these specialised constructs.
+The \langname language has resulted in a highly declarative style of programming, focusing on what is to be done, but not how. While several of the concepts featured in the language have well-known parallels in other programming languages (events/signaling, classes, inheritance, user-defined types), they have been modified to more specifically target the domain of role-playing games.
+
+The very first few iterations of \langname{} presented a hybrid attempt between the implicitly understood effects of declarative programming with the flow control of imperative programming. As analysis of the target audience took hold, however, it became clear that the language should provide for simplistic input of objects \todo{classes?} and their relationships, without the hassle of considering line ordering or even algorithms. The focus should not be on having the programmers define the sometimes tedious rule sets and calculations of the games \todo{Reference WoD}, but rather let them take the natural role of a \ac{dm} and define not the world, but its contents. This has resulted in the unavoidably imperative elements of the language (in particular the rule set and base derivations of types) to be segregated into pre-written $C++$ code (the external ruleset) while the definition of characters and the setting of their attributes remains within \langname{}. This section \todo{change if we go higher/lower} describes the primary features of the \langname{} language as well as the underlying reasoning behind them.
+
+\subsection{Paradigm}
+\label{sec:language:paradigm}
+As mentioned in the introduction to this chapter/section \todo{Correct?}, \langname{} has taken on traits of declarative programming languages that focuses on letting the programmer describe \emph{what} they want, but not necessarily \emph{how}. It is evident in the three basic interaction methods in the language: \emph{declaration}, \emph{assignment} and \emph{construction}. All three are demonstrate in the following snippet. \todo{Double check the syntax for Fireball.Costs - I can't remember how we referenced members like that.}
+
+\begin{lstlisting}[language=fflang]
+make Fireball from Ability
+{
+	Costs: [[user.Resources[Mana],-10]];
+	Targets: [all];
+	Effects: [
+				[FireDamage(10,target)],
+				[FireDot(3,3,12)]
+			];
+}
+\end{lstlisting}
+
+The user-defined type of Ability (Fireball) is declared and its member values are assigned the necessary values. Notice the syntax for each of the effects ($<EffectName>(<param_1>,...,<param_n>)$), reminiscent of procedure calls in many other languages, and indeed the best equivalent would be that of a class constructor. This code is all that is necessary in order to implement Fireball into the game and make it available to characters.
+While not strictly adherent to any single rule system, each base type in the language models a particular part of systems that was deemed almost universal across those reviewed. For example, many actions (abilities) of characters have a cost associated with them, although not always linked so tangibly to a pool of resources like mana. As an example, 4th edition Dungeons \& Dragons limits the number of times an ability (called \emph{powers} in the system) can be used as a number of times per game day, encounter (battle) or "at will" (without restriction). Both types should be possible with the generalised assignment method and should thus cater to many different systems \todo{Test/confirm/analyse/look}. All other base types contain similar members (see the language reference for full descriptions).
+The type members and the method of declaration (declare, assign, possibly construct) attempts to mimic the filling out of form-based pages in paper-based role-playing games. When a player (or \ac{dm}) fills out a character sheet, for example, they will line for line write in the current values for the character in appropriate fields \todo{Reference DnD or WoD sheets?}, erasing and updating values as necessary (when damage is taken, for example). Likewise, the programmer details the character as they should appear at the beginning of a battle according to a pre-defined rule set (that defines which types of Attribute, Resource and Effect are available), letting the engine handle the updating of values until conclusion.
+This philosophy data-driven programming is further described within the context of several key areas of programming in the following sections.
 
 \subsection{Program control and structure}
 \label{ref_external_rulebook}
-\todo{Bad guess: our language is declarative, yes, and perhaps more specifically a functional derivative. While we have very little in the form of functions (see Effect()), we apply our assignments in basically the same manner. One could consider the assignment of values to members equal to the passing of function arguments, and the declaring of types to be the function calls themselves.}
-\langname presents a style of programming that is completely order ambiguous. Any line of code within a type definition \todo{Hvad skal vi kalde nedarvninger/type-deklarationer/Primarch-nedarvninger?} may come before or after any other line within the scope without issue. In this regard, type definitions may be considered function calls and the definition of their members as the named parameters of said function. Omitting any definition would then equate to relying on default parameters of the call.
-
+Program control and control structures refer to the mechanisms in a programming language that allows a programmer to define the order of execution of the code as well as conditional branching into subregions or even looping. \langname{} has almost none, going so far as to be completely order-agnostic with line ordering in-scope. \todo{Bad guess: our language is declarative, yes, and perhaps more specifically a functional derivative. While we have very little in the form of functions (see Effect()), we apply our assignments in basically the same manner. One could consider the assignment of values to members equal to the passing of function arguments, and the declaring of types to be the function calls themselves.}
+The removal 
+While a strict line ordering would better serve to give the impression of "form-filling" as prospective programmers would know it from pen and paper games, the loose ordering is simpler to parse and affords experienced programmers to lay out their code as they choose according to readability.
 
 \subsection{Types and user-defined types}
-The core concepts of any roleplaying game necessitates a very rigid data structure, and the basis for \langname 's reference rule set is no different.
-\emph{make} allows for the inheritance from the adjusted core classes (called primarchs) of the base framework. While the Primarchs encompass several qualities often associated with object-oriented paradigms (encapsulation and inheritance), they also exhibit traits that detract from such a broad definition. In particular, primarchs and their seeds \todo{Find a better word for "children"} are highly specialised from their core, created for particular purposes within our bounded RPG framework \todo{Reference Biggi's analysis and ruleset}. Furthermore, Primarchs support no notion of class procedures, explicit instantiation or structural extendability. Any seed cannot change the first-level membership structure of its parent (it cannot add new members to the immediate structure, only modify existing members). Finally, \langname does not support variables of any form. Any additions to a declaration happens by name of the type and nothing else. Note, however, that this is by no means a singleton pattern approach. While members of a Primarch are referenced by their type name, not an arbitrary variable, the code does not reference a static class, rather a nameless instance bound to the Primarch in question. The following is a list of the Primarchs inheritable within \langname files:
+Although \langname{} attempts to 
+The core concepts of any roleplaying game necessitates a very rigid data structure, and the basis for \langname{} 's reference rule set is no different.
+\emph{make} allows for the inheritance from the adjusted core classes (called primarchs) of the base framework. While the Primarchs encompass several qualities often associated with object-oriented paradigms (encapsulation and inheritance), they also exhibit traits that detract from such a broad definition. In particular, primarchs and their seeds \todo{Find a better word for "children"} are highly specialised from their core, created for particular purposes within our bounded RPG framework \todo{Reference Biggi's analysis and ruleset}. Furthermore, Primarchs support no notion of class procedures, explicit instantiation or structural extendability. Any seed cannot change the first-level membership structure of its parent (it cannot add new members to the immediate structure, only modify existing members). Finally, \langname{} does not support variables of any form. Any additions to a declaration happens by name of the type and nothing else. Note, however, that this is by no means a singleton pattern approach. While members of a Primarch are referenced by their type name, not an arbitrary variable, the code does not reference a static class, rather a nameless instance bound to the Primarch in question. The following is a list of the Primarchs inheritable within \langname{} files:
 
 \subsubsection{Character}
 Defines any individual participant in the battle scenario. These are the root containers or associative centers for all other classes. While the Character primarch references the character's definition, it relies on the definitions of contained seeds of other primarchs to actually define it.
 
 \subsubsection{Behaviour}
-Details how a character's attributes and resources should be weighed according to each other as well as those of other characters. These weights define the character AI's "Piggy" value when calculating most beneficial actions mid-game. This forms half of the exposed mechanisms for modifying AI logic in \langname, the other half being Events. 
+Details how a character's attributes and resources should be weighed according to each other as well as those of other characters. These weights define the character AI's "Piggy" value when calculating most beneficial actions mid-game. This forms half of the exposed mechanisms for modifying AI logic in \langname{}, the other half being Events. 
 
 \subsubsection{Ability} 
 Key to describing a character's set of possible actions. Any action taken by a character will be described by an ability, from swinging a sword to weaving intricate spells and drinking potions. A seed of Ability defines the name, cost, possible targets and associated Effects of the ability. For example, swinging the sword may be accompanied by a PhysicalDamage Effect that defines how the ability will affect the game state.
 
 \subsubsection{Event}
-Events are largely analogous to the signaling features of many other languages (see events in C\#, Java, $C++$ and others) in that they are logic structures that register themselves to be notified when (or if) a particular state is reached. Once notified, the event reacts with appropriate action. In \langname, Event primarchs are as declarative as any other primarch, and thus follows a very strict mechanic. Each Event defines a trigger for the event (known as a signal in the observer pattern) as well as an optional set of conditions that must hold for the event to follow through (for example, a Warrior's Blood Rage might trigger when the character drops in health, but only if he drops below $20\%$). Finally, the Event assigns a set of Ability references that will be attempted in sequence on the Character's next turn. Thus the Event primarch is the reactive half of the exposed mechanisms for defining AI behaviour (the other being Behaviour).
+Events are largely analogous to the signaling features of many other languages (see events in C\#, Java, $C++$ and others) in that they are logic structures that register themselves to be notified when (or if) a particular state is reached. Once notified, the event reacts with appropriate action. In \langname{}, Event primarchs are as declarative as any other primarch, and thus follows a very strict mechanic. Each Event defines a trigger for the event (known as a signal in the observer pattern) as well as an optional set of conditions that must hold for the event to follow through (for example, a Warrior's Blood Rage might trigger when the character drops in health, but only if he drops below $20\%$). Finally, the Event assigns a set of Ability references that will be attempted in sequence on the Character's next turn. Thus the Event primarch is the reactive half of the exposed mechanisms for defining AI behaviour (the other being Behaviour).
 
 \noindent The following is a list of Primarchs are referenced (and initialised) within other Primarchs, but must be defined within the external ruleset (see \vref{ref_external_rulebook}).
 
@@ -38,25 +62,9 @@ Must be contained and associated to Abilities. Each defines the result of applyi
 
 \emph{make} is the mechanism by which a primarch or seed is further specialised from its previous purpose. This is roughly equatable to inheriting in traditional object-oriented languages. \emph{make PhysicalDamage from Effect} creates a new Effect seed with all the defining features of Effect, while allowing the modification to the prior's definition.
 
-\subsection{Ranges and random values}
-The language has built-in support of random number generation, going so far as to allow variables with unknown actual values until they are used in an expression. These types were conceived to cater to the widely used concepts of dice throws and resources. Resources are quite often described with minimum and maximum values. Dungeons and Dragons, for example, define a character's minimum and maximum health points as a factor of their chosen profession (class) and Constitution attribute (a measure of physical endurance). Likewise, damage rolls (the combination of dice and modifiers used to calculate damage dealt from an attack) are formulated in the general form $xdyy+z$ where $x$ is the number of $yy$-sided die to roll, plus a constant $z$, determined by modifiers relevant to the roll (strength for melee, intelligence for magic, for example). These calculations and types of data are somewhat trivial to implement in imperative languages, but the sheer frequency of their use invites a vastly simplified syntax for the expression of the concept. Consider the following example: a damage roll defined as $3d8+2$ in C:
-\begin{lstlisting}
-int val = 2; // We know the constant.
-for (int i = 0; i < 3; i++) // Run three times, matching 3 die.
-{
-    // Assume an effective pseudo-random number generator function.
-    val += rand(1,8);
-}
-// val now contains the result of the calculation.
-\end{lstlisting}
-and in \langname:
-\begin{lstlisting}
-result: 3*(1 to 8)+2;
-\end{lstlisting}
-
-\todo{Better syntax for dice rolls must be discussed! This will result in the same dice being multiplied. All non-multiples of 3 are not possible.}
-
-Clearly, the \langname syntax is much shorter and closer to the representation of the RPG rule books, simplifying the expression of random entropy \todo{redundant?} in a battle scenario.
+\begin{comment}
+%\subsection{Ranges and random values}
+%The language has built-in support of random number generation, going so far as to allow variables with unknown actual values until they are used in an expression. These types were conceived to cater to the widely used concepts of dice throws and resources. Resources are quite often described with minimum and maximum values. Dungeons and Dragons, for example, define a character's minimum and maximum health points as a factor of their chosen profession (class) and Constitution attribute (a measure of physical endurance). Likewise, damage rolls (the combination of dice and modifiers used to calculate damage dealt from an attack) are formulated in the general form $xdyy+z$ where $x$ is the number of $yy$-sided die to roll, plus a constant $z$, determined by modifiers relevant to the roll (strength for melee, intelligence for magic, for example). These calculations and types of data are somewhat trivial to implement in imperative languages, but the sheer frequency of their use invites a vastly simplified syntax for the expression of the concept. Consider the following example: a damage roll defined as $3d8+2$ in C:
 
 \subsection{Inclusions}
 A feature of primarch and seed definitions, inclusions \todo{proper term?} is a notation to define a member of a primarch without explicitly instantiating with an identifier. An example:
