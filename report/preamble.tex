@@ -12,6 +12,11 @@
 % Variable, neat, references.
 \usepackage{varioref}
 
+% Acronym package. Makes it easier to introduce acronyms.
+\usepackage{acronym}
+% Add acronyms defined in separate file.
+\input{acronyms}
+
 % Load up bibliography.
 \usepackage{natbib}
 % Bibliography style.
@@ -153,7 +158,7 @@
 }
 
 % simple command to insert our final language name. Use \langname wherever you write the language's name.
-\newcommand{\langname}{InvaderScript}
+\newcommand{\langname}{InvaderScript } % Whitespace intentional.
 
 % Sørg for at paragrafplads ikke spildes.
 \raggedbottom
