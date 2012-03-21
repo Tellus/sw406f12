@@ -32,6 +32,10 @@ namespace lexer
         unsigned int file, line;
 
         Token* make_token();
+        Token* read_identifier();
+        Token* read_number();
+        Token* read_string(char delimiter);
+        Token* read_comment(bool block);
         void generalize(char* c);
     };
 
