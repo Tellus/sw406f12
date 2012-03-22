@@ -1,6 +1,9 @@
 % Define document class. Important.
 \documentclass[a4paper,twoside,openany]{report}
 
+% simple command to insert our final language name. Use \langname wherever you write the language's name.
+\newcommand{\langname}{InvaderScript} % Whitespace intentional.
+
 % Margener
 %\setlength{\evensidemargin}{1cm}
 %\setlength{\oddsidemargin}{1cm}
@@ -37,6 +40,9 @@
 
 % Also, images.
 \usepackage{graphicx}
+
+% PDF includes
+\usepackage{pdfpages}
 
 % Todo notes here and there.
 \usepackage{todonotes}
@@ -106,6 +112,9 @@
   morestring=[b]"
 }
 
+% External file with definitions of languages.
+\input{langlistings}
+
 % Neat-o referencer...o.
 \usepackage{hyperref}
 \usepackage{nameref}
@@ -156,9 +165,6 @@
 		\centering\fbox{\includegraphics[width=0.8\columnwidth]{img/#4}}\caption{#5\label{#6}}
 		\end{minipage}	\end{figure}
 }
-
-% simple command to insert our final language name. Use \langname wherever you write the language's name.
-\newcommand{\langname}{InvaderScript } % Whitespace intentional.
 
 % Sørg for at paragrafplads ikke spildes.
 \raggedbottom
