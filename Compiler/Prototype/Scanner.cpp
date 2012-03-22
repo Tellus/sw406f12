@@ -14,18 +14,14 @@ namespace lexer
 
     Token* Scanner::scan()
     {
-        while(this->filereader->peek() != '\0')
+        do
         {
             if(this->first == NULL)
                 this->last = this->first = this->make_token();
             else
                 this->last = this->last->append(this->make_token());
         }
-
-        if (this->last != NULL)
-        	this->last->append(new Token(this->file, this->line, $, '\0'));
-        else
-        	this->last = this->first = new Token(this->file, this->line, $, '\0');
+        while (this->last->type != $);
 
         return this->first;
     }
@@ -48,6 +44,11 @@ namespace lexer
             }
 
             c = this->filereader->peek();
+        }
+
+        if (c == '\0')
+        {
+        	return new Token(this->file, this->line, $, "");
         }
 
         this->generalize(&c);
@@ -130,6 +131,9 @@ namespace lexer
             		return new Token(this->file, this->line, DIVIDE_ASSIGN, this->filereader->devour(2));
 
             	return new Token(this->file, this->line, DIVIDE, this->filereader->devour());
+
+            case ':':
+                return new Token(this->file, this->line, ASSIGN, this->filereader->devour());
 
             case '=':
             	nc = this->filereader->peek(1);
