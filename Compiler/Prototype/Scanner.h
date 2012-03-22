@@ -10,6 +10,8 @@
 
 #include "FileReader.h"
 #include "Token.h"
+#include "LexicalError.h"
+
 
 using namespace std;
 

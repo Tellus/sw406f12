@@ -8,6 +8,7 @@
 #ifndef TOKEN_H_
 #define TOKEN_H_
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -35,7 +36,7 @@ namespace lexer
         string contents;
         Token *next;
 
-        void purrdy_print();
+        void purrdy_print(unsigned int indent = 0, bool newline = true);
         Token* append(Token *next);
 
         Token(unsigned int file, unsigned int line, token_type type, string contents);
