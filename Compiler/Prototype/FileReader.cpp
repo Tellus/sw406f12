@@ -20,16 +20,17 @@ namespace lexer
 
         this->filestream.close();
 
-        if (this->filelist.empty())
+        if (this->filelist.size() == 0)
         {
             return;
         }
 
         this->filestream.open(this->filelist.front().c_str(), std::ios::in);
-        this->filelist.pop_front();
 
         if(!this->filestream.good())
-            throw 404;
+            throw new FileError(FREAD, new string(this->filelist.front()));
+
+        this->filelist.pop_front();
     }
 
     void FileReader::close()

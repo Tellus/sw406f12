@@ -5,6 +5,7 @@
  *      Author: vixen
  */
 
+
 #include <vector>
 #include <string>
 #include "Scanner.h"
@@ -29,9 +30,48 @@ int main (int argc, char* argv[])
 	{
 		tokens = scanner->scan();
 	}
-	catch (char* error)
+	catch (LexicalError *e)
 	{
+		cout << "<Syntax Error> ";
+
+		switch (e->type)
+		{
+			case UNEXPECTEDSYMBOL:
+				cout << "Unexpected symbol '" << *((char*)(e->data))
+					 << "' in file <" << files[(e->file)] << "> on line "
+					 << e->line << ".";
+				break;
+
+			case UNCLOSEDSTRING:
+				cout << "Unclosed string in file <" << files[(e->file)]
+				     << "> starting on line " << e->line << ".";
+				break;
+
+			case UNCLOSEDCOMMENT:
+				cout << "Unclosed block comment in file <" << files[(e->file)]
+				     << "> starting on line " << e->line << ".";
+				break;
+		}
+		cout << endl;
+		return 0;
 	}
+	catch (FileError *e)
+	{
+		switch (e->type)
+		{
+			case FREAD:
+				cout << "Unable to open file <" << *((string*)(e->data)) << ">.";
+				break;
+
+			case FWRITE:
+				break;
+		}
+		cout << endl;
+		return 0;
+	}
+
+	cout << "Successfully scanned " << files.size() << " files;" << endl << endl;
+	tokens->purrdy_print();
 
 	delete scanner;
 	delete tokens;

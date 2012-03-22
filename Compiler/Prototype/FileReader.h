@@ -14,6 +14,7 @@
 #include <list>
 #include <string>
 #include <cstring>
+#include "FileError.h"
 
 using namespace std;
 
