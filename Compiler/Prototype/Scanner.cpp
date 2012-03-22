@@ -144,7 +144,8 @@ namespace lexer
 				if (nc == '=')
 					return new Token(this->file, this->line, NOTEQUAL, this->filereader->devour(2));
 
-				throw "Unexpected symbol";
+				throw new LexicalError(this->file, this->line, UNEXPECTEDSYMBOL,
+						new char(c));
 
             case '<':
             	if (nc == '=')
@@ -159,7 +160,8 @@ namespace lexer
             	return new Token(this->file, this->line, GREATER, this->filereader->devour());
 
             default:
-            	throw "Unexpected symbol";
+            	throw new LexicalError(this->file, this->line, UNEXPECTEDSYMBOL,
+            			new char(c));
         }
     }
 
@@ -237,7 +239,8 @@ namespace lexer
     		this->generalize(&c);
     		if (c != '1')
     		{
-    			throw "Unexpected symbol following decimal point";
+    			throw new LexicalError(this->file, this->line, UNEXPECTEDSYMBOL,
+						new char(c));
     		}
     		while (c == '1')
     		{
@@ -250,7 +253,8 @@ namespace lexer
 
     	if (c == 'a')
     	{
-    		throw "Unexpected symbol following number";
+    		throw new LexicalError(this->file, this->line, UNEXPECTEDSYMBOL,
+					new char(c));
     	}
 
     	return new Token(this->file, this->line, NUMBER, id);
@@ -260,6 +264,7 @@ namespace lexer
     {
     	char c = ' ';
     	int i = 0;
+    	unsigned int start = this->line;
     	string id;
 
     	while (c != delimiter)
@@ -267,7 +272,7 @@ namespace lexer
     		c = this->filereader->peek(++i);
 
     		if (c == '\0' || c == 0x1C)
-    			throw "Unclosed string";
+    			throw new LexicalError(this->file, start, UNCLOSEDSTRING, NULL);
 
     		if (c == '\n')
     			this->line++;
@@ -288,6 +293,7 @@ namespace lexer
     {
     	char c = ' ';
     	int i = 0;
+    	unsigned int start = this->line;
     	string id;
 
     	while (true)
@@ -295,7 +301,7 @@ namespace lexer
     		c = this->filereader->peek(++i);
 
     		if ((c == '\0' || c == 0x1C) && block)
-    			throw "Unclosed block comment";
+    			throw new LexicalError(this->file, start, UNCLOSEDCOMMENT, NULL);
 
     		if (c == '\n')
     		{
