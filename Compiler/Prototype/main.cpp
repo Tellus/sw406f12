@@ -33,10 +33,11 @@ int main (int argc, char* argv[])
 	catch (LexicalError *e)
 	{
 		cout << "<Syntax Error> ";
+
 		switch (e->type)
 		{
 			case UNEXPECTEDSYMBOL:
-				cout << "Unexpected symbol '" << (char*)(e->data)
+				cout << "Unexpected symbol '" << *((char*)(e->data))
 					 << "' in file <" << files[(e->file)] << "> on line "
 					 << e->line << ".";
 				break;
@@ -52,7 +53,25 @@ int main (int argc, char* argv[])
 				break;
 		}
 		cout << endl;
+		return 0;
 	}
+	catch (FileError *e)
+	{
+		switch (e->type)
+		{
+			case FREAD:
+				cout << "Unable to open file <" << *((string*)(e->data)) << ">.";
+				break;
+
+			case FWRITE:
+				break;
+		}
+		cout << endl;
+		return 0;
+	}
+
+	cout << "Successfully scanned " << files.size() << " files;" << endl << endl;
+	tokens->purrdy_print();
 
 	delete scanner;
 	delete tokens;
