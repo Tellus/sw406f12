@@ -24,9 +24,11 @@ namespace lexer
     class FileReader
     {
     public:
+    	/*Returns the character which is 'lookahead' characters from the first in the buffer. Does not advance stream*/
         char peek(unsigned int lookahead = 0);
-        /*This reads the first characters from the buffer*/
+        /*Returns the first 'length' characters from the buffer, and advances the stream*/
         char* devour(unsigned int length = 1);
+        /*Adds a file to be read*/
         void add_file(string filename);
 
         FileReader();

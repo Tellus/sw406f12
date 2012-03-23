@@ -23,8 +23,6 @@ namespace lexer
 		void *data;
 		lex_err type;
 
-		void print();
-
 		LexicalError(unsigned int file, unsigned int line, lex_err type,
 				void *data);
 		virtual ~LexicalError();

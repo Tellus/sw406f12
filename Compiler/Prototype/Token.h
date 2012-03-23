@@ -36,13 +36,14 @@ namespace lexer
         string contents;
         Token *next;
 
+        /*Prints the token stream, starting from this token*/
         void purrdy_print(unsigned int indent = 0, bool newline = true);
+        /*Append a token after this one, returns new token*/
         Token* append(Token *next);
 
         Token(unsigned int file, unsigned int line, token_type type, string contents);
         virtual ~Token();
     };
-
 }
 
 #endif /* TOKEN_H_ */

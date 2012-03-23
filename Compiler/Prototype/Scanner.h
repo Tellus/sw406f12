@@ -21,7 +21,9 @@ namespace lexer
     class Scanner
     {
     public:
+    	/*Scans each file added to the scanner's filereader, returns the token-stream*/
         Token* scan();
+        /*Adds a file to the scanner's filereader*/
         void add_file(string filename);
 
         Scanner();
