@@ -8,7 +8,7 @@
 
 #include <vector>
 #include <string>
-#include "Scanner.h"
+#include "Scanner/Scanner.h"
 
 using namespace lexer;
 using namespace std;
