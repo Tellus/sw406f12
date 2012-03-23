@@ -13,18 +13,10 @@ namespace lexer
 {
     void FileReader::open()
     {
-        if (this->filestream.good() && this->filestream.is_open())
-        {
+        if ((this->filestream.good() && this->filestream.is_open()) || this->filelist.size() == 0)
             return;
-        }
 
         this->filestream.close();
-
-        if (this->filelist.size() == 0)
-        {
-            return;
-        }
-
         this->filestream.open(this->filelist.front().c_str(), std::ios::in);
 
         if(!this->filestream.good())
@@ -97,7 +89,7 @@ namespace lexer
 
     FileReader::~FileReader()
     {
-        // TODO Auto-generated destructor stub
+    	this->close();
     }
 
 }
