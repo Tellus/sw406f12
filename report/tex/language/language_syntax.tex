@@ -4,23 +4,11 @@ To make use of \langname{} a \emph{game engine} is used, which will simulate a t
 The behaviour of a user-defined character can be described as A.I.(Artificial Intelligence). The character will 'consider' it's next move, by assessing the risk of available moves against an enemy, based on a rate value. The risk and reward of possible moves can be defined with \langname{}.
 
 \section{Language syntax}
-This section focuses at describing the general syntax of the \langname{}. The description includes a comparison of \langname{} and the `C++' language, especially the parallels between class-inheriting in the two programming languages. 
+This section focuses at describing the general syntax of the \langname{}. The description includes class inheriting, declaration of members and examples of various capabilites of \langname{}.
 
 \subsection{Classes}
-Defining a character in \langname{}, is like inheriting a class in C++.
-Lets see an example of inheriting in C++:
-\begin{lstlisting}
-	class Animal
-	{
-		//Some members are put here
-	}
-	
-	class Cat :: Animal
-	{
-		//Some members are put here
-	}
-\end{lstlisting}
-In the example above the class \emph{Cat} inherits from the class \emph{Animal}. In \langname{}, the classes to inherit from are base classes; \emph{Character, Ability, Attribute, Resource, Item, Behaviour}. This helps make sure that the engine 'knows' how to deal with various user-defined units.
+Creating a character in \langname{}, is like inheriting a class in an object-oriented language.
+In \langname{}, the classes to inherit from are base classes; \emph{Character, Ability, Attribute, Resource, Item, Behaviour}. This helps make sure that the engine 'knows' how to deal with various user-defined units.
 When inheriting in \langname{}, two keyword are used; \emph{make} and \emph{from}
 \begin{lstlisting}
 	make Human from Character
@@ -28,18 +16,12 @@ When inheriting in \langname{}, two keyword are used; \emph{make} and \emph{from
 		//Some members are put here
 	}
 \end{lstlisting}
-In the example above the `class' \emph{Human} inherits from the predefined 'base class' \emph{Character}.
+In the example above the 'class' \emph{Human} inherits from the predefined 'base class' \emph{Character}.
 
 \subsubsection*{Members in classes}
-Like in C++, in \langname{} it is possible to make members of a class by enclosing the members in a block, by using the symbols ``\{'' and ``\}''.
-\begin{lstlisting}
-	class Animal
-	{
-		string name;
-	}
-\end{lstlisting}
-In the example above, the class \emph{Animal} has the member \emph{name} which is a string, and the line is ended by the symbol `;'.
-In \langname{}, the members are declared as collections, by using the symbols ``['' and ``]'', and separate the members of the collections with a comma `,', and ending the line with the symbol `;'.
+In \langname{}, the members are declared as collections, by using the symbols ' [ ' and ' ] ', separated with a comma ' , '.
+A line is ended with the symbol ' ; '.
+This can be enclosed in blocks, by using the symbols ' \{ ' and ' \} '.
 \begin{lstlisting}
 	make Human from Character
 	{	
@@ -49,22 +31,14 @@ In \langname{}, the members are declared as collections, by using the symbols ``
 			  Attack ];
 	}
 \end{lstlisting}
-The example above is a \emph{Human} class, with its members, a collections of abilities.
+The example above is a \emph{Human} class, with its members, a collection of abilities.
 
 \subsubsection*{References}
-In C++, it is possible to make references to the classes, with the keywords \emph{this} and \emph{parent} and the operator \emph{`-$>$'}.
-\begin{lstlisting}
-	class Animal
-	{
-		string name;
-		this->name = "Fox";
-	}
-\end{lstlisting}
- References in \langname{} are declared by using the keywords \emph{owner} and \emph{this} and the operator \emph{`.'} The keyword \emph{this} refer to the class the keyword declared in and the keyword \emph{owner} refer to the super class, which is the top of the inheriting. 
+References in \langname{} are declared by using the keywords \emph{owner} and \emph{this} and the operator \emph{' . '} The keyword \emph{this} refers to the class, in which it is declared. The keyword \emph{owner} refers to the base class, which the class is derived from. 
 \begin{lstlisting}
 	make HealthPoints from Resource
 	{
 		this.health: 100;
 	}
 \end{lstlisting}
-The example above is a \emph{HealthPointssets} resource, which can be assigned to a character, to keep track of its health.
+The example above is a \emph{HealthPoints} resource, which can be assigned to a character, to keep track of their health.
