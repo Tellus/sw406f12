@@ -9,9 +9,11 @@
 #include <vector>
 #include <string>
 #include "Scanner/Scanner.h"
+#include "Parser/Parser.h"
 
 using namespace lexer;
 using namespace std;
+using namespace parser;
 
 int main (int argc, char* argv[])
 {
@@ -70,11 +72,37 @@ int main (int argc, char* argv[])
 		return 0;
 	}
 
-	cout << "Successfully scanned " << files.size() << " files;" << endl << endl;
+	cout << "Successfully scanned " << files.size() << " files." << endl << endl;
 	tokens->purrdy_print();
+	cout << endl;
 
 	delete scanner;
+
+	Parser *parser = new Parser();
+	ASTNode *ast;
+
+	try
+	{
+		ast = parser->parse(tokens);
+	}
+	catch (ParseError *e)
+	{
+		cout << "<Syntax Error> Received token " << Token::stype(e->token->type)
+				<< "while parsing <" << files[e->token->file] << "> on line "
+				<< e->token->line << ". Expected " << e->expected << ".";
+		return 0;
+	}
+
+	cout << "Successfully parsed program." << endl << endl;
+
+	delete parser;
 	delete tokens;
+
+	// TODO: Semantics
+
+	delete ast;
+
+	// TODO: Code gen
 
 	return 0;
 }
