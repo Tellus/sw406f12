@@ -152,12 +152,14 @@ namespace lexer
 						new char(c));
 
             case '<':
+            	nc = this->filereader->peek(1);
             	if (nc == '=')
             		return new Token(this->file, this->line, LESS_EQUAL, this->filereader->devour(2));
 
             	return new Token(this->file, this->line, LESS, this->filereader->devour());
 
             case '>':
+            	nc = this->filereader->peek(1);
             	if (nc == '=')
             		return new Token(this->file, this->line, GREATER_EQUAL, this->filereader->devour(2));
 
@@ -214,7 +216,7 @@ namespace lexer
     	if (id == "this" || id == "owner")
     		return new Token(this->file, this->line, REFERENCE_KEYWORD, id);
 
-    	if (id == "self" || id == "enemy" || id == "ally" || id == "team_enemy",
+    	if (id == "self" || id == "enemy" || id == "ally" || id == "team_enemy" ||
     			id == "team_ally" || id == "all")
     		return new Token(this->file, this->line, VALUE_KEYWORD, id);
 
