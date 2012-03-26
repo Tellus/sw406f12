@@ -20,14 +20,45 @@ namespace lexer
 
     void Token::purrdy_print(unsigned int indent, bool newline)
     {
-    	string s_type;
+    	string s_type = Token::stype(this->type);
     	unsigned int next_indent = indent;
     	bool next_newline = false;
 
-    	switch (this->type)
+    	if (this->type == SEMICOLON || this->type == LBRACE ||
+    			this->type == RBRACE)
+    		next_newline = true;
+
+    	if (this->type == LBRACE)
+    		next_indent++;
+
+    	if (this->type == RBRACE)
+			if (next_indent > 0)
+			{
+				next_indent--;
+				indent--;
+			}
+
+
+    	if (newline)
+    	{
+    		cout << "\n";
+			for (unsigned int i = 0; i < indent; i++)
+				cout << "  ";
+    	}
+
+    	cout << s_type;
+
+    	if (this->next != NULL)
+    		this->next->purrdy_print(next_indent, next_newline);
+    }
+
+    string Token::stype(token_type type)
+    {
+    	string s_type;
+    	switch (type)
     	{
     		case $:
-    			s_type = "$\n";
+    			s_type = "$ ";
     			break;
     		case COMMA:
     			s_type = ", ";
@@ -36,22 +67,13 @@ namespace lexer
     			s_type = ". ";
     			break;
     		case SEMICOLON:
-    			s_type = ";\n";
-    			next_newline = true;
+    			s_type = "; ";
     			break;
     		case LBRACE:
-    			s_type = "\n{\n";
-    			next_indent++;
-    			next_newline = true;
+    			s_type = "{ ";
     			break;
     		case RBRACE:
-    			s_type = "}\n";
-    			if (next_indent > 0)
-    			{
-    				next_indent--;
-    				indent--;
-    			}
-    			next_newline = true;
+    			s_type = "} ";
     			break;
     		case LBRACKET:
     			s_type = "[ ";
@@ -105,31 +127,31 @@ namespace lexer
     			s_type = "*: ";
     			break;
     		case EQUAL:
-    			s_type = "=";
+    			s_type = "= ";
     			break;
     		case NOTEQUAL:
-    			s_type = "!=";
+    			s_type = "!= ";
     			break;
     		case GREATER:
-    			s_type = ">";
+    			s_type = "> ";
     			break;
     		case GREATER_EQUAL:
-    			s_type = ">=";
+    			s_type = ">= ";
     			break;
     		case LESS:
-    			s_type = "<";
+    			s_type = "< ";
     			break;
     		case LESS_EQUAL:
-    			s_type = "<=";
+    			s_type = "<= ";
     			break;
     		case COMMENT:
     			s_type = "<comment> ";
     			break;
     		case FROM:
-    			s_type = "from ";
+    			s_type = "\"from\" ";
     			break;
     		case MAKE:
-    			s_type = "make ";
+    			s_type = "\"make\" ";
     			break;
     		case REFERENCE_KEYWORD:
     			s_type = "<reference> ";
@@ -137,16 +159,13 @@ namespace lexer
     		case VALUE_KEYWORD:
     			s_type = "<value> ";
     			break;
+
+    		case ANY:
+    			s_type = "";
+    			break;
     	}
 
-    	if (newline)
-			for (unsigned int i = 0; i < indent; i++)
-				cout << "  ";
-
-    	cout << s_type;
-
-    	if (this->next != NULL)
-    		this->next->purrdy_print(next_indent, next_newline);
+    	return s_type;
     }
 
     Token::Token(unsigned int file, unsigned int line, token_type type, string contents)

@@ -24,7 +24,8 @@ namespace lexer
     			COMMENT,
     			MAKE, FROM,
     			REFERENCE_KEYWORD,
-    			VALUE_KEYWORD
+    			VALUE_KEYWORD,
+    			ANY
     	};
 
     class Token
@@ -40,6 +41,8 @@ namespace lexer
         void purrdy_print(unsigned int indent = 0, bool newline = true);
         /*Append a token after this one, returns new token*/
         Token* append(Token *next);
+
+        static string stype(token_type type);
 
         Token(unsigned int file, unsigned int line, token_type type, string contents);
         virtual ~Token();
