@@ -7,7 +7,7 @@ The behaviour of a user-defined character can be described as A.I.(Artificial In
 This section focuses at describing the general syntax of the \langname{}. The description includes class inheriting, declaration of members and examples of various capabilites of \langname{}.
 
 \subsection{Classes}
-Creating a character in \langname{}, is like inheriting a class in an object-oriented language.
+Creating an entity in \langname{} is like inheriting a class in an object-oriented language.
 In \langname{}, the classes to inherit from are base classes; \emph{Character, Ability, Attribute, Resource, Item, Behaviour}. This helps make sure that the engine 'knows' how to deal with various user-defined units.
 When inheriting in \langname{}, two keyword are used; \emph{make} and \emph{from}
 \begin{lstlisting}
@@ -36,9 +36,9 @@ The example above is a \emph{Human} class, with its members, a collection of abi
 \subsubsection*{References}
 References in \langname{} are declared by using the keywords \emph{owner} and \emph{this} and the operator \emph{' . '} The keyword \emph{this} refers to the class, in which it is declared. The keyword \emph{owner} refers to the base class, which the class is derived from. 
 \begin{lstlisting}
-	make HealthPoints from Resource
+	make Human from Character
 	{
-		this.health: 100;
+		Health: 100;
 	}
 \end{lstlisting}
-The example above is a \emph{HealthPoints} resource, which can be assigned to a character, to keep track of their health.
+The example above is a \emph{HealthPoints} resource, which can be assigned to a character to keep track of their health. The keyword \emph{this} is used to 
