@@ -7,13 +7,14 @@
 
 #include "../../Headers/Attack.h"
 
-Attack::Attack() {
+Attack::Attack()
+{
 	this->id = "attack";
 	this->targets.push_back(enemy);
 	this->output = "{s} attacks {t}!";
 }
 
-Attack::~Attack() {
+Attack::~Attack()
+{
 	// TODO Auto-generated destructor stub
 }
-

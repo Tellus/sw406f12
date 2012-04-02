@@ -69,7 +69,7 @@ void Character::turnover(bool verbose)
 	{
 		this->dead = true;
 		if (verbose)
-			cout << this->name << " died!";
+			cout << this->name << " died!" << endl;
 	}
 }
 
@@ -90,6 +90,15 @@ Character::Character(string name, double health, double attack, double defense)
 }
 
 Character::~Character() {
-	// TODO Auto-generated destructor stub
-}
+	for (list<Attribute*>::iterator it = this->attributes.begin();
+			it != this->attributes.end(); it++)
+		delete (*it);
 
+	for (list<Resource*>::iterator it = this->resources.begin();
+			it != this->resources.end(); it++)
+		delete (*it);
+
+	for (list<Ability*>::iterator it = this->abilities.begin();
+			it != this->abilities.end(); it++)
+		delete (*it);
+}

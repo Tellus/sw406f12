@@ -20,10 +20,9 @@ PhysicalDamage::PhysicalDamage(Character *source, Character *target,
 	this->source = source;
 	this->amount = amount;
 	// TODO Auto-generated constructor stub
-
 }
 
-PhysicalDamage::~PhysicalDamage() {
+PhysicalDamage::~PhysicalDamage()
+{
 	// TODO Auto-generated destructor stub
 }
-

@@ -1,0 +1,28 @@
+\emph{make} allows for the inheritance from the adjusted core classes (called primarchs) of the base framework. While the Primarchs encompass several qualities often associated with object-oriented paradigms (encapsulation and inheritance), they also exhibit traits that detract from such a broad definition. In particular, primarchs and their seeds \todo{Find a better word for "children"} are highly specialised from their core, created for particular purposes within our bounded RPG framework \todo{Reference Biggi's analysis and ruleset}. Furthermore, Primarchs support no notion of class procedures, explicit instantiation or structural extendability. Any seed cannot change the first-level membership structure of its parent (it cannot add new members to the immediate structure, only modify existing members). Finally, \langname{} does not support variables of any form. Any additions to a declaration happens by name of the type and nothing else. Note, however, that this is by no means a singleton pattern approach. While members of a Primarch are referenced by their type name, not an arbitrary variable, the code does not reference a static class, rather a nameless instance bound to the Primarch in question. The following is a list of the Primarchs inheritable within \langname{} files:
+
+\subsubsection{Character}
+Defines any individual participant in the battle scenario. These are the root containers or associative centers for all other classes. While the Character primarch references the character's definition, it relies on the definitions of contained seeds of other primarchs to actually define it.
+
+\subsubsection{Behaviour}
+Details how a character's attributes and resources should be weighed according to each other as well as those of other characters. These weights define the character AI's "Piggy" value when calculating most beneficial actions mid-game. This forms half of the exposed mechanisms for modifying AI logic in \langname{}, the other half being Events. 
+
+\subsubsection{Ability} 
+Key to describing a character's set of possible actions. Any action taken by a character will be described by an ability, from swinging a sword to weaving intricate spells and drinking potions. A seed of Ability defines the name, cost, possible targets and associated Effects of the ability. For example, swinging the sword may be accompanied by a PhysicalDamage Effect that defines how the ability will affect the game state.
+
+\subsubsection{Event}
+Events are largely analogous to the signaling features of many other languages (see events in C\#, Java, $C++$ and others) in that they are logic structures that register themselves to be notified when (or if) a particular state is reached. Once notified, the event reacts with appropriate action. In \langname{}, Event primarchs are as declarative as any other primarch, and thus follows a very strict mechanic. Each Event defines a trigger for the event (known as a signal in the observer pattern) as well as an optional set of conditions that must hold for the event to follow through (for example, a Warrior's Blood Rage might trigger when the character drops in health, but only if he drops below $20\%$). Finally, the Event assigns a set of Ability references that will be attempted in sequence on the Character's next turn. Thus the Event primarch is the reactive half of the exposed mechanisms for defining AI behaviour (the other being Behaviour).
+
+\noindent The following is a list of Primarchs are referenced (and initialised) within other Primarchs, but must be defined within the external ruleset (see \vref{ref_external_rulebook}).
+
+\subsubsection{Resource}
+For values that can vary within a range. The primary example of a resource is the notion of health for a character, described as HP (Health Points or Hit Points). A resource defines a base value, a current value as well as maximum and minimum boundaries. Typically, resources are used as basis for winning conditions (reducing an enemy's health below a minimum limit, killing him).
+
+\subsubsection{Attribute} 
+In contrast to a resource, an Attribute is a single numeral without boundaries. An attribute would typically be applied when describing the strength, dexterity, intelligence or other simply denoted value for a character. These values are not expected to fluctuate like Resources, although they are by no means constant.
+
+\subsubsection{Effect}
+Must be contained and associated to Abilities. Each defines the result of applying an Ability to a target by a Character. Effects are unique in the current design \todo{Delete if irrelevant} in that they are the only primarch with a trait akin to a class constructor.
+
+\noindent As described, primarchs have widely different uses, but are tightly connected to each other in order to discretely and precisely define the battle scenario by the programmer. They share no common ancestor, as they are each treated specially by the Batteru engine, revolving around the Character primarch. When a character's turn starts, the engine uses Behaviours associated with a Character to determine which of its known Abilities would result in the most beneficial game state. This is done by simulating the use of each Ability (applying the Ability's Effects) on every valid target and measuring the resulting Piggy value.
+
+\emph{make} is the mechanism by which a primarch or seed is further specialised from its previous purpose. This is roughly equatable to inheriting in traditional object-oriented languages. \emph{make PhysicalDamage from Effect} creates a new Effect seed with all the defining features of Effect, while allowing the modification to the prior's definition.
