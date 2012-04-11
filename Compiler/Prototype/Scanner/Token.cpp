@@ -25,7 +25,7 @@ namespace lexer
     	bool next_newline = false;
 
     	if (this->type == SEMICOLON || this->type == LBRACE ||
-    			this->type == RBRACE)
+    			this->type == RBRACE || this->type == COMMENT)
     		next_newline = true;
 
     	if (this->type == LBRACE)
