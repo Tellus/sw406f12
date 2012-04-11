@@ -1,0 +1,90 @@
+\section{Language paradigms}
+Within computer programming, a \emph{paradigm} is a model or framework for problem solving. \citeauthor{paradigms1992} describe it thus:
+
+\begin{quote}
+A programming paradigm is a collection of conceptual patterns that together mold the design process and ultimately determine a program's structure.
+\end{quote}
+
+The granularity with which paradigms are defined varies somewhat between sources. While \citeauthor{paradigms1992} keeps to the understanding that a paradigm is a larger philosophy of solving problems computationally, other sources maintain that a paradigm can be considered on the level of techniques (\citeauthor{paradigms1978} on divide and conquer \cite{paradigms1978}). Within the context of this report, we constrain ourselves to the more abstract form as presented by \citeauthor{paradigms1992} in order to better represent the higher levels of paradigms. The point of the discussion is to present an overview of the major paradigms, their main points of interest and perceived strengths/weaknesses of each. The discussion of paradigms is important, as choosing a proper paradigm (or set of paradigms) is key in considering how the target users should work with the designed language.
+
+\citep{paradigms1992} put the paradigms into three categories: \emph{operational} (where programs are described as step-by-step procedures), \emph{demonstrational} (a higher-level abstraction where an example is shown and the compiler must derive a procedure from it) and \emph{definitional} (solution properties are described, but the method of solving it is not). The demonstrational paradigms lie beyond the scope of this project owing to its "code-by-example" approach, going close to (or within) the domain of graphical programming. It will not be further discussed.
+
+\subsection{Operational versus Definitional}
+To more easily narrow down the field of optimal paradigms, first consider the two overarching categories of the operational and the definitional paradigms.
+
+In solving problems, the operational paradigms focus on specifying the solution method in sequencial steps. The granularity and focus of this approach is beneficial as solutions can be specified very precisely and the corresponding result sets are at the very least clear. However, it also demands a certain degree of familiarity with mathematical and algorithmic approaches to defining solutions, two disciplines not often found outside of programming. A necessary effect of this is the strict sequencing of steps, each one creating a new data state.
+
+In contrast, the definitional paradigms focuses on constraining the solution set. As stated by \citep{paradigms1992}:
+
+\begin{quote}
+In definitional paradigms, a program is constructed by stating facts, rules, constraints, equations, transformations, or other properties about the solution value set.
+\end{quote}
+
+The programmer is no longer required to specify \emph{how} to reach a solution, only what a correct solution should look like. This can, in principle, alleviate some of the more complex aspects of programming tasks, making the language notably easier for beginners, hobby programmers or non-programmers. Moving from this assumption, we move our focus to the definitional paradigms.
+
+\subsubsection*{Functional}
+The functional paradigms focuses on the serial application of functions to reach a desired solution. The basic approach can be likened to mathematical function definitions. For example, the mathematical function
+
+\[
+f(x) =
+\begin{cases} \frac{x+3}{12} & x \texttt{ mod } 3 = 0 \texttt{ and } x \geq 9
+\\
+\frac{x}{12} & x = 12
+\\
+(x * 4)^2 & \sqrt{x} = 3
+\end{cases}
+\]
+
+Where the computation of the function is based on conditions related to the function argument. A similarly structured approach in a functional (pseudo) language could look like so (recall that $\sqrt[2]{x} = 3 \Leftrightarrow x = 3^2$):
+
+\begin{lstlisting}
+// The function f as defined equivalently above.
+func f(X)
+	:= (X+3)/12 if (X % 3 == 0 and x >= 9)
+	:= x/12 if (X == 12)
+	:= pow(x*4,2) if (x == pow(3,2))
+
+// Function calculate power of a number.
+func pow(I,P)
+	:= I*pow(I-1,P) if P > 0
+	:= I if P=0
+\end{lstlisting}
+
+There are several features of note in this approach. First of all, the deeply ingrained conditionals. A particular computation (in this case, a line of code) is performed only if certain conditions hold. Flow control (or line ordering) is a second feature (or lack of the same) to note. The functional paradigm can be applied in such a way so the order of conditions in a function are of no consequence. Indeed, this can be seen in the implementation of the $pow$ function. In an imperative recursive implementation of $pow$, the conditional check for $P==0$ must come before the recursive step as each line is evaluated downwards. This does not need to be the case for the functional approach. During evaluation, each line's conditions are checked. How and when branching is performed varies between implementations. Some short circuit (first match, if any), others with either most conditions met or most percentage of conditions met. The printed example assumes the latter. In all cases, a mechanism for defaults must be supplied as well. One approach is to use the last line if nothing holds. This would be considered an operational - imperative - approach, somewhat contrary to definitional dogma. Another would explicitly specify the default case.
+
+The particular strength of the functional paradigms is the release from control flows and program states (note the lack of any intermediate or long-term variables) while attempting to adhere to mathematical principles for function definitions. It is left to the programmers of the compiler or interpreter to derive the proper execution order and result set. There remains, however, a need for the user of the language to understand fundamental discrete mathematics in order to properly apply the paradigm to a problem.
+
+\subsubsection*{Transformational}
+Transformational paradigms define a problem solution by a series of transformations. For example, the input $17$ might be transformed to $108$ through the transformations $17 \rightarrow 119 \rightarrow 108$ (using $17 * 7 = 119$ and $119 - 11 = 108$). A program is specified by a number of \emph{gourds} (conditions) and \emph{actions} (transformations) that define the possible transitions the input may go through. In this sense it has similarities with the functional paradigm. The difference, however, lies in how the transformations are applied. Where the functional paradigm leaves it to the programmer to specify which functions should be used, the transformational expects the system to identify which transformation to apply at any given point. In this manner, the system will transform the input until no guard will match it. At this point, the result is returned.
+
+\subsubsection*{Logic}
+The logic programming paradigm makes use of Horn clauses to describe predicates and the facts that must hold true for the predicate to do so as well. Horn clauses are beyond the scope of this report, but for context a brief example is in order. using notation of boolean algebra, a horn clause could be written as 
+
+\[
+(c_1, c_2, \cdots , c_n) \rightarrow f
+\]
+
+should be read as ''if the conditions $c_1$ to $c_n$ all hold true, then fact $f$ must also hold true''. A program written in the logic programming style is comprised solely of clauses like this. The programmer must define sufficient facts (and a goal to be reached), and the compiler must be able to deduce the correct resolution of facts to reach this goal. The set of possible combinations that must be tested to find the solution very quickly becomes so large that algorithms used for solving the problem must be heavily optimised, and even small changes to the ordering of facts can markedly affect the performance of the program. While several algorithms with acceptable running times have been designed, it still remains a challenge for the programmer not only to supply sufficient facts to deduce a solution, but also in a manner that is not counter-productive to the overall running time of the programmer. While the latter can be argued to be a staple of any programming paradigm, none would have as great an impact as in the logic programming paradigm.
+
+\subsubsection*{Form-based}
+Perhaps one of the simplest examples of the form-based paradigm in use is a spreadsheet application such as Microsoft Office or LibreOffice Spreadsheet. Computations are specified via equations, and can entirely avoid explicitly defining a control sequence by virtue of their interdependence. An equation must be computable independently of its result (that is, circular references are not allowed). Any formula $x = f(y_1, y_2, \cdots , y_n)$ therefore requires that all $y_i$ be computable independently from $x$.
+
+This paradigm's strong point is the form in which programming is done. It is analogous to filling out regular forms (tax forms, applications - even character sheets) and should come naturally to many users - as a consequence, the roles of programmer and user become very close entwined.
+
+\subsubsection*{Dataflow}
+The dataflow paradigm regards input as a flowing stream of data, passed through nodes in a network that apply a formula to the data. The sequence is determined by the programmer as it is with the functional paradigm, but the dataflow philosophy is very well suited for parallel processing of data. Several streams of data may flow through nodes, and their paths may be independent before or after they pass the node. At those points, individual threads could handle each stream through other nodes until they converge. Conversely, each node could be handled by an individual thread, awakened whenever sufficient streams had entered the node for processing, and sent back to sleep when not needed.
+
+\subsubsection*{Constraint programming}
+This paradigm might best be described as the programmer's equivalent to an equation solver. The intention is for the programmer to sufficiently \emph{constrain} the solution's value set. This does not mean to simply write out formula for the system to evaluate given certain input, but to instruct the system as to how the formula remains valid. Consider an equation
+
+\[
+y = x^3 + 12c
+\]
+
+In the case of form-based, functional or dataflow paradigms, one would expect that $y$ could be computed once appropriate values $x$ and $c$ have been input. Constraint programming, however, should support finding any variable once enough of the other variables have bene passed. Consequently, the equation
+
+\[
+\sqrt[3]{y - 12c} = x
+\]
+
+is programmatically equivalent. The system must be able to derive these equations and computational possibilities on its own, without the programmer (assuming the programmer properly constrained the problem).
