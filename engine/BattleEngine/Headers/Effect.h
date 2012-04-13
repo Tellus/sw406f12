@@ -8,6 +8,8 @@
 #ifndef EFFECT_H_
 #define EFFECT_H_
 
+#include "Character.h"
+
 namespace engine {
 
 class Effect {

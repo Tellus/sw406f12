@@ -8,6 +8,9 @@
 #ifndef ABILITYTABLE_H_
 #define ABILITYTABLE_H_
 
+#include "Character.h"
+#include "Action.h"
+
 namespace engine {
 
 class AbilityTable {

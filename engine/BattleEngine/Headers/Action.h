@@ -8,6 +8,8 @@
 #ifndef ACTION_H_
 #define ACTION_H_
 
+#include "Effect.h"
+
 namespace engine {
 
 class Action {

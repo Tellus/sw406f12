@@ -8,6 +8,8 @@
 #ifndef ABILITY_H_
 #define ABILITY_H_
 
+#include "EffectDefinition.h"
+
 namespace engine {
 
 class Ability {

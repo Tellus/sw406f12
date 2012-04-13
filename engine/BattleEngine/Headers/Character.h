@@ -8,6 +8,11 @@
 #ifndef CHARACTER_H_
 #define CHARACTER_H_
 
+#include "Attribute.h"
+#include "Ability.h"
+#include "ContinouosEffect.h"
+#include "Resource.h"
+
 namespace engine {
 
 class Character {

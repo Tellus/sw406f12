@@ -8,6 +8,10 @@
 #ifndef GAMESTATE_H_
 #define GAMESTATE_H_
 
+#include "Character.h"
+#include "Behaviour.h"
+#include "AbilityTable.h"
+
 namespace engine {
 
 class GameState {
