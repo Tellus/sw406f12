@@ -7,15 +7,34 @@
 
 #include "Attribute.h"
 
-namespace engine {
+namespace engine
+{
 
-Attribute::Attribute() {
-	// TODO Auto-generated constructor stub
-
+void Attribute::modify(int amount)
+{
+	this->current += amount;
 }
 
-Attribute::~Attribute() {
-	// TODO Auto-generated destructor stub
+void Attribute::reset()
+{
+	this->current = this->initial;
+}
+
+Attribute::Attribute(int value)
+{
+	this->current = value;
+	this->initial = value;
+}
+
+Attribute::Attribute(Attribute *copy)
+{
+	this->current = copy->current;
+	this->initial = copy->initial;
+}
+
+Attribute::~Attribute()
+{
+	// Nothing to clean...
 }
 
 } /* namespace engine */
