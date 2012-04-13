@@ -16,10 +16,18 @@ namespace lexer
     {
         do
         {
-            if(this->first == NULL)
-                this->last = this->first = this->make_token();
-            else
-                this->last = this->last->append(this->make_token());
+        	Token *token;
+        	do
+        	{
+        		token = this->make_token();
+        	}
+        	while (token->type == COMMENT);
+
+			if(this->first == NULL)
+				this->last = this->first = token;
+			else
+				this->last = this->last->append(token);
+
         }
         while (this->last->type != $);
 
