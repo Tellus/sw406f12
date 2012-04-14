@@ -19,7 +19,6 @@ protected:
 public:
 	Attribute();
 	virtual ~Attribute();
-<<<<<<< HEAD
 
     Attribute(float start);
 
@@ -48,8 +47,6 @@ public:
 	 * \param amount Amount to change the current value by.
 	 **/
 	void virtual change(float amount);
-=======
->>>>>>> parent of 8a31347... Created Attributes and resources
 };
 
 } /* namespace engine */

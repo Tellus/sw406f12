@@ -12,7 +12,6 @@
 
 namespace engine {
 
-<<<<<<< HEAD
 class Resource:public engine::Attribute {
 protected:
     /**
@@ -25,9 +24,6 @@ protected:
      **/
     float maximum;
 
-=======
-class Resource: public engine::Attribute {
->>>>>>> parent of 8a31347... Created Attributes and resources
 public:
 	Resource();
 	virtual ~Resource();
