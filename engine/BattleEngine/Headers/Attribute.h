@@ -17,7 +17,15 @@ protected:
 	float current;
 
 public:
-	Attribute();
+	int current, initial;
+
+	/* Modifies current on Attribute, modifies maximum on Resource */
+	virtual void modify(int amount);
+	/* Resets current on Attribute, boundaries on Resource */
+	virtual void reset();
+
+	Attribute(int value);
+	Attribute(Attribute *copy);
 	virtual ~Attribute();
 
     Attribute(float start);
