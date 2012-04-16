@@ -11,8 +11,8 @@ namespace engine {
 
 Ability::Ability()
 {
-    this->effect_defs = std::vector<engine::EffectDefinition>();
-    this->legal_targets = std::vector<engine::RGR_Enum>();
+    this->effects = std::vector<engine::EffectDefinition*>();
+    this->targets = std::vector<engine::RGR_Enum>();
     this->cost_health = this->cost_mana = 0;
 }
 
@@ -30,7 +30,30 @@ Ability::~Ability()
 
 void Ability::add_target(engine::RGR_Enum tar)
 {
-    this->legal_targets.push_back(tar);
+    // OR'ing it several times has no effect. No existance check is needed.
+    this->targets |= tar;
+}
+
+void Ability::remove_target(engine::RGR_Enum tar)
+{
+    // XOR will only remove it if it already exists, so we check existance.
+    if (this->has_target(tar)) this->targets ^= tar;
+    else return;
+}
+
+bool Ability::has_target(engine::RGR_Enum tar)
+{
+    return ((this->targets & tar) == tar);
+}
+
+void Ability::toggle_target(engine::RGR_Enum tar)
+{
+    this->targets ^= tar;
+}
+
+void Ability::set_targets(int tar)
+{
+    this->targets = tar;
 }
 
 } /* namespace engine */

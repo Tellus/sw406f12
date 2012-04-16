@@ -14,15 +14,11 @@ namespace engine {
 
 class Attribute {
 protected:
-	float current;
+	float current, initial;
 
 public:
-	int current, initial;
-
 	/* Modifies current on Attribute, modifies maximum on Resource */
 	virtual void modify(int amount);
-	/* Resets current on Attribute, boundaries on Resource */
-	virtual void reset();
 
 	Attribute(int value);
 	Attribute(Attribute *copy);
@@ -30,7 +26,6 @@ public:
 
     Attribute(float start);
 
-	float initial;
 	std::string pretty_name;
 
 	/**
@@ -48,7 +43,7 @@ public:
 	/**
 	 * Resets the current value to the initial value.
 	 **/
-	void reset();
+	virtual void reset();
 	
 	/**
 	 * Makes a relative change to the current value.

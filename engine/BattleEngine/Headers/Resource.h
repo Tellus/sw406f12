@@ -26,9 +26,9 @@ protected:
      **/
     float maximum;
 
-public:
-	int maximum, minimum, initial_minimum;
+    float initial_minimum;
 
+public:
 	void deplete(int amount);
 	void regain(int amount);
 	void modify_minimum(int amount);
