@@ -29,9 +29,6 @@ public:
 	virtual ~Ability();
 	
 	float cost_health, cost_mana;
-	
-protected:
-    void add_target(engine::RGR_Enum tar);
 };
 
 } /* namespace engine */
