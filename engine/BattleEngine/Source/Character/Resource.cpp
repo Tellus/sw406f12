@@ -56,11 +56,6 @@ Resource::Resource(Resource *copy) : Attribute(0)
 	this->initial_minimum = copy->initial_minimum;
 }
 
-Resource::Resource()
-{
-	// TODO Auto-generated constructor stub
-}
-
 Resource::Resource(float min, float max, float initial) : Attribute(initial)
 {
     this->modify_min(min);

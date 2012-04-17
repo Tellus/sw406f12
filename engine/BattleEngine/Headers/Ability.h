@@ -9,6 +9,7 @@
 #define ABILITY_H_
 
 #include "EffectDefinition.h"
+#include "Effect.h"
 #include "RGR_Enum.h"
 #include "vector"
 
@@ -19,7 +20,7 @@ namespace engine {
 class Ability
 {
 public:
-	std::vector<EffectDefinition<Effect>*> effects;
+	std::vector<EffectDefinition<Effect>> effects;
 //	std::vector<RGR_Enum> targets;
 
 	Ability();
@@ -57,10 +58,16 @@ public:
     
     /**
      * Set a completely new target mask.
-     * \param tars New mask. Use a bitwise set of RGR_Enums to set easily.
+     * \param tars New target (singular). Consider using set_targets(int).
      **/
     void set_targets(RGR_Enum tars);
-    
+	
+	/**
+	 * Set a completely new target mask.
+	 * \param tars New mask.
+	 **/
+	void set_targets(int tars);
+	
 private:
     /**
      * Mask of targest allowed. Since we use an enum to pass valid targets, we

@@ -11,8 +11,10 @@ namespace engine {
 
 Ability::Ability()
 {
-    this->effects = std::vector<engine::EffectDefinition*>();
-    this->targets = std::vector<engine::RGR_Enum>();
+	// Note you'll probably mess things up if you don't use non-abstract
+	// objects during new EffDeff additions.
+    this->effects = std::vector<engine::EffectDefinition<Effect>>();
+    this->targets = 0;
     this->cost_health = this->cost_mana = 0;
 }
 
@@ -52,6 +54,11 @@ void Ability::toggle_target(engine::RGR_Enum tar)
 }
 
 void Ability::set_targets(int tar)
+{
+    this->targets = tar;
+}
+
+void Ability::set_targets(RGR_Enum tar)
 {
     this->targets = tar;
 }

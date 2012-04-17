@@ -8,6 +8,9 @@
 #ifndef ACTION_H_
 #define ACTION_H_
 
+#include "Ability.h"
+#include "RGR_Enum.h"
+#include "EffectDefinition.h"
 #include "Effect.h"
 
 namespace engine {

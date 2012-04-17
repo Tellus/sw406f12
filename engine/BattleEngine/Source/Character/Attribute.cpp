@@ -15,11 +15,6 @@ void Attribute::modify(int amount)
 	this->current += amount;
 }
 
-void Attribute::reset()
-{
-	this->current = this->initial;
-}
-
 Attribute::Attribute(int value)
 {
 	this->current = value;

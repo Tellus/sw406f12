@@ -9,10 +9,12 @@
 #define EFFECT_H_
 
 class Character;
+// #include "Character.h"
 
 namespace engine {
 
-class Effect {
+class Effect
+{
 public:
 	Effect();
 	virtual ~Effect();

@@ -17,16 +17,19 @@ protected:
 	float current, initial;
 
 public:
-	/* Modifies current on Attribute, modifies maximum on Resource */
-	virtual void modify(int amount);
-
+	Attribute();
 	Attribute(int value);
+	Attribute(float start);
 	Attribute(Attribute *copy);
 	virtual ~Attribute();
 
-    Attribute(float start);
-
 	std::string pretty_name;
+	
+	/**
+	 * Modifies the current value of the Attribute. Modifies the maximum on
+	 * Resources (... *WHAT*?!).
+	 */
+	virtual void modify(int amount);
 
 	/**
 	 * Increase the current value of the attribute... duh.

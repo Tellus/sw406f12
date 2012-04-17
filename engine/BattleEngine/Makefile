@@ -10,22 +10,28 @@ SOURCES= Source/Character/Ability.cpp Source/Character/Attribute.cpp Source/Char
 # Object versions of sources.
 OBJECTS=$(SOURCES:.cpp=.o)
 
+OBJ_DIR=obj
+
 EXECUTABLE=engine
 
 # Extension
 EXT=
 
-all: $(SOURCES) $(EXECUTABLE)
+all: init $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(INCS) $(LIB) $(OBJECTS) -o $@
+
+init:
+	if test ! -d $(OBJ_DIR); then mkdir $(OBJ_DIR); fi
 	
 clean:
-	rm -rf *.o
+	rm -rf $(OBJ_DIR)/*.o
 	if test -f $(EXECUTABLE)$(EXT); then rm $(EXECUTABLE)$(EXT); fi
+	if test -d $(OBJ_DIR); then rm -r $(OBJ_DIR); fi
 	
 .cpp.o:
-	$(CC) $(FLAGS) $(INCS) $(LIB) $< -o $@
+	$(CC) $(FLAGS) $(INCS) $(LIB) $< -o $(OBJ_DIR)/$(@F)
 	
 dev: all
 	./$(EXECUTABLE)$(EXT)
