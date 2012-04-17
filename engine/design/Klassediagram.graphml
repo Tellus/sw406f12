@@ -191,7 +191,7 @@ modify_max()</y:MethodLabel>
       <data key="d5"><![CDATA[UMLClass]]></data>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="28.0" width="100.0" x="-1226.5589743589744" y="-1612.6096153846154"/>
+          <y:Geometry height="28.0" width="100.0" x="-1244.1128205128205" y="-1763.6102564102566"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.92626953125" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="67.57177734375" x="16.214111328125" y="3.0">Behaviour</y:NodeLabel>
@@ -218,21 +218,7 @@ modify_max()</y:MethodLabel>
         </y:UMLClassNode>
       </data>
     </node>
-    <edge id="e0" source="n11" target="n10">
-      <data key="d8"/>
-      <data key="d9"><![CDATA[UMLreferences]]></data>
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="white_diamond"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="six_pos" modelPosition="shead" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="10.673828125" x="-20.80079564803691" y="-20.70116811899038">1</y:EdgeLabel>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="six_pos" modelPosition="thead" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="10.673828125" x="-73.87696752303691" y="-20.70116811899038">1</y:EdgeLabel>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="e1" source="n11" target="n5">
+    <edge id="e0" source="n11" target="n5">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLreferences]]></data>
       <data key="d10">
@@ -248,7 +234,7 @@ modify_max()</y:MethodLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e2" source="n11" target="n7">
+    <edge id="e1" source="n11" target="n7">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLreferences]]></data>
       <data key="d10">
@@ -263,7 +249,7 @@ modify_max()</y:MethodLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e3" source="n11" target="n8">
+    <edge id="e2" source="n11" target="n8">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLreferences]]></data>
       <data key="d10">
@@ -278,22 +264,23 @@ modify_max()</y:MethodLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e4" source="n11" target="n9">
+    <edge id="e3" source="n11" target="n9">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLreferences]]></data>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="-992.5589743589743" y="-1393.896153846154"/>
+            <y:Point x="-992.5589743589743" y="-1396.2"/>
+            <y:Point x="-992.5589743589743" y="-1379.896153846154"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="white_diamond"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="six_pos" modelPosition="thead" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="22.01171875" x="63.686343775040086" y="151.49294683003723">0..*</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="six_pos" modelPosition="thead" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="22.01171875" x="63.686343775040086" y="159.3193002554085">0..*</y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e5" source="n11" target="n4">
+    <edge id="e4" source="n11" target="n4">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLreferences]]></data>
       <data key="d10">
@@ -308,23 +295,23 @@ modify_max()</y:MethodLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e6" source="n9" target="n8">
+    <edge id="e5" source="n9" target="n8">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLinherits]]></data>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="-750.5589743589743" y="-1393.896153846154"/>
+            <y:Point x="-750.5589743589743" y="-1379.896153846154"/>
             <y:Point x="-749.5589743589743" y="-1227.8807692307694"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="48.67511861573041" y="74.2879300631007"/>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="48.676228102564096" y="74.0076566256007"/>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e7" source="n7" target="n6">
+    <edge id="e6" source="n7" target="n6">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLreferences]]></data>
       <data key="d10">
@@ -338,7 +325,7 @@ modify_max()</y:MethodLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e8" source="n3" target="n3">
+    <edge id="e7" source="n3" target="n3">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLreferences]]></data>
       <data key="d10">
@@ -356,7 +343,7 @@ modify_max()</y:MethodLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e9" source="n3" target="n11">
+    <edge id="e8" source="n3" target="n11">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLreferences]]></data>
       <data key="d10">
@@ -370,7 +357,7 @@ modify_max()</y:MethodLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e10" source="n3" target="n2">
+    <edge id="e9" source="n3" target="n2">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLreferences]]></data>
       <data key="d10">
@@ -383,7 +370,7 @@ modify_max()</y:MethodLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e11" source="n2" target="n7">
+    <edge id="e10" source="n2" target="n7">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLuses]]></data>
       <data key="d10">
@@ -395,7 +382,7 @@ modify_max()</y:MethodLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e12" source="n2" target="n1">
+    <edge id="e11" source="n2" target="n1">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLuses]]></data>
       <data key="d10">
@@ -409,7 +396,7 @@ modify_max()</y:MethodLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e13" source="n1" target="n0">
+    <edge id="e12" source="n1" target="n0">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLreferences]]></data>
       <data key="d10">
@@ -423,24 +410,24 @@ modify_max()</y:MethodLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e14" source="n0" target="n11">
+    <edge id="e13" source="n0" target="n11">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLuses]]></data>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
             <y:Point x="-532.5589743589743" y="-1809.6102564102566"/>
-            <y:Point x="-1058.5589743589744" y="-1809.6102564102566"/>
-            <y:Point x="-1058.5589743589744" y="-1687.6102564102566"/>
+            <y:Point x="-1089.9051282051282" y="-1809.6102564102566"/>
+            <y:Point x="-1089.9051282051282" y="-1687.6102564102566"/>
           </y:Path>
           <y:LineStyle color="#000000" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="-265.0000143980369" y="-172.99123785556912"/>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="-280.6730913211138" y="-172.99123785556912"/>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e15" source="n2" target="n11">
+    <edge id="e14" source="n2" target="n11">
       <data key="d8"/>
       <data key="d9"><![CDATA[UMLuses]]></data>
       <data key="d10">
@@ -449,6 +436,35 @@ modify_max()</y:MethodLabel>
           <y:LineStyle color="#000000" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="short"/>
           <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="-24.891637557592162" y="13.679718200000707"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e15" source="n3" target="n10">
+      <data key="d8"/>
+      <data key="d9"><![CDATA[UMLreferences]]></data>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="white_diamond"/>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="six_pos" modelPosition="thead" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="22.01171875" x="-91.38479316907046" y="-20.701198793069125">0..*</y:EdgeLabel>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" modelName="six_pos" modelPosition="stail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="10.673828125" x="-20.75477514022441" y="1.9999730819308752">1</y:EdgeLabel>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e16" source="n10" target="n11">
+      <data key="d8"/>
+      <data key="d9"><![CDATA[UMLuses]]></data>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
+            <y:Point x="-1194.1128205128205" y="-1598.6096153846154"/>
+          </y:Path>
+          <y:LineStyle color="#000000" type="dashed" width="1.0"/>
+          <y:Arrows source="none" target="short"/>
+          <y:EdgeLabel alignment="center" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="six_pos" modelPosition="tail" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" visible="true" width="4.0" x="69.21439553285245" y="139.02869027944712"/>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
