@@ -1,20 +1,20 @@
 /*
- * ContinouosEffect.h
+ * ContEffect.h
  *
  *  Created on: 13/04/2012
  *      Author: Ezphares
  */
 
-#ifndef CONTINOUOSEFFECT_H_
-#define CONTINOUOSEFFECT_H_
+#ifndef CONTEFFECT_H_
+#define CONTEFFECT_H_
 
 namespace engine {
 
-class ContinouosEffect {
+class ContEffect {
 public:
-	ContinouosEffect();
-	virtual ~ContinouosEffect();
+	ContEffect();
+	virtual ~ContEffect();
 };
 
 } /* namespace engine */
-#endif /* CONTINOUOSEFFECT_H_ */
+#endif /* CONTEFFECT_H_ */

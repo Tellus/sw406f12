@@ -10,7 +10,7 @@
 
 #include "Attribute.h"
 #include "Ability.h"
-#include "ContinouosEffect.h"
+#include "ContEffect.h"
 #include "Resource.h"
 
 #include <string>
@@ -26,7 +26,7 @@ protected:
 public:
 	std::map<std::string, Attribute*> attributes;
 	std::map<std::string, Resource*> resources;
-	std::list<ContinouosEffect*> continuoos_effects;
+	std::list<ContEffect*> continuoos_effects;
 	std::list<Ability*> abilities;
 
 	void add_attribute(std::string name, Attribute *attribute);

@@ -1,20 +1,20 @@
 /*
- * ContinouosEffect.cpp
+ * ContEffect.cpp
  *
  *  Created on: 13/04/2012
  *      Author: Ezphares
  */
 
-#include "ContinouosEffect.h"
+#include "ContEffect.h"
 
 namespace engine {
 
-ContinouosEffect::ContinouosEffect() {
+ContEffect::ContEffect() {
 	// TODO Auto-generated constructor stub
 
 }
 
-ContinouosEffect::~ContinouosEffect() {
+ContEffect::~ContEffect() {
 	// TODO Auto-generated destructor stub
 }
 
