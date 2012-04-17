@@ -1,6 +1,47 @@
+
+/*
+I like orcs!
+*/
+
+make Orc from Character
+{
+    name: "Hello Kitty";
+
+    strength: 10;
+    dexterity: 5;
+    
+    abilites: [Attack,
+                Heal,
+                Fire];
+    behaviours: Smart;
+    
+    events +: [ForceHeal];
+}
+
+make Smart from Behaviour
+{
+    positive: [[owner.health, 100],
+               [owner.mana ,10]];
+}
+
+make Heal from Ability
+{
+    costs: [[mana, 10]];
+    targets: [self, ally];
+    effects: [MagicHeal(target, 20)];
+}
+
+make ForceHeal from Event
+{
+    triggers: [owner.health.decrease];
+    conditions: [owner.health <= 10];
+    actions: [Heal(owner)];
+}
+
+
 /*
  I like orcs!
-*/
+
 make Orc from Character
 {
 	name: "Hello Kitty";
@@ -33,3 +74,4 @@ make ForceHeal from Event
 	conditions: [owner.health <= 10];
 	actions: [Heal(owner)];
 }
+*/

@@ -10,6 +10,7 @@
 
 #include <list>
 #include <string>
+#include <iostream>
 
 enum ast_type {NONE, NODE_PROG, NODE_DECLARATION,
 	NODE_SUPERCLASS, NODE_SUBCLASS, NODE_ASSIGNMENT_LIST,
@@ -34,6 +35,8 @@ public:
 	string data;
 
 	void add_child(ASTNode *child);
+	void print_node(int indent = 0);
+	string ntype(ast_type type);
 
 	ASTNode(ast_type type, string data = "");
 	virtual ~ASTNode();

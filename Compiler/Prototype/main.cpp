@@ -15,6 +15,8 @@ using namespace lexer;
 using namespace std;
 using namespace parser;
 
+void TreePrint(ASTNode *node);
+
 int main (int argc, char* argv[])
 {
 	vector<string> files;
@@ -99,6 +101,8 @@ int main (int argc, char* argv[])
 	delete tokens;
 
 	// TODO: Semantics
+
+	ast->print_node();
 
 	delete ast;
 
