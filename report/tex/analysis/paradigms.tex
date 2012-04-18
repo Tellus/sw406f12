@@ -5,25 +5,28 @@ Within computer programming, a \emph{paradigm} is a model or framework for probl
 A programming paradigm is a collection of conceptual patterns that together mold the design process and ultimately determine a program's structure.
 \end{quote}
 
-The granularity with which paradigms are defined varies somewhat between sources. While \citeauthor{paradigms1992} keeps to the understanding that a paradigm is a larger philosophy of solving problems computationally, other sources maintain that a paradigm can be considered on the level of techniques (\citeauthor{paradigms1978} on divide and conquer \cite{paradigms1978}). Within the context of this report, we constrain ourselves to the more abstract form as presented by \citeauthor{paradigms1992} in order to better represent the higher levels of paradigms. The point of the discussion is to present an overview of the major paradigms, their main points of interest and perceived strengths/weaknesses of each. The discussion of paradigms is important, as choosing a proper paradigm (or set of paradigms) is key in considering how the target users should work with the designed language.
+The granularity with which paradigms are defined varies somewhat between sources. While \citeauthor{paradigms1992} keeps to the understanding that a paradigm is a larger philosophy of solving problems computationally, other sources maintain that a paradigm can be considered on the level of techniques (\citeauthor{paradigms1978} on divide and conquer \cite{paradigms1978}). Within the context of this report, we constrain ourselves to the more abstract form as presented by the former in order to better represent the higher levels of paradigms. The point of the discussion is to present an overview of the major paradigms, their main points of interest and perceived strengths/weaknesses of each. Following the convention of authors of both articles, we shall refer to a language that allows a paradigm to be used fully as a language that \emph{supports} the paradigm.
 
-\citep{paradigms1992} put the paradigms into three categories: \emph{operational} (where programs are described as step-by-step procedures), \emph{demonstrational} (a higher-level abstraction where an example is shown and the compiler must derive a procedure from it) and \emph{definitional} (solution properties are described, but the method of solving it is not). The demonstrational paradigms lie beyond the scope of this project owing to its "code-by-example" approach, going close to (or within) the domain of graphical programming. It will not be further discussed.
+The discussion of paradigms is is key in considering how the target users are intended work with the designed language. By far most modern languages today do not constrain themselves to a single paradigm, instead supporting a variety of different approaches to better fit with the overall design of the language and its uses. As examples, $C++$ supports procedural, functional, object-oriented and generic paradigms, while $SQL$ supports both definitional (in the general sense) and procedural approaches. In considering the target audience of the language, we must determine the paradigms that would ease their work while remaining effective. The remainder of this section describes the three major categories of paradigms with brief examples of underlying paradigms.
 
-\subsection{Operational versus Definitional}
-To more easily narrow down the field of optimal paradigms, first consider the two overarching categories of the operational and the definitional paradigms.
+\subsection{Operational}
+In solving problems, the operational paradigms focus on specifying the solution method in sequencial steps. The granularity and focus of this approach is beneficial as solutions can be specified very precisely and the corresponding result sets are at the very least clear. However, it also demands a certain degree of familiarity with mathematical and algorithmic approaches to defining solutions, two disciplines not often found outside of programming. A necessary effect of this is the strict explicit sequencing of steps.
 
-In solving problems, the operational paradigms focus on specifying the solution method in sequencial steps. The granularity and focus of this approach is beneficial as solutions can be specified very precisely and the corresponding result sets are at the very least clear. However, it also demands a certain degree of familiarity with mathematical and algorithmic approaches to defining solutions, two disciplines not often found outside of programming. A necessary effect of this is the strict sequencing of steps, each one creating a new data state.
+\paragraph*{A note on side-effecting}
+The operational paradigms are further divided between two views of data: those that modify existing data repeatedly, and those that create new data continuously. The former is called side-effecting.
 
-In contrast, the definitional paradigms focuses on constraining the solution set. As stated by \citep{paradigms1992}:
+\subsubsection*{Imperative}
+The imperative paradigm is perhaps the one most naturally mapped to the actual architecture of modern computer systems. In it, an abstract storage model of the computer system is utilised to modify the data state in discrete steps until it reflects the desired solution to a given problem. A pure imperative language would allow only atomic changes to the data with simple instructions, shedding any notion of procedures or complex data structures.
 
-\begin{quote}
-In definitional paradigms, a program is constructed by stating facts, rules, constraints, equations, transformations, or other properties about the solution value set.
-\end{quote}
+The procedural paradigm is considered an extension of the imperative paradigm, introduction procedures and blocks to clarify code and encourage code reuse, reducing redundant re-typing of similar collections of instructions.
 
-The programmer is no longer required to specify \emph{how} to reach a solution, only what a correct solution should look like. This can, in principle, alleviate some of the more complex aspects of programming tasks, making the language notably easier for beginners, hobby programmers or non-programmers. Moving from this assumption, we move our focus to the definitional paradigms.
+\subsubsection*{Object-oriented}
+This paradigm expands on the store model of the imperative paradigm. Instead of repeatedly modifying the store, the paradigm focuses on altering the state of composite structures - objects - through their embedded procedures; methods. The abstraction allows for a more detailed view of the problem set being modeled, as it can be divided into individual segments, each communicating with the others while being responsible for their own internal state.
+
+The paradigm further enhances the concept by generalising objects into classifications (classes) that define the common structure of a set of objects. These generalisations can be further expanded and specialised through inheritance, while specialised objects with a common ancestor can regard one another as objects of that ancestor (polymorphism).
 
 \subsubsection*{Functional}
-The functional paradigms focuses on the serial application of functions to reach a desired solution. The basic approach can be likened to mathematical function definitions. For example, the mathematical function
+The functional paradigm focuses on the serial application of functions to reach a desired solution. The basic approach can be likened to mathematical function definitions. For example, the mathematical function
 
 \[
 f(x) =
@@ -37,7 +40,7 @@ f(x) =
 
 Where the computation of the function is based on conditions related to the function argument. A similarly structured approach in a functional (pseudo) language could look like so (recall that $\sqrt[2]{x} = 3 \Leftrightarrow x = 3^2$):
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Pseudocode example in a functional style.},label={lst:paradigm_functional}]
 // The function f as defined equivalently above.
 func f(X)
 	:= (X+3)/12 if (X % 3 == 0 and x >= 9)
@@ -50,9 +53,23 @@ func pow(I,P)
 	:= I if P=0
 \end{lstlisting}
 
-There are several features of note in this approach. First of all, the deeply ingrained conditionals. A particular computation (in this case, a line of code) is performed only if certain conditions hold. Flow control (or line ordering) is a second feature (or lack of the same) to note. The functional paradigm can be applied in such a way so the order of conditions in a function are of no consequence. Indeed, this can be seen in the implementation of the $pow$ function. In an imperative recursive implementation of $pow$, the conditional check for $P==0$ must come before the recursive step as each line is evaluated downwards. This does not need to be the case for the functional approach. During evaluation, each line's conditions are checked. How and when branching is performed varies between implementations. Some short circuit (first match, if any), others with either most conditions met or most percentage of conditions met. The printed example assumes the latter. In all cases, a mechanism for defaults must be supplied as well. One approach is to use the last line if nothing holds. This would be considered an operational - imperative - approach, somewhat contrary to definitional dogma. Another would explicitly specify the default case.
+There are several features of note in this approach. First of all, the deeply ingrained conditionals. A particular computation (in this case, a line of code) is performed only if certain conditions hold. 
 
 The particular strength of the functional paradigms is the release from control flows and program states (note the lack of any intermediate or long-term variables) while attempting to adhere to mathematical principles for function definitions. It is left to the programmers of the compiler or interpreter to derive the proper execution order and result set. There remains, however, a need for the user of the language to understand fundamental discrete mathematics in order to properly apply the paradigm to a problem.
+
+\subsection{Definitional}
+The definitional paradigms focuses on constraining the solution set. As stated by \citep{paradigms1992}:
+
+\begin{quote}
+In definitional paradigms, a program is constructed by stating facts, rules, constraints, equations, transformations, or other properties about the solution value set.
+\end{quote}
+
+The programmer is no longer required to specify \emph{how} to reach a solution, only what a correct solution should look like. This can, in principle, alleviate some of the more complex aspects of programming tasks, making the language notably easier for beginners, hobby programmers or non-programmers. With from this assumption, we shift our attention only to the definitional paradigms.
+
+\subsubsection*{Functional}
+The function paradigm is placed found in operational and definitional variants. For all but an operational traits the two are equivalent.
+
+The purely definitional functional paradigm removes notions of side-effecting and control sequences and. The paradigm can be applied in such a way so the order of conditions in a function are of no consequence. Indeed, this can be seen in the implementation of the $pow$ function in the example \vref{lst:paradigm_functional}. In an imperative recursive implementation of $pow$, the conditional check for $P==0$ must come before the recursive step as each line is evaluated downwards. While an operational functional approach requires this ordering, a definitional does not. During evaluation, each line's conditions are checked. How and when branching is performed varies between implementations. Some short circuit (first match, if any), others with either most conditions met or most percentage of conditions met. The printed example assumes the latter. In all cases, a mechanism for defaults must be supplied as well. One approach is to use the last line if nothing holds. This would be considered an imperative approach, somewhat contrary to definitional dogma. Another method would explicitly specify the default case.
 
 \subsubsection*{Transformational}
 Transformational paradigms define a problem solution by a series of transformations. For example, the input $17$ might be transformed to $108$ through the transformations $17 \rightarrow 119 \rightarrow 108$ (using $17 * 7 = 119$ and $119 - 11 = 108$). A program is specified by a number of \emph{gourds} (conditions) and \emph{actions} (transformations) that define the possible transitions the input may go through. In this sense it has similarities with the functional paradigm. The difference, however, lies in how the transformations are applied. Where the functional paradigm leaves it to the programmer to specify which functions should be used, the transformational expects the system to identify which transformation to apply at any given point. In this manner, the system will transform the input until no guard will match it. At this point, the result is returned.

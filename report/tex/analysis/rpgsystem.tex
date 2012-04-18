@@ -1,25 +1,33 @@
 \section{Analysis of Role-playing systems}
-Our target-group consists of people experienced in role-playing, both digital games and so called \emph{pen \& paper} games.	After analysing the question sheets\vref{qsheets}, sent to a part of our target-group, we decided to take a closer look at three systems, described in the next section. The reason for this, is to find common characteristics and try to adjust our language to the basic needs of these popular role-playing games.
+Our target-group consists of people experienced in role-playing, both digital games and \emph{Pen \& Paper} games. Question sheets were created and sent out to a part of our target group, where questions regarding role-playing experience (number of known systems, years played, etc) and programming experience were answered. This helped us with designing our language to the needs of the target group.
+After analysing the question sheets\vref{qsheets} we decided to take a closer look at three systems, described in the next section. The reason for this, is to find common characteristics and try to adjust our language to the basic needs of these popular role-playing games.
 
 \subsection*{Role-playing games}
-The World Of Darkness (WoD) is a supernatural horror role-playing game, which incorporates a system called \emph{Storytelling System} developed by \emph{White Wolf Inc}.\cite{wod}
-Dungeons \& Dragons (DnD) is a fantasy role-playing game, which incorporates a system called \emph{d20 System} developed by \emph{Wizards of the Coast}.\cite{dnd}
-Cyberpunk 2020 (Cyberpunk) is cyberpunk role-playing game, which incorporates a system called \emph{Interlock System} developed by \emph{R. Talsorian Games}.\cite{cyberpunk}
+
+The World Of Darkness (WoD) is a supernatural horror role-playing game, which incorporates a system called \emph{Storytelling System} developed by \emph{White Wolf Inc}. It's world consists of mythical creatures like vampires, werewolves and ghosts. The system is unique in the way it handles character health and damage, which is categorising received damage and assigning a symbol to each type, making it easy to keep track of changes. The outcome of events is decided with one or more 10-sided dices.\cite{wod}
+
+Dungeons \& Dragons (DnD) is a fantasy role-playing game, which incorporates a system called \emph{d20 System} developed by \emph{Wizards of the Coast}.
+It's world consists of mythical creatures like elves, dwarves, dragons and other supernatural beings. The fact that the system is the first to be published commercially makes it an interesting reference. The outcome of events is decided with a dice pool containing 4-sided up to 20-sided dices, the 20-sided ones are used to roll for success (use abilities).\cite{dnd}
+
+Cyberpunk 2020 (Cyberpunk) is a role-playing game with a postmodern science-fiction setting, which incorporates a system called \emph{Interlock System} developed by \emph{R. Talsorian Games}. It's world consists mostly of humans, cyborgs and robots.
+The \emph{Interlock System} is skill-based instead of the traditional level-based system. Meaning that players get awarded points to spend on their skill sets instead of experience points. The outcome of events is decided with a similar dice pool to 'DnD, but using 10-sided dices to roll for success.\cite{cyberpunk}
 
 \subsection*{Common characteristics}
 \label{baseclasses}
-The systems have some basic requirements, such as:
-Character classes, attributes, effects, abilities, resources, modifiers and variation (dice rolls).
-Their dice sizes and quantity differ, but are derived from the same concept: \textit{''To decide the outcome of a given task, you must roll a dice of a specific size, add modifiers, calculate the result and compare to the task's difficulty. If your result is higher, you succeed''}\\
+The systems have some basic requirements to provide optimal playing experience, such as:
+Character classes, attributes, effects, abilities, resources, modifiers and variation (dice rolls). These core entities represent their respective real-life concepts and the dice rolls introduce 'luck' to the mix.
+Each of these systems have their 'dice pool' and their rules which define what types of dices and how many are involved in a given task.
+The systems' dice size and quantity differ, but are derived from the same concept: \textit{''To decide the outcome of a given task, you must roll a dice of a specific size, add modifiers, calculate the result and compare to the task's difficulty. If your result is higher, you succeed''}\\
 
-What these systems have in common, although implemented differently in each, is health points, damage and their calculations. This results in a different approach to our engine's damage calculations. While \emph{WoD} and \emph{Cyberpunk} have some very convenient representations for \emph{pen \& paper} role-play, they are not suitable for our engine. A character sheet from the game \emph{World of Darkness} is presented in the appendix for reference at \vref{charsheet}. As seen on the character sheet, a character is defined by their \emph{Attributes}, \emph{Skills} and \emph{Other Traits}. When playing a game, it is recommended to have the core rulebook as support, since calculations and various details about happenings is defined there.
+What these systems have in common, although implemented differently in each, is health points, damage and their calculations. This results in a different approach to our engine's damage calculations. While \emph{WoD} and \emph{Cyberpunk} have some very convenient representations for \emph{pen \& paper} role-play, they are not suitable for our engine. A character sheet from the game \emph{World of Darkness} is presented for reference on appendix \vref{charsheet}. As seen on the character sheet, a character is defined by their \emph{Attributes}, \emph{Skills} and \emph{Other Traits}. When playing a game, it is recommended to have the core rulebook as support, since calculations and various details about happenings is defined there.
+
 \subsection*{Conclusion}
 As a proof of concept, we choose the common characteristics of these systems for constructing the rulebook, common characteristics being the before mentioned \emph{requirements} of the systems.
 By using Characters classes, attributes, effects, abilities, resources and modifiers, we can define a character in our language, like it was a character sheet. If done correctly, this should satisfy our target group.
 
 \subsubsection*{''Final Fantasy'' \& engine specifics}
-The Event system and fight simulation will be based on the older versions of the computer game \emph{Final Fantasy} (1-5) to simplify the implementation.
-The Final Fantasy games have implemented various combat systems, turn-based and real-time.\cite{ffantasy}
+The Event system and fight simulation will be based on the first games of the video-game series \emph{Final Fantasy}, this is done to simplify the implementation. Final Fantasy is a fantasy role-playing game, released for the \emph{Nintendo Entertainment System} in 1987. The game was a success and has since then spawned a whole franchise named after the original title.
+The Final Fantasy series have implemented various combat systems, turn-based and real-time.\cite{ffantasy}
 Since our engine simulates battle and provides fairness through modifiers, we choose turn-based combat, where a battle is measured in turns.
 For simplicity we also choose to restrict the number of contestants to two.
 

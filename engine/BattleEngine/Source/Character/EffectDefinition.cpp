@@ -9,13 +9,17 @@
 
 namespace engine {
 
-EffectDefinition::EffectDefinition() {
-	// TODO Auto-generated constructor stub
-
+template <class T> EffectDefinition<T>::EffectDefinition() {
+	Effect *test = new T();
 }
 
-EffectDefinition::~EffectDefinition() {
+template <class T> EffectDefinition<T>::~EffectDefinition() {
 	// TODO Auto-generated destructor stub
+}
+
+template <class T> T EffectDefinition<T>::spawn(Character *source, Character *target)
+{
+    return new T(source, target);
 }
 
 } /* namespace engine */
