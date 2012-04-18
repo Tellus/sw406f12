@@ -7,6 +7,9 @@
 
 #pragma once
 
+#include "GameState.h"
+#include "Character.h"
+
 namespace engine
 {
 
@@ -15,6 +18,7 @@ class RGRIdentifier
 public:
     int rgr;
     virtual Character *identify(GameState *from) = 0;
+	RGRIdentifier();
 	virtual ~RGRIdentifier();
 };
 

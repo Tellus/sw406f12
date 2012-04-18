@@ -6,7 +6,7 @@ FLAGS=-c -Wall -std=c++0x
 INCS=-I. -IHeaders
 # Linker switches.
 #LIB=
-SOURCES= Source/Character/Ability.cpp Source/Character/Attribute.cpp Source/Character/Character.cpp Source/Character/ContEffect.cpp Source/Character/EffectDefinition.cpp Source/Character/Resource.cpp Source/program.cpp Source/System/AbilityTable.cpp Source/System/Action.cpp Source/System/Behaviour.cpp Source/System/Effect.cpp Source/System/EventListener.cpp Source/System/GameState.cpp Source/System/RGRIdentifier/EnemyIdentifier.cpp Source/System/Team.cpp
+SOURCES= Source/Character/Ability.cpp Source/Character/Attribute.cpp Source/Character/Character.cpp Source/Character/ContEffect.cpp Source/Character/EffectDefinition.cpp Source/Character/Resource.cpp Source/program.cpp Source/System/AbilityTable.cpp Source/System/Action.cpp Source/System/Behaviour.cpp Source/System/Effect.cpp Source/System/EventListener.cpp Source/System/GameState.cpp Source/System/RGRIdentifier/EnemyIdentifier.cpp Source/System/Team.cpp Source/Character/Primarch.cpp Source/System/RGRIdentifier.cpp
 # Object versions of sources.
 OBJECTS=$(SOURCES:.cpp=.o)
 
@@ -29,9 +29,10 @@ clean:
 	rm -rf $(OBJ_DIR)/*.o
 	if test -f $(EXECUTABLE)$(EXT); then rm $(EXECUTABLE)$(EXT); fi
 	if test -d $(OBJ_DIR); then rm -r $(OBJ_DIR); fi
+	rm $(OBJECTS)
 	
 .cpp.o:
-	$(CC) $(FLAGS) $(INCS) $(LIB) $< -o $(OBJ_DIR)/$(@F)
+	$(CC) $(FLAGS) $(INCS) $(LIB) $< -o $@
 	
 dev: all
 	./$(EXECUTABLE)$(EXT)
