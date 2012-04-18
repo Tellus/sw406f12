@@ -72,6 +72,22 @@ public:
 	 **/
 	void set_rgrs(int tars);
 	
+	/**
+	 * Gets the list of RGR's as a list container.
+	 * \return List of RGR's.
+	 */
+	std::list<RGR_Enum> get_as_list();
+	
+	/**
+	 * Gets the list of RGR's as a mask.
+	 * \return The RGR's as a mask.
+	 * \note Use bitwise operations and the enum values of RGR_Enum to filter
+	 * out single values.
+	 * \note This method may be faster than using get_as_list() for large sets
+	 * but cannot offer the convenience of simple for loops with iterators.
+	 */
+	int get_as_mask();
+	
 private:
     /**
      * List of RGR's.

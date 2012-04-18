@@ -6,7 +6,7 @@ FLAGS=-c -Wall -std=c++0x
 INCS=-I. -IHeaders
 # Linker switches.
 #LIB=
-SOURCES= Source/Character/Ability.cpp Source/Character/Attribute.cpp Source/Character/Character.cpp Source/Character/ContEffect.cpp Source/Character/EffectDefinition.cpp Source/Character/Resource.cpp Source/program.cpp Source/System/AbilityTable.cpp Source/System/Action.cpp Source/System/Behaviour.cpp Source/System/Effect.cpp Source/System/EventListener.cpp Source/System/GameState.cpp Source/System/RGRIdentifier/EnemyIdentifier.cpp Source/System/Team.cpp Source/Character/Primarch.cpp Source/System/RGRIdentifier.cpp
+SOURCES= Source/Character/Ability.cpp Source/Character/Attribute.cpp Source/Character/Character.cpp Source/Character/ContEffect.cpp Source/Character/EffectDefinition.cpp Source/Character/Resource.cpp Source/program.cpp Source/System/AbilityTable.cpp Source/System/Action.cpp Source/System/Behaviour.cpp Source/System/Effect.cpp Source/System/EventListener.cpp Source/System/GameState.cpp Source/System/RGRIdentifier/EnemyIdentifier.cpp Source/System/Team.cpp Source/Character/Primarch.cpp Source/System/RGRIdentifier.cpp Source/System/RGR_List.cpp Source/System/Exceptions/DuplicateKeyException.cpp
 # Object versions of sources.
 OBJECTS=$(SOURCES:.cpp=.o)
 

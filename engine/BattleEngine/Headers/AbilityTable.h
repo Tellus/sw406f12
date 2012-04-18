@@ -20,6 +20,13 @@ protected:
      * to simulate.
      **/
     std::vector<Action> actions;
+	
+	/**
+	 * Runs through all target combinations in an Ability, filtering out
+	 * abilities that cannot be used by the source Character due to cost
+	 * restrictions.
+	 */
+	void iterate_ability(Ability *src);
 
 public:
 	AbilityTable();

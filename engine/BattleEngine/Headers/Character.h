@@ -66,33 +66,41 @@ public:
 	virtual ~Character();
 	
 	/**
-	 * Retrieves a non-modifiable version of the ability list.
+	 * Retrieves the ability list.
 	 **/
 	std::list<Ability*> get_abilities();
 	
 	/**
-	 * Retrieves a resource on the character.
-	 * \param name Name of the resource.
-	 **/
-	float get_resource(char *name);
+	 * Retrieves the map of Attributes.
+	 * \return Map<string,Attribute*) of the Attributes on the Character.
+	 */
+	std::map<std::string, Attribute*> get_attributes();
 	
 	/**
 	 * Retrieves a resource on the character.
 	 * \param name Name of the resource.
 	 **/
-	float get_resource(std::string name);
+	Resource* get_resource(std::string name);
 	
 	/**
 	 * Retrieves an Attribute on the Character (if defined).
 	 * \param name Name of the Attribute to retrieve.
 	 **/
-	float get_attribute(char *name);
+	Attribute* get_attribute(std::string name);
 	
 	/**
-	 * Retrieves an Attribute on the Character (if defined).
-	 * \param name Name of the Attribute to retrieve.
-	 **/
-	float get_attribute(std::string name);
+	 * Checks for a named Attribute on the Character.
+	 * \param name Name of the Attribute.
+	 * \return True if the Attribute is on the Character, false otherwise.
+	 */
+	bool has_attribute(std::string name);
+	
+	/**
+	 * Checks for a named Resource on the Character.
+	 * \param name Name of the Resource.
+	 * \return True if the Resource is on the Character, false otherwise.
+	 */
+	bool has_resource(std::string name);
 };
 
 } /* namespace engine */

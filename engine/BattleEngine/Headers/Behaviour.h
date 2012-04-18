@@ -8,11 +8,10 @@
 #ifndef BEHAVIOUR_H_
 #define BEHAVIOUR_H_
 
-#include "Character.h"
-
 namespace engine {
 
-class Behaviour {
+class Behaviour
+{
 public:
 	Behaviour();
 	virtual ~Behaviour();

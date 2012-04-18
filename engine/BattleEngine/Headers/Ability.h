@@ -17,7 +17,7 @@
 
 namespace engine {
 
-class Ability
+class Ability : public RGR_List
 {
 public:
 	std::vector<EffectDefinition<Effect>> effects;

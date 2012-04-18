@@ -53,6 +53,8 @@ public:
 	 * \param amount Amount to change the current value by.
 	 **/
 	void virtual change(float amount);
+	
+	float get_current();
 };
 
 } /* namespace engine */

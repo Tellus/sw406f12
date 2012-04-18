@@ -5,7 +5,22 @@
  *      Author: Johannes
  */
 
-void Ability::add_rgr(engine::RGR_Enum tar)
+#include "RGR_List.h"
+ 
+namespace engine {
+ 
+RGR_List::RGR_List()
+{
+	// Will reset all members.
+	this->set_rgrs(0);
+}
+
+RGR_List::~RGR_List()
+{
+	// STUB.
+}
+ 
+void RGR_List::add_rgr(engine::RGR_Enum tar)
 {
     if (this->has_rgr(tar)) return;
     
@@ -13,7 +28,7 @@ void Ability::add_rgr(engine::RGR_Enum tar)
     this->rgr_list.push_back(tar);
 }
 
-void Ability::remove_rgr(engine::RGR_Enum tar)
+void RGR_List::remove_rgr(engine::RGR_Enum tar)
 {
     // XOR will only remove it if it already exists, so we check existance.
     if (this->has_rgr(tar))
@@ -24,12 +39,12 @@ void Ability::remove_rgr(engine::RGR_Enum tar)
     }
 }
 
-bool Ability::has_rgr(engine::RGR_Enum tar)
+bool RGR_List::has_rgr(engine::RGR_Enum tar)
 {
     return ((this->rgr_mask & tar) == tar);
 }
 
-void Ability::toggle_rgr(engine::RGR_Enum tar)
+void RGR_List::toggle_rgr(engine::RGR_Enum tar)
 {
     if (this->has_rgr(tar)) this->rgr_list.remove(tar);
     else this->rgr_list.push_back(tar);
@@ -37,7 +52,7 @@ void Ability::toggle_rgr(engine::RGR_Enum tar)
     this->rgr_mask ^= tar;
 }
 
-void Ability::set_rgrs(int tar)
+void RGR_List::set_rgrs(int tar)
 {
     this->rgr_mask = tar;
     this->rgr_list.clear();
@@ -48,7 +63,7 @@ void Ability::set_rgrs(int tar)
     {
         if (tar & 1)
         {
-            this->rgr_list.push_back(pow(2, pos));
+            this->rgr_list.push_back(RGR_Enum(pow(2, pos)));
         }
         
         pos++;
@@ -56,9 +71,21 @@ void Ability::set_rgrs(int tar)
     }
 }
 
-void Ability::set_rgrs(RGR_Enum tar)
+void RGR_List::set_rgrs(RGR_Enum tar)
 {
     this->rgr_mask = tar;
     this->rgr_list.clear();
     this->rgr_list.push_back(tar);
+}
+
+std::list<RGR_Enum> RGR_List::get_as_list()
+{
+	return std::list<RGR_Enum>(this->rgr_list);
+}
+
+int RGR_List::get_as_mask()
+{
+	return this->rgr_mask;
+}
+
 }

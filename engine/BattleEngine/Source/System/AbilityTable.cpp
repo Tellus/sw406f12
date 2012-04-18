@@ -26,10 +26,10 @@ void AbilityTable::create_actions(Character *from)
     std::list<Ability*> abils = from->get_abilities();
     
     // Final list of usable abilities.
-    std::vector<Ability*> usable;
+    std::list<Ability*> usable;
     
     //
-    std::vector<Ability*>::iterator iter;
+    std::list<Ability*>::iterator iter;
     Ability *abil;
     
     // Discard all unusable Ability objects.
@@ -37,8 +37,8 @@ void AbilityTable::create_actions(Character *from)
     {
         // Get abil. Test cost.
         abil = *iter;
-        if (abil->cost_health <= from->get_resource_current("health") &&
-            abil->cost_mana <= from->get_resource_current("mana"))
+        if (abil->cost_health <= from->get_resource("health")->get_current() &&
+            abil->cost_mana <= from->get_resource("mana")->get_current())
                 usable.push_back(*iter);
     }
     
@@ -48,13 +48,8 @@ void AbilityTable::create_actions(Character *from)
 
 void AbilityTable::iterate_ability(Ability *src)
 {
-    /*
-        In order to 
-    */
-    for (int i=0; i<__RGR__END__; i*=2)
-    {
-    
-    }
+    // get valid targets.
+	auto tars = src->get_as_list();
 }
 
 } /* namespace engine */

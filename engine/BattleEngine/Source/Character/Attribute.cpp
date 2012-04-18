@@ -66,4 +66,9 @@ void Attribute::reset()
     this->current = this->initial;
 }
 
+float Attribute::get_current()
+{
+	return this->current;
+}
+
 } /* namespace engine */
