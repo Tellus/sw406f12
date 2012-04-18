@@ -14,9 +14,18 @@
 namespace engine {
 
 class AbilityTable {
+protected:
+    /**
+     * Vector of Action objects, representing the Ability/Target combinations
+     * to simulate.
+     **/
+    std::vector<Action> actions;
+
 public:
 	AbilityTable();
 	virtual ~AbilityTable();
+	
+	void create_actions(Character *from);
 };
 
 } /* namespace engine */

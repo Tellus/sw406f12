@@ -16,6 +16,12 @@ class Behaviour {
 public:
 	Behaviour();
 	virtual ~Behaviour();
+	
+	/**
+	 * Calculates the piggy value depending on the premises given for the
+	 * current Behaviour child class.
+	 **/
+	float get_piggy();
 };
 
 } /* namespace engine */

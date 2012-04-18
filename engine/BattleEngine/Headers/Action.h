@@ -10,7 +10,7 @@
 
 #include "Primarch.h"
 #include "Ability.h"
-#include "RGR_Enum.h"
+#include "RGR_List.h"
 
 namespace engine {
 

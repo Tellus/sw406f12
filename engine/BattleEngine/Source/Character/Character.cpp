@@ -18,4 +18,9 @@ Character::~Character() {
 	// TODO Auto-generated destructor stub
 }
 
+float Character::get_piggy()
+{
+    this->behaviour.get_piggy();
+}
+
 } /* namespace engine */
