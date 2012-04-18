@@ -10,10 +10,12 @@
 #include <string>
 #include "Scanner/Scanner.h"
 #include "Parser/Parser.h"
+#include "Typecheck/TypeCheck.h"
 
 using namespace lexer;
 using namespace std;
 using namespace parser;
+using namespace typec;
 
 void TreePrint(ASTNode *node);
 
@@ -103,6 +105,9 @@ int main (int argc, char* argv[])
 	// TODO: Semantics
 
 	ast->print_node();
+
+	TypeCheck *che = new TypeCheck();
+	che->initiate_table();
 
 	delete ast;
 
