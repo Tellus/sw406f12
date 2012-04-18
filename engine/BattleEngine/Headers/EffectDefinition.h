@@ -7,8 +7,8 @@
 #ifndef EFFECTDEFINITION_H_
 #define EFFECTDEFINITION_H_
 
+#include "Primarch.h"
 #include "Effect.h"
-class Character;
 
 namespace engine {
 
@@ -18,7 +18,7 @@ public:
 	EffectDefinition();
 	virtual ~EffectDefinition();
 	
-	T spawn(Character *source, Character *target);
+	T spawn(Primarch *source, Primarch *target);
 };
 
 } /* namespace engine */

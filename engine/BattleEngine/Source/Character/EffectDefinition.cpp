@@ -17,7 +17,7 @@ template <class T> EffectDefinition<T>::~EffectDefinition() {
 	// TODO Auto-generated destructor stub
 }
 
-template <class T> T EffectDefinition<T>::spawn(Character *source, Character *target)
+template <class T> T EffectDefinition<T>::spawn(Primarch *source, Primarch *target)
 {
     return new T(source, target);
 }

@@ -8,6 +8,7 @@
 #ifndef CHARACTER_H_
 #define CHARACTER_H_
 
+#include "Primarch.h"
 #include "Attribute.h"
 #include "Ability.h"
 #include "ContEffect.h"
@@ -19,7 +20,8 @@
 
 namespace engine {
 
-class Character {
+class Character : public Primarch
+{
 protected:
     int id_counter;
 
@@ -39,6 +41,7 @@ public:
     int id;
 
 	Character();
+	Character(const Character& copy);
 	virtual ~Character();
 };
 

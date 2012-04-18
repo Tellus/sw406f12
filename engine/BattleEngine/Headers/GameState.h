@@ -15,6 +15,8 @@
 #include "AbilityTable.h"
 #include "Team.h"
 
+#define GAMESTATE_CONTAINER_TYPE list
+
 namespace engine {
 
 class GameState {
@@ -54,11 +56,6 @@ public:
      * without copying.
      **/
     void add_character(Character *to_add);
-    
-    /**
-     * Copies a character into the GameState, leaving the original unaffected.
-     **/
-    void add_character_by_copy(const Character& copy);
     
     /**
      * Retrieves a pointer to a character represented by the passed RGR.

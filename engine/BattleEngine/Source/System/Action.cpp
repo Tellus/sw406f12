@@ -9,16 +9,16 @@
 
 namespace engine {
 
-Action::Action(Character *source, Ability *abil, Character *target)
+Action::Action(Primarch *source, Ability *abil, Primarch *target)
 {
-    this->source_char = source;
-    this->target_char = target;
+    this->source = source;
+    this->target = target;
     this->ability = abil;
 }
 
-Action::Action(Character *source, Ability *abil, RGR_Enum target)
+Action::Action(Primarch *source, Ability *abil, RGR_Enum target)
 {
-    this->source_char = source;
+    this->source = source;
     this->ability = abil;
     
     // Afvikle

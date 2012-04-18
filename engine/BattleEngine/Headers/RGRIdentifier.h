@@ -15,7 +15,7 @@ class RGRIdentifier
 public:
     int rgr;
     virtual Character *identify(GameState *from) = 0;
-    RGRIdentifier();
+	virtual ~RGRIdentifier();
 };
 
 }

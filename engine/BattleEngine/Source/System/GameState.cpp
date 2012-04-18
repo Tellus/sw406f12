@@ -11,7 +11,6 @@ namespace engine {
 
 GameState::GameState() {
 	// TODO Auto-generated constructor stub
-    this->characters = new std::list<Character*>();
 }
 
 GameState::~GameState() {
@@ -37,23 +36,12 @@ void GameState::add_character(Character *to_add)
     this->characters.push_back(to_add);
 }
 
-/**
- * Copies a character into the GameState, leaving the original unaffected.
- **/
-void add_character_by_copy(const Character& copy)
-{
-    this->characters.push_back(Character(copy));
-}
-
-Character *get_rgr(RGR_Enum rgr)
+Character *GameState::get_rgr(RGR_Enum rgr)
 {
     switch(rgr)
     {
         case ENEMY:
         {
-            // RGR_Enum.ENEMY
-            int team = this->current_char->team_index;
-            
             std::list<Team*>::iterator iter;
             
             for (iter = teams.begin(); iter != teams.end(); iter++)
