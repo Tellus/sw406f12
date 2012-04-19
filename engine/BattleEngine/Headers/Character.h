@@ -27,10 +27,14 @@ protected:
     int id_counter;
 
 public:
+	Character();
+	Character(const Character& copy);
+	virtual ~Character();
+
     /** Membesr analogous to InvaderScript implementation. **/
 	std::map<std::string, Attribute*> attributes;
 	std::map<std::string, Resource*> resources;
-	std::list<ContEffect*> continuoos_effects;
+	std::list<ContEffect*> cont_effects;
 	std::list<Ability*> abilities;
 	Behaviour behaviour;
 
@@ -60,10 +64,6 @@ public:
      * Character among all Character instances in the active GameState.
      **/
     int id;
-
-	Character();
-	Character(const Character& copy);
-	virtual ~Character();
 	
 	/**
 	 * Retrieves the ability list.
