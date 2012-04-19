@@ -5,7 +5,7 @@
  *      Author: Johannes
  */ 
 
-#include "exceptions/DuplicateKeyException.h"
+#include "Exceptions/DuplicateKeyException.h"
  
 namespace engine {
 

@@ -7,7 +7,9 @@
 
 #include "PhysicalDamageEffect.h"
 
-void PhysicalDamage::execute()
+namespace engine{
+
+void PhysicalDamageEffect::execute()
 {
     // Cast target to Character.
     this->target_char = (Character*)this->target;
@@ -15,6 +17,7 @@ void PhysicalDamage::execute()
 
     // SHOULD be: WeaponDMG + Strength/2 + 1
     // Damage reduction unknown right now.
-    this->target->health -= 20;
+    this->target_char->get_resource("health")->deplete(20);
 	// Should have: (this->source->attributes["Strength"]->current / 2) + 1;
 }
+};

@@ -36,10 +36,14 @@ public:
 	 **/
 	Action(Primarch* source, Ability* abil, RGR_Enum target);
 	
+	void execute();
+
 protected:
     Primarch *source, *target;
     RGR_Enum *target_rgr;
     Ability *ability;
+
+    void generate_effects();
 };
 
 } /* namespace engine */

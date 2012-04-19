@@ -11,7 +11,6 @@
 #include "EffectDefinition.h"
 #include "Effect.h"
 #include "RGR_List.h"
-#include "vector"
 
 #include <vector>
 
@@ -20,7 +19,7 @@ namespace engine {
 class Ability : public RGR_List
 {
 public:
-	std::vector<EffectDefinition<Effect>> effects;
+	std::vector<EffectDefinition<Effect> > effects;
 //	std::vector<RGR_Enum> targets;
 
 	Ability();
