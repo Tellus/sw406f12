@@ -7,26 +7,42 @@ A programming paradigm is a collection of conceptual patterns that together mold
 
 The granularity with which paradigms are defined varies somewhat between sources. While \citeauthor{paradigms1992} keeps to the understanding that a paradigm is a larger philosophy of solving problems computationally, other sources maintain that a paradigm can be considered on the level of techniques (\citeauthor{paradigms1978} on divide and conquer \cite{paradigms1978}). Within the context of this report, we constrain ourselves to the more abstract form as presented by the former in order to better represent the higher levels of paradigms. The point of the discussion is to present an overview of the major paradigms, their main points of interest and perceived strengths/weaknesses of each. Following the convention of authors of both articles, we shall refer to a language that allows a paradigm to be used fully as a language that \emph{supports} the paradigm.
 
-The discussion of paradigms is is key in considering how the target users are intended work with the designed language. By far most modern languages today do not constrain themselves to a single paradigm, instead supporting a variety of different approaches to better fit with the overall design of the language and its uses. As examples, $C++$ supports procedural, functional, object-oriented and generic paradigms, while $SQL$ supports both definitional (in the general sense) and procedural approaches. In considering the target audience of the language, we must determine the paradigms that would ease their work while remaining effective. The remainder of this section describes the three major categories of paradigms with brief examples of underlying paradigms.
+The discussion of paradigms is is key in considering how the target users are intended work with the designed language. By far most modern languages today do not constrain themselves to a single paradigm, instead supporting a variety of different approaches to better fit with the overall design of the language and its uses. As examples, $C++$ supports procedural, functional, object-oriented and generic paradigms, while $SQL$ supports both declarative and imperative approaches. In considering the target audience of the language, we must determine the paradigms that would ease their work while remaining effective. The remainder of this section describes the major categories of paradigms (as described by Sebesta \todo{Missing bib reference.}) with brief examples of underlying paradigms.
 
-\subsection{Operational}
-In solving problems, the operational paradigms focus on specifying the solution method in sequencial steps. The granularity and focus of this approach is beneficial as solutions can be specified very precisely and the corresponding result sets are at the very least clear. However, it also demands a certain degree of familiarity with mathematical and algorithmic approaches to defining solutions, two disciplines not often found outside of programming. A necessary effect of this is the strict explicit sequencing of steps.
+\subsection{Imperative}
+The imperative paradigm is perhaps the one most naturally mapped to the actual architecture of modern computer systems. In it, an abstract storage model (predominantly the Von Neumann architecture, wherein data and program are stored alongside one another in main memory) of the computer system is utilised. This naturally leads to the use of variables as metaphors for memory cells to store data and some form of structured programming to encourage the stepwise execution of adjacent memory cells.
 
-\paragraph*{A note on side-effecting}
-The operational paradigms are further divided between two views of data: those that modify existing data repeatedly, and those that create new data continuously. The former is called side-effecting.
+This basis in the architecture lead to several supporting paradigms, notably structured programming and object oriented programming.
 
-\subsubsection*{Imperative}
-The imperative paradigm is perhaps the one most naturally mapped to the actual architecture of modern computer systems. In it, an abstract storage model of the computer system is utilised to modify the data state in discrete steps until it reflects the desired solution to a given problem. A pure imperative language would allow only atomic changes to the data with simple instructions, shedding any notion of procedures or complex data structures.
+\subsubsection*{Structured programming}
+Programming within the imperative domain using only instruction jumps was a very daunting task, and often code with many branches of execution and repetitions would wind up as proverbial ''spaghetti'' code as the only formal way of executing anything but the next instruction was the (now notorious) GOTO statement.
 
-The procedural paradigm is considered an extension of the imperative paradigm, introduction procedures and blocks to clarify code and encourage code reuse, reducing redundant re-typing of similar collections of instructions.
+Structured programming eased the implementation task by introducing notions of blocks, branching control structures and loops. While the final machine code will often still rely on the roots of procedural programming, these abstractions in higher programming languages vastly simplify the task for problem solving for programmers.
 
-\subsubsection*{Object-oriented}
-This paradigm expands on the store model of the imperative paradigm. Instead of repeatedly modifying the store, the paradigm focuses on altering the state of composite structures - objects - through their embedded procedures; methods. The abstraction allows for a more detailed view of the problem set being modeled, as it can be divided into individual segments, each communicating with the others while being responsible for their own internal state.
+\subsubsection*{Object oriented}
+Object oriented programming emerged with the advent of data-oriented programming. Where procedure-oriented methods focused on an algorithmic approach to problem solving (the necessary steps involved in creating the solution), data-oriented programming instead works with abstract data types that model the problem and solution.
 
-The paradigm further enhances the concept by generalising objects into classifications (classes) that define the common structure of a set of objects. These generalisations can be further expanded and specialised through inheritance, while specialised objects with a common ancestor can regard one another as objects of that ancestor (polymorphism).
+The approach encapsulates procedures and variables within objects to create a more clear data model. In turn, this makes it a more natural task to model reality (consider trying to describe the workings of a basic car using only procedures for managing components that can only be described atomically compared to doing so with abstractions for wheels, chassis and the like, each with separate responsibilities and capabilities).
 
-\subsubsection*{Functional}
-The functional paradigm focuses on the serial application of functions to reach a desired solution. The basic approach can be likened to mathematical function definitions. For example, the mathematical function
+Furthermore the object oriented method introduced inheritance and polymorphism, extending the basic notion of classes of objects with similar representations to hierarchies of objects with shared ancestors while offering specialised implementations.
+
+\subsection{Functional}
+The functional paradigms focus on mimicking the notion of functions from mathematics as closely as possible. This results in shedding such concepts as states and iterations. Consider a mathematical function $f(x) = x*3+7$, where the value $x$ from the domain set is applied to the expression $x*3+7$, resulting in an element from the value set. In \emph{Scheme}, this function could be represented as
+
+\begin{lstlisting}
+(DEFINE (fun x)
+    (+ 7 (* x 3))
+)
+\end{lstlisting}
+
+and used with 
+
+\begin{lstlisting}
+(DEFINE val 3)
+(fun val)
+\end{lstlisting}
+
+Note the complete lack of variables and any direct sequenced execution. Values are defined as constant expressions and passed as arguments (from the domain set) to a function that \emph{defines} the corresponding element in the value set. The function
 
 \[
 f(x) =
@@ -34,74 +50,38 @@ f(x) =
 \\
 \frac{x}{12} & x = 12
 \\
-(x * 4)^2 & \sqrt{x} = 3
+(x * 4)^2 & otherwise
 \end{cases}
 \]
 
-Where the computation of the function is based on conditions related to the function argument. A similarly structured approach in a functional (pseudo) language could look like so (recall that $\sqrt[2]{x} = 3 \Leftrightarrow x = 3^2$):
+Contains conditions and requires the use of recursive and conditional elements of the function languages. Again, in Scheme, this would look as follows:
 
-\begin{lstlisting}[caption={Pseudocode example in a functional style.},label={lst:paradigm_functional}]
-// The function f as defined equivalently above.
-func f(X)
-	:= (X+3)/12 if (X % 3 == 0 and x >= 9)
-	:= x/12 if (X == 12)
-	:= pow(x*4,2) if (x == pow(3,2))
+\begin{lstlisting}
+(DEFINE (^ x y)
+    (IF (= y 0)
+        1
+        (* x (^ x (- y 1) ) )
+    )
+)
 
-// Function calculate power of a number.
-func pow(I,P)
-	:= I*pow(I-1,P) if P > 0
-	:= I if P=0
+(DEFINE (fun x)
+    (IF (>= x 9)
+        (/ x 12)
+        (IF (= x 12)
+            (/ (+ x 3) 12)
+            (^ (* x 4) 2 )
+        )
+    )
+)           
 \end{lstlisting}
 
-There are several features of note in this approach. First of all, the deeply ingrained conditionals. A particular computation (in this case, a line of code) is performed only if certain conditions hold. 
+The line breaks are only for readability and can be omitted. Note how every single token in the program code is either a list or atom (the two basic units of Scheme) - either an atomic value (a function name, a constant or a literal) or a list serving as a function call. Notice also how the integration of functions within functions work in exactly the same way as function composition does in mathematics. A final trait is how the lack of any form of variable or machine state completely eliminates side-effecting; the output will \emph{always} be the same for any given input.
 
-The particular strength of the functional paradigms is the release from control flows and program states (note the lack of any intermediate or long-term variables) while attempting to adhere to mathematical principles for function definitions. It is left to the programmers of the compiler or interpreter to derive the proper execution order and result set. There remains, however, a need for the user of the language to understand fundamental discrete mathematics in order to properly apply the paradigm to a problem.
-
-\subsection{Definitional}
-The definitional paradigms focuses on constraining the solution set. As stated by \citep{paradigms1992}:
-
-\begin{quote}
-In definitional paradigms, a program is constructed by stating facts, rules, constraints, equations, transformations, or other properties about the solution value set.
-\end{quote}
-
-The programmer is no longer required to specify \emph{how} to reach a solution, only what a correct solution should look like. This can, in principle, alleviate some of the more complex aspects of programming tasks, making the language notably easier for beginners, hobby programmers or non-programmers. With from this assumption, we shift our attention only to the definitional paradigms.
-
-\subsubsection*{Functional}
-The function paradigm is placed found in operational and definitional variants. For all but an operational traits the two are equivalent.
-
-The purely definitional functional paradigm removes notions of side-effecting and control sequences and. The paradigm can be applied in such a way so the order of conditions in a function are of no consequence. Indeed, this can be seen in the implementation of the $pow$ function in the example \vref{lst:paradigm_functional}. In an imperative recursive implementation of $pow$, the conditional check for $P==0$ must come before the recursive step as each line is evaluated downwards. While an operational functional approach requires this ordering, a definitional does not. During evaluation, each line's conditions are checked. How and when branching is performed varies between implementations. Some short circuit (first match, if any), others with either most conditions met or most percentage of conditions met. The printed example assumes the latter. In all cases, a mechanism for defaults must be supplied as well. One approach is to use the last line if nothing holds. This would be considered an imperative approach, somewhat contrary to definitional dogma. Another method would explicitly specify the default case.
-
-\subsubsection*{Transformational}
-Transformational paradigms define a problem solution by a series of transformations. For example, the input $17$ might be transformed to $108$ through the transformations $17 \rightarrow 119 \rightarrow 108$ (using $17 * 7 = 119$ and $119 - 11 = 108$). A program is specified by a number of \emph{gourds} (conditions) and \emph{actions} (transformations) that define the possible transitions the input may go through. In this sense it has similarities with the functional paradigm. The difference, however, lies in how the transformations are applied. Where the functional paradigm leaves it to the programmer to specify which functions should be used, the transformational expects the system to identify which transformation to apply at any given point. In this manner, the system will transform the input until no guard will match it. At this point, the result is returned.
-
-\subsubsection*{Logic}
-The logic programming paradigm makes use of Horn clauses to describe predicates and the facts that must hold true for the predicate to do so as well. Horn clauses are beyond the scope of this report, but for context a brief example is in order. using notation of boolean algebra, a horn clause could be written as 
+\subsection{Logic}
+\todo{Logic is not even revised.}The logic programming paradigm makes use of Horn clauses to describe predicates and the facts that must hold true for the predicate to do so as well. Horn clauses are beyond the scope of this report, but for context a brief example is in order. using notation of boolean algebra, a horn clause could be written as 
 
 \[
 (c_1, c_2, \cdots , c_n) \rightarrow f
 \]
 
 should be read as ''if the conditions $c_1$ to $c_n$ all hold true, then fact $f$ must also hold true''. A program written in the logic programming style is comprised solely of clauses like this. The programmer must define sufficient facts (and a goal to be reached), and the compiler must be able to deduce the correct resolution of facts to reach this goal. The set of possible combinations that must be tested to find the solution very quickly becomes so large that algorithms used for solving the problem must be heavily optimised, and even small changes to the ordering of facts can markedly affect the performance of the program. While several algorithms with acceptable running times have been designed, it still remains a challenge for the programmer not only to supply sufficient facts to deduce a solution, but also in a manner that is not counter-productive to the overall running time of the programmer. While the latter can be argued to be a staple of any programming paradigm, none would have as great an impact as in the logic programming paradigm.
-
-\subsubsection*{Form-based}
-Perhaps one of the simplest examples of the form-based paradigm in use is a spreadsheet application such as Microsoft Office or LibreOffice Spreadsheet. Computations are specified via equations, and can entirely avoid explicitly defining a control sequence by virtue of their interdependence. An equation must be computable independently of its result (that is, circular references are not allowed). Any formula $x = f(y_1, y_2, \cdots , y_n)$ therefore requires that all $y_i$ be computable independently from $x$.
-
-This paradigm's strong point is the form in which programming is done. It is analogous to filling out regular forms (tax forms, applications - even character sheets) and should come naturally to many users - as a consequence, the roles of programmer and user become very close entwined.
-
-\subsubsection*{Dataflow}
-The dataflow paradigm regards input as a flowing stream of data, passed through nodes in a network that apply a formula to the data. The sequence is determined by the programmer as it is with the functional paradigm, but the dataflow philosophy is very well suited for parallel processing of data. Several streams of data may flow through nodes, and their paths may be independent before or after they pass the node. At those points, individual threads could handle each stream through other nodes until they converge. Conversely, each node could be handled by an individual thread, awakened whenever sufficient streams had entered the node for processing, and sent back to sleep when not needed.
-
-\subsubsection*{Constraint programming}
-This paradigm might best be described as the programmer's equivalent to an equation solver. The intention is for the programmer to sufficiently \emph{constrain} the solution's value set. This does not mean to simply write out formula for the system to evaluate given certain input, but to instruct the system as to how the formula remains valid. Consider an equation
-
-\[
-y = x^3 + 12c
-\]
-
-In the case of form-based, functional or dataflow paradigms, one would expect that $y$ could be computed once appropriate values $x$ and $c$ have been input. Constraint programming, however, should support finding any variable once enough of the other variables have bene passed. Consequently, the equation
-
-\[
-\sqrt[3]{y - 12c} = x
-\]
-
-is programmatically equivalent. The system must be able to derive these equations and computational possibilities on its own, without the programmer (assuming the programmer properly constrained the problem).
