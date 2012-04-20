@@ -12,11 +12,15 @@
 #include <map>
 #include <iostream>
 
+#include "../Parser/ASTNode.h"
+#include "TypeVisitor.h"
+using namespace parser;
+
 enum assign_enum {
 	ASSIGN_NONE,
 	ASSIGN_NUMBER, ASSIGN_STRING,
 	ASSIGN_BOOL, ASSIGN_LIST,
-	ASSIGN_LIST_LISTS
+	ASSIGN_LIST_LISTS, ASSIGN_REFERENCE
 };
 
 struct symbol
@@ -30,18 +34,20 @@ namespace typec {
 class TypeCheck {
 public:
 	//Initialize tables for all types
-		std::map<std::string, symbol*> Declaration;
+		std::map<std::string, symbol*> DeclarationTable;
 		std::map<std::string, symbol*> CharacterTable;
-		std::map<std::string, symbol*> Ability;
-		std::map<std::string, symbol*> Attribute;
-		std::map<std::string, symbol*> Resource;
-		std::map<std::string, symbol*> Behaviour;
-		std::map<std::string, symbol*> Effect;
-		std::map<std::string, symbol*> Event;
+		std::map<std::string, symbol*> AbilityTable;
+		std::map<std::string, symbol*> AttributeTable;
+		std::map<std::string, symbol*> ResourceTable;
+		std::map<std::string, symbol*> BehaviourTable;
+		std::map<std::string, symbol*> EffectTable;
+		std::map<std::string, symbol*> EventTable;
+		std::map<std::string, symbol*> ReferenceTable;
 
 	void initiate_table();
 	void add_symbol(std::map<std::string, symbol*>* addtable, std::string name, std::map<std::string, symbol*>* reftable, assign_enum assign);
 	symbol* lookup_symbol(std::string name, std::map<std::string, symbol*>* looktable);
+	symbol* traverse(ASTNode *ast);
 
 	TypeCheck();
 	virtual ~TypeCheck();
