@@ -12,6 +12,7 @@ namespace parser {
 void ASTNode::add_child(ASTNode *child)
 {
 	this->children.push_back(child);
+	this->dec = NULL;
 }
 
 void ASTNode::print_node(int indent)

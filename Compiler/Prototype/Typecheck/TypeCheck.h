@@ -8,9 +8,12 @@
 #ifndef TYPECHECK_H_
 #define TYPECHECK_H_
 
+#include "../Parser/ASTNode.h"
 #include <string>
 #include <map>
 #include <iostream>
+
+using namespace parser;
 
 enum assign_enum {
 	ASSIGN_NONE,
@@ -42,10 +45,13 @@ public:
 	void initiate_table();
 	void add_symbol(std::map<std::string, symbol*>* addtable, std::string name, std::map<std::string, symbol*>* reftable, assign_enum assign);
 	symbol* lookup_symbol(std::string name, std::map<std::string, symbol*>* looktable);
+	void decorate(ASTNode *node);
 
 	TypeCheck();
 	virtual ~TypeCheck();
 };
 }
+
+
 
 #endif /* TYPECHECK_H_ */

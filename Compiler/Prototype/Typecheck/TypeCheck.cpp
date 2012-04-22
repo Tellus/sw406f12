@@ -7,6 +7,8 @@
 
 #include "TypeCheck.h"
 
+using namespace parser;
+
 namespace typec {
 /*symbol* TypeCheck::lookup_symbol(std::string name, std::map<std::string, symbol*>* looktable)
 {
@@ -50,12 +52,45 @@ void TypeCheck::initiate_table()
 
 
 	std::map<std::string, symbol*>::iterator printer;
-	std::cout << "The Charactertable contains the following keys: ";
+	std::cout << "The Character table contains the following keys: ";
 	for (printer = CharacterTable.begin(); printer != CharacterTable.end(); printer++)
 	{
 		std::cout << printer->first <<" " << printer->second->type << std::endl;
 	}
 
+}
+//Traverse, decorate the ASTNodes with type information and perform basic type checking
+void TypeCheck::decorate(ASTNode *node)
+{
+	//maybe something to be done before looping
+	//Looping through nodes bottom-up
+	for (list<ASTNode*>::iterator i = node->children.begin(); i != node->children.end(); i++)
+	{
+		this->decorate(*i);
+
+	}
+
+	//Handling leaves
+	switch(node->type)
+	{
+		case NODE_STRING:
+			node->dec = new decoration;
+			node->dec->type = T_STRING;
+			break;
+		case NODE_BOOL:
+			node->dec = new decoration;
+			node->dec->type = T_BOOLEAN;
+			break;
+		case NODE_NUMBER:
+			node->dec = new decoration;
+			node->dec->type = T_NUMBER;
+			break;
+		case NODE_ASSIGNMENT:
+			node->dec = node->children.back()->dec;
+			break;
+		default:
+			break;
+	}
 }
 
 TypeCheck::TypeCheck() {

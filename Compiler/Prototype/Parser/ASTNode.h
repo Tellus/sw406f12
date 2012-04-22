@@ -24,19 +24,30 @@ enum ast_type {NONE, NODE_PROG, NODE_DECLARATION,
 	NODE_REFERENCE_KEYWORD
 };
 
+enum primitive_type {T_NULL, T_STRING, T_NUMBER, T_BOOLEAN, T_LIST, T_PAIR, T_REFERENCE, T_CALL};
+
 using namespace std;
 
 namespace parser {
+
+struct decoration
+{
+	primitive_type type;
+	decoration* subtype;
+};
 
 class ASTNode {
 public:
 	list<ASTNode*> children;
 	ast_type type;
 	string data;
+	decoration* dec;
 
 	void add_child(ASTNode *child);
 	void print_node(int indent = 0);
 	string ntype(ast_type type);
+	decoration* decorate();
+
 
 	ASTNode(ast_type type, string data = "");
 	virtual ~ASTNode();
