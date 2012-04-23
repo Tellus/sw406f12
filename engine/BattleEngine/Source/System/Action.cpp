@@ -30,32 +30,16 @@ Action::~Action() {
 
 void Action::execute()
 {
-	this->ability->effects;
+	this->generate_effects();
 }
 
 void Action::generate_effects()
 {
-
-	//Forskellige forsøg.. Men tror sq ikke de virker..
-	/*
-	for(std::vector<EffectDefinition<Effect> >::iterator i = this->ability->effects.begin();
-		i != this->ability->effects.end(); i++)
+	std::vector<EffectDefinition<Effect> > * tmp = &this->ability->effects;
+	for(std::vector<EffectDefinition<Effect> >::iterator i = tmp->begin(); i != tmp->end(); i++)
 	{
-		for(std::vector<Effect>::iterator j = this->ability->effects.at(i); j != *i.end(); j++)
-		{
-
-		}
+		(*i).spawn(source, target);
 	}
-
-	for(unsigned int i = 0; i < this->ability->effects.size(); i++)
-	{
-		for(unsigned int j = 0; j < this->ability->effects.size(); j++)
-		{
-			this->ability->effects[i];
-		}
-	}
-*/
 }
-
 
 } /* namespace engine */

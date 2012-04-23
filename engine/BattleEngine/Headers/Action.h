@@ -36,6 +36,9 @@ public:
 	 **/
 	Action(Primarch* source, Ability* abil, RGR_Enum target);
 	
+	/**
+	 * Generates and applies the effects to the given target
+	 */
 	void execute();
 
 protected:
@@ -43,6 +46,10 @@ protected:
     RGR_Enum *target_rgr;
     Ability *ability;
 
+
+    /**
+     * Called by execute, to generate a collections of effects from effectDefinitions
+     */
     void generate_effects();
 };
 
