@@ -1,0 +1,123 @@
+\begin{comment}
+\section{EBNF}
+To explain the language syntax, an \emph{EBNF} notation is used.
+EBNF is an abbreviation for \emph{Extended Backus-Naur form} and is a modified version of \emph{BNF} (Backus-Naur form).
+EBNF is a notation technique to describe the syntax of languages and is often used for computer programming languages. EBNF is a set of derivation rules, meaning that a 'word' on the left side (called a non-terminal) is substituted with the words on the right side.\\
+Example:\\
+{\begin{lstlisting}[numbers=none]
+full-name = name, last-name, $ | name, full-name
+
+name> = first-name | middle-name
+\end{lstlisting}}
+Translation:
+\begin{itemize}
+	\item A full-name consists of a name, followed by a last-name and end-of-line, or a name, followed by full-name.
+	\item A name consists of a first-name or a middle-name
+\end{itemize}
+\pagebreak
+\end{comment}
+
+
+\section{\langname{} \ac{ebnf}}
+
+Two criteria were used to support the design of our language syntax, these are writability and readability. Writability is a measure for how convenient, for a programmer, a language is to write and readability is a measure for how easy a language is to understand and learn. These two have an extreme on each side of the scale, where a complex language can be extremely efficient due to type security, the number of operations and data structures, on the other side a simple one, made to be easy to use and learn often sacrifices some of the type security, operations and data structures to be more convenient for the user.
+Here follows the \ac{ebnf} notation for \langname{}:
+
+{\begin{lstlisting}[numbers=none]
+
+program = "begin" , { declaration } , $ ;
+
+declaration = "make", identifier, "from",  identifier , "{", { assignment } , "}" ;
+
+assignment = identifier , ( ":" | "+:" | "-:" ) , value , ";" ;
+
+value = expression | set | call;
+
+expression = term , [ ( "+" | "-" ) , expression ] ;
+
+term = factor , [ ( "*" | "/" ) , term ] ;
+
+factor = single_value | ( "(" , expression , ")" ) ;
+
+single_value = bool | number | string | class_member | value_keyword ;
+
+class_member = identifier | reference_keyword , { "." , identifier } ;
+
+set = "[" value , { "," , value } , "]" ;
+
+reference_keyword = "owner" | "this" ;
+
+value_keyword = "self" | "enemy" | "ally" | "team_ally" | "team_enemy" | "all" ;
+
+call = identifier , "(" , value , { "," , value } , ")" ;
+
+identifier = ( letter | "_" ), { letter | digit | "_" };
+
+string = '"'{ all_symbols }'"' ;
+
+bool =  "true" | "false";
+
+number = {digit}, [ ".", {digit}] ;
+
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+
+letter = ? A - Z and a - z ?
+
+all_symbols = ? all symbols besides " ?
+
+\end{lstlisting}}
+\pagebreak
+\begin{itemize}
+\item program is the code to be compiled, from the beginning statement to the end of input.
+A program may contain one or more declarations
+
+\item declaration is the declaration of entities in \langname{}, after analysing the target group
+and deciding upon readability over writability, the words "make" and "from" were chosen.
+A declaration takes two identifiers and one or more assignments
+
+\item assignment is the assignment of a value to a specific identifier, the symbol : was chosen
+to resemble a character sheet.
+An assignment takes an identifier, an operator and a value, followed by the symbol ;
+
+\item value consists of either an expression, a set or a call
+
+\item expression is a term, optionally followed by an operator and another expression
+
+\item term is a factor, optionally followed by an operator and another term
+
+\item factor is either a single\_value or an expression
+
+\item single\_value can be a bool, number, string, class\_member or a value\_keyword
+
+\item class\_member is an identifier or a reference\_keyword, optionally followed
+by the symbol . and another identifier. The optional identifier is to specifically access members
+of a given identifier
+
+\item set is a list of values, contained within brackets "[" and "]"
+
+\item reference\_keyword is either "owner" or "this", for writability these reference keywords are included
+to make it easier for the user to refer to either a superclass (owner) or the active object (this)
+
+\item value\_keyword is much like reference\_keyword but has to be given definitions of each keyword.
+value\_keyword is can be "self", "enemy", "ally", "team\_ally", "team\_enemy" or "all".
+These keywords are included to make it easier to define who are effected by specific actions
+
+\item call takes an identifier, followed by one or more value enclosed in parantheses "(" and ")"
+
+\item identifier starts with either a letter or an underscore "\_", followed by either letter, digit or
+an underscore
+
+\item string consists of all\_symbols enclosed in quotation marks '"'
+
+\item bool is a boolean expression which can be either false or true
+
+\item number is the only form for representing numbers in \langname{}, in a form of a decimal fraction
+this form is both more detailed than an integer and eliminates the need for casting when calculating
+
+\item digit represents one symbol from the decimal system, namely 0 - 9
+
+\item letter represents one symbol from the american alphabet, both uppercase and lowercase
+
+\item all\_symbols is every symbol in the ascii table, besides the quotation mark '"'
+
+\end{itemize}
