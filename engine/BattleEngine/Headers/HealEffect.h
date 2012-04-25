@@ -15,15 +15,16 @@ namespace testbattle {
 /**
  * Example effect.
  **/
-class PhysicalDamageEffect : public engine::Effect
+class HealEffect : public engine::Effect
 {
 public:
-    PhysicalDamageEffect();
-    PhysicalDamageEffect(engine::Primarch *s, engine::Primarch *t);
+    HealEffect();
+    HealEffect(engine::Primarch *s, engine::Primarch *t);
 
-    engine::Character *target_char, *source_char;
+    engine::Character *source_char, *target_char;
 
     Effect *clone(engine::Primarch *s, engine::Primarch *t);
+    
     void execute();
 };
 

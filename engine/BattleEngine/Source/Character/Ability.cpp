@@ -11,9 +11,7 @@ namespace engine {
 
 Ability::Ability()
 {
-	// Note you'll probably mess things up if you don't use non-abstract
-	// objects during new EffDeff additions.
-    this->effects = std::vector<engine::EffectDefinition<Effect>>();
+    this->effects = std::vector<engine::Effect*>();
     this->cost_health = this->cost_mana = 0;
 }
 

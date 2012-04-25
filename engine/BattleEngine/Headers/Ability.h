@@ -19,7 +19,7 @@ namespace engine {
 class Ability : public RGR_List
 {
 public:
-	std::vector<EffectDefinition<Effect> > effects;
+	std::vector<Effect*> effects;
 //	std::vector<RGR_Enum> targets;
 
 	Ability();

@@ -19,18 +19,21 @@ Character classes, attributes, effects, abilities, resources, modifiers and vari
 Each of these systems have their 'dice pool' and their rules which define what types of dices and how many are involved in a given task.
 The systems' dice size and quantity differ, but are derived from the same concept: \textit{''To decide the outcome of a given task, you must roll a dice of a specific size, add modifiers, calculate the result and compare to the task's difficulty. If your result is higher, you succeed''}\\
 
-What these systems have in common, although implemented differently in each, is health points, damage and their calculations. This results in a different approach to our engine's damage calculations. While \emph{WoD} and \emph{Cyberpunk} have some very convenient representations for \emph{pen \& paper} role-play, they are not suitable for our engine. A character sheet from the game \emph{World of Darkness} is presented for reference on appendix \vref{charsheet}. As seen on the character sheet, a character is defined by their \emph{Attributes}, \emph{Skills} and \emph{Other Traits}. When playing a game, it is recommended to have the core rulebook as support, since calculations and various details about happenings is defined there.
+What these systems have in common, although implemented differently in each, is health points, damage and their calculations. This results in a different approach to our engine's damage calculations. While \ac{wod} and \emph{Cyberpunk} have some very convenient representations for \emph{pen \& paper} role-play, they are not suitable for our engine, reason being that health has various types, be it bashing, lethal or aggravated.
+With this implementation the system captures some real-life forms of damage. An attack with a knife therefore does not have the same effect as with a hammer. Whereas in a health-resource based implementation, like in some video games, an attack does an amount of damage regardless of the type of attack. The amount is then subtracted from the health pool of the victim.
+A character sheet from the game \ac{wod} is presented for reference on appendix \vref{charsheet}. As seen on the character sheet, a character is defined by their \emph{Attributes}, \emph{Skills} and \emph{Other Traits}. When playing a game, it is recommended to have the core rulebook as support, since calculations and various details about happenings is defined there.
 
-\subsection*{Conclusion}
+\subsubsection*{Conclusion}
 As a proof of concept, we choose the common characteristics of these systems for constructing the rulebook, common characteristics being the before mentioned \emph{requirements} of the systems.
 By using Characters classes, attributes, effects, abilities, resources and modifiers, we can define a character in our language, like it was a character sheet. If done correctly, this should satisfy our target group.
 
+\begin{comment}
 \subsubsection*{''Final Fantasy'' \& engine specifics}
 The Event system and fight simulation will be based on the first games of the video-game series \emph{Final Fantasy}, this is done to simplify the implementation. Final Fantasy is a fantasy role-playing game, released for the \emph{Nintendo Entertainment System} in 1987. The game was a success and has since then spawned a whole franchise named after the original title.
 The Final Fantasy series have implemented various combat systems, turn-based and real-time.\cite{ffantasy}
 Since our engine simulates battle and provides fairness through modifiers, we choose turn-based combat, where a battle is measured in turns.
 For simplicity we also choose to restrict the number of contestants to two.
-
+\end{comment}
 
 
 %sources: WoD - The World of Darkness (ISBN: 1-58846-484-9) by White Wolf Publishing

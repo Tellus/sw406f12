@@ -10,20 +10,19 @@
 namespace engine
 {
 
-void Attribute::modify(int amount)
-{
-	this->current += amount;
-}
-
-Attribute::Attribute(int value)
-{
-	this->current = value;
-	this->initial = value;
-}
-
 Attribute::Attribute()
 {
 	// TODO Auto-generated constructor stub
+}
+
+Attribute::Attribute(float start)
+{
+    this->set_initial(start);
+}
+
+Attribute::Attribute(int initial)
+{
+    this->set_initial((float)initial);
 }
 
 Attribute::Attribute(Attribute *copy)
@@ -37,9 +36,14 @@ Attribute::~Attribute()
 	// Nothing to clean...
 }
 
-Attribute::Attribute(float start)
+void Attribute::set_initial(float init)
 {
-    this->current = this->initial = start;
+    this->current = this->initial = init;
+}
+
+void Attribute::modify(float amount)
+{
+	this->current += amount;
 }
 
 void Attribute::increase(float amount)

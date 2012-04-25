@@ -7,17 +7,25 @@
 
 #include "PhysicalDamageEffect.h"
 
-namespace engine{
+namespace testbattle{
+
+PhysicalDamageEffect::PhysicalDamageEffect(engine::Primarch *s, engine::Primarch *t)
+    : engine::Effect(s, t) {}
+
+PhysicalDamageEffect::PhysicalDamageEffect() : engine::Effect() {}
 
 void PhysicalDamageEffect::execute()
 {
-    // Cast target to Character.
-    this->target_char = (Character*)this->target;
-    this->source_char = (Character*)this->source;
+    // Cast target to Character.<
+    this->target_char = (engine::Character*)this->target;
+    this->source_char = (engine::Character*)this->source;
 
-    // SHOULD be: WeaponDMG + Strength/2 + 1
-    // Damage reduction unknown right now.
-    this->target_char->get_resource("health")->deplete(20);
-	// Should have: (this->source->attributes["Strength"]->current / 2) + 1;
+    this->target_char->get_resource("Health")->deplete(20);
 }
+
+engine::Effect *PhysicalDamageEffect::clone(engine::Primarch *s, engine::Primarch *t)
+{
+    return new PhysicalDamageEffect(s, t);
+}
+
 };
