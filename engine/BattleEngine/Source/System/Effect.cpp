@@ -20,4 +20,16 @@ Effect::~Effect()
 	// TODO Auto-generated destructor stub
 }
 
+Effect::Effect(Primarch *source, Primarch *target)
+{
+    this->target = target;
+    this->source = source;
+}
+
+void Effect::execute()
+{
+    // TODO Useless stub.
+    // TODO Reconsider a more elegant design.
+}
+
 } /* namespace engine */

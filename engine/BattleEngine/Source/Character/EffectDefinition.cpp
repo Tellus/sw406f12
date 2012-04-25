@@ -19,7 +19,9 @@ template <class T> EffectDefinition<T>::~EffectDefinition() {
 
 template <class T> T EffectDefinition<T>::spawn(Primarch *source, Primarch *target)
 {
-    return new T(source, target);
+    return T(source, target);
 }
+
+template Effect EffectDefinition<Effect>::spawn(Primarch *source, Primarch *target);
 
 } /* namespace engine */

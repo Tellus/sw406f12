@@ -35,10 +35,12 @@ void Action::execute()
 
 void Action::generate_effects()
 {
-	std::vector<EffectDefinition<Effect> > * tmp = &this->ability->effects;
-	for(std::vector<EffectDefinition<Effect> >::iterator i = tmp->begin(); i != tmp->end(); i++)
+	std::vector<Effect*> *tmp = &this->ability->effects;
+	Effect *eff;
+	for(std::vector<Effect*>::iterator i = tmp->begin(); i != tmp->end(); i++)
 	{
-		(*i).spawn(source, target);
+	    eff = *i;
+		eff->clone(source, target);
 	}
 }
 
