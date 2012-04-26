@@ -1,7 +1,7 @@
 \subsection{Relative Global References}
 RGR's (or "RoGeRs") are a set of keywords that correlate to a dynamic set of global references. these are \emph{owner} \emph{enemy} \emph{target} to name a few, and will always reference the respective entity from the perspective of the local scope. \emph{enemy}, for example, will always reference the \textbf{other} Character in a battle when applied inside a Character subtype or its members, while \emph{owner} always references the topmost Character in a membership hierarchy. Consider the following code:
 
-\begin{lstlisting}
+\begin{lstlisting}[language=fflang]
 make Fireball from Ability
 {
 	// Several mandatory members omitted for clarity.
@@ -19,4 +19,4 @@ make Mage from Character
 }
 \end{lstlisting}
 
-\emph{owner} when referenced in Fireball, will point to whichever Character is considering the ability. If it is the Wizard's turn and is calculating the use of the Fireball ability, \emph{owner} points to Wizard, not Mage. Essentially, this syntax approach wraps a parent-child relationship between objects (the hierarchy structucal design pattern) without the programmer having to specify these relationships explicitly. All of the RGR's thus automatically represent this relationship model, allowing the programmer to focus purely on the subtype at hand rather than the larger class architecture and the implications of n-element aggregation chains.
+\emph{owner} when referenced in Fireball, will point to whichever Character is considering the ability. If it is the Wizard's turn and is calculating the use of the Fireball ability, \emph{owner} points to Wizard, not Mage. Essentially, this syntax approach wraps a parent-child relationship between objects (the hierarchy structural design pattern) without the programmer having to specify these relationships explicitly. All of the RGR's thus automatically represent this relationship model, allowing the programmer to focus purely on the subtype at hand rather than the larger class architecture and the implications of n-element aggregation chains.
