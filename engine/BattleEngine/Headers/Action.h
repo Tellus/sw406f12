@@ -41,16 +41,15 @@ public:
 	 */
 	void execute();
 
-protected:
     Primarch *source, *target;
     RGR_Enum *target_rgr;
     Ability *ability;
 
-
+protected:
     /**
      * Called by execute, to generate a collections of effects from effectDefinitions
      */
-    void generate_effects();
+    std::vector<Effect*> *generate_effects();
 };
 
 } /* namespace engine */

@@ -6,6 +6,7 @@
  */
 
 #include "Effect.h"
+#include <iostream>
 
 namespace engine {
 
@@ -30,6 +31,7 @@ void Effect::execute()
 {
     // TODO Useless stub.
     // TODO Reconsider a more elegant design.
+    std::cout << "STUB EFFECT CALLED!\n";
 }
 
 } /* namespace engine */

@@ -30,18 +30,31 @@ Action::~Action() {
 
 void Action::execute()
 {
-	this->generate_effects();
+    std::cout << "Action execution started.\n";
+
+	std::vector<Effect*> *effects = this->generate_effects();
+	for (std::vector<Effect*>::iterator iter = effects->begin(); iter != effects->end(); iter++)
+	{
+	    std::cout << "\tExecuting effect.\n";
+	    Effect* f = *iter;
+	    f->execute();
+	}
 }
 
-void Action::generate_effects()
+std::vector<Effect*> *Action::generate_effects()
 {
 	std::vector<Effect*> *tmp = &this->ability->effects;
+	std::vector<Effect*> *out = new std::vector<Effect*>();;
 	Effect *eff;
+	
+	std::cout << "Cloning " << tmp->size() << " effects.\n";
+	
 	for(std::vector<Effect*>::iterator i = tmp->begin(); i != tmp->end(); i++)
 	{
 	    eff = *i;
-		eff->clone(source, target);
+		out->push_back(eff->clone(source, target));
 	}
+	return out;
 }
 
 } /* namespace engine */

@@ -88,4 +88,23 @@ int RGR_List::get_as_mask()
 	return this->rgr_mask;
 }
 
+std::string RGR_List::to_string(RGR_Enum in)
+{
+    switch (in)
+    {
+        case ANY:
+            return "ANY";
+        case ENEMY:
+            return "ENEMY";
+        case ALLY:
+            return "ALLY";
+        case OWNER:
+            return "OWNER";
+        case ALL:
+            return "ALL";
+        default:
+            return "UNKNOWN";
+    }
+}
+
 }

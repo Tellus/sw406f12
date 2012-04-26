@@ -8,11 +8,15 @@
 #include <iostream>
 
 #include "GameState.h"
+#include "AbilityTable.h"
 
-#include "EffectDefinition.h"
+#include "SexyAbility.h"
+#include "HealAbility.h"
+#include "AttackAbility.h"
 
 using namespace std;
 using namespace engine;
+using namespace testbattle;
 
 void sp(std::string to_print)
 {
@@ -36,13 +40,43 @@ int main(int argc, char *argv[])
     // add behaviour
     // Abilities.
     sp("\tAbilities...");
-    johannes->abilities.push_back(new Ability(10, 0));
-    johannes->abilities.push_back(new Ability(0, 25));
-    johannes->abilities.push_back(new Ability(0,0));
+    johannes->add_ability("Sexy", new SexyAbility());
+    johannes->add_ability("Heal", new HealAbility());
+    johannes->add_ability("Attack", new AttackAbility());
+
+    johannes->pretty_print();
 
     sp("Done!");
     
-    cout << johannes->get_resource("Health")->get_current();
+    sp("Creating intermediate GameState.");
+    
+    GameState *state = new GameState();
+    state->add_character(johannes);
+    state->current_char = johannes;
+    
+    state->pretty_print();
+    
+    sp("Testing copy-constructor.");
+    
+    GameState *tmp_state = new GameState(*state);
+    
+    tmp_state->pretty_print();
+    
+    sp("Running AbilityTable on GameState.");
+    
+    AbilityTable *at = new AbilityTable(state);
+    
+    sp("Retrieving best state.");
+    
+    GameState *hit = at->get_next_state();
+    
+    sp("Printing best state.");
+    
+    hit->pretty_print();
+    
+    sp("There!");
+    
+    johannes->pretty_print();
 
 	return 0;
 }

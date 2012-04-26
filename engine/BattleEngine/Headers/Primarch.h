@@ -7,6 +7,9 @@
 
 #pragma once
 
+#include <iostream>
+#include <string>
+
 namespace engine {
 
 /**
@@ -15,7 +18,23 @@ namespace engine {
  **/
 class Primarch
 {
-
+public:
+    /**
+     * Global Id for a primarch. This is identical across GameState making it
+     * simpler to follow the "same" object through several instances.
+     **/
+    int id;
+    
+    /**
+     * Name. basically everything has a meaningful name. So, centralized :D
+     **/
+    std::string name;
+    
+    /**
+     * Pretty print. Should print human-readable information about the
+     * subclass instance.
+     **/
+    virtual void pretty_print() = 0;
 };
 
 }

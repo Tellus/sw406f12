@@ -9,6 +9,7 @@
 
 #include <math.h>
 #include <list>
+#include <string>
 
 namespace engine
 {
@@ -88,6 +89,12 @@ public:
 	 * but cannot offer the convenience of simple for loops with iterators.
 	 */
 	int get_as_mask();
+	
+	/**
+	 * Hard-coded method for getting string representations of enums. Naturally,
+	 * this is solely for debugging purposes.
+	 **/
+	static std::string to_string(RGR_Enum in);
 	
 private:
     /**

@@ -11,12 +11,24 @@ namespace engine {
 
 RGRIdentifier::RGRIdentifier()
 {
-	// TODO: Stub?
+    this->_init();
+}
+
+RGRIdentifier::RGRIdentifier(int rgr_id)
+{
+    this->_init();
+    
+    this->rgr = rgr_id;
 }
 
 RGRIdentifier::~RGRIdentifier()
 {
 	// TODO: Stub.
+}
+
+void RGRIdentifier::_init()
+{
+
 }
 
 }

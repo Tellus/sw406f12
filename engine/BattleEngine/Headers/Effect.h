@@ -58,7 +58,7 @@ public:
 	 * Makes the changes to source and target as defined by the subclassed
 	 * Effect.
 	 **/
-	void execute();
+	virtual void execute();
 	
 	/**
 	 * Clones the Effect. This is a relatively simple mechanism for creating a
