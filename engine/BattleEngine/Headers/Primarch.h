@@ -29,6 +29,12 @@ public:
      * retaining the id for the Engine's references.
      **/
     Primarch(const Primarch& copy);
+    
+    /**
+     * Creates a new Primarch with a human-readable name. Similar
+     * to base constructor in its workings.
+     **/
+    Primarch(std::string name);
 
     /**
      * Global Id for a primarch. This is identical across GameState making it

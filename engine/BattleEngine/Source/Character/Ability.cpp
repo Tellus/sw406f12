@@ -24,6 +24,15 @@ Ability::Ability(float cost_health, float cost_mana)
     this->cost_mana = cost_mana;
 }
 
+Ability::Ability(std::string name, float cost_health, float cost_mana) :
+    Primarch(name)
+{
+    this->_init();
+    
+    this->cost_health = cost_health;
+    this->cost_mana = cost_mana;
+}
+
 Ability::Ability(const Ability& copy)
 {
     this->_init();
@@ -71,7 +80,7 @@ void Ability::pretty_print()
     {
         std::cout << RGR_List::to_string(*rgr_iter) << " ";
     }
-    std::cout << "\n" << "Effects:\n";
+    std::cout << "\n" << "Effects (" << this->effects.size() << "):\n";
     for (std::vector<Effect*>::iterator eff_iter = this->effects.begin();
          eff_iter != this->effects.end();
          eff_iter++)

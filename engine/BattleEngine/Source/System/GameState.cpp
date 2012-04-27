@@ -61,14 +61,24 @@ Character *GameState::get_rgr(RGR_Enum rgr)
 {
     if (GameState::rgr_identifiers.count(rgr) <= 0)
     {
-        std::cout << "No handler for " << RGR_List::to_string(rgr) << " was found.";
+        frontend::PrettyPrinter::print_bad("ERROR! ");
+        std::cout << "No handler for " << RGR_List::to_string(rgr) << " was found.\n";
         return NULL;
     }
         
     // Retrieve the proper identifier instance.
     RGRIdentifier *ident = GameState::rgr_identifiers[rgr];
     
-    return ident->identify(this);
+    Character *found = ident->identify(this);
+    
+    if (found == NULL)
+    {
+        frontend::PrettyPrinter::print_bad("ERROR! ");
+        std::cout << "No results when requesting " << RGR_List::to_string(rgr) << ".\n";
+        return NULL;
+    }
+    
+    return found;
 }
 
 void GameState::pretty_print()

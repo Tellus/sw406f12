@@ -16,7 +16,7 @@
 
 namespace engine {
 
-class Ability : public RGR_List, Primarch
+class Ability : public Primarch, public RGR_List
 {
 public:
     /**
@@ -27,6 +27,7 @@ public:
 
 	Ability();
 	Ability(float cost_health, float cost_mana);
+    Ability(std::string name, float cost_health, float cost_mana);
 	
 	/**
 	 * Copy-constructor. We use this in the deep cloning of objects for new
