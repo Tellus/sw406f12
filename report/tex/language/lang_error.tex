@@ -1,6 +1,6 @@
 \section{Error reporting}
 
-One of the most important things to be aware of when designing and implementing a compiler is how the programmer is informed of errors. Errors in programming are very common, errors are almost always user-related like grammatical errors, trying to use unsupported operations, referring to undeclared entities, endless loops, memory misuse etc.
+One of the most important things to be aware of when designing and implementing a compiler is how the programmer is informed of errors. Errors in programming are very common and therefore need to be handled properly. Errors are almost always user-related, such as; grammatical errors, trying to use unsupported operations, referring to undeclared entities, endless loops, memory misuse etc.
 
 \subsection{Error types}
 Errors can be caught in different phases of compiling.
@@ -15,4 +15,13 @@ x = 5;
 /* Variable with a type */
 int x = 5;
 \end{lstlisting}}
-The level of detail is of course up to the designers of the compiler, as the errors that are reported are in the hands of the designers, not the compiler itself.
+The compiler might then return "Undeclared variable used on line <line number>".
+
+The compiler must be made aware of the errors that can occur and how to report them. This is in the hands of the designers of the compiler, and the level of detail as well
+
+\subsection{\langname{} errors}
+
+\langname{} consists of almost strictly declarations and calls. These declarations and calls need to be formed according to the language specifics and checked during scanning and/or parsing.
+The compiler will report the first error it encounters, stop compiling and the user will then be required to fix the given error and try again.
+If all code to be compiled parses correctly, the type-checking is performed where again the compiler will stop if an error is encountered.
+
