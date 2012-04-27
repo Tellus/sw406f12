@@ -8,11 +8,13 @@
 #ifndef ATTRIBUTE_H_
 #define ATTRIBUTE_H_
 
+#include "Primarch.h"
 #include <string>
 
 namespace engine {
 
-class Attribute {
+class Attribute : public Primarch
+{
 protected:
 	float current, initial;
 
@@ -20,7 +22,7 @@ public:
 	Attribute();
 	Attribute(float start);
 	Attribute(int initial);
-	Attribute(Attribute *copy);
+	Attribute(const Attribute& copy);
 	virtual ~Attribute();
 
 	std::string pretty_name;
@@ -55,6 +57,8 @@ public:
 	void virtual change(float amount);
 	
 	float get_current();
+	
+	void pretty_print();
 	
 private:
     /**

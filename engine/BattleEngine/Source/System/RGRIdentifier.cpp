@@ -18,7 +18,7 @@ RGRIdentifier::RGRIdentifier(int rgr_id)
 {
     this->_init();
     
-    this->rgr = rgr_id;
+    this->rgr = (RGR_Enum)rgr_id;
 }
 
 RGRIdentifier::~RGRIdentifier()

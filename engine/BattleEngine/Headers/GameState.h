@@ -68,13 +68,21 @@ public:
      **/
     Character *get_rgr(RGR_Enum rgr);
     
-public:
-    std::map<RGR_Enum, RGRIdentifier*> rgr_identifiers;
+    static std::map<RGR_Enum, RGRIdentifier*> rgr_identifiers;
     
     /**
      * Human-readable text output of the GameState's current data contents.
      **/
     void pretty_print();
+    
+    /**
+     * Retrieves the Character identified by id, if any.
+     * \param id The id to look for.
+     * \return Pointer to the Character if found, null otherwise.
+     **/
+    Character *get_char_by_id(int id);
+    
+    static void register_identifier(RGRIdentifier *r);
 };
 
 } /* namespace engine */

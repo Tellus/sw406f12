@@ -9,6 +9,8 @@
 
 namespace engine {
 
+std::map<RGR_Enum, RGRIdentifier*> GameState::rgr_identifiers = std::map<RGR_Enum, RGRIdentifier*>();
+
 GameState::GameState() {
 	// TODO Auto-generated constructor stub
 }
@@ -24,17 +26,26 @@ GameState::~GameState() {
 GameState::GameState(const GameState& copy):
     characters(copy.characters)
 {
-    std::cout << "GameState: " << &copy << " copied into " << this << "\n";
+    std::cout << "GameState: " << &copy << " copying into " << this << "\n";
     
     this->characters = std::list<Character*>();
     std::list<Character*> remote = copy.characters;
     
+    std::cout << "\tCharacters:\n";
     for (std::list<Character*>::iterator char_iter = remote.begin();
          char_iter != remote.end();
          char_iter++)
-     {
-        this->characters.push_back(new Character(**char_iter));
-     }
+    {
+        Character *c = *char_iter;
+        Character *nc = new Character(*c);
+        this->characters.push_back(nc);
+        
+        std::cout << "\t(" << c->id << ")\t" << c << '\t' << c->name << '\n';
+        std::cout << "\t\t TO \n";
+        std::cout << "\t(" << nc->id << ")\t" << nc << '\t' << nc->name << '\n';
+    }
+    
+    this->current_char = this->get_char_by_id(copy.current_char->id);
 }
 
 /**
@@ -48,14 +59,14 @@ void GameState::add_character(Character *to_add)
 
 Character *GameState::get_rgr(RGR_Enum rgr)
 {
-    if (this->rgr_identifiers.count(rgr) < 0)
+    if (GameState::rgr_identifiers.count(rgr) <= 0)
     {
         std::cout << "No handler for " << RGR_List::to_string(rgr) << " was found.";
         return NULL;
     }
         
     // Retrieve the proper identifier instance.
-    RGRIdentifier *ident = this->rgr_identifiers[rgr];
+    RGRIdentifier *ident = GameState::rgr_identifiers[rgr];
     
     return ident->identify(this);
 }
@@ -68,18 +79,43 @@ void GameState::pretty_print()
          char_iter != this->characters.end();
          char_iter++)
     {
-        std::cout << '\t' << (*char_iter)->name << '\t' << *char_iter;
+        Character *c = *char_iter;
+        std::cout << "\t(" << c->id << ")\t" << c << '\t' << c->name;
         if ((*char_iter)->id == this->current_char->id) std::cout << " (*)";
         std::cout << '\n';
     }
     
-    std::cout << "Registered RGR identifiers:\n";
-    for (std::map<RGR_Enum,RGRIdentifier*>::iterator rgr_iter = this->rgr_identifiers.begin();
-         rgr_iter != this->rgr_identifiers.end();
-         rgr_iter++)
+    if (GameState::rgr_identifiers.size() == 0)
     {
-        std::cout << '\t' << RGR_List::to_string(rgr_iter->first) << '\n';
+        std::cout << "RGR identifiers: None!\n";
     }
+    else
+    {
+        std::cout << "Registered RGR identifiers:\n";
+        for (std::map<RGR_Enum,RGRIdentifier*>::iterator rgr_iter = GameState::rgr_identifiers.begin();
+             rgr_iter != GameState::rgr_identifiers.end();
+             rgr_iter++)
+        {
+            std::cout << '\t' << RGR_List::to_string(rgr_iter->first) << '\n';
+        }
+    }
+}
+
+Character* GameState::get_char_by_id(int id)
+{
+    for (std::list<Character*>::iterator iter = this->characters.begin();
+         iter != this->characters.end();
+         iter++)
+    {
+        if ((*iter)->id == id) return *iter;
+    }
+    
+    return NULL;
+}
+
+void GameState::register_identifier(RGRIdentifier *r)
+{
+    GameState::rgr_identifiers[r->rgr] = r;
 }
 
 } /* namespace engine */

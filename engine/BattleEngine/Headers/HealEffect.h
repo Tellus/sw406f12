@@ -22,8 +22,6 @@ public:
     HealEffect(engine::Primarch *s, engine::Primarch *t);
 
     engine::Character *source_char, *target_char;
-
-    Effect *clone(engine::Primarch *s, engine::Primarch *t);
     
     void execute();
 };

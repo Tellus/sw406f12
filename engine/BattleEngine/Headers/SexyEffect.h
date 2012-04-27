@@ -23,7 +23,6 @@ public:
     SexyEffect(engine::Primarch *s, engine::Primarch *t);
     SexyEffect();
     void execute();
-    Effect *clone(engine::Primarch *s, engine::Primarch *t);
 };
 
 }

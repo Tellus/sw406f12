@@ -42,7 +42,7 @@ GameState *AbilityTable::get_next_state()
     // 1 + 2
     std::cout << "Creating viable actions...";
     std::vector<Action*> *actions = this->create_actions(this->state->current_char);
-    std::cout << " DONE!\nCalculating best piggy action...";
+    std::cout << " DONE (" << actions->size() << ")!\nCalculating best piggy action...";
 
     // 3
     float max_piggy = 0;
@@ -50,6 +50,11 @@ GameState *AbilityTable::get_next_state()
          iter != actions->end();
          iter++)
     {
+        Action *tmp_a = *iter;
+        Character *t = (Character*)tmp_a->target;
+        std::cout << "\tConsidering:\n";
+        tmp_a->ability->pretty_print();
+        t->pretty_print();
         float new_pig = this->get_action_piggy(*iter);
         if (new_pig > max_piggy)
         {
@@ -58,7 +63,23 @@ GameState *AbilityTable::get_next_state()
         }
     }
     
-    std::cout << " DONE!\nReturning cloned state.\n";
+    std::cout << " DONE!\n";
+        
+    if (this->best_action == 0 || this->best_action == NULL)
+    {
+        std::cout << "ERROR! Null Action!\n";
+    }
+    else if (this->best_action->ability == 0 || this->best_action->ability == NULL)
+    {
+        std::cout << "ERROR! Ability was null for some reason!\n";
+    }
+    else
+    {
+        std::cout << "Best action:\n";
+        this->best_action->ability->pretty_print();
+    }
+    
+    std::cout << "Returning cloned state.\n";
     
     delete actions;
     

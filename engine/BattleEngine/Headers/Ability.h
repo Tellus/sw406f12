@@ -16,7 +16,7 @@
 
 namespace engine {
 
-class Ability : public RGR_List
+class Ability : public RGR_List, Primarch
 {
 public:
     /**
@@ -24,20 +24,20 @@ public:
      * use Effect::clone() when you need an effects rather than use it directly.
      **/
 	std::vector<Effect*> effects;
-//	std::vector<RGR_Enum> targets;
 
 	Ability();
 	Ability(float cost_health, float cost_mana);
+	
+	/**
+	 * Copy-constructor. We use this in the deep cloning of objects for new
+	 * GameStates.
+	 **/
+	Ability(const Ability& copy);
 	virtual ~Ability();
 	
 	float cost_health, cost_mana;
-	
-    RGR_List targets;
     
-    /**
-     * Retrieves the effect vector, specialised to a specific target.
-     **/
-    std::vector<Effect*> get_effects(Primarch *target);
+    void pretty_print();
     
 private:
     /**

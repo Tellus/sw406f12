@@ -22,9 +22,10 @@ Character::~Character()
 	// TODO Auto-generated destructor stub
 }
 
-Character::Character(const Character& copy)
+Character::Character(const Character& copy) :
+    Primarch(copy)
 {
-    // TODO: Remaining things that must be copied.
+    std::cout << copy.name << " (" << copy.id << ") is being copied into " << this << '\n';
 
     this->name = copy.name;
     
@@ -45,7 +46,7 @@ Character::Character(const Character& copy)
          res_iter != res_remote.end();
          res_iter++)
      {
-        this->add_resource(res_iter->first, new Resource(res_iter->second));
+        this->add_resource(res_iter->first, new Resource(*(res_iter->second)));
      }
     
     // Attributes
@@ -54,9 +55,9 @@ Character::Character(const Character& copy)
     for (std::map<std::string, Attribute*>::iterator attr_iter = attr_remote.begin();
          attr_iter != attr_remote.end();
          attr_iter++)
-     {
-        this->add_attribute(attr_iter->first, new Attribute(attr_iter->second));
-     }
+    {
+        this->add_attribute(attr_iter->first, new Attribute(*(attr_iter->second)));
+    }
 }
 
 void Character::_init()
@@ -68,7 +69,7 @@ void Character::_init()
 
 void Character::pretty_print()
 {
-    std::cout << "Character: " << this->name;
+    std::cout << "Character: " << this->name << '\n';
     std::cout << "Attributes:\n";
     std::map<std::string,Attribute*> *tmp = &this->attributes;
     for (std::map<std::string,Attribute*>::iterator iter = tmp->begin(); iter != tmp->end(); iter++)

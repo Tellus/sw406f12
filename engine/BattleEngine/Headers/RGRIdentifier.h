@@ -27,7 +27,7 @@ public:
 	/**
      * RGR_Enum value that this RGRIdentifier is able to identify.
      **/
-    int rgr;
+    RGR_Enum rgr;
     
     /**
      * Identifies a character from a given GameState. This method is overridden

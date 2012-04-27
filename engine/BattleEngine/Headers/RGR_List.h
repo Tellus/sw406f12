@@ -96,7 +96,7 @@ public:
 	 **/
 	static std::string to_string(RGR_Enum in);
 	
-private:
+protected:
     /**
      * List of RGR's.
      **/

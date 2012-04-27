@@ -26,9 +26,4 @@ void SexyEffect::execute()
     // Heals for 40 health.
     this->target_char->get_resource("Health")->regain(40);
 }
-
-engine::Effect *SexyEffect::clone(engine::Primarch *s, engine::Primarch *t)
-{
-    return new SexyEffect(s, t);
-}
 };

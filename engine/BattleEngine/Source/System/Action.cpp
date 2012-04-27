@@ -45,14 +45,12 @@ std::vector<Effect*> *Action::generate_effects()
 {
 	std::vector<Effect*> *tmp = &this->ability->effects;
 	std::vector<Effect*> *out = new std::vector<Effect*>();;
-	Effect *eff;
-	
+
 	std::cout << "Cloning " << tmp->size() << " effects.\n";
 	
 	for(std::vector<Effect*>::iterator i = tmp->begin(); i != tmp->end(); i++)
 	{
-	    eff = *i;
-		out->push_back(eff->clone(source, target));
+		out->push_back(new Effect(**i));
 	}
 	return out;
 }

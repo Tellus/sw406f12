@@ -14,6 +14,8 @@
 #include "HealAbility.h"
 #include "AttackAbility.h"
 
+#include "EnemyIdentifier.h"
+
 using namespace std;
 using namespace engine;
 using namespace testbattle;
@@ -25,10 +27,18 @@ void sp(std::string to_print)
 
 int main(int argc, char *argv[])
 {
+    cout << "BattleEngine v1 alpha.\n";
+    
+    cout << "Testing console output.\n";
+    
+    cout << "\033[1;31mbold red text\033[0m\n";
+    cout << "\[\033[32m]Hello, \[\033[36m]colourful \[\033[33mworld!\033[0m]\nm";
+
     cout << "Initializing character...\n";
 
     // Let's do a simple verification test: Create and populate a character.
     Character *johannes = new Character();
+    johannes->name = "Johannes";
     sp("\tResources...");
     johannes->add_resource("Health", new Resource(100, 0, 100));
     johannes->add_resource("Mana", new Resource(100, 0, 100));
@@ -53,14 +63,17 @@ int main(int argc, char *argv[])
     GameState *state = new GameState();
     state->add_character(johannes);
     state->current_char = johannes;
+    GameState::register_identifier(new EnemyIdentifier());
     
     state->pretty_print();
     
+    /**
     sp("Testing copy-constructor.");
     
     GameState *tmp_state = new GameState(*state);
     
     tmp_state->pretty_print();
+    **/
     
     sp("Running AbilityTable on GameState.");
     

@@ -18,6 +18,7 @@ namespace engine
 
 class EnemyIdentifier : public RGRIdentifier
 {
+public:
     Character *identify(GameState *from);
     EnemyIdentifier();
 };
