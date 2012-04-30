@@ -1,18 +1,30 @@
 \pagebreak
 \section{Syntax theory}
 % ~Hornbjerg
-Every language, whenever it is English, German, or some other language, have some specified gramma, used for making sentence in the languages. The gramma of the languages is specified by rules, which desripe how to use the gramma corretly. \\
-Every sourcecode of a program, written in some programming language also consist of some sentence. Specify how a correct sentence in programming languages i written, the programming language uses a set of rules called the \textit{syntax} of the language. \\
-The syntax of a programming language is usually descriped using an \ac{cfg}, which can be formed i different ways. Two of the most common forms is \ac{bnf} and \ac{ebnf}. \\
-\\
-\ac{cfg} was first descriped in the middel of the 1950s by Noam Chromsky. A \ac{cfg} is a colloction of substitutions rules. The rules consist of two kinds of symbols; \textit{nonterminals} also know as \textit{variable} and \textit{terminals}. Each rule in a \ac{cfg} is formed as a line. The line determents how to substitut one (ore more) \textit{variables} with another vaiable or terminal \cite{syntax_book}. \\
+\subsection{\ac{regex}}
+Every programming language, have some basic symbol, these could be ``expression'', ``value'', or so. These basic symbol have to be specified, so it is possible for a compiler to determine, if the programmer has made a mistake. \\
+Different ways to specified the basic symbols, of a programming language, exist, although, most programming languages use \ac{regex} to specified the basic symbols. \cite{Fischer2010}
 
-\subsection{\ac{ebnf}}
+\ac{regex} is build by regular operations, these operations are; union ``$\cup$'', concatenation ``$\circ$'' and star ``$\ast$''.
+\begin{description}
+	\item Union work as an ``or'' operator, which means that the expression $0 \cup 1$ can either evaluate $0$ or $1$.
+	\item Concatenation works as a ``followed by'' operator, which means the expression $0 \circ 1$ evaluate a $0$ followed by a $1$.
+	\item Star works as an ``zero or more'' operator, meaning that the expression $0^{\ast}$ evaluate zero or more $0$'s.
+\end{description}
+Summing up, the \ac{regex} $(0 \cup 1) \circ 0^{\ast}$ evaluates a $0$ or $1$ followed by zero or more $0$'s. \cite{syntax_book}
+
+
+\subsection{\ac{cfgs}}
+Every language, whenever it is English, German, or some other language, have some specified grammar, used for making sentence in the languages. The grammar of the languages is specified by rules, which describe how to use the grammar correctly. \\
+Every source code of a program, written in some programming language also consist of some sentence. Specify how a correct sentence in programming languages i written, the programming language uses a set of rules called the \textit{syntax} of the language. \\
+The syntax of a programming language is usually described using an \ac{cfg}, which can be formed i different ways. Two of the most common forms is \ac{bnf} and \ac{ebnf}. \\
+\\
+\ac{cfgs} was first described in the middle of the 1950s by Noam Chromsky \cite{concepts_prog_lang}. A \ac{cfg} is a collection of substitutions rules. The rules consist of two kinds of symbols; \textit{nonterminals} also know as \textit{variable} and \textit{terminals}. Each rule in a \ac{cfg} is formed as a line. The line determines how to substitute one (ore more) \textit{variables} with another variable or terminal \cite{syntax_book}.
+
+\subsubsection*{\ac{ebnf}}
 The \ac{ebnf} notation is an extended version of the \ac{bnf} notation. Both the \ac{bnf} notation and the \ac{ebnf} notation are \ac{cfg}'s, and therefore used for describing syntax of programming languages. The \ac{bnf} notation was introduced by John Backus, and the was later modified by Peter Naur, hence the notation was called \ac{bnf}. \\
 The \ac{bnf} notation has though time been extended i several ways, and even though all the extensions is not exactly the same, they are all called \ac{ebnf}. The extended notation was supposed to make the notation more readable and writeable. The \ac{bnf} notation and the \ac{ebnf} notation have the same power of description. \cite{concepts_prog_lang}
 
-\subsection{Regular expressions}
-Some about that shit to come here........
 
 \begin{comment}
 \begin{tabular}{l l l}
@@ -45,5 +57,5 @@ The notation \ac{bnf}, is an form of a \ac{cfg}, and it was introduced by John B
 $<\texttt{assign}>$ & $\rightarrow$ & $<\texttt{var}> \; = \; <\texttt{expression}>$ 
 \end{tabular}
 
-where $<\texttt{assign}>$ is an abstract reprecentation of an assignment statement, and the rule specifies that $<\texttt{assign}>$ is defined as an instance of the abstraction $<\texttt{var}>$ followed by the `=' symbol, and then followed by the abstraction $<\texttt{expression}>$.
+where $<\texttt{assign}>$ is an abstract representation of an assignment statement, and the rule specifies that $<\texttt{assign}>$ is defined as an instance of the abstraction $<\texttt{var}>$ followed by the `=' symbol, and then followed by the abstraction $<\texttt{expression}>$.
 \end{comment}
