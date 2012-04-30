@@ -5,15 +5,19 @@
  *      Author: Ezphares
  */
 
-#ifndef GAMESTATE_H_
-#define GAMESTATE_H_
+#pragma once
 
 #include <list>
+#include <string>
+#include <iostream>
 
+#include "RGRIdentifier.h"
 #include "Character.h"
 #include "Behaviour.h"
-#include "AbilityTable.h"
 #include "Team.h"
+#include "Exceptions/InvalidRGRException.h"
+
+#include "PrettyPrinter.h"
 
 #define GAMESTATE_CONTAINER_TYPE list
 
@@ -61,9 +65,26 @@ public:
      * Retrieves a pointer to a character represented by the passed RGR.
      * \param rgr The RGR to retrieve for.
      * \return Pointer to a Character in the GameState that represents the RGR.
+     * Returns NULL if the RGR is invalid or not applicable (for example ALLY
+     * if there are only two characters, OWNER and ENEMY).
      **/
     Character *get_rgr(RGR_Enum rgr);
+    
+    static std::map<RGR_Enum, RGRIdentifier*> rgr_identifiers;
+    
+    /**
+     * Human-readable text output of the GameState's current data contents.
+     **/
+    void pretty_print();
+    
+    /**
+     * Retrieves the Character identified by id, if any.
+     * \param id The id to look for.
+     * \return Pointer to the Character if found, null otherwise.
+     **/
+    Character *get_char_by_id(int id);
+    
+    static void register_identifier(RGRIdentifier *r);
 };
 
 } /* namespace engine */
-#endif /* GAMESTATE_H_ */

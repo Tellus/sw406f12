@@ -27,8 +27,4 @@ void HealEffect::execute()
     this->target_char->get_resource("Health")->regain(40);
 }
 
-engine::Effect *HealEffect::clone(engine::Primarch *source, engine::Primarch *target)
-{
-    return new HealEffect(source, target);
-}
 };

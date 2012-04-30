@@ -1,7 +1,7 @@
 /*
- * EnemyIdentifier.h
+ * OwnerIdentifier.h
  *
- *  Created on: 16/04/2012
+ *  Created on: 27/04/2012
  *      Author: Johannes
  */
 
@@ -16,11 +16,11 @@
 namespace engine
 {
 
-class EnemyIdentifier : public RGRIdentifier
+class OwnerIdentifier : public RGRIdentifier
 {
 public:
     Character *identify(GameState *from);
-    EnemyIdentifier();
+    OwnerIdentifier();
 };
 
 }

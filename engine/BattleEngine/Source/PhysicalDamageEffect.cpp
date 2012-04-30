@@ -23,9 +23,4 @@ void PhysicalDamageEffect::execute()
     this->target_char->get_resource("Health")->deplete(20);
 }
 
-engine::Effect *PhysicalDamageEffect::clone(engine::Primarch *s, engine::Primarch *t)
-{
-    return new PhysicalDamageEffect(s, t);
-}
-
 };

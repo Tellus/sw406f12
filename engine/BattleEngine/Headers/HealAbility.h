@@ -13,7 +13,7 @@
 namespace testbattle
 {
 
-class HealAbility : engine::Ability
+class HealAbility : public engine::Ability
 {
 public:
     HealAbility();

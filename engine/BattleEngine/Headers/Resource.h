@@ -10,8 +10,6 @@
 
 #include "Attribute.h"
 
-#include <algorithm>
-
 namespace engine {
 
 class Resource:public engine::Attribute {
@@ -26,17 +24,15 @@ protected:
      **/
     float maximum;
 
-    float initial_minimum;
-
 public:
 	/* At maximum = -1, set it to value */
 	Resource(int value, int maximum = -1, int minimum = 0);
-	Resource(Resource *copy);
+	Resource(const Resource& copy);
 	virtual ~Resource();
 
 	void deplete(int amount);
 	void regain(int amount);
-	void modify_minimum(int amount);
+	
 	virtual void reset();
 	virtual void modify(int amount);
 	
@@ -53,6 +49,8 @@ public:
 	 * \param value The new value.
 	 **/
 	void modify_max(float value);
+	
+	void pretty_print();
 };
 
 } /* namespace engine */

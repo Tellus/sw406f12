@@ -63,7 +63,8 @@ void RGR_List::set_rgrs(int tar)
     {
         if (tar & 1)
         {
-            this->rgr_list.push_back(RGR_Enum(pow(2, pos)));
+			int rgr_tmp = pow(2.0, pos);
+            this->rgr_list.push_back(RGR_Enum(rgr_tmp));
         }
         
         pos++;
@@ -86,6 +87,25 @@ std::list<RGR_Enum> RGR_List::get_as_list()
 int RGR_List::get_as_mask()
 {
 	return this->rgr_mask;
+}
+
+std::string RGR_List::to_string(RGR_Enum in)
+{
+    switch (in)
+    {
+        case ANY:
+            return "ANY";
+        case ENEMY:
+            return "ENEMY";
+        case ALLY:
+            return "ALLY";
+        case OWNER:
+            return "OWNER";
+        case ALL:
+            return "ALL";
+        default:
+            return "UNKNOWN";
+    }
 }
 
 }

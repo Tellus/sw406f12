@@ -28,7 +28,7 @@ Character *EnemyIdentifier::identify(GameState *from)
             return tmp->front();
         }
     }
-    throw 404;
+    return NULL;
 }
 
 }

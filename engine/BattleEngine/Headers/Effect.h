@@ -18,7 +18,7 @@ namespace engine {
  * unhealthy amount of classes in the other alternative (separate subclasses of
  * EffectDefinition defeats its purpose).
  **/
-class Effect
+class Effect : public Primarch
 {
 public:
     /**
@@ -26,6 +26,12 @@ public:
      * be usable, it is not guaranteed in the API.
      **/
 	Effect();
+	
+	/**
+	 * Copy-constructor, used for creating deep mirror copies during GameState
+	 * cloning.
+	 **/
+	Effect(const Effect& copy);
 	
 	/**
 	 * Creates a usable Effect, with a source and target (our pre-determined
@@ -58,14 +64,9 @@ public:
 	 * Makes the changes to source and target as defined by the subclassed
 	 * Effect.
 	 **/
-	void execute();
+	virtual void execute();
 	
-	/**
-	 * Clones the Effect. This is a relatively simple mechanism for creating a
-	 * single API for Effect creation. As mentioned, this creates the effect of
-	 * some weird sort of self-replicating factory thingy-dingy.
-	 **/
-	virtual Effect *clone(Primarch *s, Primarch *t) = 0;
+	void pretty_print();
 };
 
 } /* namespace engine */

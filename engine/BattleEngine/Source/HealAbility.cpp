@@ -11,7 +11,7 @@ namespace testbattle
 {
 
 HealAbility::HealAbility() :
-    Ability(0,25)
+    Ability("Heal", 0, 25)
 {
     HealEffect *eff = new HealEffect();
     this->effects.push_back(eff);

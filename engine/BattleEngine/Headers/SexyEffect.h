@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <string>
+#include <iostream>
 #include "Effect.h"
 #include "Character.h"
 
@@ -21,7 +23,6 @@ public:
     SexyEffect(engine::Primarch *s, engine::Primarch *t);
     SexyEffect();
     void execute();
-    Effect *clone(engine::Primarch *s, engine::Primarch *t);
 };
 
 }

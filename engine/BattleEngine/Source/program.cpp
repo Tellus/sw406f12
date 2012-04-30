@@ -8,11 +8,23 @@
 #include <iostream>
 
 #include "GameState.h"
+#include "AbilityTable.h"
 
-#include "EffectDefinition.h"
+#include "SexyAbility.h"
+#include "HealAbility.h"
+#include "AttackAbility.h"
+
+// Identifier includes. This should be made prettier.
+#include "EnemyIdentifier.h"
+#include "OwnerIdentifier.h"
+
+// Other stuff.
+#include "PrettyPrinter.h"
 
 using namespace std;
 using namespace engine;
+using namespace frontend;
+using namespace testbattle;
 
 void sp(std::string to_print)
 {
@@ -21,28 +33,68 @@ void sp(std::string to_print)
 
 int main(int argc, char *argv[])
 {
-    cout << "Initializing character...\n";
+    PrettyPrinter::print("BattleEngine v1 alpha.\n", YELLOW);
+
+    PrettyPrinter::print("Initialize new character...\n");
 
     // Let's do a simple verification test: Create and populate a character.
     Character *johannes = new Character();
-    sp("\tResources...");
+    johannes->name = "Johannes";
+    
+    PrettyPrinter::print("Resources...\n", YELLOW);
     johannes->add_resource("Health", new Resource(100, 0, 100));
     johannes->add_resource("Mana", new Resource(100, 0, 100));
-    sp("\tAttributes...");
+    
+    PrettyPrinter::print("Attributes...\n", YELLOW);
     johannes->add_attribute("Strength", new Attribute(17));
     johannes->add_attribute("Intelligence", new Attribute(25));
     johannes->add_attribute("Sexyness", new Attribute(10000));
     // Behaviour
     // add behaviour
     // Abilities.
-    sp("\tAbilities...");
-    johannes->abilities.push_back(new Ability(10, 0));
-    johannes->abilities.push_back(new Ability(0, 25));
-    johannes->abilities.push_back(new Ability(0,0));
-
-    sp("Done!");
     
-    cout << johannes->get_resource("Health")->get_current();
+    PrettyPrinter::print("Abilities...\n", YELLOW);
+    johannes->add_ability("Sexy", new SexyAbility());
+    johannes->add_ability("Heal", new HealAbility());
+    johannes->add_ability("Attack", new AttackAbility());
 
+    johannes->pretty_print();
+
+    PrettyPrinter::print_good("DONE!\n");
+    
+    sp("Creating intermediate GameState.");
+    
+    GameState *state = new GameState();
+    state->add_character(johannes);
+    state->current_char = johannes;
+    GameState::register_identifier(new EnemyIdentifier());
+    GameState::register_identifier(new OwnerIdentifier());
+    
+    state->pretty_print();
+    
+    /**
+    sp("Testing copy-constructor.");
+    
+    GameState *tmp_state = new GameState(*state);
+    
+    tmp_state->pretty_print();
+    **/
+    
+    PrettyPrinter::print("Running AbilityTable on GameState.\n");
+    
+    AbilityTable *at = new AbilityTable(state);
+    
+    PrettyPrinter::print("Calculating best future state...\n");
+    
+    GameState *hit = at->get_next_state();
+    
+    PrettyPrinter::print_good("DONE!\n");
+    
+    hit->pretty_print();
+    
+    johannes->pretty_print();
+
+    PrettyPrinter::print_good("Finalized. Thank you.");
+    
 	return 0;
 }

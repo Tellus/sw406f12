@@ -33,7 +33,7 @@ bool Team::has_character(int id)
 {
     std::list<Character*>::iterator finder;
     
-    finder = find_if(this->members.begin(), this->members.end(), [id](Character *t){ return t->id == id;});
+    finder = std::find_if(this->members.begin(), this->members.end(), [id](Character *t){ return t->id == id;});
     
     if (finder == this->members.end()) return false;
     else return true;
@@ -43,7 +43,7 @@ Character* Team::get_character(int id)
 {
     std::list<Character*>::iterator finder;
     
-    finder = find_if(this->members.begin(), this->members.end(), [id](Character *t){ return t->id == id;});
+    finder = std::find_if(this->members.begin(), this->members.end(), [id](Character *t){ return t->id == id;});
     
     if (finder == this->members.end()) return NULL;
     else return *finder;

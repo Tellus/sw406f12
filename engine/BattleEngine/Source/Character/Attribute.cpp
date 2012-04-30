@@ -25,10 +25,10 @@ Attribute::Attribute(int initial)
     this->set_initial((float)initial);
 }
 
-Attribute::Attribute(Attribute *copy)
+Attribute::Attribute(const Attribute& copy)
 {
-	this->current = copy->current;
-	this->initial = copy->initial;
+	this->current = copy.current;
+	this->initial = copy.initial;
 }
 
 Attribute::~Attribute()
@@ -73,6 +73,11 @@ void Attribute::reset()
 float Attribute::get_current()
 {
 	return this->current;
+}
+
+void Attribute::pretty_print()
+{
+    std::cout << "Attribute: " << this->name << " (" << this->id << ")\n";
 }
 
 } /* namespace engine */
