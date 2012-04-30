@@ -27,6 +27,12 @@ Primarch::Primarch(const Primarch& copy)
     this->id = copy.id;
 }
 
+Primarch::Primarch(std::string name)
+{
+    this->name = name;
+    this->id = Primarch::get_new_id();
+}
+
 int Primarch::get_new_id()
 {
     return ++(Primarch::_id_counter);

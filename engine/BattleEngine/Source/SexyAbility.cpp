@@ -13,7 +13,7 @@ namespace testbattle
 {
 
 SexyAbility::SexyAbility() :
-    Ability(25,0)
+    Ability("Sexy Time",25,0)
 {
     SexyEffect *eff = new SexyEffect();
     this->effects.push_back(eff);

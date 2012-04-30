@@ -40,11 +40,22 @@ GameState *AbilityTable::get_next_state()
 **/
 
     // 1 + 2
-    std::cout << "Creating viable actions...";
+    frontend::PrettyPrinter::print("Creating viable actions...\n");
     std::vector<Action*> *actions = this->create_actions(this->state->current_char);
-    std::cout << " DONE (" << actions->size() << ")!\nCalculating best piggy action...";
+    frontend::PrettyPrinter::print("Final actions found! ", frontend::GREEN);
+    std::cout << "(" << actions->size() << ")\n";
+    
+    frontend::PrettyPrinter::print("Calculating best piggy action... ");
 
     // 3
+    if (actions->size() == 0)
+    {
+        frontend::PrettyPrinter::print_bad("\nERROR!");
+        frontend::PrettyPrinter::print(" There are no viable actions!\n");
+        
+        return NULL;
+    }
+    
     float max_piggy = 0;
     for (std::vector<Action*>::iterator iter = actions->begin();
          iter != actions->end();
@@ -63,7 +74,7 @@ GameState *AbilityTable::get_next_state()
         }
     }
     
-    std::cout << " DONE!\n";
+    frontend::PrettyPrinter::print_good("DONE!\n");
         
     if (this->best_action == 0 || this->best_action == NULL)
     {
@@ -111,7 +122,6 @@ float AbilityTable::get_action_piggy(Action *a)
 
 std::vector<Action*> *AbilityTable::create_actions(Character *from)
 {
-//    std::cout << "create_actions:\n";
     // Get a short-hand.
     std::map<std::string, Ability*> abils = from->get_abilities();
     
@@ -121,11 +131,13 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
     // Final list of usable abilities.
     std::list<Ability*> usable;
     
-    //
     std::map<std::string, Ability*>::iterator iter;
     Ability *abil;
-    
-//    std::cout << "Filtering out unusable abilities... ";
+ 
+    frontend::PrettyPrinter::print("Filtering out non-usable actions (of ");
+    std::cout << abils.size();
+    frontend::PrettyPrinter::print(").\n");
+
     // Discard all unusable Ability objects.
     for (iter = abils.begin();
          iter != abils.end();
@@ -137,27 +149,33 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
             abil->cost_mana <= from->get_resource("Mana")->get_current())
                 usable.push_back((iter->second));
     }
-//    std::cout << "DONE!\nFinding Ability/Target combinations for Actions...";
+    
+    frontend::PrettyPrinter::print("Final count: ");
+    std::cout << usable.size() << '\n';
     
     // Create the Action list.
+    
+    frontend::PrettyPrinter::print("Getting all viable Ability/Target combos...\n");
     
     // Loop through each ability.
     for (std::list<Ability*>::iterator abil_iter = usable.begin();
          abil_iter != usable.end();
          abil_iter++)
     {
-        // Loop through the list of available targets.
+        frontend::PrettyPrinter::print("\tConsidering ");
+        
         std::list<RGR_Enum> targets = (*abil_iter)->get_as_list();
+        
+        std::cout << targets.size() << " on "  << (*abil_iter)->name << '\n';
+        
+        // Loop through the list of available targets.
+        
         for (std::list<RGR_Enum>::iterator tar_iter = targets.begin();
-             tar_iter != targets.begin();
+             tar_iter != targets.end();
              tar_iter++)
         {
             // Assert the target and, if valid, create the action.
-            if (this->state->get_rgr(*tar_iter) == NULL)
-            {
-                std::cout << "Failed to retrieve RGR for " << RGR_List::to_string(*tar_iter) << ".\n";
-            }
-            else
+            if (this->state->get_rgr(*tar_iter) != NULL)
             {
                 // Add it to the list of validated actions. Notice how we use
                 // the RGR_Enum variant of the initializer. At this point, we
@@ -167,9 +185,7 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
             }
         }
     }
-    
-//    std::cout << "DONE!\nReturning...\n";
-    
+
     return this->actions;
 }
 

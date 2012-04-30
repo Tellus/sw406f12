@@ -11,7 +11,7 @@ namespace testbattle
 {
 
 AttackAbility::AttackAbility() :
-    Ability(0,0)
+    Ability("Attack", 0, 0)
 {
     this->effects.push_back(new PhysicalDamageEffect());
     this->add_rgr(engine::RGR_Enum::ENEMY);

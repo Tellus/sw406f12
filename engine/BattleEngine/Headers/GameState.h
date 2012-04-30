@@ -17,6 +17,8 @@
 #include "Team.h"
 #include "Exceptions/InvalidRGRException.h"
 
+#include "PrettyPrinter.h"
+
 #define GAMESTATE_CONTAINER_TYPE list
 
 namespace engine {

@@ -8,6 +8,7 @@
 #ifndef ABILITYTABLE_H_
 #define ABILITYTABLE_H_
 
+#include "PrettyPrinter.h"
 #include "GameState.h"
 #include "RGRIdentifier.h"
 #include "Character.h"
