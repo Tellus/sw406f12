@@ -25,20 +25,20 @@ void PrettyPrinter::print(std::string in)
     std::cout << in;
 }
 
-void PrettyPrinter::print(std::string in, BASE_COLOR col)
+void PrettyPrinter::print(std::string in, FG_COLOR col)
 {
     std::cout << "\e[0;"; // Reset
-    std::cout << TEXT+col; // Text color.
+    std::cout << col; // Text color.
     std::cout << "m"; // End parameters.
     std::cout << in; // Input.
     std::cout << "\033[0m"; // End format and endline.
 }
 
-void PrettyPrinter::print(std::string in, BASE_COLOR col, BASE_COLOR bg)
+void PrettyPrinter::print(std::string in, FG_COLOR col, BG_COLOR bg)
 {
     std::cout << "\e[0;"
-              << TEXT+col << ";"
-              << BACKGROUND+bg
+              << col << ";"
+              << bg
               << "m"
               << in
               << "\033[0m";
@@ -46,12 +46,12 @@ void PrettyPrinter::print(std::string in, BASE_COLOR col, BASE_COLOR bg)
 
 void PrettyPrinter::print_good(std::string in)
 {
-	PrettyPrinter::print(in, GREEN);
+	PrettyPrinter::print(in, FG_GREEN);
 }
 
 void PrettyPrinter::print_bad(std::string in)
 {
-	PrettyPrinter::print(in, RED);
+	PrettyPrinter::print(in, FG_RED);
 }
 
 void PrettyPrinter::_empty_buffer()

@@ -15,7 +15,7 @@ OBJ_DIR=obj
 EXECUTABLE=engine
 
 # Extension
-EXT=
+EXT=.exe
 
 all: init $(SOURCES) $(EXECUTABLE)
 
@@ -24,7 +24,7 @@ $(EXECUTABLE): $(OBJECTS)
 
 init:
 	if test ! -d $(OBJ_DIR); then mkdir $(OBJ_DIR); fi
-	
+    
 clean:
 	rm -rf $(OBJ_DIR)/*.o
 	if test -f $(EXECUTABLE)$(EXT); then rm $(EXECUTABLE)$(EXT); fi
@@ -32,7 +32,7 @@ clean:
 	rm $(OBJECTS)
 	
 .cpp.o:
-	$(CC) -c $(FLAGS) $(INCS) $(LIB) $< -o $@
+	$(CC) -c $(FLAGS) $(CFLAGS) $(INCS) $(LIB) $< -o $@
 	
 dev: all
 	./$(EXECUTABLE)$(EXT)

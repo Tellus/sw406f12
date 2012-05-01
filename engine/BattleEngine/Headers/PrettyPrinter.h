@@ -11,23 +11,14 @@
 #include <iostream>
 #include <vector>
 
+#ifdef WIN32
+#include "PrettyPrintEnum_WIN.h"
+#else
+#include "PrettyPrintEnum_BASH.h"
+#endif
+
 namespace frontend
 {
-
-enum BASE_COLOR {   BLACK = 0,
-                    RED = 1,
-                    GREEN = 2,
-                    YELLOW = 3,
-                    BLUE = 4,
-                    MAGENTA = 5,
-                    CYAN = 6,
-                    WHITE = 7
-                };
-
-enum COLOR_MOD {    TEXT = 30,
-                    BACKGROUND = 40
-                };
-
 
 class PrettyPrinter
 {
@@ -41,7 +32,7 @@ public:
      * \param col The colour (choose from BASE_COLOR choices).
      * \note Only complete string instances can be accepted right now.
      **/
-    static void print(std::string in, BASE_COLOR col);
+    static void print(std::string in, FG_COLOR col);
     
     /**
      * Prints coloured text to the standard output.
@@ -50,7 +41,7 @@ public:
      * \param bg The background colour to use (choose from BASE_COLOR).
      * \note Only complete string instances can be accepted right now.
      **/
-    static void print(std::string in, BASE_COLOR col, BASE_COLOR bg);
+    static void print(std::string in, FG_COLOR col, BG_COLOR bg);
     
     /**
      * Shorthand for print(in, GREEN);

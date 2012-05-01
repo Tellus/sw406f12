@@ -33,7 +33,7 @@ void sp(std::string to_print)
 
 int main(int argc, char *argv[])
 {
-    PrettyPrinter::print("BattleEngine v1 alpha.\n", YELLOW);
+    PrettyPrinter::print("BattleEngine v1 alpha.\n", FG_YELLOW);
 
     PrettyPrinter::print("Initialize new character...\n");
 
@@ -41,11 +41,11 @@ int main(int argc, char *argv[])
     Character *johannes = new Character();
     johannes->name = "Johannes";
     
-    PrettyPrinter::print("Resources...\n", YELLOW);
+    PrettyPrinter::print("Resources...\n", FG_YELLOW);
     johannes->add_resource("Health", new Resource(100, 0, 100));
     johannes->add_resource("Mana", new Resource(100, 0, 100));
     
-    PrettyPrinter::print("Attributes...\n", YELLOW);
+    PrettyPrinter::print("Attributes...\n", FG_YELLOW);
     johannes->add_attribute("Strength", new Attribute(17));
     johannes->add_attribute("Intelligence", new Attribute(25));
     johannes->add_attribute("Sexyness", new Attribute(10000));
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     // add behaviour
     // Abilities.
     
-    PrettyPrinter::print("Abilities...\n", YELLOW);
+    PrettyPrinter::print("Abilities...\n", FG_YELLOW);
     johannes->add_ability("Sexy", new SexyAbility());
     johannes->add_ability("Heal", new HealAbility());
     johannes->add_ability("Attack", new AttackAbility());

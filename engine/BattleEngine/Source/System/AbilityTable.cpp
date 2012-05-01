@@ -42,7 +42,7 @@ GameState *AbilityTable::get_next_state()
     // 1 + 2
     frontend::PrettyPrinter::print("Creating viable actions...\n");
     std::vector<Action*> *actions = this->create_actions(this->state->current_char);
-    frontend::PrettyPrinter::print("Final actions found! ", frontend::GREEN);
+    frontend::PrettyPrinter::print("Final actions found! ", frontend::FG_GREEN);
     std::cout << "(" << actions->size() << ")\n";
     
     frontend::PrettyPrinter::print("Calculating best piggy action... ");
