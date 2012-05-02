@@ -62,7 +62,29 @@ GameState *AbilityTable::get_next_state()
          iter++)
     {
         Action *tmp_a = *iter;
-        Character *t = (Character*)tmp_a->target;
+
+		// Character pointer.
+        Character *t;
+
+		// Gotta know if this was defined as a RGR or not.
+		if (tmp_a->target == NULL)
+		{
+			// Get from GameState.
+			try
+			{
+				t = this->state->get_rgr(tmp_a->target_rgr);
+			}
+			catch (...)
+			{
+				throw "No target pointer and no corresponding RGR found.";
+			}
+		}
+		else
+		{
+			// Get raw.
+			t = (Character*)tmp_a->target;
+		}
+
         std::cout << "\tConsidering:\n";
         tmp_a->ability->pretty_print();
         t->pretty_print();
@@ -104,7 +126,15 @@ float AbilityTable::get_action_piggy(Action *a)
     
     // Set correct (relative) pointers.
     a->source = clone->current_char;
-    a->target = clone->get_rgr(*a->target_rgr);
+
+	try
+	{
+		a->target = clone->get_rgr(a->target_rgr);
+	}
+	catch (...)
+	{
+		throw "Failed to retrieve a target to piggy on.";
+	}
     
     // Run.
     a->execute();
@@ -175,14 +205,21 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
              tar_iter++)
         {
             // Assert the target and, if valid, create the action.
-            if (this->state->get_rgr(*tar_iter) != NULL)
-            {
-                // Add it to the list of validated actions. Notice how we use
-                // the RGR_Enum variant of the initializer. At this point, we
-                // don't have a GameState clone to affect, yet, and thus still
-                // need the relative reference.
-                this->actions->push_back(new Action(from, *abil_iter, *tar_iter));
-            }
+			Character *targ;
+			try
+			{
+				targ = this->state->get_rgr(*tar_iter);
+				// Add it to the list of validated actions. Notice how we use
+				// the RGR_Enum variant of the initializer. At this point, we
+				// don't have a GameState clone to affect, yet, and thus still
+				// need the relative reference.
+				this->actions->push_back(new Action(from, *abil_iter, targ));
+			}
+			catch (engine::InvalidRGRException e)
+			{
+				// throw e;
+				frontend::PrettyPrinter::print_bad("Failed to retrieve target as requested.");
+			}
         }
     }
 

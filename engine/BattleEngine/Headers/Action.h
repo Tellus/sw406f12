@@ -42,7 +42,7 @@ public:
 	void execute();
 
     Primarch *source, *target;
-    RGR_Enum *target_rgr;
+    RGR_Enum target_rgr;
     Ability *ability;
 
 protected:

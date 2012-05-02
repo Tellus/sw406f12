@@ -20,6 +20,7 @@ Action::Action(Primarch *source, Ability *abil, RGR_Enum target)
 {
     this->source = source;
     this->ability = abil;
+	this->target = NULL;
     
     // Afvikle this->execute();
 }
