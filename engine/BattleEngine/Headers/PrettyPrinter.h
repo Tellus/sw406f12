@@ -12,9 +12,9 @@
 #include <vector>
 
 #ifdef WIN32
-#include "PrettyPrintEnum_WIN.h"
+#include "PrettyPrinter_WIN32.h"
 #else
-#include "PrettyPrintEnum_BASH.h"
+#include "PrettyPrinter_BASH.h"
 #endif
 
 namespace frontend
