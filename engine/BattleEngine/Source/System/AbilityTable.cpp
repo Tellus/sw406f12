@@ -45,7 +45,7 @@ GameState *AbilityTable::get_next_state()
     frontend::PrettyPrinter::print("Final actions found! ", frontend::FG_GREEN);
     std::cout << "(" << actions->size() << ")\n";
     
-    frontend::PrettyPrinter::print("Calculating best piggy action... ");
+    frontend::PrettyPrinter::print("Calculating best piggy action...\n");
 
     // 3
     if (actions->size() == 0)
@@ -66,24 +66,7 @@ GameState *AbilityTable::get_next_state()
 		// Character pointer.
         Character *t;
 
-		// Gotta know if this was defined as a RGR or not.
-		if (tmp_a->target == NULL)
-		{
-			// Get from GameState.
-			try
-			{
-				t = this->state->get_rgr(tmp_a->target_rgr);
-			}
-			catch (...)
-			{
-				throw "No target pointer and no corresponding RGR found.";
-			}
-		}
-		else
-		{
-			// Get raw.
-			t = (Character*)tmp_a->target;
-		}
+		t = (Character*)tmp_a->target;
 
         std::cout << "\tConsidering:\n";
         tmp_a->ability->pretty_print();
@@ -125,16 +108,7 @@ float AbilityTable::get_action_piggy(Action *a)
     GameState *clone = new GameState(*this->state);
     
     // Set correct (relative) pointers.
-    a->source = clone->current_char;
-
-	try
-	{
-		a->target = clone->get_rgr(a->target_rgr);
-	}
-	catch (...)
-	{
-		throw "Failed to retrieve a target to piggy on.";
-	}
+    // a->source = clone->current_char;
     
     // Run.
     a->execute();
@@ -193,10 +167,11 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
          abil_iter++)
     {
         frontend::PrettyPrinter::print("\tConsidering ");
+        frontend::PrettyPrinter::print((*abil_iter)->name);
         
         std::list<RGR_Enum> targets = (*abil_iter)->get_as_list();
         
-        std::cout << targets.size() << " on "  << (*abil_iter)->name << '\n';
+//        std::cout << targets.size() << " on "  << (*abil_iter)->name << '\n';
         
         // Loop through the list of available targets.
         
@@ -214,11 +189,12 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
 				// don't have a GameState clone to affect, yet, and thus still
 				// need the relative reference.
 				this->actions->push_back(new Action(from, *abil_iter, targ));
+				frontend::PrettyPrinter::print_good(" OK\n");
 			}
 			catch (engine::InvalidRGRException e)
 			{
 				// throw e;
-				frontend::PrettyPrinter::print_bad("Failed to retrieve target as requested.");
+				frontend::PrettyPrinter::print_bad(" FAIL\n");
 			}
         }
     }
