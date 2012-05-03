@@ -52,7 +52,7 @@ public:
 	 **/
 	virtual void execute(Primarch* s, Primarch* t) = 0;
 	
-	void pretty_print();
+	virtual void pretty_print();
 };
 
 } /* namespace engine */

@@ -29,7 +29,7 @@ Effect::Effect(RGR_Enum source, RGR_Enum target)
 
 void Effect::pretty_print()
 {
-    std::cout << "Effect: " << this->name << " (" << this->id << ")\n";
+    std::cout << "Effect: '" << this->name << "' (" << this->id << ")\n";
 }
 
 } /* namespace engine */

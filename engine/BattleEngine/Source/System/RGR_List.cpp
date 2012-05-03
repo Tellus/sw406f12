@@ -63,7 +63,7 @@ void RGR_List::set_rgrs(int tar)
     {
         if (tar & 1)
         {
-			int rgr_tmp = pow(2.0, pos);
+			int rgr_tmp = static_cast<int>(pow(2.0, pos));
             this->rgr_list.push_back(RGR_Enum(rgr_tmp));
         }
         

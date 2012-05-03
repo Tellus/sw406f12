@@ -10,6 +10,7 @@
 
 #include "Primarch.h"
 #include "Ability.h"
+#include "GameState.h"
 #include "Exceptions/NullParameterException.h"
 
 #include <typeinfo>
@@ -27,14 +28,22 @@ public:
 	 * \param abil The ability to use.
 	 * \param target The target to use the ability ON.
 	 **/
-	Action(Primarch* source, Ability* abil, Primarch* target);
+	Action(RGR_Enum source, RGR_Enum target, Ability* abil);
 	
 	/**
-	 * Generates and applies the effects to the given target
+	 * Creates a new cloned GameState and runs the effects on it.
+	 * \param thru The GameState to run the execution through.
+	 * \return A (new) modified GameState.
 	 */
-	void execute();
+	GameState* execute(GameState *thru);
 
-    Primarch *source, *target;
+    // Primarch *source, *target;
+	/**
+	 * RGR references to the targets of this particular action. Typically, this
+	 * will distill the list of targets of an Ability down to the few necessary.
+	 */
+	RGR_Enum source, target;
+
     Ability *ability;
 
 protected:

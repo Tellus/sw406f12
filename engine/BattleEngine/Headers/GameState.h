@@ -88,6 +88,12 @@ private:
 	 * Private initialization function.
 	 */
 	void _init();
+public:
+	// Sets a Character to be on a specific team. Vital for some RGRIdentifiers to work properly.
+	bool set_team_aff(int t_id, Character* to_set);
+	// Finds the team that the Character is on, if any.
+	int get_char_team(int c_id);
+	int get_char_team(Character* c);
 };
 
 } /* namespace engine */

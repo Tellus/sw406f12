@@ -87,8 +87,20 @@ GameState* make_base_state()
     GameState::register_identifier(new OwnerIdentifier());
 
     GameState *state = new GameState();
-	state->add_character(make_joe());
-	state->add_character(make_biggi());
+
+	Character* joe = make_joe();
+	Character* big = make_biggi();
+
+	state->add_character(joe);
+	if (!state->set_team_aff(1, joe))
+	{
+		PrettyPrinter::print_bad("Joe could not be put on a team!\n");
+	}
+	state->add_character(big);
+	if (!state->set_team_aff(2, big))
+	{
+		PrettyPrinter::print_bad("Biggi could not be put on a team!\n");
+	}
 	state->current_char = state->characters.front();
 
 	return state;
@@ -118,9 +130,13 @@ int main(int argc, char *argv[])
 	Character* biggi = make_biggi();
 	biggi->pretty_print();
 
-    PrettyPrinter::print_good("DONE!\n");
+	// Erase tracks again. Good for mem... mom?
+	delete biggi;
+	delete johannes;
+
+    PrettyPrinter::print_good("Character init test: DONE!\n");
     
-    PrettyPrinter::print("Creating intermediate GameState.");
+    PrettyPrinter::print("Creating intermediate GameState.\n");
 
 	GameState* state = make_base_state();
     
@@ -141,9 +157,6 @@ int main(int argc, char *argv[])
     
     hit->pretty_print();
     
-    johannes->pretty_print();
-	biggi->pretty_print();
-
     PrettyPrinter::print_good("We're done! Thank you.");
     
 	PrettyPrinter::print("Press any key to exit.");

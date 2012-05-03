@@ -44,8 +44,6 @@ GameState *AbilityTable::get_next_state()
     std::vector<Action*> *actions = this->create_actions(this->state->current_char);
     frontend::PrettyPrinter::print("Final actions found! ", frontend::FG_GREEN);
     std::cout << "(" << actions->size() << ")\n";
-    
-    frontend::PrettyPrinter::print("Calculating best piggy action...\n");
 
     // 3
     if (actions->size() == 0)
@@ -56,23 +54,20 @@ GameState *AbilityTable::get_next_state()
         return NULL;
     }
     
+	frontend::PrettyPrinter::print("Calculating best piggy action...\n");
+
+	// Highest piggy rating so far.
     float max_piggy = 0;
+
     for (std::vector<Action*>::iterator iter = actions->begin();
          iter != actions->end();
          iter++)
     {
         Action *tmp_a = *iter;
 
-		// Character pointer.
-        Character *t;
-
-		t = (Character*)tmp_a->target;
-
-        std::cout << "\tConsidering:\n";
-        tmp_a->ability->pretty_print();
-        t->pretty_print();
-        float new_pig = this->get_action_piggy(*iter);
-        if (new_pig > max_piggy)
+		float new_pig = this->get_action_piggy(*iter);
+		
+		if (new_pig > max_piggy)
         {
             max_piggy = new_pig;
             this->best_action = *iter;
@@ -96,7 +91,7 @@ GameState *AbilityTable::get_next_state()
     }
     
     std::cout << "Returning cloned state.\n";
-    
+
     delete actions;
     
     // 4.
@@ -105,20 +100,14 @@ GameState *AbilityTable::get_next_state()
 
 float AbilityTable::get_action_piggy(Action *a)
 {
-    GameState *clone = new GameState(*this->state);
-    
-    // Set correct (relative) pointers.
-    // a->source = clone->current_char;
-    
-    // Run.
-    a->execute();
+	GameState *new_state = a->execute(this->state);
     
     // Get piggy.
-    Character *ch = (Character*)a->source;
+	Character *ch = new_state->get_rgr(a->source);
     float piggy = ch->get_piggy();
     
     // Destroy clone.
-    delete clone;
+    delete new_state;
     
     // Return piggy.
     return piggy;
@@ -187,7 +176,8 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
 				// the RGR_Enum variant of the initializer. At this point, we
 				// don't have a GameState clone to affect, yet, and thus still
 				// need the relative reference.
-				this->actions->push_back(new Action(from, *abil_iter, targ));
+				// TODO: Make something more elegant than always sourcing the character OWNER.
+				this->actions->push_back(new Action(OWNER, (*tar_iter), *abil_iter));
 				frontend::PrettyPrinter::print_good(" OK\n");
 			}
 			catch (engine::InvalidRGRException e)

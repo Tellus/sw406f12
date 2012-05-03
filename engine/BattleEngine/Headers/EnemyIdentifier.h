@@ -12,6 +12,7 @@
 #include "GameState.h"
 #include "Character.h"
 #include "RGRIdentifier.h"
+#include "PrettyPrinter.h"
 
 namespace engine
 {

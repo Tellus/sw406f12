@@ -9,12 +9,8 @@
 
 namespace engine {
 
-Action::Action(Primarch *source, Ability *abil, Primarch *target)
+Action::Action(RGR_Enum source, RGR_Enum target, Ability* abil)
 {
-    if (source == NULL || target == NULL)
-    {
-        throw new NullParameterException("Source or target cannot be null.");
-    }
     this->source = source;
     this->target = target;
     this->ability = abil;
@@ -24,17 +20,26 @@ Action::~Action() {
 	// TODO Auto-generated destructor stub
 }
 
-void Action::execute()
+GameState* Action::execute(GameState *thru)
 {
     std::cout << "Action execution started.\n";
+
+	// Clone.
+	GameState* state = thru->clone();
+
+	Character* source = thru->get_rgr(this->source);
 
 	std::vector<Effect*> *effects = this->generate_effects();
 	for (std::vector<Effect*>::iterator iter = effects->begin(); iter != effects->end(); iter++)
 	{
-	    std::cout << "\tExecuting effect.\n";
 		Effect *ef = dynamic_cast<Effect*>(*iter);
-		ef->execute(this->source, this->target);
+
+		std::cout << "\tExecuting effect '" << ef->name << "'.\n";
+
+		ef->execute(source, state->get_rgr(this->target));
 	}
+
+	return state;
 }
 
 std::vector<Effect*> *Action::generate_effects()

@@ -17,10 +17,13 @@ namespace engine
 
 class Team
 {
-protected:
-    std::list<Character*> members;
-    
 public:
+	/**
+	 * List of team members as Primarch IDs. These are much simpler to track across GameStates than
+	 * pointers.
+	 */
+    std::list<int> members;
+    
     Team(int id);
     
     int id;
@@ -31,9 +34,8 @@ public:
     void remove_character(int id);
     
     bool has_character(int id);
-    
-    Character* get_character(int id);
-    Character* front();
+
+	int first_char();
 };
 
 }
