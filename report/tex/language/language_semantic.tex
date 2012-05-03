@@ -1,2 +1,86 @@
-\section{Language semantic}
-Some about the semantic of \langname{} to come here
+\section{Language semantics}
+Introducion to semantics and what it is all about.
+
+\subsection{Environment-store model}
+(blabla about env-store model)
+
+
+\subsection{\langname{} semantics}
+Five parts are highlighted for semantic description, these are  \emph{Declaration}, \emph{Turn}, \emph{AI}, \emph{Action} and \emph{Wincon}.\\
+The first one 'Declaration' is the main function of \langname{} and the four that follow are not included in the language itself but in the engine.
+A turn is a character takes an action, based at the outcome of the AI calculation \\
+AI is calculation, which simulates every possible outcome, based on the possible actions a character can make. \\
+Action is an event, which will make change for the stored values of the enemy character, or the character itself.\\
+Wincon is a conditional check to see if the \emph{winning condition} is met.\\\\
+
+The semantics for the relevant parts of \langname{} are defined as follows: \begin{itemize}
+	\item $EnvD$ is a declaration-environment
+	\item $env_{D}$ is an element in the set $EnvD$
+	\item $EnvC$ is a character-environment
+	\item $env_{c}$ is an element in the set $EnvC$
+	\item $StoreS$ is a set of locations and their bindings
+	\item $sto$ is an element in the set $Stores$
+	\item $Pending$ is a list of pending characters
+	\item $ActioN$ is a set of available actions
+	\item $act$ is an element in the set $ActioN$
+\end{itemize}
+\pagebreak
+The rules for the five parts are as follows:
+\begin{center}
+\begin{tabular}{ c }
+\textbf{Declaration}\\
+\hline
+ \\
+$\langle env_{D}, env_{C}, sto \rangle \rightarrow$\\
+$\langle env_{C}', sto' \rangle$\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ l l }
+\multicolumn{2}{c}{\textbf{Turn}}\\
+\hline
+ & \\
+$\langle Pending, env_{C}, sto \rangle \Rightarrow$ & \\
+$\langle Pending', env_{C}, sto \rangle$ & $\text{if wincon } \rightarrow_{b} ff$\\
+ & \\
+$\langle Pending, env_{C}, sto \rangle \Rightarrow$ & \\
+$\langle Pending, env_{C}, sto \rangle$ & $\text{if wincon } \rightarrow_{b} tt$\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ c }
+\textbf{AI}\\
+\hline
+ \\
+$\langle Pending, env_{C}, sto, Action \rangle \Rightarrow$\\
+$\langle Pending, env_{C}, sto, act \rangle$\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ c }
+\textbf{Action}\\
+\hline
+ \\
+$\langle env_{C}, Pending, sto, act \rangle \Rightarrow$\\
+$\langle env_{C}, Pending, sto', act \rangle$\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ l l }
+\multicolumn{2}{c}{\textbf{Wincon}}\\
+\hline
+ & \\
+$\dfrac{env_{C} \vdash c \rightarrow_{h} h}{\text{win} \rightarrow_{b} ff}$ & $\text{if } h > 0$\\
+ & \\
+$\dfrac{env_{C} \vdash c \rightarrow_{h} h}{\text{win} \rightarrow_{b} tt}$ & $\text{if } h \leq 0$\\
+\end{tabular}
+\end{center}
+\pagebreak
+
+
+
+

@@ -1,7 +1,63 @@
 \subsection{\langname{} Rule Set}
 \label{language:ruleset}
+Many systems have complex conditions or calculations for some of their aspects.
+Analysing the target group's most popular systems, several rules were exposed that cannot be expressed simply in a generalised declarative manner.
+For example, characters with a health pool reduced to a non-positive number are no longer able to act, but are not entirely out of the battle.
+Given medical attention, the character can return to battle.
+Another example is the health system of the revised Storyteller system from the \ac{wod} series of games. Three distinct types of damage cover the same seven points of health. Damage must be calculated on specific areas of these points, and must be removed via separate means.
+Simpler examples of rules are damage calculations of most video \ac{rpgs},
+where certain attributes will lower the damage sustained from specific categories of damage. In Final Fantasy I, which is the rule set used in this report's reference implementation, physical attack damage is determined from two formulae depending on the active character's class. For examples see the section \vref{language:implset}.
+
+\subsection{Implemented set}
+\label{language:implset}
+\begin{tabular}{|l l l|}
+\hline
+\multicolumn{3}{|c|}{\textbf{Attributes}}\\
+\hline
+Strength: & Manually Set & (used for Damage calculations)\\
+\hline
+Agility: & Manually Set	 & (used for Defense calculations)\\
+\hline
+Intelligence: & Manually Set & (used for MP and SpellDmg calculations)\\
+\hline
+Stamina: & Manually Set & (used for HP and Defense calculations)\\
+\hline
+\end{tabular}
+\\
+\begin{tabular}{|l l|}
+\hline
+\multicolumn{2}{|c|}{\textbf{2nd Attributes (calculated)}}\\
+\hline
+Defense: & ((Stamina + Agility) / 3)\\
+\hline
+Magic Defense: & ((Stamina + Intelligence) / 3)\\
+\hline	
+\end{tabular}
+\\
+\begin{tabular}{|l l|}
+\hline
+\multicolumn{2}{|c|}{\textbf{Resources}}\\
+\hline
+Health Points: & (Stamina * 20)\\
+\hline
+Mana Points: & (Intelligence * 15)\\
+\hline
+\end{tabular}
+\\
+\begin{tabular}{|l l|}
+\hline
+\multicolumn{2}{|c|}{\textbf{Abilities}}\\
+\hline
+Attack Power: & (WeaponDmg + ((Strength / 2) + 1))\\
+\hline
+Magic Power: & (Equipment bonus + ((Intelligence / 2) + 1))\\
+\hline
+\end{tabular}
+
+
+\begin{comment}
 Many systems have complex conditions or calculations for some of their aspects. Analysing the target group's most popular systems, several rules were exposed that cannot be expressed simply in a generalised declarative manner. For example, characters with a health pool reduced to a non-positive number are no longer able to act, but are not entirely out of the battle. Given medical attention, the character can return to battle.
 Another example is the health system of the revised Storyteller system from the \ac{wod} series of games. Three distinct types of damage cover the same seven points of health. Damage must be calculated on specific areas of these points, and must be removed via separate means.
-Simpler examples of rules are damage calculations of most video \ac{rpgs}, where certain attributes will lower the damage sustained from specific categories of damage. In Final Fantasy I, which is the rule set used in this report's reference implementation, physical attack damage is determined from one of two formulae depending on the active character's class ($WeaponAttackPower + \frac{Strength}{2}$ for regular characters and either $WeaponAttackPower + \frac{Strength}{2} + 1$ or $Level \times 2$ for monks).
+Simpler examples of rules are damage calculations of most video \ac{rpgs}, where certain attributes will lower the damage sustained from specific categories of damage. In Final Fantasy I, which is the rule set used in this report's reference implementation, physical attack damage is determined from one of two formulae depending on the active character's class. %($WeaponAttackPower + \frac{Strength}{2}$ for regular characters and either $WeaponAttackPower + \frac{Strength}{2} + 1$ or $Level \times 2$ for monks).
 In order to accommodate these requirements, it would be necessary to either introduce complex conditionality or imperative state manipulation in \langname{}, or externalise these specific parts where they could be described more fully.
-
+\end{comment}
