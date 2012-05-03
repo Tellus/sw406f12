@@ -6,22 +6,19 @@
  */
 
 #include "Action.h"
+#include "Exceptions/NullParameterException.h"
 
 namespace engine {
 
 Action::Action(Primarch *source, Ability *abil, Primarch *target)
 {
+    if (source == NULL || target == NULL)
+    {
+        throw new NullParameterException("Source or target cannot be null.");
+    }
     this->source = source;
     this->target = target;
     this->ability = abil;
-}
-
-Action::Action(Primarch *source, Ability *abil, RGR_Enum target)
-{
-    this->source = source;
-    this->ability = abil;
-    
-    // Afvikle this->execute();
 }
 
 Action::~Action() {

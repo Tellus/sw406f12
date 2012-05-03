@@ -10,7 +10,6 @@
 
 #include "Primarch.h"
 #include "Ability.h"
-#include "RGR_List.h"
 
 namespace engine {
 
@@ -26,15 +25,6 @@ public:
 	 * \param target The target to use the ability ON.
 	 **/
 	Action(Primarch* source, Ability* abil, Primarch* target);
-
-	/**
-	 * Creates a new Action object based on two character objects (source and
-	 * target) and an ability.
-	 * \param source The character to use this ability.
-	 * \param abil The ability to use.
-	 * \param target The RGR to use the ability ON.
-	 **/
-	Action(Primarch* source, Ability* abil, RGR_Enum target);
 	
 	/**
 	 * Generates and applies the effects to the given target
@@ -42,7 +32,6 @@ public:
 	void execute();
 
     Primarch *source, *target;
-    RGR_Enum *target_rgr;
     Ability *ability;
 
 protected:

@@ -16,7 +16,9 @@ InvalidRGRException::InvalidRGRException(std::string msg)
 }
 
 InvalidRGRException::~InvalidRGRException() throw()
-{}
+{
+    // Empty, though defined.
+}
 
 const char* InvalidRGRException::what() const throw()
 {

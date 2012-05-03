@@ -45,7 +45,7 @@ GameState *AbilityTable::get_next_state()
     frontend::PrettyPrinter::print("Final actions found! ", frontend::FG_GREEN);
     std::cout << "(" << actions->size() << ")\n";
     
-    frontend::PrettyPrinter::print("Calculating best piggy action... ");
+    frontend::PrettyPrinter::print("Calculating best piggy action...\n");
 
     // 3
     if (actions->size() == 0)
@@ -62,7 +62,12 @@ GameState *AbilityTable::get_next_state()
          iter++)
     {
         Action *tmp_a = *iter;
-        Character *t = (Character*)tmp_a->target;
+
+		// Character pointer.
+        Character *t;
+
+		t = (Character*)tmp_a->target;
+
         std::cout << "\tConsidering:\n";
         tmp_a->ability->pretty_print();
         t->pretty_print();
@@ -103,8 +108,7 @@ float AbilityTable::get_action_piggy(Action *a)
     GameState *clone = new GameState(*this->state);
     
     // Set correct (relative) pointers.
-    a->source = clone->current_char;
-    a->target = clone->get_rgr(*a->target_rgr);
+    // a->source = clone->current_char;
     
     // Run.
     a->execute();
@@ -163,10 +167,11 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
          abil_iter++)
     {
         frontend::PrettyPrinter::print("\tConsidering ");
+        frontend::PrettyPrinter::print((*abil_iter)->name);
         
         std::list<RGR_Enum> targets = (*abil_iter)->get_as_list();
         
-        std::cout << targets.size() << " on "  << (*abil_iter)->name << '\n';
+//        std::cout << targets.size() << " on "  << (*abil_iter)->name << '\n';
         
         // Loop through the list of available targets.
         
@@ -175,14 +180,22 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
              tar_iter++)
         {
             // Assert the target and, if valid, create the action.
-            if (this->state->get_rgr(*tar_iter) != NULL)
-            {
-                // Add it to the list of validated actions. Notice how we use
-                // the RGR_Enum variant of the initializer. At this point, we
-                // don't have a GameState clone to affect, yet, and thus still
-                // need the relative reference.
-                this->actions->push_back(new Action(from, *abil_iter, *tar_iter));
-            }
+			Character *targ;
+			try
+			{
+				targ = this->state->get_rgr(*tar_iter);
+				// Add it to the list of validated actions. Notice how we use
+				// the RGR_Enum variant of the initializer. At this point, we
+				// don't have a GameState clone to affect, yet, and thus still
+				// need the relative reference.
+				this->actions->push_back(new Action(from, *abil_iter, targ));
+				frontend::PrettyPrinter::print_good(" OK\n");
+			}
+			catch (engine::InvalidRGRException e)
+			{
+				// throw e;
+				frontend::PrettyPrinter::print_bad(" FAIL\n");
+			}
         }
     }
 
