@@ -166,12 +166,9 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
          abil_iter != usable.end();
          abil_iter++)
     {
-        frontend::PrettyPrinter::print("\tConsidering ");
-        frontend::PrettyPrinter::print((*abil_iter)->name);
-        
-        std::list<RGR_Enum> targets = (*abil_iter)->get_as_list();
-        
-//        std::cout << targets.size() << " on "  << (*abil_iter)->name << '\n';
+		std::list<RGR_Enum> targets = (*abil_iter)->get_as_list();
+
+		frontend::PrettyPrinter::print("| Considering " + (*abil_iter)->name + '\n');
         
         // Loop through the list of available targets.
         
@@ -180,6 +177,8 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
              tar_iter++)
         {
             // Assert the target and, if valid, create the action.
+			frontend::PrettyPrinter::print("\t" + RGR_List::to_string(*tar_iter) + "... ");
+
 			Character *targ;
 			try
 			{
@@ -194,7 +193,7 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
 			catch (engine::InvalidRGRException e)
 			{
 				// throw e;
-				frontend::PrettyPrinter::print_bad(" FAIL\n");
+				frontend::PrettyPrinter::print_bad(" FAIL (" + e.msg + ")\n");
 			}
         }
     }

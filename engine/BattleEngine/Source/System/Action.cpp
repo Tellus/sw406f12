@@ -6,7 +6,6 @@
  */
 
 #include "Action.h"
-#include "Exceptions/NullParameterException.h"
 
 namespace engine {
 
@@ -33,8 +32,8 @@ void Action::execute()
 	for (std::vector<Effect*>::iterator iter = effects->begin(); iter != effects->end(); iter++)
 	{
 	    std::cout << "\tExecuting effect.\n";
-	    Effect* f = *iter;
-	    f->execute();
+		Effect *ef = dynamic_cast<Effect*>(*iter);
+		ef->execute(this->source, this->target);
 	}
 }
 
@@ -45,9 +44,12 @@ std::vector<Effect*> *Action::generate_effects()
 
 	std::cout << "Cloning " << tmp->size() << " effects.\n";
 	
+	Effect *ef;
+
 	for(std::vector<Effect*>::iterator i = tmp->begin(); i != tmp->end(); i++)
 	{
-		out->push_back(new Effect(**i));
+		ef = (*i);
+		out->push_back(dynamic_cast<Effect*>(ef->clone()));
 	}
 	return out;
 }

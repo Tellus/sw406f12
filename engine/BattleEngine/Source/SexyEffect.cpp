@@ -11,19 +11,26 @@ namespace testbattle{
 
 SexyEffect::SexyEffect() : engine::Effect() {}
 
-SexyEffect::SexyEffect(engine::Primarch *s, engine::Primarch *t)
+void SexyEffect::execute(Primarch* s, Primarch* t)
 {
-    this->target = t;
-    this->source = s;
+	engine::Character* schar = dynamic_cast<engine::Character*>(s);
+	engine::Character* tchar = dynamic_cast<engine::Character*>(t);
+
+	tchar->get_resource("Health")->regain(4);
+	schar->get_resource("Mana")->deplete(10);
 }
 
-void SexyEffect::execute()
+engine::Primarch* SexyEffect::clone(bool with_id)
 {
-    // Cast target to Character.
-    this->target_char = (engine::Character*)this->target;
-    this->source_char = (engine::Character*)this->source;
+	SexyEffect* se = new SexyEffect();
 
-    // Heals for 40 health.
-    this->target_char->get_resource("Health")->regain(40);
+	if (with_id) se->id = this->id;
+
+	// Specific cloning action.
+	se->target_rgr = this->target_rgr;
+	se->source_rgr = this->source_rgr;
+
+	return se;
 }
+
 };

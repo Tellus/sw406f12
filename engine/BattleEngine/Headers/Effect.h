@@ -9,6 +9,7 @@
 #define EFFECT_H_
 
 #include "Primarch.h"
+#include "RGR_Enum.h"
 
 namespace engine {
 
@@ -26,45 +27,30 @@ public:
      * be usable, it is not guaranteed in the API.
      **/
 	Effect();
-	
-	/**
-	 * Copy-constructor, used for creating deep mirror copies during GameState
-	 * cloning.
-	 **/
-	Effect(const Effect& copy);
-	
-	/**
-	 * Creates a usable Effect, with a source and target (our pre-determined
-	 * required parameters for any type of effect).
-	 * \param source Pointer to the Primarch that *causes* the effect.
-	 * \param target Pointer to the Primarch that is *affected* by the effect.
-	 **/
-	Effect(Primarch *source, Primarch *target);
+	Effect(RGR_Enum s, RGR_Enum t);
 	virtual ~Effect();
-	
+
+	// Re-defined as pure virtual here to make it easier for dumb Effect programmers (... me, for example).
+	virtual Primarch *clone(bool with_id = false) = 0;
+
 	/**
-	 * The target of the effect. This is what should be affected by the...
-	 * effects. Note the use of a Primarch supertype to avoid circular
-	 * references to Character (through Character->Ability->Effect->Character),
-	 * but also to (unintentionally) enable affecting any other Primarch
-	 * subclass (which could be made out to be Items, Resource, Attributes and
-	 * the like) directly.
-	 **/
-	Primarch *target;
-	
+	 * RGR to the target of the effect. We use the generalised form for Effects
+	 * since they aren't realised until an Action needs to affect a GameState.
+	 */
+	RGR_Enum target_rgr;
+
 	/**
-	 * The source of the effect. May be primarily used by the Engine and
-	 * frontend to output something about the source, but often you'll find that
-	 * effects rely on some characteristic about their source (FF: physical
-	 * damage relies on the source's Strength Attribute).
-	 **/
-	Primarch *source;
+	 * RGR of the source of the effect. We use the generalised form for Effects
+	 * since they aren't realised until an Action needs to affect a GameState.
+	 */
+	RGR_Enum source_rgr;
 	
 	/**
 	 * Makes the changes to source and target as defined by the subclassed
 	 * Effect.
+	 * \param in_state The state to make changes within.
 	 **/
-	virtual void execute();
+	virtual void execute(Primarch* s, Primarch* t) = 0;
 	
 	void pretty_print();
 };

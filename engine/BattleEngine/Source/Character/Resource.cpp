@@ -16,17 +16,9 @@ Resource::Resource(int value, int maximum, int minimum) : Attribute(value)
 	if (maximum == -1)
 		maximum = value;
 
-	this->initial = maximum;
-	this->maximum = maximum;
-	this->minimum = minimum;
-}
-
-Resource::Resource(const Resource& copy) :
-    Attribute(copy.initial)
-{
-	this->current = copy.current;
-	this->modify_max(copy.maximum);
-	this->modify_min(copy.minimum);
+	this->initial = static_cast<float>(maximum);
+	this->maximum = static_cast<float>(maximum);
+	this->minimum = static_cast<float>(minimum);
 }
 
 Resource::Resource(float min, float max, float initial) :
@@ -41,6 +33,12 @@ Resource::Resource(float min, float max, float initial) :
 Resource::~Resource()
 {
 	// TODO Auto-generated destructor stub
+}
+
+Primarch* Resource::clone(bool with_id)
+{
+	Resource* to_ret = new Resource(this->minimum, this->maximum, this->initial);
+	return to_ret;
 }
 
 void Resource::deplete(int amount)

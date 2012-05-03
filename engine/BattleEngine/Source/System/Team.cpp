@@ -2,12 +2,7 @@
 
 namespace engine
 {
-   
-Team::Team(const Team& copy, int new_id):
-    members(copy.members),
-    id(new_id)
-{ }
-
+ 
 Team::Team(int id)
 {
     this->members = std::list<Character*>();

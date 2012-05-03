@@ -21,25 +21,10 @@ Effect::~Effect()
 	// TODO Auto-generated destructor stub
 }
 
-Effect::Effect(Primarch *source, Primarch *target)
+Effect::Effect(RGR_Enum source, RGR_Enum target)
 {
-    this->target = target;
-    this->source = source;
-}
-
-Effect::Effect(const Effect& copy)
-{
-    // Currently, a copied effect is still just the same Effect without target
-    // and source.
-    this->source = copy.source;
-    this->target = copy.target;
-}
-
-void Effect::execute()
-{
-    // TODO Useless stub.
-    // TODO Reconsider a more elegant design.
-    std::cout << "STUB EFFECT CALLED!\n";
+    this->target_rgr = target;
+    this->source_rgr = source;
 }
 
 void Effect::pretty_print()

@@ -11,15 +11,11 @@
 #include <list>
 #include <string>
 
+#include "RGR_Enum.h"
+
 namespace engine
 {
-enum RGR_Enum{  ANY = 1,
-                ENEMY = 2,
-                ALLY = 4,
-                OWNER = 8,
-                ALL = 16,
-                };
-                    
+
 class RGR_List
 {
 public:

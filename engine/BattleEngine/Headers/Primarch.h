@@ -25,16 +25,22 @@ public:
     Primarch();
     
     /**
-     * Copy-constructor. Creates an individual copy of the passed input,
-     * retaining the id for the Engine's references.
-     **/
-    Primarch(const Primarch& copy);
-    
-    /**
      * Creates a new Primarch with a human-readable name. Similar
      * to base constructor in its workings.
      **/
     Primarch(std::string name);
+
+	/**
+	 * Clones the Primarch into an identical (with regard to the type) copy.
+	 * \param with_id Create with existing id? Consider this the difference
+	 * between carbon copy (where both copies are, for all intents and purposes -
+	 * except pointers - identical) and twins (where they are identical, but
+	 * distinct). Consider the difference between creating an identical character
+	 * (where the id should NOT be identical) for convenience or cloning the
+	 * character during the GameState cloning procedure (where even the id
+	 * needs to be identical).
+	 */
+	virtual Primarch* clone(bool with_id = false) = 0;
 
     /**
      * Global Id for a primarch. This is identical across GameState making it

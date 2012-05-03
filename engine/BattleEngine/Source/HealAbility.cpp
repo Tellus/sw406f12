@@ -18,4 +18,5 @@ HealAbility::HealAbility() :
     this->add_rgr(engine::RGR_Enum::OWNER);
 }
 
+
 }

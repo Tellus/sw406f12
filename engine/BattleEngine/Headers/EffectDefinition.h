@@ -18,7 +18,7 @@ public:
 	EffectDefinition();
 	virtual ~EffectDefinition();
 	
-	T spawn(Primarch *source, Primarch *target);
+	T* spawn(Primarch *source, Primarch *target);
 };
 
 } /* namespace engine */

@@ -22,8 +22,9 @@ public:
 	Attribute();
 	Attribute(float start);
 	Attribute(int initial);
-	Attribute(const Attribute& copy);
 	virtual ~Attribute();
+
+	virtual Primarch *clone(bool with_id);
 
 	std::string pretty_name;
 	

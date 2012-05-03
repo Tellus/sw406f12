@@ -13,39 +13,41 @@ std::map<RGR_Enum, RGRIdentifier*> GameState::rgr_identifiers = std::map<RGR_Enu
 
 GameState::GameState() {
 	// TODO Auto-generated constructor stub
+	this->_init();
 }
 
 GameState::~GameState() {
 	// TODO Auto-generated destructor stub
 }
 
-/**
- * Copy constructor. Will copy the passed GameState into a new one, distinct
- * from the original.
- **/
-GameState::GameState(const GameState& copy):
-    characters(copy.characters)
+GameState *GameState::clone()
 {
-    std::cout << "GameState: " << &copy << " copying into " << this << "\n";
-    
-    this->characters = std::list<Character*>();
-    std::list<Character*> remote = copy.characters;
+	GameState* new_state = new GameState();
+
+    std::cout << "GameState: " << this << " copying into " << new_state << "\n";
     
     std::cout << "\tCharacters:\n";
-    for (std::list<Character*>::iterator char_iter = remote.begin();
-         char_iter != remote.end();
+	for (std::list<Character*>::iterator char_iter = this->characters.begin();
+         char_iter != this->characters.end();
          char_iter++)
     {
-        Character *c = *char_iter;
-        Character *nc = new Character(*c);
-        this->characters.push_back(nc);
-        
-        std::cout << "\t(" << c->id << ")\t" << c << '\t' << c->name << '\n';
+		Character *c = dynamic_cast<Character*>((*char_iter)->clone(true));
+
+		new_state->add_character(c);
+
+		std::cout << "\t(" << (*char_iter)->id << ")\t" << (*char_iter) << '\t' << (*char_iter)->name << '\n';
         std::cout << "\t\t TO \n";
-        std::cout << "\t(" << nc->id << ")\t" << nc << '\t' << nc->name << '\n';
+        std::cout << "\t(" << c->id << ")\t" << c << '\t' << c->name << '\n';
     }
     
-    this->current_char = this->get_char_by_id(copy.current_char->id);
+	new_state->current_char = new_state->get_char_by_id(this->current_char->id);
+
+	return new_state;
+}
+
+void GameState::_init()
+{
+	this->characters = std::list<Character*>();
 }
 
 /**

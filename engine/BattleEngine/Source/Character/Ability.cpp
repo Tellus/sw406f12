@@ -33,31 +33,20 @@ Ability::Ability(std::string name, float cost_health, float cost_mana) :
     this->cost_mana = cost_mana;
 }
 
-Ability::Ability(const Ability& copy)
+Primarch* Ability::clone(bool with_id)
 {
-    this->_init();
-    
-    // Set basics.
-    this->cost_health = copy.cost_health;
-    this->cost_mana = copy.cost_mana;
-    
-    // Get effects.
-    for (std::vector<Effect*>::const_iterator eff_iter = copy.effects.begin();
-         eff_iter != copy.effects.end();
+	Ability* to_ret = new Ability(this->name, this->cost_health, this->cost_mana);
+
+	for (std::vector<Effect*>::const_iterator eff_iter = this->effects.begin();
+         eff_iter != this->effects.end();
          eff_iter++)
     {
-        effects.push_back(new Effect(**eff_iter));
+		to_ret->effects.push_back(dynamic_cast<Effect*>((*eff_iter)->clone(with_id)));
     }
-    
-    // Get targets.
-    // Try a simple variant drawn from implementation.
 
-    for (std::list<RGR_Enum>::const_iterator rgr_iter = copy.rgr_list.begin();
-         rgr_iter != copy.rgr_list.end();
-         rgr_iter++)
-    {
-        this->add_rgr(*rgr_iter);
-    }
+	to_ret->rgr_list = this->rgr_list;
+
+	return to_ret;
 }
 
 void Ability::_init()

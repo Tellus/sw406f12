@@ -8,6 +8,7 @@
 #ifndef CHARACTER_H_
 #define CHARACTER_H_
 
+// The necessities.
 #include "Primarch.h"
 #include "Attribute.h"
 #include "Ability.h"
@@ -15,6 +16,10 @@
 #include "Resource.h"
 #include "Behaviour.h"
 
+// The exceptions.
+#include "Exceptions/ResourceDoesNotExistException.h"
+
+// The built-ins.
 #include <string>
 #include <map>
 #include <list>
@@ -28,8 +33,9 @@ protected:
 
 public:
 	Character();
-	Character(const Character& copy);
 	virtual ~Character();
+
+	virtual Primarch* clone(bool with_id);
 
     /** Membesr analogous to InvaderScript implementation. **/
 	std::map<std::string, Attribute*> attributes;

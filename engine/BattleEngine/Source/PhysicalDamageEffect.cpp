@@ -9,18 +9,22 @@
 
 namespace testbattle{
 
-PhysicalDamageEffect::PhysicalDamageEffect(engine::Primarch *s, engine::Primarch *t)
+PhysicalDamageEffect::PhysicalDamageEffect(engine::RGR_Enum s, engine::RGR_Enum t)
     : engine::Effect(s, t) {}
 
 PhysicalDamageEffect::PhysicalDamageEffect() : engine::Effect() {}
 
-void PhysicalDamageEffect::execute()
+void PhysicalDamageEffect::execute(Primarch* s, Primarch* t)
 {
-    // Cast target to Character.<
-    this->target_char = (engine::Character*)this->target;
-    this->source_char = (engine::Character*)this->source;
+	engine::Character *tchar = dynamic_cast<engine::Character*>(t);
 
-    this->target_char->get_resource("Health")->deplete(20);
+    tchar->get_resource("Health")->deplete(20);
+}
+
+engine::Primarch* PhysicalDamageEffect::clone(bool with_id)
+{
+	engine::Effect *to_ret = new PhysicalDamageEffect(*this);
+	return to_ret;
 }
 
 };

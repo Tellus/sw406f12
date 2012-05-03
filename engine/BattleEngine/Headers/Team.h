@@ -21,7 +21,6 @@ protected:
     std::list<Character*> members;
     
 public:
-    Team(const Team& copy, int id);
     Team(int id);
     
     int id;

@@ -23,12 +23,15 @@
 
 namespace engine {
 
-class GameState {
+class GameState
+{
 public:
     /* CONSTRUCTORS */
 	GameState();
 	virtual ~GameState();
 	
+	virtual GameState *clone();
+
 	/* MEMBERS */
 	
 	/** 
@@ -48,12 +51,6 @@ public:
 	 * changing the game state, as most changes affect them or spring from them.
 	 **/
 	std::list<Character*> characters;
-	
-	/**
-	 * Copy constructor. Will copy the passed GameState into a new one, distinct
-	 * from the original.
-	 **/
-    GameState(const GameState& copy);
     
     /**
      * Adds a character to the list of characters. Will use the pointer given
@@ -85,6 +82,12 @@ public:
     Character *get_char_by_id(int id);
     
     static void register_identifier(RGRIdentifier *r);
+
+private:
+	/**
+	 * Private initialization function.
+	 */
+	void _init();
 };
 
 } /* namespace engine */

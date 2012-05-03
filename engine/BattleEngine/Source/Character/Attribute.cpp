@@ -25,15 +25,14 @@ Attribute::Attribute(int initial)
     this->set_initial((float)initial);
 }
 
-Attribute::Attribute(const Attribute& copy)
-{
-	this->current = copy.current;
-	this->initial = copy.initial;
-}
-
 Attribute::~Attribute()
 {
 	// Nothing to clean...
+}
+
+Primarch* Attribute::clone(bool with_id)
+{
+	return new Attribute(this->initial);
 }
 
 void Attribute::set_initial(float init)

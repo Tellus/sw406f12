@@ -18,15 +18,6 @@ Primarch::Primarch()
     this->id = Primarch::get_new_id();
 }
 
-Primarch::Primarch(const Primarch& copy)
-{
-    this->name = copy.name;
-    // For cloned Primarchs, we copy the id, so the same Primarch entity can be
-    // referenced across different GameState objects. This cannot be done by
-    // pointers.
-    this->id = copy.id;
-}
-
 Primarch::Primarch(std::string name)
 {
     this->name = name;

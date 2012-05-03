@@ -18,11 +18,11 @@ namespace testbattle
 class SexyEffect : public engine::Effect
 {
 public:
-    engine::Character *source_char, *target_char;
-
-    SexyEffect(engine::Primarch *s, engine::Primarch *t);
     SexyEffect();
-    void execute();
+	SexyEffect(engine::RGR_Enum s, engine::RGR_Enum t);
+
+    void execute(engine::Primarch* s, engine::Primarch* t);
+	Primarch* clone(bool with_id = false);
 };
 
 }

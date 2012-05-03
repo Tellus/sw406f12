@@ -22,42 +22,46 @@ Character::~Character()
 	// TODO Auto-generated destructor stub
 }
 
-Character::Character(const Character& copy) :
-    Primarch(copy)
+Primarch *Character::clone(bool with_id = true)
 {
-    std::cout << copy.name << " (" << copy.id << ") is being copied into " << this << '\n';
+	Character *new_char = new Character();
 
-    this->name = copy.name;
+    std::cout << this->name << " (" << this->id << ") is being copied into " << new_char << '\n';
+
+    new_char->name = this->name;
+	new_char->id = this->id;
     
     // Abilities
-    std::map<std::string, Ability*> abil_remote = copy.abilities;
+    std::map<std::string, Ability*> abil_remote = this->abilities;
     
     for (std::map<std::string, Ability*>::iterator abil_iter = abil_remote.begin();
          abil_iter != abil_remote.end();
          abil_iter++)
      {
-        this->add_ability(abil_iter->first, new Ability(*abil_iter->second));
+        new_char->add_ability(abil_iter->first, dynamic_cast<Ability*>(abil_iter->second->clone(true)));
      }
     
     // Resources
-    std::map<std::string, Resource*> res_remote = copy.resources;
+    std::map<std::string, Resource*> res_remote = this->resources;
     
     for (std::map<std::string, Resource*>::iterator res_iter = res_remote.begin();
          res_iter != res_remote.end();
          res_iter++)
      {
-        this->add_resource(res_iter->first, new Resource(*(res_iter->second)));
+		new_char->add_resource(res_iter->first, dynamic_cast<Resource*>(res_iter->second->clone(true)));
      }
     
     // Attributes
-    std::map<std::string, Attribute*> attr_remote = copy.attributes;
+    std::map<std::string, Attribute*> attr_remote = this->attributes;
     
     for (std::map<std::string, Attribute*>::iterator attr_iter = attr_remote.begin();
          attr_iter != attr_remote.end();
          attr_iter++)
     {
-        this->add_attribute(attr_iter->first, new Attribute(*(attr_iter->second)));
-    }
+        new_char->add_attribute(attr_iter->first, dynamic_cast<Attribute*>(attr_iter->second->clone(true)));
+    }	
+
+	return new_char;
 }
 
 void Character::_init()
@@ -139,7 +143,10 @@ std::map<std::string, Ability*> Character::get_abilities()
 Resource* Character::get_resource(std::string name)
 {
 	if (this->has_resource(name)) return this->resources[name];
-	else return NULL;
+	else
+	{
+		throw new ResourceDoesNotExistException("The requested resource does not exist.");
+	}
 }
 
 Attribute* Character::get_attribute(std::string name)

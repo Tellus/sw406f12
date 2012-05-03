@@ -10,6 +10,9 @@
 
 #include "Primarch.h"
 #include "Ability.h"
+#include "Exceptions/NullParameterException.h"
+
+#include <typeinfo>
 
 namespace engine {
 

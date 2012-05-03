@@ -12,7 +12,8 @@
 
 namespace engine {
 
-class Resource:public engine::Attribute {
+class Resource:public engine::Attribute
+{
 protected:
     /**
      * Lowest allowable value for the Resource.
@@ -27,8 +28,9 @@ protected:
 public:
 	/* At maximum = -1, set it to value */
 	Resource(int value, int maximum = -1, int minimum = 0);
-	Resource(const Resource& copy);
 	virtual ~Resource();
+
+	virtual Primarch *clone(bool with_id);
 
 	void deplete(int amount);
 	void regain(int amount);

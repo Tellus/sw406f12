@@ -28,17 +28,13 @@ public:
 	Ability();
 	Ability(float cost_health, float cost_mana);
     Ability(std::string name, float cost_health, float cost_mana);
-	
-	/**
-	 * Copy-constructor. We use this in the deep cloning of objects for new
-	 * GameStates.
-	 **/
-	Ability(const Ability& copy);
 	virtual ~Ability();
 	
 	float cost_health, cost_mana;
     
     void pretty_print();
+
+	Primarch* clone(bool with_id = false);
     
 private:
     /**

@@ -19,12 +19,11 @@ class PhysicalDamageEffect : public engine::Effect
 {
 public:
     PhysicalDamageEffect();
-    PhysicalDamageEffect(engine::Primarch *s, engine::Primarch *t);
+	PhysicalDamageEffect(engine::RGR_Enum s, engine::RGR_Enum t);
 
-    engine::Character *target_char, *source_char;
+    virtual void execute(engine::Primarch* s, engine::Primarch* t);
 
-    Effect *clone(engine::Primarch *s, engine::Primarch *t);
-    void execute();
+	Primarch* clone(bool with_id = false);
 };
 
 }
