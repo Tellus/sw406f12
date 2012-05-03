@@ -38,8 +38,8 @@ Character* make_joe()
     johannes->name = "Johannes";
     
     // PrettyPrinter::print("Resources...\n", FG_YELLOW);
-    johannes->add_resource("Health", new Resource(100, 0, 100));
-    johannes->add_resource("Mana", new Resource(100, 0, 100));
+    johannes->add_resource("Health", new Resource(0, 100));
+    johannes->add_resource("Mana", new Resource(0, 100));
     
     // PrettyPrinter::print("Attributes...\n", FG_YELLOW);
     johannes->add_attribute("Strength", new Attribute(17));
@@ -64,8 +64,8 @@ Character* make_biggi()
     biggi->name = "Biggi";
     
     // PrettyPrinter::print("Resources...\n", FG_YELLOW);
-    biggi->add_resource("Health", new Resource(250, 0, 250));
-    biggi->add_resource("Mana", new Resource(50, 0, 50));
+    biggi->add_resource("Health", new Resource(0, 250));
+    biggi->add_resource("Mana", new Resource(0, 50));
     
     // PrettyPrinter::print("Attributes...\n", FG_YELLOW);
     biggi->add_attribute("Strength", new Attribute(50));
@@ -151,11 +151,11 @@ int main(int argc, char *argv[])
     
     PrettyPrinter::print("Calculating best future state...\n");
     
-    GameState *hit = at->get_next_state();
+    state = at->get_next_state();
     
     PrettyPrinter::print_good("Future state: DONE!\n");
     
-    hit->pretty_print();
+    state->pretty_print();
     
     PrettyPrinter::print_good("We're done! Thank you.");
     

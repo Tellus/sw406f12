@@ -29,7 +29,7 @@ Primarch *Character::clone(bool with_id = true)
     std::cout << this->name << " (" << this->id << ") is being copied into " << new_char << '\n';
 
     new_char->name = this->name;
-	new_char->id = this->id;
+	if (with_id) new_char->id = id;
     
     // Abilities
     std::map<std::string, Ability*> abil_remote = this->abilities;
@@ -73,7 +73,7 @@ void Character::_init()
 
 void Character::pretty_print()
 {
-    std::cout << "Character: " << this->name << '\n';
+    std::cout << "Character(" << this << "): " << this->name << '\n';
     std::cout << "Attributes:\n";
     std::map<std::string,Attribute*> *tmp = &this->attributes;
     for (std::map<std::string,Attribute*>::iterator iter = tmp->begin(); iter != tmp->end(); iter++)
@@ -142,6 +142,7 @@ std::map<std::string, Ability*> Character::get_abilities()
 
 Resource* Character::get_resource(std::string name)
 {
+	std::cout << "Character(" << this << "): Resource '" << name << "' requested.\n";
 	if (this->has_resource(name)) return this->resources[name];
 	else
 	{

@@ -27,18 +27,16 @@ protected:
 
 public:
 	/* At maximum = -1, set it to value */
-	Resource(int value, int maximum = -1, int minimum = 0);
+	Resource(float min, float max, float init);
+	Resource(float min, float max);
 	virtual ~Resource();
 
 	virtual Primarch *clone(bool with_id);
-
-	void deplete(int amount);
-	void regain(int amount);
 	
 	virtual void reset();
-	virtual void modify(int amount);
-	
-	Resource(float min, float max, float initial);
+	virtual void modify(float amount);
+	void decrease(float amount);
+	void increase(float amount);
 	
 	/**
 	 * Changes the minimum value of the Resource.
@@ -53,6 +51,9 @@ public:
 	void modify_max(float value);
 	
 	void pretty_print();
+
+private:
+	void _init(float min, float max);
 };
 
 } /* namespace engine */

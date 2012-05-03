@@ -32,7 +32,11 @@ Attribute::~Attribute()
 
 Primarch* Attribute::clone(bool with_id)
 {
-	return new Attribute(this->initial);
+	Attribute *ret = new Attribute();
+	ret->initial = this->initial;
+	ret->current = this->current;
+	
+	return ret;
 }
 
 void Attribute::set_initial(float init)

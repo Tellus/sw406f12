@@ -35,13 +35,23 @@ Ability::Ability(std::string name, float cost_health, float cost_mana) :
 
 Primarch* Ability::clone(bool with_id)
 {
-	Ability* to_ret = new Ability(this->name, this->cost_health, this->cost_mana);
+	Ability* to_ret = new Ability();// this->name, this->cost_health, this->cost_mana);
+	to_ret->name = this->name;
+	to_ret->cost_health = this->cost_health;
+	to_ret->cost_mana = this->cost_mana;
+
+	Effect* new_eff;
 
 	for (std::vector<Effect*>::const_iterator eff_iter = this->effects.begin();
          eff_iter != this->effects.end();
          eff_iter++)
     {
-		to_ret->effects.push_back(dynamic_cast<Effect*>((*eff_iter)->clone(with_id)));
+		new_eff = dynamic_cast<Effect*>((*eff_iter)->clone(with_id));
+		if (new_eff == NULL)
+		{
+			throw "Bad Effect cast!";
+		}
+		to_ret->effects.push_back(new_eff);
     }
 
 	to_ret->rgr_list = this->rgr_list;

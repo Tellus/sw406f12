@@ -23,9 +23,9 @@ void HealEffect::execute(engine::Primarch* s, engine::Primarch* t)
 	engine::Character* schar = dynamic_cast<engine::Character*>(s);
 
     // Heals for 40 health.
-	tchar->get_resource("Health")->regain(40);
+	tchar->get_resource("Health")->increase(10);
 	// Costs a bit, too.
-	schar->get_resource("Mana")->deplete(20);
+	schar->get_resource("Mana")->decrease(20);
 }
 
 engine::Primarch* HealEffect::clone(bool with_id)

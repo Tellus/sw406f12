@@ -18,7 +18,7 @@ void PhysicalDamageEffect::execute(Primarch* s, Primarch* t)
 {
 	engine::Character *tchar = dynamic_cast<engine::Character*>(t);
 
-    tchar->get_resource("Health")->deplete(20);
+    tchar->get_resource("Health")->decrease(20);
 }
 
 engine::Primarch* PhysicalDamageEffect::clone(bool with_id)

@@ -25,8 +25,6 @@ public:
 	virtual ~Attribute();
 
 	virtual Primarch *clone(bool with_id);
-
-	std::string pretty_name;
 	
 	/**
 	 * Modifies the current value of the Attribute. Modifies the maximum on
