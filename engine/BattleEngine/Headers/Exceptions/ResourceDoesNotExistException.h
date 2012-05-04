@@ -5,17 +5,19 @@
  *      Author: Johannes
  */ 
 
+#pragma once
+
 #include <exception>
 #include <string>
- 
+
+#include "PrimarchDoesNotExistException.h"
+
 namespace engine {
-class ResourceDoesNotExistException : public std::exception
+class ResourceDoesNotExistException : public PrimarchDoesNotExistException
 {
 public:
-	std::string msg;
-
 	ResourceDoesNotExistException(std::string mess);
-	~ResourceDoesNotExistException() throw();
+	virtual ~ResourceDoesNotExistException() throw();
 	virtual const char* what() const throw();
 };
 }

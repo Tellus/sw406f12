@@ -10,6 +10,7 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include <limits>
 
 #include "RGRIdentifier.h"
 #include "Character.h"
@@ -22,6 +23,8 @@
 #define GAMESTATE_CONTAINER_TYPE list
 
 namespace engine {
+
+// TODO: Replace the character list with the PrimarchIndexer class as a base instead.
 
 class GameState
 {
@@ -94,6 +97,11 @@ public:
 	// Finds the team that the Character is on, if any.
 	int get_char_team(int c_id);
 	int get_char_team(Character* c);
+
+	/**
+	 * Gets the highest team id registered so far.
+	 */
+	int max_team_id();
 };
 
 } /* namespace engine */

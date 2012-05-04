@@ -140,11 +140,8 @@ void GameState::register_identifier(RGRIdentifier *r)
     GameState::rgr_identifiers[r->rgr] = r;
 }
 
-} /* namespace engine */
-
-
 // Sets a Character to be on a specific team. Vital for some RGRIdentifiers to work properly.
-bool engine::GameState::set_team_aff(int t_id, Character* to_set)
+bool GameState::set_team_aff(int t_id, Character* to_set)
 {
 	// Start by removing from all other teams.
 	std::list<Team*>::iterator iter;
@@ -206,7 +203,7 @@ bool engine::GameState::set_team_aff(int t_id, Character* to_set)
 }
 
 // Finds the team that the Character is on, if any.
-int engine::GameState::get_char_team(int c_id)
+int GameState::get_char_team(int c_id)
 {
 	for (std::list<Team*>::iterator iter = this->teams.begin();
 		 iter != this->teams.end();
@@ -221,7 +218,27 @@ int engine::GameState::get_char_team(int c_id)
 }
 
 // Finds the team that the Character is on, if any.
-int engine::GameState::get_char_team(Character* c_id)
+int GameState::get_char_team(Character* c_id)
 {
 	return this->get_char_team(c_id->id);
+}
+
+int GameState::max_team_id()
+{
+	int hi = -std::numeric_limits<int>::infinity();
+
+	int to_test;
+
+	for (std::list<Team*>::iterator iter = this->teams.begin();
+		iter != this->teams.end();
+		iter++)
+	{
+		to_test = (*iter)->id;
+		//  hi = std::max(hi, to_test);
+		hi = hi < to_test ? to_test : hi;
+	}
+
+	return hi;
+}
+
 }

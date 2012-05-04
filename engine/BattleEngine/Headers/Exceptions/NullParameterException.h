@@ -5,6 +5,8 @@
  *      Author: Johannes
  */ 
 
+#pragma once
+
 #include <exception>
 #include <string>
  

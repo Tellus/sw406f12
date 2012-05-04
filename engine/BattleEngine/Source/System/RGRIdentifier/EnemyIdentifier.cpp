@@ -17,16 +17,11 @@ EnemyIdentifier::EnemyIdentifier()
 
 Character *EnemyIdentifier::identify(GameState *from)
 {
-	Character* cur = from->current_char;
-
-	// frontend::PrettyPrinter::print("Trying to find an ENEMY for " + cur->name + '\n');
-
 	// Get their team.
 	int t_id = from->get_char_team(from->current_char);
 
 	if (t_id == -1)
 	{
-		// frontend::PrettyPrinter::print_bad("The Character is not on a team. Cannot proceed!");
 		return NULL;
 	}
 
@@ -46,7 +41,6 @@ Character *EnemyIdentifier::identify(GameState *from)
 		}
 	}
 
-	// frontend::PrettyPrinter::print_bad("There are no valid ENEMY type Characters to be found.");
 	return NULL;
 }
 

@@ -5,8 +5,13 @@
  *      Author: Ezphares
  */
 
+// For program.cpp
 #include <iostream>
 
+#include "Engine.h"
+#include "SimpleWinCondition.h"
+
+// For unit tests.
 #include "GameState.h"
 #include "AbilityTable.h"
 
@@ -131,10 +136,8 @@ void test_gamestate_clone(GameState* from)
 	delete tmp_state;
 }
 
-int main(int argc, char *argv[])
+void base_test()
 {
-    PrettyPrinter::print("BattleEngine v1 alpha.\n", FG_YELLOW);
-
     PrettyPrinter::print("Initialize new character...\n");
 
     // Let's do a simple verification test: Create and populate a character.
@@ -175,8 +178,24 @@ int main(int argc, char *argv[])
     PrettyPrinter::print_good("We're done! Thank you.");
     
 	PrettyPrinter::print("Press any key to exit.");
-	string str;
-	cin >> str;
+}
+
+int main(int argc, char *argv[])
+{
+    PrettyPrinter::print("BattleEngine v1 alpha.\n", FG_YELLOW);
+
+	// Uncomment to perform basic initialization, cloning and AI test.
+	// base_test();
+
+	/*** BEGIN TRUE ENGINE TEST ***/
+
+	Engine* game = new Engine();
+	game->win_condition = new SimpleWinCondition();
+	game->add_character(make_joe());
+	game->add_character(make_biggi());
+	game->run();
+
+	/*** END TRUE ENGINE TEST ***/
 
 	return 0;
 }
