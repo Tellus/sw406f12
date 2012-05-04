@@ -61,6 +61,9 @@ Primarch *Character::clone(bool with_id = true)
         new_char->add_attribute(attr_iter->first, dynamic_cast<Attribute*>(attr_iter->second->clone(true)));
     }	
 
+	// Behaviour
+	new_char->behaviour = this->behaviour->clone();
+
 	return new_char;
 }
 
@@ -87,11 +90,6 @@ void Character::pretty_print()
     {
         std::cout << '\t' << iter->first << '\t' << iter->second->get_current() << '\n';
     }
-}
-
-float Character::get_piggy()
-{
-    return this->behaviour.get_piggy();
 }
 
 std::map<std::string, Attribute*> Character::get_attributes()
@@ -169,6 +167,11 @@ bool Character::has_resource(std::string name)
 bool Character::has_ability(std::string name)
 {
     return (this->abilities.count(name)>0);
+}
+
+float Character::get_piggy(GameState* from)
+{
+	return this->behaviour->get_piggy(from);
 }
 
 } /* namespace engine */

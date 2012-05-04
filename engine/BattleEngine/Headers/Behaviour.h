@@ -5,23 +5,29 @@
  *      Author: Ezphares
  */
 
-#ifndef BEHAVIOUR_H_
-#define BEHAVIOUR_H_
+#pragma once
+
+// I'm too slow to figure an alternative to forward declaration.
+namespace engine{
+class GameState;
+}
 
 namespace engine {
 
 class Behaviour
 {
 public:
-	Behaviour();
-	virtual ~Behaviour();
-	
 	/**
 	 * Calculates the piggy value depending on the premises given for the
 	 * current Behaviour child class.
+	 * \param from Pointer to the GameState to get piggy from. We need a
+	 * direct way to retrieve game data, and that is through GameState.
+	 * It's unfortunate this creates a reference loop via
+	 * GameState -> Character -> Behaviour -> GameState.
 	 **/
-	float get_piggy();
+	virtual float get_piggy(GameState* from) = 0;
+
+	virtual Behaviour* clone() = 0;
 };
 
 } /* namespace engine */
-#endif /* BEHAVIOUR_H_ */

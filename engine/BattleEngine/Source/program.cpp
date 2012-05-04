@@ -10,6 +10,10 @@
 #include "GameState.h"
 #include "AbilityTable.h"
 
+#include "FullBehaviour.h"
+#include "BehaviourRatios/ResourceRatio.h"
+#include "BehaviourRatios/AttributeRatio.h"
+
 #include "SexyAbility.h"
 #include "HealAbility.h"
 #include "AttackAbility.h"
@@ -32,6 +36,15 @@ void sp(std::string to_print)
     cout << to_print << "\n";
 }
 
+FullBehaviour* make_fighter_behaviour()
+{
+	FullBehaviour *nb = new FullBehaviour();
+	nb->add_ratio(new ResourceRatio(ENEMY, "Health", -0.5));
+	nb->add_ratio(new ResourceRatio(OWNER, "Health", 1));
+
+	return nb;
+}
+
 Character* make_joe()
 {
     Character *johannes = new Character();
@@ -47,7 +60,7 @@ Character* make_joe()
     johannes->add_attribute("Sexyness", new Attribute(10000));
 
 	// Behaviour
-    // add behaviour
+	johannes->behaviour = make_fighter_behaviour();
 
     // Abilities.
     // PrettyPrinter::print("Abilities...\n", FG_YELLOW);
@@ -71,8 +84,9 @@ Character* make_biggi()
     biggi->add_attribute("Strength", new Attribute(50));
     biggi->add_attribute("Intelligence", new Attribute(10));
     biggi->add_attribute("Sexyness", new Attribute(5));
-    // Behaviour
-    // add behaviour
+    
+	// Behaviour
+	biggi->behaviour = make_fighter_behaviour();
 
     // Abilities.
     // PrettyPrinter::print("Abilities...\n", FG_YELLOW);

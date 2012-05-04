@@ -58,8 +58,8 @@ GameState *AbilityTable::get_next_state()
     
 	frontend::PrettyPrinter::print("Calculating best piggy action...\n");
 
-	// Highest piggy rating so far.
-    float max_piggy = 0;
+	// Highest piggy rating so far... minimal value.
+	float max_piggy = std::numeric_limits<float>::infinity() * -1;
 
     for (std::vector<Action*>::iterator iter = actions->begin();
          iter != actions->end();
@@ -69,7 +69,7 @@ GameState *AbilityTable::get_next_state()
 
 		GameState *tmp_state = tmp_a->execute(this->state);
 
-		float new_piggy = tmp_state->current_char->get_piggy();
+		float new_piggy = tmp_state->current_char->get_piggy(tmp_state);
 
 		if (new_piggy > max_piggy)
 		{
@@ -110,28 +110,13 @@ GameState *AbilityTable::get_next_state()
 	return this->best_state;
 }
 
-bool AbilityTable::challenge_piggy(Action* a)
-{
-	GameState *new_state = a->execute(this->state);
-    
-    // Get piggy.
-	Character *ch = new_state->get_rgr(a->source);
-    float piggy = ch->get_piggy();
-    
-    // Destroy clone.
-    delete new_state;
-    
-    // Return piggy.
-    return piggy;
-}
-
 float AbilityTable::get_action_piggy(Action *a)
 {
 	GameState *new_state = a->execute(this->state);
     
     // Get piggy.
 	Character *ch = new_state->get_rgr(a->source);
-    float piggy = ch->get_piggy();
+    float piggy = ch->get_piggy(new_state);
     
     // Destroy clone.
     delete new_state;

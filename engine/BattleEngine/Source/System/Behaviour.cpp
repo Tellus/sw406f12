@@ -9,20 +9,4 @@
 
 namespace engine {
 
-Behaviour::Behaviour()
-{
-	// TODO Auto-generated constructor stub
-
-}
-
-Behaviour::~Behaviour()
-{
-	// TODO Auto-generated destructor stub
-}
-
-float Behaviour::get_piggy()
-{
-    return 1;
-}
-
 } /* namespace engine */

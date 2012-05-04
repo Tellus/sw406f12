@@ -26,6 +26,9 @@
 
 namespace engine {
 
+// Forward declaration... hm.
+class GameState;
+
 class Character : public Primarch
 {
 protected:
@@ -42,7 +45,7 @@ public:
 	std::map<std::string, Resource*> resources;
 	std::map<std::string, Ability*> abilities;
 	std::list<ContEffect*> cont_effects;
-	Behaviour behaviour;
+	Behaviour* behaviour;
 
     /**
      * Adds a new Attribute to the Character.
@@ -68,7 +71,7 @@ public:
 	 * \return The current piggy value.
 	 * \note Mostly a proxy for Behaviour::get_piggy().
 	 **/
-	float get_piggy();
+	float get_piggy(GameState* from);
 	
 	/**
 	 * Retrieves the ability list.

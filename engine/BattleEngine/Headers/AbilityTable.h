@@ -8,6 +8,8 @@
 #ifndef ABILITYTABLE_H_
 #define ABILITYTABLE_H_
 
+#include <limits>
+
 #include "PrettyPrinter.h"
 #include "GameState.h"
 #include "RGRIdentifier.h"
@@ -42,13 +44,6 @@ protected:
 	 * decisions.
 	 **/
 	std::vector<Action*> *create_actions(Character *from);
-
-	/**
-	 * Executes the passed action and tests the resulting piggy. Replaces
-	 * max piggy and best state if result is better.
-	 * \return True if the best state was replaced. False otherwise.
-	 */
-	bool challenge_piggy(Action* a);
 
 public:
 	/**
