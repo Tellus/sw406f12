@@ -39,6 +39,8 @@ GameState *AbilityTable::get_next_state()
    4. Return resulting max state.
 **/
 
+	this->best_action = NULL;
+
     // 1 + 2
     frontend::PrettyPrinter::print("Creating viable actions...\n");
     std::vector<Action*> *actions = this->create_actions(this->state->current_char);
@@ -65,18 +67,27 @@ GameState *AbilityTable::get_next_state()
     {
         Action *tmp_a = *iter;
 
-		float new_pig = this->get_action_piggy(*iter);
-		
-		if (new_pig > max_piggy)
-        {
-            max_piggy = new_pig;
-            this->best_action = *iter;
-        }
+		GameState *tmp_state = tmp_a->execute(this->state);
+
+		float new_piggy = tmp_state->current_char->get_piggy();
+
+		if (new_piggy > max_piggy)
+		{
+			std::cout << "Better action supplanting previous.\n";
+			max_piggy = new_piggy;
+			this->best_action = *iter;
+			this->best_state = tmp_state;
+		}
+		else
+		{
+			std::cout << "Current piggy is best.\n";
+			delete tmp_state;
+		}
     }
     
     frontend::PrettyPrinter::print_good("DONE!\n");
         
-    if (this->best_action == 0 || this->best_action == NULL)
+    if (this->best_action == NULL)
     {
         std::cout << "ERROR! Null Action!\n";
     }
@@ -95,7 +106,23 @@ GameState *AbilityTable::get_next_state()
     delete actions;
     
     // 4.
-    return new GameState(*this->state);
+    // return new GameState(*this->state);
+	return this->best_state;
+}
+
+bool AbilityTable::challenge_piggy(Action* a)
+{
+	GameState *new_state = a->execute(this->state);
+    
+    // Get piggy.
+	Character *ch = new_state->get_rgr(a->source);
+    float piggy = ch->get_piggy();
+    
+    // Destroy clone.
+    delete new_state;
+    
+    // Return piggy.
+    return piggy;
 }
 
 float AbilityTable::get_action_piggy(Action *a)
@@ -195,16 +222,6 @@ void AbilityTable::iterate_ability(Ability *src)
 {
     // get valid targets.
 	auto tars = src->get_as_list();
-}
-
-Action *AbilityTable::get_next_action()
-{
-    if (this->best_action == NULL)
-    {
-        get_next_state();
-    }
-    
-    return this->best_action;
 }
 
 } /* namespace engine */

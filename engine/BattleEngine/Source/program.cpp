@@ -149,7 +149,8 @@ int main(int argc, char *argv[])
     
     AbilityTable *at = new AbilityTable(state);
     
-    PrettyPrinter::print("Calculating best future state...\n");
+    // PrettyPrinter::print("Calculating best future state...\n");
+	cout << "Calculating best future state from " << state << "...\n";
     
     state = at->get_next_state();
     

@@ -27,7 +27,13 @@ GameState* Action::execute(GameState *thru)
 	// Clone.
 	GameState* state = thru->clone();
 
-	Character* source = thru->get_rgr(this->source);
+	Character* source = state->get_rgr(this->source);
+	Character* target = state->get_rgr(this->target);
+
+	std::cout << "DEBUG INFO:\n";
+	std::cout << "\tGameState: " << state << '\n';
+	std::cout << "\tSource: " << source << '\n';
+	std::cout << "\tTarget: " << target << '\n';
 
 	std::vector<Effect*> *effects = this->generate_effects();
 	for (std::vector<Effect*>::iterator iter = effects->begin(); iter != effects->end(); iter++)
@@ -36,7 +42,7 @@ GameState* Action::execute(GameState *thru)
 
 		std::cout << "\tExecuting effect '" << ef->name << "'.\n";
 
-		ef->execute(source, state->get_rgr(this->target));
+		ef->execute(source, target);
 	}
 
 	return state;

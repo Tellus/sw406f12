@@ -43,6 +43,13 @@ protected:
 	 **/
 	std::vector<Action*> *create_actions(Character *from);
 
+	/**
+	 * Executes the passed action and tests the resulting piggy. Replaces
+	 * max piggy and best state if result is better.
+	 * \return True if the best state was replaced. False otherwise.
+	 */
+	bool challenge_piggy(Action* a);
+
 public:
 	/**
 	 * Creates a new AbilityTable instance and have it instantly calculate the
@@ -67,6 +74,11 @@ public:
 	Action *best_action;
 	
 	/**
+	 * The best next state, as determined by an execution on best_action.
+	 */
+	GameState *best_state;
+
+	/**
 	 * Runs the AbilityTable calculations and creates a new GameState wherein
 	 * the current Character has taken the best action available to them.
 	 * \return A new GameState.
@@ -75,14 +87,6 @@ public:
 	 * by AbilityTable.
 	 **/
     GameState *get_next_state();
-    
-    /**
-     * Finds the best possible action for the currently active Character.
-     * \return The best action.
-     * \note The return value is automatically stored in best_action so the
-     * result can be cached.
-     **/
-    Action *get_next_action();
     
     /**
      * Simulates an action on a cloned state and returns the state's active
