@@ -23,11 +23,6 @@
 #include "HealAbility.h"
 #include "AttackAbility.h"
 
-// Identifier includes. This should be made prettier.
-#include "EnemyIdentifier.h"
-#include "EnemyIdentifier_Unsafe.h"
-#include "OwnerIdentifier.h"
-
 // Other stuff.
 #include "PrettyPrinter.h"
 
@@ -35,11 +30,6 @@ using namespace std;
 using namespace engine;
 using namespace frontend;
 using namespace testbattle;
-
-void sp(std::string to_print)
-{
-    cout << to_print << "\n";
-}
 
 FullBehaviour* make_fighter_behaviour()
 {

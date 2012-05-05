@@ -12,6 +12,7 @@
 #include <iostream>
 #include <limits>
 
+#include "PrimarchIndexer.h"
 #include "RGRIdentifier.h"
 #include "Character.h"
 #include "Behaviour.h"
@@ -26,7 +27,7 @@ namespace engine {
 
 // TODO: Replace the character list with the PrimarchIndexer class as a base instead.
 
-class GameState
+class GameState : public PrimarchIndexer
 {
 public:
     /* CONSTRUCTORS */
@@ -48,18 +49,6 @@ public:
 	std::list<Team*> teams;
 	
 	/* METHODS */
-	
-	/**
-	 * Vector of Character objects in-game. They are the essential core of
-	 * changing the game state, as most changes affect them or spring from them.
-	 **/
-	std::list<Character*> characters;
-    
-    /**
-     * Adds a character to the list of characters. Will use the pointer given
-     * without copying.
-     **/
-    void add_character(Character *to_add);
     
     /**
      * Retrieves a pointer to a character represented by the passed RGR.
@@ -76,13 +65,6 @@ public:
      * Human-readable text output of the GameState's current data contents.
      **/
     void pretty_print();
-    
-    /**
-     * Retrieves the Character identified by id, if any.
-     * \param id The id to look for.
-     * \return Pointer to the Character if found, null otherwise.
-     **/
-    Character *get_char_by_id(int id);
     
     static void register_identifier(RGRIdentifier *r);
 

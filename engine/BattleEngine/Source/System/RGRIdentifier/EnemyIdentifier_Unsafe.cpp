@@ -25,12 +25,9 @@ Character *EnemyIdentifier_Unsafe::identify(GameState *from)
         Team *tmp = *iter;
         if (!tmp->has_character(from->current_char->id))
         {
-			return from->get_char_by_id(tmp->first_char());
+			return from->get_character_by_id(tmp->first_char());
         }
     }
-
-	// This is where we get unsafe. Return self.
-	// frontend::PrettyPrinter::print("Warning! ENEMY returning current char.");
 
 	return from->current_char;
 

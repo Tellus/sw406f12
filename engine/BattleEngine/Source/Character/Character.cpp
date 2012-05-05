@@ -26,8 +26,6 @@ Primarch *Character::clone(bool with_id = true)
 {
 	Character *new_char = new Character();
 
-    std::cout << this->name << " (" << this->id << ") is being copied into " << new_char << '\n';
-
     new_char->name = this->name;
 	if (with_id) new_char->id = id;
     
@@ -140,7 +138,6 @@ std::map<std::string, Ability*> Character::get_abilities()
 
 Resource* Character::get_resource(std::string name)
 {
-	std::cout << "Character(" << this << "): Resource '" << name << "' requested.\n";
 	if (this->has_resource(name)) return this->resources[name];
 	else
 	{

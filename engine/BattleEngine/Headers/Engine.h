@@ -15,6 +15,9 @@
 #include "WinCondition.h"
 #include "AbilityTable.h"
 
+#include "EnemyIdentifier.h"
+#include "OwnerIdentifier.h"
+
 namespace engine
 {
 
@@ -35,13 +38,6 @@ public:
 	 * It will change rapidly depending on the execution speed of AI turns.
 	 */
 	GameState* current_state;
-
-	/**
-	 * Contains the basic Character objects that were present when the match
-	 * was started. They are not used currently but may have historic or ...
-	 * debuggic value.
-	 */
-	std::list<Character*> base_characters;
 
 	/**
 	 * The active win condition. This is tested after each turn cycle to see if
@@ -76,14 +72,6 @@ public:
 	void add_character(Character* to_add, int team_id);
 
 	/**
-	 * Checks to see if the passed Character (by name) is present in either
-	 * the list of base characters or the current GameState.
-	 * \param name The name (very case sensitive) of the Character to seek.
-	 * \return True if found, false otherwise.
-	 */
-	bool character_exists(std::string name);
-
-	/**
 	 * Checks to see if the passed Character (by Primarch ID) is present in either
 	 * the list of base characters or the current GameState.
 	 * \param c_id The ID of the Character to look for.
@@ -103,7 +91,7 @@ public:
 	Character* get_next_character();
 
 private:
-	Character* _add_base_char(Character* to_add);
+	Character* _add_base_char(Character* to_add, int team_id = -1);
 	void _init(void);
 };
 

@@ -16,6 +16,8 @@
 #include "Character.h"
 #include "Action.h"
 
+#include "Exceptions/NoValidActionException.h"
+
 namespace engine {
 
 class AbilityTable {
@@ -46,6 +48,7 @@ protected:
 	std::vector<Action*> *create_actions(Character *from);
 
 public:
+	AbilityTable();
 	/**
 	 * Creates a new AbilityTable instance and have it instantly calculate the
 	 * highest valued action for a Character in a GameState.

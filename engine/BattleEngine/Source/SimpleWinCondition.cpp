@@ -23,14 +23,22 @@ bool SimpleWinCondition::is_met(GameState* check)
 
 	Character* tmp_c;
 
-	for (std::list<Team*>::iterator iter = teams.begin();
-		 iter != teams.end();
-		 iter++)
+	// Loop teams.
+	for (std::list<Team*>::iterator team_iter = teams.begin();
+		 team_iter != teams.end();
+		 team_iter++)
 	{
-		tmp_c = check->get_char_by_id((*iter)->id);
-		if (tmp_c->get_resource("Health")->get_current() <= 0)
+		// Loop each char in team.
+		for (std::list<int>::iterator char_iter = (*team_iter)->members.begin();
+		 	char_iter != (*team_iter)->members.end();
+		 	char_iter++)
 		{
-			return true;
+			tmp_c = check->get_character_by_id(*char_iter);
+
+			if (tmp_c->get_resource("Health")->get_current() <= 0)
+			{
+				return true;
+			}
 		}
 	}
 

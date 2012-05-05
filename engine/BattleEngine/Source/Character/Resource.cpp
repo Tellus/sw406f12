@@ -44,15 +44,14 @@ Primarch* Resource::clone(bool with_id)
 
 void Resource::decrease(float amount)
 {
-	std::cout << this->name << ": " << this->current << "-" << amount << " = " << (this->current-amount) << ". ";
+	std::cout << this->name << " from " << this->current;
 	this->current = std::max(this->minimum, this->current-amount);
-	std::cout << " Ended up as " << this->current << '\n';
+	std::cout << " to " << this->current << '\n';
 }
 
 void Resource::increase(float amount)
 {
-	std::cout << this->name << ": " << this->current << "+" << amount << " = " << (this->current+amount) << ".\n";
-	this->current = std::max(this->maximum, this->current+amount);
+	this->current = std::min(this->maximum, this->current+amount);
 }
 
 void Resource::modify(float amount)

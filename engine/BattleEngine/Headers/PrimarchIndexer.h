@@ -8,6 +8,7 @@
 #pragma once
 
 #include <list>
+#include <algorithm>
 
 #include "Character.h"
 
@@ -30,7 +31,21 @@ public:
 
 	std::list<Character*> characters;
 
+	/**
+	 * Retrieves a Character object by the Primarch ID.
+	 * \param c_id Primarch ID of the Character.
+	 * \return The first encountered Character object (should be the only one).
+	 * \throws PrimarchDoesNotExistException if the requested ID was not found in the collection.
+	 */
 	Character* get_character_by_id(int c_id);
+
+    /**
+     * Adds a character to the list of characters. Will use the pointer given
+     * without copying.
+     **/
+    void add_character(Character *to_add);
+
+	bool has_character(int c_id);
 
 private:
 	void _init();

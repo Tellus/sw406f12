@@ -11,7 +11,12 @@ PrimarchIndexer::PrimarchIndexer()
 
 PrimarchIndexer::~PrimarchIndexer()
 {
-	// Why no implement?
+	for (std::list<Character*>::iterator iter = this->characters.begin();
+		iter != this->characters.end();
+		iter++)
+	{
+		delete (*iter);
+	}
 }
 
 void PrimarchIndexer::_init()
@@ -21,14 +26,41 @@ void PrimarchIndexer::_init()
 
 Character* PrimarchIndexer::get_character_by_id(int c_id)
 {
-	for (std::list<Character*>::iterator iter = this->characters.begin();
-		 iter != this->characters.begin();
-		 iter++)
+	std::list<Character*>::iterator finder;
+    
+    finder = std::find_if(this->characters.begin(),
+						  this->characters.end(),
+						  [c_id](Character* cp){ return cp->id == c_id;});
+    
+    if (finder == this->characters.end())
 	{
-		if ((*iter)->id == c_id) return *iter;
+		throw PrimarchDoesNotExistException("The requested Character was not in the list.");
 	}
+	else
+	{
+		return (*finder);
+	}
+}
 
-	throw PrimarchDoesNotExistException("The requested Character was not in the list.");
+/**
+ * Adds a character to the list of characters. Will use the pointer given
+ * without copying.
+ **/
+void PrimarchIndexer::add_character(Character *to_add)
+{
+    this->characters.push_back(to_add);
+}
+
+bool PrimarchIndexer::has_character(int c_id)
+{
+	std::list<Character*>::iterator finder;
+    
+    finder = std::find_if(this->characters.begin(),
+						  this->characters.end(),
+						  [c_id](Character* cp){ return cp->id == c_id;});
+    
+    if (finder == this->characters.end()) return false;
+    else return true;
 }
 
 }

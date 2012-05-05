@@ -13,13 +13,6 @@ namespace frontend
 std::string PrettyPrinter::_buffer = std::string();
 std::vector<int> PrettyPrinter::_params = std::vector<int>();
 
-/**
-
-cout << "\033[1;31mbold red text\033[0m\n";
-cout << "\[\033[32m]Hello, \[\033[36m]colourful \[\033[33mworld!\033[0m]\nm";
-
-**/
-
 void PrettyPrinter::print(std::string in)
 {
     std::cout << in;

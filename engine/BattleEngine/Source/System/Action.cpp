@@ -22,25 +22,16 @@ Action::~Action() {
 
 GameState* Action::execute(GameState *thru)
 {
-    std::cout << "Action execution started.\n";
-
 	// Clone.
 	GameState* state = thru->clone();
 
 	Character* source = state->get_rgr(this->source);
 	Character* target = state->get_rgr(this->target);
 
-	std::cout << "DEBUG INFO:\n";
-	std::cout << "\tGameState: " << state << '\n';
-	std::cout << "\tSource: " << source << '\n';
-	std::cout << "\tTarget: " << target << '\n';
-
 	std::vector<Effect*> *effects = this->generate_effects();
 	for (std::vector<Effect*>::iterator iter = effects->begin(); iter != effects->end(); iter++)
 	{
 		Effect *ef = dynamic_cast<Effect*>(*iter);
-
-		std::cout << "\tExecuting effect '" << ef->name << "'.\n";
 
 		ef->execute(source, target);
 	}
@@ -53,8 +44,6 @@ std::vector<Effect*> *Action::generate_effects()
 	std::vector<Effect*> *tmp = &this->ability->effects;
 	std::vector<Effect*> *out = new std::vector<Effect*>();;
 
-	std::cout << "Cloning " << tmp->size() << " effects.\n";
-	
 	Effect *ef;
 
 	for(std::vector<Effect*>::iterator i = tmp->begin(); i != tmp->end(); i++)

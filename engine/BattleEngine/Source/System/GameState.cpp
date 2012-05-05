@@ -24,9 +24,6 @@ GameState *GameState::clone()
 {
 	GameState* new_state = new GameState();
 
-    std::cout << "GameState: " << this << " copying into " << new_state << "\n";
-
-    std::cout << "\tCharacters:\n";
 	for (std::list<Character*>::iterator char_iter = this->characters.begin();
          char_iter != this->characters.end();
          char_iter++)
@@ -34,15 +31,10 @@ GameState *GameState::clone()
 		Character *c = dynamic_cast<Character*>((*char_iter)->clone(true));
 
 		new_state->add_character(c);
-
-		std::cout << "\t(" << (*char_iter)->id << ")\t" << (*char_iter) << '\t' << (*char_iter)->name << '\n';
-        std::cout << "\t\t TO \n";
-        std::cout << "\t(" << c->id << ")\t" << c << '\t' << c->name << '\n';
     }
     
-	new_state->current_char = new_state->get_char_by_id(this->current_char->id);
+	new_state->current_char = new_state->get_character_by_id(this->current_char->id);
 
-	std::cout << "Teams...\n";
 	// Copying by list. Should be quite safe with this pointer-less ordeal.
 	new_state->teams = this->teams;
 
@@ -52,15 +44,6 @@ GameState *GameState::clone()
 void GameState::_init()
 {
 	this->characters = std::list<Character*>();
-}
-
-/**
- * Adds a character to the list of characters. Will use the pointer given
- * without copying.
- **/
-void GameState::add_character(Character *to_add)
-{
-    this->characters.push_back(to_add);
 }
 
 Character *GameState::get_rgr(RGR_Enum rgr)
@@ -110,29 +93,16 @@ void GameState::pretty_print()
 		 team_iter != this->teams.end();
 		 team_iter++)
 	{
-		// frontend::PrettyPrinter::print(">>" + (*team_iter)->id + "\n");
 		std::cout << ">> " << (*team_iter)->id << '\n';
 		for (std::list<int>::iterator char_iter = (*team_iter)->members.begin();
 			 char_iter != (*team_iter)->members.end();
 			 char_iter++)
 		{
-			this->get_char_by_id((*char_iter))->pretty_print();
+			this->get_character_by_id((*char_iter))->pretty_print();
 		}
 	}
 
 	std::cout << "-------------------------------\n";
-}
-
-Character* GameState::get_char_by_id(int id)
-{
-    for (std::list<Character*>::iterator iter = this->characters.begin();
-         iter != this->characters.end();
-         iter++)
-    {
-        if ((*iter)->id == id) return *iter;
-    }
-    
-    return NULL;
 }
 
 void GameState::register_identifier(RGRIdentifier *r)
@@ -166,10 +136,10 @@ bool GameState::set_team_aff(int t_id, Character* to_set)
 		// Create new team.
 		tp = new Team(t_id);
 		tp->add_character(to_set);
-
+		
 		this->teams.push_back(tp);
 
-		frontend::PrettyPrinter::print("Team did not exist. Created and char added.\n");
+		// frontend::PrettyPrinter::print("Team did not exist. Created and char added.\n");
 
 		return true;
 	}
@@ -182,7 +152,7 @@ bool GameState::set_team_aff(int t_id, Character* to_set)
 		{
 			if ((*iter)->id == tp->id)
 			{
-				frontend::PrettyPrinter::print("Character already on requested team. Exiting.\n");
+				// frontend::PrettyPrinter::print("Character already on requested team. Exiting.\n");
 				return true; // Skip everything else if the character was already on the team.
 			}
 			else
@@ -190,14 +160,14 @@ bool GameState::set_team_aff(int t_id, Character* to_set)
 				(*iter)->remove_character(to_set->id);
 				tp->add_character(to_set);
 
-				frontend::PrettyPrinter::print("Character added succesfully.\n");
+				// frontend::PrettyPrinter::print("Character added succesfully.\n");
 
 				return true;
 			}
 		}
 	}
 
-	frontend::PrettyPrinter::print("Something fucked up happened. Check debug log.\n");
+	// frontend::PrettyPrinter::print("Something fucked up happened. Check debug log.\n");
 
 	return false;
 }
