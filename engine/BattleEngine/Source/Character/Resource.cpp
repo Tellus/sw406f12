@@ -38,15 +38,17 @@ Resource::~Resource()
 
 Primarch* Resource::clone(bool with_id)
 {
-	Resource* to_ret = new Resource(this->minimum, this->maximum, this->initial);
+	Resource* to_ret = new Resource(this->minimum, this->maximum, this->current);
+	// std::cout << "Cloned Resource:\n";
+	// to_ret->pretty_print();
 	return to_ret;
 }
 
 void Resource::decrease(float amount)
 {
-	std::cout << this->name << " from " << this->current;
+	// std::cout << this->name << " from " << this->current;
 	this->current = std::max(this->minimum, this->current-amount);
-	std::cout << " to " << this->current << '\n';
+	// std::cout << " to " << this->current << '\n';
 }
 
 void Resource::increase(float amount)

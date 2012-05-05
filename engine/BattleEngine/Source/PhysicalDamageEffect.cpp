@@ -16,8 +16,6 @@ PhysicalDamageEffect::PhysicalDamageEffect() : engine::Effect() {}
 
 void PhysicalDamageEffect::execute(Primarch* s, Primarch* t)
 {
-	std::cout << "ATTACK!\n";
-
 	engine::Character *tchar = dynamic_cast<engine::Character*>(t);
 
     tchar->get_resource("Health")->decrease(20);

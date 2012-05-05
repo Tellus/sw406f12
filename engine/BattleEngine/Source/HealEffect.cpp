@@ -19,8 +19,6 @@ HealEffect::HealEffect(engine::RGR_Enum s, engine::RGR_Enum t) :
 
 void HealEffect::execute(engine::Primarch* s, engine::Primarch* t)
 {
-	std::cout << "HEAL\n";
-
 	engine::Character* tchar = dynamic_cast<engine::Character*>(t);
 	engine::Character* schar = dynamic_cast<engine::Character*>(s);
 

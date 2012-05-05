@@ -94,20 +94,36 @@ void Engine::run()
 
 	while (!this->win_condition->is_met(this->current_state))
 	{
+		/*
+		std::cout << "*********************\n";
+		std::cout << "Pre-execution state:\n";
+		this->current_state->pretty_print();
+		std::cout << "*********************\n";
+		*/
+
 		this->current_state->current_char = this->current_state->get_character_by_id(this->get_next_character()->id);
 
 		Character* cur = this->current_state->current_char;
-
+		/*
 		std::cout << "*****\n";
 		std::cout << cur->name << "[" << cur << "] (" << cur->get_resource("Health")->get_current() << "/" << cur->get_resource("Mana")->get_current() << ") ponders their next move.\n";
 		std::cout << "*****\n";
 
 		this->current_state->pretty_print();
-
+		*/
 		at = new AbilityTable(this->current_state);
     
 		this->current_state = at->get_next_state();
+
+		/*
+		std::cout << "*********************\n";
+		std::cout << "Post-execution state:\n";
+		this->current_state->pretty_print();
+		std::cout << "*********************\n";
+		*/
 	}
+
+	std::cout << "Game over! Thanks for playing. Insert Coin.\n";
 }
 
 }
