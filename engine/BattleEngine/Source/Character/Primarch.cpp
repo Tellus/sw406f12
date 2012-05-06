@@ -29,4 +29,9 @@ int Primarch::get_new_id()
     return ++(Primarch::_id_counter);
 }
 
+void Primarch::notify(GameEvent* event)
+{
+	std::cerr << "Base notify called.\n";
+}
+
 }

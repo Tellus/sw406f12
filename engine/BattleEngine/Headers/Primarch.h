@@ -10,6 +10,8 @@
 #include <iostream>
 #include <string>
 
+#include "GameEvent.h"
+
 namespace engine {
 
 /**
@@ -65,6 +67,12 @@ public:
      **/
     static int get_new_id();
     
+	/**
+	 * Free catch-all event handler that is propagated throughout all Primarchs.
+	 * Override this to get generic event handling for your Primarchs.
+	 **/
+	void notify(GameEvent* event);
+
 private:
     static int _id_counter;
 };
