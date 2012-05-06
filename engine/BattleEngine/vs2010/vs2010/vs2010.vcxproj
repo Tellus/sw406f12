@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BBEEB827-B203-420F-8E30-FB3A3C9879CD}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>engine</RootNamespace>
+    <ProjectName>BattleEngine</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\git\sw406f12\engine\BattleEngine\Headers;$(IncludePath)</IncludePath>
+    <SourcePath>D:\git\sw406f12\engine\BattleEngine\Source;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Headers\Ability.h" />
+    <ClInclude Include="..\..\Headers\AbilityTable.h" />
+    <ClInclude Include="..\..\Headers\Action.h" />
+    <ClInclude Include="..\..\Headers\AttackAbility.h" />
+    <ClInclude Include="..\..\Headers\Attribute.h" />
+    <ClInclude Include="..\..\Headers\Behaviour.h" />
+    <ClInclude Include="..\..\Headers\BehaviourRatio.h" />
+    <ClInclude Include="..\..\Headers\BehaviourRatios\AttributeRatio.h" />
+    <ClInclude Include="..\..\Headers\BehaviourRatios\ResourceRatio.h" />
+    <ClInclude Include="..\..\Headers\Character.h" />
+    <ClInclude Include="..\..\Headers\ContEffect.h" />
+    <ClInclude Include="..\..\Headers\Effect.h" />
+    <ClInclude Include="..\..\Headers\EnemyIdentifier.h" />
+    <ClInclude Include="..\..\Headers\EnemyIdentifier_Unsafe.h" />
+    <ClInclude Include="..\..\Headers\Engine.h" />
+    <ClInclude Include="..\..\Headers\EventListener.h" />
+    <ClInclude Include="..\..\Headers\Exceptions\DuplicateKeyException.h" />
+    <ClInclude Include="..\..\Headers\Exceptions\EventLockedException.h" />
+    <ClInclude Include="..\..\Headers\Exceptions\InvalidRGRException.h" />
+    <ClInclude Include="..\..\Headers\Exceptions\NoValidActionException.h" />
+    <ClInclude Include="..\..\Headers\Exceptions\NullParameterException.h" />
+    <ClInclude Include="..\..\Headers\Exceptions\PrimarchDoesNotExistException.h" />
+    <ClInclude Include="..\..\Headers\Exceptions\ResourceDoesNotExistException.h" />
+    <ClInclude Include="..\..\Headers\FullBehaviour.h" />
+    <ClInclude Include="..\..\Headers\GameEvent.h" />
+    <ClInclude Include="..\..\Headers\GameState.h" />
+    <ClInclude Include="..\..\Headers\HealAbility.h" />
+    <ClInclude Include="..\..\Headers\HealEffect.h" />
+    <ClInclude Include="..\..\Headers\OwnerIdentifier.h" />
+    <ClInclude Include="..\..\Headers\PhysicalDamageEffect.h" />
+    <ClInclude Include="..\..\Headers\PrettyPrinter.h" />
+    <ClInclude Include="..\..\Headers\Primarch.h" />
+    <ClInclude Include="..\..\Headers\PrimarchIndexer.h" />
+    <ClInclude Include="..\..\Headers\Resource.h" />
+    <ClInclude Include="..\..\Headers\RGRIdentifier.h" />
+    <ClInclude Include="..\..\Headers\RGR_Enum.h" />
+    <ClInclude Include="..\..\Headers\RGR_List.h" />
+    <ClInclude Include="..\..\Headers\SexyAbility.h" />
+    <ClInclude Include="..\..\Headers\SexyEffect.h" />
+    <ClInclude Include="..\..\Headers\SimpleWinCondition.h" />
+    <ClInclude Include="..\..\Headers\Team.h" />
+    <ClInclude Include="..\..\Headers\WinCondition.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\AttackAbility.cpp" />
+    <ClCompile Include="..\..\Source\Character\Ability.cpp" />
+    <ClCompile Include="..\..\Source\Character\Attribute.cpp" />
+    <ClCompile Include="..\..\Source\Character\Character.cpp" />
+    <ClCompile Include="..\..\Source\Character\ContEffect.cpp" />
+    <ClCompile Include="..\..\Source\Character\Primarch.cpp" />
+    <ClCompile Include="..\..\Source\Character\Resource.cpp" />
+    <ClCompile Include="..\..\Source\HealAbility.cpp" />
+    <ClCompile Include="..\..\Source\HealEffect.cpp" />
+    <ClCompile Include="..\..\Source\PhysicalDamageEffect.cpp" />
+    <ClCompile Include="..\..\Source\PrettyPrinter.cpp" />
+    <ClCompile Include="..\..\Source\program.cpp" />
+    <ClCompile Include="..\..\Source\SexyAbility.cpp" />
+    <ClCompile Include="..\..\Source\SexyEffect.cpp" />
+    <ClCompile Include="..\..\Source\SimpleWinCondition.cpp" />
+    <ClCompile Include="..\..\Source\System\AbilityTable.cpp" />
+    <ClCompile Include="..\..\Source\System\Action.cpp" />
+    <ClCompile Include="..\..\Source\System\Behaviour.cpp" />
+    <ClCompile Include="..\..\Source\System\BehaviourRatio.cpp" />
+    <ClCompile Include="..\..\Source\System\BehaviourRatios\AttributeRatio.cpp" />
+    <ClCompile Include="..\..\Source\System\BehaviourRatios\ResourceRatio.cpp" />
+    <ClCompile Include="..\..\Source\System\Effect.cpp" />
+    <ClCompile Include="..\..\Source\System\Engine.cpp" />
+    <ClCompile Include="..\..\Source\System\EventListener.cpp" />
+    <ClCompile Include="..\..\Source\System\Exceptions\DuplicateKeyException.cpp" />
+    <ClCompile Include="..\..\Source\System\Exceptions\EventLockedException.cpp" />
+    <ClCompile Include="..\..\Source\System\Exceptions\InvalidRGRException.cpp" />
+    <ClCompile Include="..\..\Source\System\Exceptions\NoValidActionException.cpp" />
+    <ClCompile Include="..\..\Source\System\Exceptions\NullParameterException.cpp" />
+    <ClCompile Include="..\..\Source\System\Exceptions\PrimarchDoesNotExistException.cpp" />
+    <ClCompile Include="..\..\Source\System\Exceptions\ResourceDoesNotExistException.cpp" />
+    <ClCompile Include="..\..\Source\System\FullBehaviour.cpp" />
+    <ClCompile Include="..\..\Source\System\GameEvent.cpp" />
+    <ClCompile Include="..\..\Source\System\GameState.cpp" />
+    <ClCompile Include="..\..\Source\System\PrimarchIndexer.cpp" />
+    <ClCompile Include="..\..\Source\System\RGRIdentifier.cpp" />
+    <ClCompile Include="..\..\Source\System\RGRIdentifier\EnemyIdentifier.cpp" />
+    <ClCompile Include="..\..\Source\System\RGRIdentifier\EnemyIdentifier_Unsafe.cpp" />
+    <ClCompile Include="..\..\Source\System\RGRIdentifier\OwnerIdentifier.cpp" />
+    <ClCompile Include="..\..\Source\System\RGR_List.cpp" />
+    <ClCompile Include="..\..\Source\System\Team.cpp" />
+    <ClCompile Include="..\..\Source\System\WinCondition.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
