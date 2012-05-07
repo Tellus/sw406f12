@@ -10,6 +10,7 @@ where certain attributes will lower the damage sustained from specific categorie
 
 \subsection{Implemented set}
 \label{language:implset}
+\begin{center}
 \begin{tabular}{|l l l|}
 \hline
 \multicolumn{3}{|c|}{\textbf{Attributes}}\\
@@ -22,8 +23,11 @@ Intelligence: & Manually Set & (used for MP and SpellDmg calculations)\\
 \hline
 Stamina: & Manually Set & (used for HP and Defense calculations)\\
 \hline
-\end{tabular}
-\\
+\end{tabular}\\
+\emph{All above listed attributes are manually set by the programmer.\\ These initial values are fundamental for a character in the implemented world.}
+\end{center}
+
+\begin{center}
 \begin{tabular}{|l l|}
 \hline
 \multicolumn{2}{|c|}{\textbf{2nd Attributes (calculated)}}\\
@@ -32,8 +36,11 @@ Defense: & ((Stamina + Agility) / 3)\\
 \hline
 Magic Defense: & ((Stamina + Intelligence) / 3)\\
 \hline	
-\end{tabular}
-\\
+\end{tabular}\\
+\emph{These second attributes are calculated with the given values of the initial attributes.\\ They serve as defense for various damage types, by subtracting their assigned values from the damage taken.}
+\end{center}
+
+\begin{center}
 \begin{tabular}{|l l|}
 \hline
 \multicolumn{2}{|c|}{\textbf{Resources}}\\
@@ -42,8 +49,11 @@ Health Points: & (Stamina * 20)\\
 \hline
 Mana Points: & (Intelligence * 15)\\
 \hline
-\end{tabular}
-\\
+\end{tabular}\\
+
+\end{center}
+
+\begin{center}
 \begin{tabular}{|l l|}
 \hline
 \multicolumn{2}{|c|}{\textbf{Abilities}}\\
@@ -52,7 +62,9 @@ Attack Power: & (WeaponDmg + ((Strength / 2) + 1))\\
 \hline
 Magic Power: & (Equipment bonus + ((Intelligence / 2) + 1))\\
 \hline
-\end{tabular}
+\end{tabular}\\
+\emph{These are values, calculated for use in various abilites, both harmful and helpful.}
+\end{center}
 
 
 \begin{comment}

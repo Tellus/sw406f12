@@ -1,10 +1,11 @@
 \section{Engine}
 While the \langname{} compiler chain parses, validates and translates program code, the result cannot be run on its own. The compiler must be complemented by a run-time library, an interpreter or perhaps some form of virtual machine that will support the execution of a \langname{}-defined battle scenario. A run-time environment has been developed in parallel with the compiler, enabling coded scenarios to be resolved as described by the turn-based semantics. This section will describe the inner workings of the engine, its basic design, architecture and form.
-
+\begin{comment}
 \begin{figure}
 \includegraphics[scale=1]{img/engine_class_design}
 \caption{The abstract class design of the engine.}
 \end{figure}
+\end{comment}
 
 \subsection{Base philosophy}
 The stated intention of the engine is to simulate a scenario according to the definitions set up by the \langname{} code. This results in the need for several features, both for convenience and correctness.
