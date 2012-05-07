@@ -49,4 +49,14 @@ void GameEvent::cancel()
 	this->current_listener = this->listeners.end();
 }
 
+std::string GameEvent::get_type()
+{
+	return this->_event_type;
+}
+
+void GameEvent::set_type(std::string new_type)
+{
+	this->_event_type = new_type;
+}
+
 } /* namespace engine */

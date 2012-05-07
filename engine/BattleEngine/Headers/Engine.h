@@ -95,6 +95,31 @@ public:
 	 */
 	Character* get_next_character();
 
+protected:
+	/**
+	 * Harvests events from the underlying current state's Primarch objects.
+	 **/
+	void harvest_events();
+
+	/**
+	 * Raises all pending events.
+	 **/
+	void raise_events();
+
+	/**
+	 * Complete list of all events that have not been raised since the last
+	 * execution loop.
+	 **/
+	std::list<GameEvent*> pending_events;
+
+	/**
+	 * A complete mapping (EVENT_TYPE -> [Primarch*]) of which event types
+	 * have been registered to specific callback functions.
+	 **/
+	std::map<std::string, std::list<callback>> registered_event_listeners;
+
+	void get_callbacks();
+
 private:
 	Character* _add_base_char(Character* to_add, int team_id = -1);
 	void _init(void);

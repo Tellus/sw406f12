@@ -119,6 +119,13 @@ void Engine::run()
     
 		this->current_state = at->get_next_state();
 
+		// Harvest all pending events.
+		
+
+		// Raise all pending events.
+
+		
+
 		/*
 		std::cout << "*********************\n";
 		std::cout << "Post-execution state:\n";
@@ -128,6 +135,69 @@ void Engine::run()
 	}
 
 	std::cout << "Game over! Thanks for playing. Insert Coin.\n";
+}
+
+void Engine::harvest_events()
+{
+	for (std::list<Primarch*>::iterator p_iter = this->current_state->children.begin();
+		 p_iter != this->current_state->children.end();
+		 p_iter++)
+	{
+		this->pending_events.merge((*p_iter)->get_pending_events());
+	}
+
+	// Done!
+}
+
+void Engine::raise_events()
+{
+	std::string event_type;
+
+	for (std::list<GameEvent*>::iterator ge_iter = this->pending_events.begin();
+		 ge_iter != this->pending_events.end();
+		 ge_iter++)
+	{
+		// Populate with recipients of event type.
+		event_type = (*ge_iter)->get_type();
+		if (this->registered_event_listeners.count(event_type) > 0)
+		{
+			// We actually have hits :D
+			for (std::list<callback>::iterator c_iter = this->registered_event_listeners[event_type].begin();
+				 c_iter != this->registered_event_listeners[event_type].end();
+				 c_iter++)
+			{
+				(*ge_iter)->add_listener((*c_iter).first, (*c_iter).second);
+			}
+		}
+		// Send off.
+		(*ge_iter)->raise();
+	}
+
+	// Kill.
+	this->pending_events.clear();
+}
+
+void Engine::get_callbacks()
+{
+	// Opposed to raised events, callbacks are more persistent.
+	// We can't simply purge the list every time, but must construct
+	// one hiarchially...billy...silly.
+
+	// We do start, however, by emptying it. We're working one-offs right now.
+	this->registered_event_listeners.clear();
+
+	for (std::list<Primarch*>::iterator iter = this->children.begin();
+		 iter != this->children.end();
+		 iter++)
+	{
+		std::map<std::string, std::list<callback>> tmp = (*iter)->get_callbacks();
+		for (std::map<std::string, std::list<callback>>::iterator cb_iter = tmp.begin();
+			 cb_iter != tmp.end();
+			 cb_iter++)
+		{
+			this->registered_event_listeners[(*cb_iter).first].merge((*cb_iter).second);
+		}
+	}
 }
 
 }

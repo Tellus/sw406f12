@@ -102,6 +102,7 @@ void Character::add_resource(std::string name, Resource *res)
 	else
 	{
 		this->resources[name] = res;
+		this->add_child(res);
 	}
 }
 
@@ -115,6 +116,7 @@ void Character::add_attribute(std::string name, Attribute *att)
 	else
 	{
 		this->attributes[name] = att;
+		this->add_child(att);
 	}
 }
 
@@ -128,6 +130,7 @@ void Character::add_ability(std::string name, Ability *abil)
     else
     {
         this->abilities[name] = abil;
+		this->add_child(abil);
     }
 }
 

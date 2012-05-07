@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <string>
+#include <map>
 
 #include "GameEvent.h"
 
@@ -65,7 +66,7 @@ public:
      * Generates (... iterates) a new global identifier value.
      * \return a guaranteed unique id.
      **/
-    static int get_new_id();
+    static long get_new_id();
     
     /**
      * Retrieves any pending events in the Primarch and flushes the internal
@@ -76,17 +77,16 @@ public:
      **/
     std::list<GameEvent*> get_pending_events();
 
-    void add_child(Primarch* c);
-    
-    void remove_child(Primarch* c);
-    
-    void remove_child(int i);
-    
-    bool has_child(Primarch* c);
-    
-    bool has_child(int i);
+	/**
+	 * Should return a list of any callbacks that the object is interested in.
+	 * For example, this should for a Character Primarch return callbacks for
+	 * RESOURCE_DECREASE and the like.
+	 **/
+	std::map<std::string, std::list<callback>> get_callbacks();
 
 protected:
+
+	std::map<std::string, std::list<callback>> _callbacks;
 
     /**
      * List of events waiting to be raised.
@@ -100,11 +100,36 @@ protected:
      * catch-all, meant for event traversal and other generic/global actions.
      **/
     std::list<Primarch*> children;
+
+	/**
+	 * Adds a child Primarch.
+	 **/
+    void add_child(Primarch* c);
     
+	/**
+	 * Removes a child Primarch.
+	 **/
+    void remove_child(Primarch* c);
     
+	/**
+	 * Removes a child Primarch.
+	 **/
+    void remove_child(int i);
+    
+	/**
+	 * Checks to see if a child exists in the Primarch.
+	 **/
+    // bool has_child(Primarch* c);
+    
+	/**
+	 * Checks to see if a child exists in the Primarch.
+	 **/
+    bool has_child(int i);
+
+	const std::list<Primarch*>* get_children();
 
 private:
-    static int _id_counter;
+    static long _id_counter;
 };
 
 }

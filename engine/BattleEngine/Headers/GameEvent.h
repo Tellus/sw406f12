@@ -70,8 +70,25 @@ public:
 	 **/
 	void cancel();
 
+	/**
+	 * Returns a string representation of the GameEvent. This is used by subclasses
+	 * in order to uniquely identify them.
+	 * This shit needs to be implemented, yo.
+	 **/
+	std::string get_type();
+
+	/**
+	 * HACK! Sort of. Sets the type of the event. The only thing that separated different
+	 * event subclasses was their type (which was also the purpose). So, fuck it, let's not
+	 * write each fucking event subclass write now.
+	 * \param new_type New type string. Should be all-caps for simplicity's sake.
+	 **/
+	void set_type(std::string new_type);
+
 private:
 	bool _running;
+
+	std::string _event_type;
 };
 
 } /* namespace engine */

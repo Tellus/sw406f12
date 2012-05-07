@@ -17,7 +17,7 @@ class PrimarchEvent : public GameEvent
 	/**
 	 * Returns "PRIMARCH;GENERIC";
 	 **/
-	std::list<std::string> get_type();
+	std::string get_type();
 
 };
 
