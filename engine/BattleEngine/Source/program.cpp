@@ -100,17 +100,17 @@ GameState* make_base_state()
 	Character* joe = make_joe();
 	Character* big = make_biggi();
 
-	state->add_character(joe);
+	state->add_child(joe);
 	if (!state->set_team_aff(1, joe))
 	{
 		PrettyPrinter::print_bad("Joe could not be put on a team!\n");
 	}
-	state->add_character(big);
+	state->add_child(big);
 	if (!state->set_team_aff(2, big))
 	{
 		PrettyPrinter::print_bad("Biggi could not be put on a team!\n");
 	}
-	state->current_char = state->characters.front();
+	state->current_char = dynamic_cast<Character*>(state->children.front());
 
 	return state;
 }
@@ -180,10 +180,13 @@ int main(int argc, char *argv[])
 	/*** BEGIN TRUE ENGINE TEST ***/
 
 	Engine* game = new Engine();
+	game->current_state->pretty_print();
 	game->win_condition = new SimpleWinCondition();
-	game->add_character(make_joe());
-	game->add_character(make_biggi());
+	game->add_character(make_joe(),0);
+	game->add_character(make_biggi(),1);
 	game->run();
+
+	game->current_state->pretty_print();
 
 	/*** END TRUE ENGINE TEST ***/
 

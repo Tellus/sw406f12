@@ -36,15 +36,15 @@ void Engine::_init()
 	this->current_state->register_identifier(new OwnerIdentifier());
 }
 
-void Engine::add_character(Character* to_add)
+void Engine::add_child(Primarch* to_add)
 {
 	try
 	{
-		PrimarchIndexer::add_character(to_add);
+		PrimarchIndexer::add_child(to_add);
 
-		this->current_state->add_character(to_add);
+		this->current_state->add_child(to_add);
 		
-		this->current_state->set_team_aff(this->current_state->max_team_id()+1, to_add);
+		this->current_state->set_team_aff(this->current_state->max_team_id()+1, dynamic_cast<Character*>(to_add));
 
 		this->turn_order.push_back(to_add->id);
 	}
@@ -56,7 +56,7 @@ void Engine::add_character(Character* to_add)
 
 void Engine::add_character(Character* to_add, int team_id)
 {
-	this->add_character(to_add);
+	this->add_child(to_add);
 
 	this->current_state->set_team_aff(team_id, to_add);
 }
@@ -72,8 +72,7 @@ Character* Engine::get_next_character()
 		this->current_turn = this->turn_order.begin();
 
 	// Resolve character and return.
-	return this->get_character_by_id(*(this->current_turn));
-	// return this->current_state->get_character_by_id(*(this->current_turn));
+	return dynamic_cast<Character*>(this->get_child_by_id(*(this->current_turn)));
 }
 
 void Engine::run()
@@ -101,9 +100,9 @@ void Engine::run()
 		std::cout << "*********************\n";
 		*/
 
-		this->current_state->current_char = this->current_state->get_character_by_id(this->get_next_character()->id);
+		this->current_state->current_char = dynamic_cast<Character*>(this->current_state->get_child_by_id(this->get_next_character()->id));
 
-		Character* cur = this->current_state->current_char;
+		// Character* cur = this->current_state->current_char;
 		/*
 		std::cout << "*****\n";
 		std::cout << cur->name << "[" << cur << "] (" << cur->get_resource("Health")->get_current() << "/" << cur->get_resource("Mana")->get_current() << ") ponders their next move.\n";

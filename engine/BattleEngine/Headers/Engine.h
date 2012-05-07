@@ -62,7 +62,7 @@ public:
 	 * \param to_add Character to add.
 	 * \note This method CLONES the Character, leaving the original untouched.
 	 */
-	void add_character(Character* to_add);
+	void add_child(Primarch* to_add);
 
 	/**
 	 * Adds another Character ot the roster, on a specific team.

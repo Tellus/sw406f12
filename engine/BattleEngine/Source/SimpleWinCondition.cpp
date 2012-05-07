@@ -33,7 +33,7 @@ bool SimpleWinCondition::is_met(GameState* check)
 		 	char_iter != (*team_iter)->members.end();
 		 	char_iter++)
 		{
-			tmp_c = check->get_character_by_id(*char_iter);
+			tmp_c = dynamic_cast<Character*>(check->get_child_by_id(*char_iter));
 
 			if (tmp_c->get_resource("Health")->get_current() <= 0)
 			{

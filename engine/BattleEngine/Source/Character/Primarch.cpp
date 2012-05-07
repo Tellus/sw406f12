@@ -29,9 +29,14 @@ int Primarch::get_new_id()
     return ++(Primarch::_id_counter);
 }
 
-void Primarch::notify(GameEvent* event)
+std::list<GameEvent*> Primarch::get_pending_events()
 {
-	std::cerr << "Base notify called.\n";
+    std::list<GameEvent*> to_ret = this->pending_events; // Copies.
+    
+    this->pending_events.clear();
+    
+    return to_ret;
+    
 }
 
 }

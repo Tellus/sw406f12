@@ -25,7 +25,7 @@ Character *EnemyIdentifier_Unsafe::identify(GameState *from)
         Team *tmp = *iter;
         if (!tmp->has_character(from->current_char->id))
         {
-			return from->get_character_by_id(tmp->first_char());
+			return dynamic_cast<Character*>(from->get_child_by_id(tmp->first_char()));
         }
     }
 

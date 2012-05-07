@@ -37,7 +37,7 @@ Character *EnemyIdentifier::identify(GameState *from)
 		if ((*iter)->id == t_id) continue; // Skip if the teams are identical. Enemies are not on your team.
 		else
 		{
-			return from->get_character_by_id((*iter)->first_char());
+			return dynamic_cast<Character*>(from->get_child_by_id((*iter)->first_char()));
 		}
 	}
 

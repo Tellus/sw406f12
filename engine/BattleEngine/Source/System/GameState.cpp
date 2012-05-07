@@ -24,16 +24,16 @@ GameState *GameState::clone()
 {
 	GameState* new_state = new GameState();
 
-	for (std::list<Character*>::iterator char_iter = this->characters.begin();
-         char_iter != this->characters.end();
+	for (std::list<Primarch*>::iterator char_iter = this->children.begin();
+         char_iter != this->children.end();
          char_iter++)
     {
 		Character *c = dynamic_cast<Character*>((*char_iter)->clone(true));
 
-		new_state->add_character(c);
+		new_state->add_child(c);
     }
     
-	new_state->current_char = new_state->get_character_by_id(this->current_char->id);
+	new_state->current_char = dynamic_cast<Character*>(new_state->get_child_by_id(this->current_char->id));
 
 	// Copying by list. Should be quite safe with this pointer-less ordeal.
 	new_state->teams = this->teams;
@@ -43,7 +43,7 @@ GameState *GameState::clone()
 
 void GameState::_init()
 {
-	this->characters = std::list<Character*>();
+	// Most inits handled by PrimarchIndexer.
 }
 
 Character *GameState::get_rgr(RGR_Enum rgr)
@@ -98,7 +98,7 @@ void GameState::pretty_print()
 			 char_iter != (*team_iter)->members.end();
 			 char_iter++)
 		{
-			this->get_character_by_id((*char_iter))->pretty_print();
+			this->get_child_by_id((*char_iter))->pretty_print();
 		}
 	}
 
@@ -120,14 +120,17 @@ bool GameState::set_team_aff(int t_id, Character* to_set)
 	Team* tp = NULL;
 
 	// Finding the correct team.
+	std::cout << "Running through teams.\n";
 	for (iter = this->teams.begin();
 		 iter != this->teams.end();
 		 iter++)
 	{
 		if ((*iter)->id == t_id)
 		{
+			std::cout << "Found " << (*iter)->id << '\n';
 			tp = (*iter);
 			iter = this->teams.end();
+			break;
 		}
 	}
 

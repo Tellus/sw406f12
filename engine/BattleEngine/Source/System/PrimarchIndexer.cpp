@@ -11,8 +11,8 @@ PrimarchIndexer::PrimarchIndexer()
 
 PrimarchIndexer::~PrimarchIndexer()
 {
-	for (std::list<Character*>::iterator iter = this->characters.begin();
-		iter != this->characters.end();
+	for (std::list<Primarch*>::iterator iter = this->children.begin();
+		iter != this->children.end();
 		iter++)
 	{
 		delete (*iter);
@@ -21,18 +21,18 @@ PrimarchIndexer::~PrimarchIndexer()
 
 void PrimarchIndexer::_init()
 {
-	this->characters = std::list<Character*>();
+	this->children = std::list<Primarch*>();
 }
 
-Character* PrimarchIndexer::get_character_by_id(int c_id)
+Primarch* PrimarchIndexer::get_child_by_id(int c_id)
 {
-	std::list<Character*>::iterator finder;
+	std::list<Primarch*>::iterator finder;
     
-    finder = std::find_if(this->characters.begin(),
-						  this->characters.end(),
-						  [c_id](Character* cp){ return cp->id == c_id;});
+    finder = std::find_if(this->children.begin(),
+						  this->children.end(),
+						  [c_id](Primarch* cp){ return cp->id == c_id;});
     
-    if (finder == this->characters.end())
+    if (finder == this->children.end())
 	{
 		throw PrimarchDoesNotExistException("The requested Character was not in the list.");
 	}
@@ -43,23 +43,23 @@ Character* PrimarchIndexer::get_character_by_id(int c_id)
 }
 
 /**
- * Adds a character to the list of characters. Will use the pointer given
+ * Adds a character to the list of children. Will use the pointer given
  * without copying.
  **/
-void PrimarchIndexer::add_character(Character *to_add)
+void PrimarchIndexer::add_child(Primarch *to_add)
 {
-    this->characters.push_back(to_add);
+    this->children.push_back(to_add);
 }
 
-bool PrimarchIndexer::has_character(int c_id)
+bool PrimarchIndexer::has_child(int c_id)
 {
-	std::list<Character*>::iterator finder;
+	std::list<Primarch*>::iterator finder;
     
-    finder = std::find_if(this->characters.begin(),
-						  this->characters.end(),
-						  [c_id](Character* cp){ return cp->id == c_id;});
+    finder = std::find_if(this->children.begin(),
+						  this->children.end(),
+						  [c_id](Primarch* cp){ return cp->id == c_id;});
     
-    if (finder == this->characters.end()) return false;
+    if (finder == this->children.end()) return false;
     else return true;
 }
 

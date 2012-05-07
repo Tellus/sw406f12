@@ -67,11 +67,41 @@ public:
      **/
     static int get_new_id();
     
-	/**
-	 * Free catch-all event handler that is propagated throughout all Primarchs.
-	 * Override this to get generic event handling for your Primarchs.
-	 **/
-	void notify(GameEvent* event);
+    /**
+     * Retrieves any pending events in the Primarch and flushes the internal
+     * list.
+     * \return A list of GameEvent pointers.
+     * \note The list must be used. The internal pointer list is flushed with
+     * the call.
+     **/
+    std::list<GameEvent*> get_pending_events();
+
+    void add_child(Primarch* c);
+    
+    void remove_child(Primarch* c);
+    
+    void remove_child(int i);
+    
+    bool has_child(Primarch* c);
+    
+    bool has_child(int i);
+
+protected:
+
+    /**
+     * List of events waiting to be raised.
+     **/
+    std::list<GameEvent*> pending_events;
+    
+    /**
+     * List of child Primarchs connected to this one. Typically, this is a
+     * question of various subclasses connected to a Character. While the
+     * Character maintains separate lists for various types, Children is a
+     * catch-all, meant for event traversal and other generic/global actions.
+     **/
+    std::list<Primarch*> children;
+    
+    
 
 private:
     static int _id_counter;
