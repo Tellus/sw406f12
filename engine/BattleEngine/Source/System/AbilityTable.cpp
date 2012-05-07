@@ -146,10 +146,11 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
              tar_iter++)
         {
             // Assert the target and, if valid, create the action.
-			// Character* targ;
+			Character* targ;
 			try
 			{
-				// targ = this->state->get_rgr(*tar_iter);
+				targ = this->state->get_rgr(*tar_iter);
+
 				// Add it to the list of validated actions. Notice how we use
 				// the RGR_Enum variant of the initializer. At this point, we
 				// don't have a GameState clone to affect, yet, and thus still

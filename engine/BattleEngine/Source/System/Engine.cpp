@@ -54,6 +54,11 @@ void Engine::add_child(Primarch* to_add)
 	}
 }
 
+void Engine::add_child(Character* to_add)
+{
+	this->add_child(dynamic_cast<Primarch*>(to_add));
+}
+
 void Engine::add_character(Character* to_add, int team_id)
 {
 	this->add_child(to_add);

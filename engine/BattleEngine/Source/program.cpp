@@ -182,8 +182,8 @@ int main(int argc, char *argv[])
 	Engine* game = new Engine();
 	game->current_state->pretty_print();
 	game->win_condition = new SimpleWinCondition();
-	game->add_character(make_joe(),0);
-	game->add_character(make_biggi(),1);
+	game->add_child(make_joe());
+	game->add_child(make_biggi());
 	game->run();
 
 	game->current_state->pretty_print();

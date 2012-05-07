@@ -65,6 +65,11 @@ public:
 	void add_child(Primarch* to_add);
 
 	/**
+	 * Proxy call with more type safty for add_child(Primarch*).
+	 **/
+	void add_child(Character* to_add);
+
+	/**
 	 * Adds another Character ot the roster, on a specific team.
 	 * \param to_add The Character to add.
 	 * \note This method CLONES the Character.

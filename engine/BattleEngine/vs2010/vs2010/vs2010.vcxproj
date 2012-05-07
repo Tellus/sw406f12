@@ -93,6 +93,8 @@
     <ClInclude Include="..\..\Headers\EnemyIdentifier_Unsafe.h" />
     <ClInclude Include="..\..\Headers\Engine.h" />
     <ClInclude Include="..\..\Headers\EventListener.h" />
+    <ClInclude Include="..\..\Headers\Events\PrimarchEvent.h" />
+    <ClInclude Include="..\..\Headers\Events\ResourceEvent.h" />
     <ClInclude Include="..\..\Headers\Exceptions\DuplicateKeyException.h" />
     <ClInclude Include="..\..\Headers\Exceptions\EventLockedException.h" />
     <ClInclude Include="..\..\Headers\Exceptions\InvalidRGRException.h" />
@@ -145,6 +147,8 @@
     <ClCompile Include="..\..\Source\System\Effect.cpp" />
     <ClCompile Include="..\..\Source\System\Engine.cpp" />
     <ClCompile Include="..\..\Source\System\EventListener.cpp" />
+    <ClCompile Include="..\..\Source\System\Events\PrimarchEvent.cpp" />
+    <ClCompile Include="..\..\Source\System\Events\ResourceEvent.cpp" />
     <ClCompile Include="..\..\Source\System\Exceptions\DuplicateKeyException.cpp" />
     <ClCompile Include="..\..\Source\System\Exceptions\EventLockedException.cpp" />
     <ClCompile Include="..\..\Source\System\Exceptions\InvalidRGRException.cpp" />
