@@ -1,5 +1,5 @@
 \subsection{Relative Global References}
-RGR's (or "RoGeRs") are a set of keywords that correlate to a dynamic set of global references. these are \emph{owner} \emph{enemy} \emph{target} to name a few, and will always reference the respective entity from the perspective of the local scope. \emph{enemy}, for example, will always reference the \textbf{other} Character in a battle when applied inside a Character subtype or its members, while \emph{owner} always references the topmost Character in a membership hierarchy. Consider the following code:
+RGR's are a set of keywords that correlate to a dynamic set of global references. these are \emph{owner} \emph{enemy} \emph{target} to name a few, and will always reference the respective entity from the perspective of the local scope. \emph{enemy}, for example, will always reference \textbf{another} Character in a battle when applied inside a Character subtype or its members, while \emph{owner} always references the topmost Character in a membership hierarchy. Consider the following code:
 
 \begin{lstlisting}[language=fflang]
 make Fireball from Ability

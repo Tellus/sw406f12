@@ -106,3 +106,54 @@ $\dfrac{env_{C} \vdash c \rightarrow_{h} h}{\text{win} \rightarrow_{b} tt}$ & $\
 Wincon is special, because it is a boolean expression. \\
 The rules evaluates true, if the demanded character $c$, has health evaluating to the value $h$, and the value is less or equal to zero, else et evaluates false, and the game will the continue 
 \pagebreak
+
+	$D_C ::= character C \{ D_A, D_R, D_B \}; D_C | \varepsilon$\\
+	%D_C is a declaration of a character
+	$D_A ::= A: v; D_A | \varepsilon$\\
+	%D_A is a declaration of an attribute
+	$D_R ::= R: v; D_R | \varepsilon$\\
+	%D_R is a declaration of a resource
+	$D_{AB} ::= AB \{ List[Rgr], List[effects], cost_h, cost_m \}; D_{AB} | \varepsilon$\\
+	%D_{AB} is a declaration of an ability
+	%cost_h is health cost
+	%cost_m is mana cost
+	$D_B ::= positiv | negativ : [Rgr.member, v]; D_B | \varepsilon$\\
+	%D_B is a declaration of a behaviour
+
+	
+	$D_C \in Env_C$\\
+	$D_A \in Env_A$\\
+	$D_R \in Env_R$\\
+	$D_B \in Env_B$\\
+	$D_{AB} \in Env_{AB}$\\
+	$D_E \in Env_E$\\
+	\\
+	
+	$\mathbf{Env_A} = \textbf{Att} \cup \{ \texttt{next} \} \rightharpoonup \textbf{Loc}$\\
+	%Att is the id of an ability
+	%next is the next available loc
+	%loc is the location
+	$\mathbf{Sto_A} = \textbf{Loc} \rightharpoonup \mathbb{Z}$\\
+	% Z is the value of attributes
+	\\
+	$\mathbf{Env_R} = \textbf{Res} \cup \{ \texttt{next} \} \rightharpoonup \textbf{Loc}$\\
+	%Res is the id of a resource
+	$\mathbf{Sto_R} = \textbf{Loc} \rightharpoonup \mathbb{Z}$\\
+	\\
+	$\mathbf{Env_B} = \textbf{Beh} \cup \{ \texttt{next} \} \rightharpoonup \textbf{Loc}$\\
+	%Beh is the id of a behaviour
+	$\mathbf{Sto_B} = \textbf{Loc} \rightharpoonup \mathbb{Z}$\\
+	\\
+	
+
+
+[Act-New]\\
+	$env_c, sto \vdash \langle calc:A, s \rangle \Rightarrow \langle s'; calc:A', s \rangle$\\
+	hvor $s' = env_c, sto \vdash s[piggy \mapsto v]$\\
+	og $A' = Action[new]$\\
+	
+[Act-Empty]\\
+	$env_c, sto \vdash \langle calc:A, s \rangle \Rightarrow \langle S \rangle$\\
+	hvor $A = \varepsilon$
+	
+\pagebreak
