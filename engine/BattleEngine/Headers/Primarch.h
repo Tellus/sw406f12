@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <boost/algorithm/string.hpp>
 
 #include "GameEvent.h"
 
@@ -85,6 +86,16 @@ public:
 	 * RESOURCE_DECREASE and the like.
 	 **/
 	std::map<std::string, std::list<callback>> get_callbacks();
+	
+	/**
+	 * Less-than check.
+	 **/
+//	virtual bool lt(Primarch* p);
+	
+	/**
+	 * Less-than check, int version
+	 **/
+//	virtual bool lt(int p);
 
 protected:
 
@@ -129,6 +140,8 @@ protected:
     bool has_child(int i);
 
 	const std::list<Primarch*>* get_children();
+
+    void raise_event(std::string type);
 
 private:
     static long _id_counter;

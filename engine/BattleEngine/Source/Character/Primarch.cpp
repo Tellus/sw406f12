@@ -119,4 +119,12 @@ std::map<std::string, std::list<callback>> Primarch::get_callbacks()
 	return cb;
 }
 
+void Primarch::raise_event(std::string name)
+{
+    GameEvent* e = new GameEvent();
+    
+    this->pending_events.push_back(
+        new GameEvent(this, boost::to_upper_copy(name)));
+}
+
 }
