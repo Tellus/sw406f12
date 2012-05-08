@@ -33,6 +33,8 @@ public:
      **/
     Primarch(std::string name);
 
+    virtual ~Primarch();
+
 	/**
 	 * Clones the Primarch into an identical (with regard to the type) copy.
 	 * \param with_id Create with existing id? Consider this the difference

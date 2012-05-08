@@ -24,6 +24,11 @@ Primarch::Primarch(std::string name)
     this->id = Primarch::get_new_id();
 }
 
+Primarch::~Primarch()
+{
+
+}
+
 long Primarch::get_new_id()
 {
 	Primarch::_id_counter += 1;

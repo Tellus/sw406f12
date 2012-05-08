@@ -8,7 +8,7 @@
 #ifndef ABILITY_H_
 #define ABILITY_H_
 
-#include "EffectDefinition.h"
+// #include "EffectDefinition.h"
 #include "Effect.h"
 #include "RGR_List.h"
 
