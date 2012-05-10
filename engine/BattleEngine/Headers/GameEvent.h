@@ -28,6 +28,7 @@ class GameEvent
 {
 public:
 	GameEvent();
+	GameEvent(void* caller, std::string type);
 	virtual ~GameEvent();
 
 	/**

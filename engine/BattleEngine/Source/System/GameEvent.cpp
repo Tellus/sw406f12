@@ -15,6 +15,15 @@ GameEvent::GameEvent()
 	this->_running = false;
 }
 
+GameEvent::GameEvent(void* caller, std::string type) :
+    caller(caller),
+    _running(false),
+    _event_type(type)
+    
+{
+    // See initializer list.
+}
+
 GameEvent::~GameEvent()
 {
 	// TODO Auto-generated destructor stub

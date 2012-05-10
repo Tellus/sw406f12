@@ -82,16 +82,58 @@ void Primarch::remove_child(int c_id)
 	}
 }
 
-bool Primarch::has_child(int c_id)
+bool Primarch::has_child(int c_id, bool deep)
 {
 	for (std::list<Primarch*>::iterator iter = this->children.begin();
 		 iter != this->children.end();
 		 iter++)
 	{
+	    // Regular check.
 		if ((*iter)->id == c_id) return true;
+		else
+		{
+		    // Deep check.
+		    if (deep && ((*iter)->has_child(c_id), deep)) return true;
+		}
 	}
 
 	return false;
+}
+
+Primarch* Primarch::get_child(int c_id, bool deep)
+{
+    // Performing a prelim check is noble, but costs about as much as the search
+    // itself, so let's not do that.
+    // if (!this->has_child(c_id, deep))
+    //    throw PrimarchDoesNotExistException("The requested object is not contained in this Primarch.");
+    
+    Primarch* to_ret;
+    std::list<Primarch*>::iterator finder;
+        
+    // Shallow search.
+    finder = std::find_if(this->children.begin(),
+                         this->children.end(),
+                         [c_id](Primarch* cp){ return cp->id == c_id;});
+    
+    if (finder == this->children.end() && deep)
+    {
+        for (std::list<Primarch*>::iterator iter = this->children.begin();
+             iter != this->children.end();
+             iter++)
+        {
+            try
+            {
+                to_ret = (*iter)->get_child(c_id, deep);
+                return to_ret;
+            }
+            catch (PrimarchDoesNotExistException e)
+            {
+                // Do nothing, just catch it for safety :D
+            }
+        }    
+    }
+    
+    throw PrimarchDoesNotExistException("The requested object is not contained in this Primarch.");
 }
 
 std::map<std::string, std::list<callback>> Primarch::get_callbacks()
@@ -117,6 +159,14 @@ std::map<std::string, std::list<callback>> Primarch::get_callbacks()
 	}
 
 	return cb;
+}
+
+void Primarch::raise_event(std::string name)
+{
+    GameEvent* e = new GameEvent();
+    
+    this->pending_events.push_back(
+        new GameEvent(this, boost::to_upper_copy(name)));
 }
 
 }

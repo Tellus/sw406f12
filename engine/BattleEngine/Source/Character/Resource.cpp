@@ -49,11 +49,15 @@ void Resource::decrease(float amount)
 	// std::cout << this->name << " from " << this->current;
 	this->current = std::max(this->minimum, this->current-amount);
 	// std::cout << " to " << this->current << '\n';
+
+    this->raise_event(boost::to_upper_copy(this->name + "_DECREASE"));
 }
 
 void Resource::increase(float amount)
 {
 	this->current = std::min(this->maximum, this->current+amount);
+
+    this->raise_event(boost::to_upper_copy(this->name + "_INCREASE"));
 }
 
 void Resource::modify(float amount)
