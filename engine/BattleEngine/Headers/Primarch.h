@@ -13,6 +13,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include "GameEvent.h"
+#include "Exceptions/PrimarchDoesNotExistException.h"
 
 namespace engine {
 
@@ -136,8 +137,20 @@ protected:
     
 	/**
 	 * Checks to see if a child exists in the Primarch.
+	 * \param i Primarch ID of the Child to find.
+	 * \param go_deep True if the search should recurse into each child if not
+	 * found.
+	 * \note This is a breadth-first search.
 	 **/
-    bool has_child(int i);
+    bool has_child(int i, bool go_deep = false);
+
+    /**
+     * Retrieves a child Primarch from the object.
+     * \param c_id The Primarch ID of the child to retrieve.
+     * \param deep True if this should be performed as a full depth
+     * breadth-first search.
+     **/
+    Primarch* get_child(int c_id, bool deep = false);
 
 	const std::list<Primarch*>* get_children();
 
