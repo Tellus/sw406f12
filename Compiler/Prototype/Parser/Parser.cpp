@@ -37,7 +37,7 @@ ASTNode *Parser::accept_declaration()
 	this->advance(MAKE);
 	node->add_child(new ASTNode(NODE_SUBCLASS, (this->advance(IDENTIFIER))->contents));
 	this->advance(FROM);
-	node->add_child(new ASTNode(NODE_SUBCLASS, (this->advance(IDENTIFIER))->contents));
+	node->add_child(new ASTNode(NODE_SUPERCLASS, (this->advance(IDENTIFIER))->contents));
 	this->advance(LBRACE);
 
 	node->add_child(this->accept_assingment_list());

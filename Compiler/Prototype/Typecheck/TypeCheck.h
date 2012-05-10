@@ -48,7 +48,7 @@ public:
 	void add_symbol(std::map<std::string, symbol*>* addtable, std::string name, std::map<std::string, symbol*>* reftable, assign_enum assign);
 	symbol* lookup_symbol(std::string name, std::map<std::string, symbol*>* looktable);
 	symbol* traverse(ASTNode *ast);
-	void decorate(ASTNode *node);
+	bool decorate(ASTNode *node, std::map<std::string, symbol*> *scope = NULL);
 
 	TypeCheck();
 	virtual ~TypeCheck();

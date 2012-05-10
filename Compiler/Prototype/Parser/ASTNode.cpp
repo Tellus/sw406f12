@@ -112,8 +112,8 @@ string ASTNode::ntype(ast_type type)
 			t_type = "Reference";
 			break;
 
-		return t_type;
 	}
+	return t_type;
 }
 
 ASTNode::ASTNode(ast_type type, string data) {
