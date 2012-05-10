@@ -6,6 +6,7 @@
  */
 
 #include "Effect.h"
+#include <iostream>
 
 namespace engine {
 
@@ -18,6 +19,17 @@ Effect::Effect()
 Effect::~Effect()
 {
 	// TODO Auto-generated destructor stub
+}
+
+Effect::Effect(RGR_Enum source, RGR_Enum target)
+{
+    this->target_rgr = target;
+    this->source_rgr = source;
+}
+
+void Effect::pretty_print()
+{
+    std::cout << "Effect: '" << this->name << "' (" << this->id << ")\n";
 }
 
 } /* namespace engine */

@@ -12,12 +12,14 @@
 #include "GameState.h"
 #include "Character.h"
 #include "RGRIdentifier.h"
+#include "PrettyPrinter.h"
 
 namespace engine
 {
 
 class EnemyIdentifier : public RGRIdentifier
 {
+public:
     Character *identify(GameState *from);
     EnemyIdentifier();
 };

@@ -10,7 +10,10 @@
 
 #include "Primarch.h"
 #include "Ability.h"
-#include "RGR_List.h"
+#include "GameState.h"
+#include "Exceptions/NullParameterException.h"
+
+#include <typeinfo>
 
 namespace engine {
 
@@ -25,25 +28,29 @@ public:
 	 * \param abil The ability to use.
 	 * \param target The target to use the ability ON.
 	 **/
-	Action(Primarch* source, Ability* abil, Primarch* target);
-
-	/**
-	 * Creates a new Action object based on two character objects (source and
-	 * target) and an ability.
-	 * \param source The character to use this ability.
-	 * \param abil The ability to use.
-	 * \param target The RGR to use the ability ON.
-	 **/
-	Action(Primarch* source, Ability* abil, RGR_Enum target);
+	Action(RGR_Enum source, RGR_Enum target, Ability* abil);
 	
-	void execute();
+	/**
+	 * Creates a new cloned GameState and runs the effects on it.
+	 * \param thru The GameState to run the execution through.
+	 * \return A (new) modified GameState.
+	 */
+	GameState* execute(GameState *thru);
 
-protected:
-    Primarch *source, *target;
-    RGR_Enum *target_rgr;
+    // Primarch *source, *target;
+	/**
+	 * RGR references to the targets of this particular action. Typically, this
+	 * will distill the list of targets of an Ability down to the few necessary.
+	 */
+	RGR_Enum source, target;
+
     Ability *ability;
 
-    void generate_effects();
+protected:
+    /**
+     * Called by execute, to generate a collections of effects from effectDefinitions
+     */
+    std::vector<Effect*> *generate_effects();
 };
 
 } /* namespace engine */

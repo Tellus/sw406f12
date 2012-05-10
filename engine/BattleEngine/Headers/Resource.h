@@ -10,11 +10,10 @@
 
 #include "Attribute.h"
 
-#include <algorithm>
-
 namespace engine {
 
-class Resource:public engine::Attribute {
+class Resource:public engine::Attribute
+{
 protected:
     /**
      * Lowest allowable value for the Resource.
@@ -26,21 +25,18 @@ protected:
      **/
     float maximum;
 
-    float initial_minimum;
-
 public:
-	void deplete(int amount);
-	void regain(int amount);
-	void modify_minimum(int amount);
-	virtual void reset();
-	virtual void modify(int amount);
-
 	/* At maximum = -1, set it to value */
-	Resource(int value, int maximum = -1, int minimum = 0);
-	Resource(Resource *copy);
+	Resource(float min, float max, float init);
+	Resource(float min, float max);
 	virtual ~Resource();
+
+	virtual Primarch *clone(bool with_id);
 	
-	Resource(float min, float max, float initial);
+	virtual void reset();
+	virtual void modify(float amount);
+	void decrease(float amount);
+	void increase(float amount);
 	
 	/**
 	 * Changes the minimum value of the Resource.
@@ -53,6 +49,11 @@ public:
 	 * \param value The new value.
 	 **/
 	void modify_max(float value);
+	
+	void pretty_print();
+
+private:
+	void _init(float min, float max);
 };
 
 } /* namespace engine */

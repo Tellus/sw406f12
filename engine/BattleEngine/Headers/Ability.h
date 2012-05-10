@@ -8,7 +8,7 @@
 #ifndef ABILITY_H_
 #define ABILITY_H_
 
-#include "EffectDefinition.h"
+// #include "EffectDefinition.h"
 #include "Effect.h"
 #include "RGR_List.h"
 
@@ -16,19 +16,31 @@
 
 namespace engine {
 
-class Ability : public RGR_List
+class Ability : public Primarch, public RGR_List
 {
 public:
-	std::vector<EffectDefinition<Effect> > effects;
-//	std::vector<RGR_Enum> targets;
+    /**
+     * The effects applied when an ability is used. It is preferred that you
+     * use Effect::clone() when you need an effects rather than use it directly.
+     **/
+	std::vector<Effect*> effects;
 
 	Ability();
 	Ability(float cost_health, float cost_mana);
+    Ability(std::string name, float cost_health, float cost_mana);
 	virtual ~Ability();
 	
 	float cost_health, cost_mana;
-	
-    RGR_List targets;
+    
+    void pretty_print();
+
+	Primarch* clone(bool with_id = false);
+    
+private:
+    /**
+     * Used by constructors for the initializations shared between them all.
+     **/
+    void _init();
 };
 
 } /* namespace engine */

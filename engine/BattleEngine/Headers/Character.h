@@ -8,6 +8,7 @@
 #ifndef CHARACTER_H_
 #define CHARACTER_H_
 
+// The necessities.
 #include "Primarch.h"
 #include "Attribute.h"
 #include "Ability.h"
@@ -15,11 +16,18 @@
 #include "Resource.h"
 #include "Behaviour.h"
 
+// The exceptions.
+#include "Exceptions/ResourceDoesNotExistException.h"
+
+// The built-ins.
 #include <string>
 #include <map>
 #include <list>
 
 namespace engine {
+
+// Forward declaration... hm.
+class GameState;
 
 class Character : public Primarch
 {
@@ -28,15 +36,16 @@ protected:
 
 public:
 	Character();
-	Character(const Character& copy);
 	virtual ~Character();
+
+	virtual Primarch* clone(bool with_id);
 
     /** Membesr analogous to InvaderScript implementation. **/
 	std::map<std::string, Attribute*> attributes;
 	std::map<std::string, Resource*> resources;
+	std::map<std::string, Ability*> abilities;
 	std::list<ContEffect*> cont_effects;
-	std::list<Ability*> abilities;
-	Behaviour behaviour;
+	Behaviour* behaviour;
 
     /**
      * Adds a new Attribute to the Character.
@@ -53,22 +62,21 @@ public:
 	void add_resource(std::string name, Resource *resource);
 	
 	/**
+	 * Adds an ability to the list of available abilities to the character.
+	 **/
+	void add_ability(std::string name, Ability *abil);
+	
+	/**
 	 * Retrieves the Character's current piggy (happiness) value.
 	 * \return The current piggy value.
 	 * \note Mostly a proxy for Behaviour::get_piggy().
 	 **/
-	float get_piggy();
-
-    /**
-     * Fuckin' arbitrary id. Assume that this id will be unique for this
-     * Character among all Character instances in the active GameState.
-     **/
-    int id;
+	float get_piggy(GameState* from);
 	
 	/**
 	 * Retrieves the ability list.
 	 **/
-	std::list<Ability*> get_abilities();
+	std::map<std::string, Ability*> get_abilities();
 	
 	/**
 	 * Retrieves the map of Attributes.
@@ -101,6 +109,13 @@ public:
 	 * \return True if the Resource is on the Character, false otherwise.
 	 */
 	bool has_resource(std::string name);
+	
+	bool has_ability(std::string name);
+	
+	virtual void pretty_print();
+	
+private:
+    void _init();
 };
 
 } /* namespace engine */

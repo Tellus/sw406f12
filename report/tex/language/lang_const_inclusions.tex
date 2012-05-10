@@ -1,10 +1,10 @@
 \subsection{Inclusions}
 A feature of primarch and seed definitions, inclusions \todo{proper term?} is a notation to define a member of a primarch without explicitly instantiating with an identifier. An example:
-\begin{lstlisting}
+\begin{lstlisting}[language=fflang]
 make Fireball from Ability
 {
-	targets: [any];
-	cost: [[user.mana, 10]];
+	targets: [target];
+	cost: [[owner.mana, 10]];
 	effects: [	FireDamage(target,5,12),
 				BurnDOT(target,5,2 to 5)
 			 ];
@@ -13,13 +13,13 @@ make Fireball from Ability
 make Heal from Ability
 {
 	targets: [owner];
-	cost   : [[user.mana, 7]];
+	cost   : [[owner.mana, 7]];
 	effects: [Heal(target,2d8)];
 }
 
 make BattleMageBehaviour from Behaviour
 {
-	positive : [[user.health, 70]];
+	positive : [[owner.health, 70]];
 	negative : [[team.enemy.health, 80]];
 }
 
@@ -27,17 +27,16 @@ make Wizard from Character
 {
 	abilities : [Fireball, Heal, Attack];
 	behaviour : BattleMageBehaviour;
-	events    : [];
-	items     : [];
+	events    : [ ];
+	items     : [ ];
                  
-    Strength: 8;
-    Dexterity: 8;
-    Intelligence: 21;
-    Wisdom: 17;
+    strength: 8;
+    agility: 8;
+    intelligence: 21;
     
-    Health: 80;
-    Mana: 100;
+    health: 80;
+    mana: 100;
 }
 \end{lstlisting}
 
-In this example, we transcend Wizard from the Primarch Character, assigning new abilities and setting the value of attributes and resources as well as a proper behaviour. Notice that unlike imperative languages, only the type is given - no identifiers are necessary, since each entry of the type is considered unique (it is impossible to have two Strength attributes on the same character, both in the language and in by far most RPG systems).
+In this example, we transcend Wizard from the Primarch Character, assigning new abilities and setting the value of attributes and resources as well as a proper behaviour. Notice that unlike imperative languages, only the type is given - no identifiers are necessary, since each entry of the type is considered unique (it is impossible to have two ''strength'' attributes on the same character.

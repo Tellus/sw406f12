@@ -17,18 +17,31 @@ EnemyIdentifier::EnemyIdentifier()
 
 Character *EnemyIdentifier::identify(GameState *from)
 {
-    std::list<Team*>::iterator iter;
-    std::list<Team*> teams = from->teams;
-    
-    for (iter = teams.begin(); iter != teams.end(); iter++)
-    {
-        Team *tmp = *iter;
-        if (!tmp->has_character(from->current_char->id))
-        {
-            return tmp->front();
-        }
-    }
-    throw 404;
+	// Get their team.
+	int t_id = from->get_char_team(from->current_char);
+
+	if (t_id == -1)
+	{
+		return NULL;
+	}
+
+	// Pointers are... much... cheaper, Joe.
+	std::list<Team*> *teams = &from->teams;
+
+	std::list<Team*>::iterator iter = teams->begin();
+
+	for (;
+		 iter != teams->end();
+		 iter++)
+	{
+		if ((*iter)->id == t_id) continue; // Skip if the teams are identical. Enemies are not on your team.
+		else
+		{
+			return dynamic_cast<Character*>(from->get_child_by_id((*iter)->first_char()));
+		}
+	}
+
+	return NULL;
 }
 
 }

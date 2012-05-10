@@ -8,28 +8,29 @@
 #ifndef ATTRIBUTE_H_
 #define ATTRIBUTE_H_
 
+#include "Primarch.h"
 #include <string>
 
 namespace engine {
 
-class Attribute {
+class Attribute : public Primarch
+{
 protected:
 	float current, initial;
 
 public:
 	Attribute();
-	Attribute(int value);
 	Attribute(float start);
-	Attribute(Attribute *copy);
+	Attribute(int initial);
 	virtual ~Attribute();
 
-	std::string pretty_name;
+	virtual Primarch *clone(bool with_id);
 	
 	/**
 	 * Modifies the current value of the Attribute. Modifies the maximum on
 	 * Resources (... *WHAT*?!).
 	 */
-	virtual void modify(int amount);
+	virtual void modify(float amount);
 
 	/**
 	 * Increase the current value of the attribute... duh.
@@ -55,6 +56,14 @@ public:
 	void virtual change(float amount);
 	
 	float get_current();
+	
+	void pretty_print();
+	
+private:
+    /**
+     * Sets the initial values.
+     **/
+    void set_initial(float start);
 };
 
 } /* namespace engine */

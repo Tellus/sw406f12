@@ -5,6 +5,6 @@
 *.log
 *.lol
 *.out
-*.pdf
+master.pdf
 *.synctex.gz
 *.toc

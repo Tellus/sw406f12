@@ -10,63 +10,67 @@
 namespace engine
 {
 
-void Resource::deplete(int amount)
+Resource::Resource(float min, float max, float init) :
+    Attribute(initial)
 {
-	this->current = std::max(this->minimum, this->current - amount);
+	this->_init(min, max);
+
+	this->initial = this->current = init;
 }
 
-void Resource::regain(int amount)
+Resource::Resource(float min, float max) :
+	Attribute(max)
 {
-	this->current = std::min(this->maximum, this->current + amount);
+	this->_init(min, max);
 }
 
-void Resource::modify_minimum(int amount)
-{
-	this->minimum = std::min(this->maximum, this->minimum + amount);
-}
-
-void Resource::modify(int amount)
-{
-	this->maximum = std::max(this->minimum, this->minimum + amount);
-}
-
-void Resource::reset()
-{
-	this->maximum = initial;
-	this->minimum = initial_minimum;
-}
-
-Resource::Resource(int value, int maximum, int minimum) : Attribute(value)
-{
-	if (maximum == -1)
-		maximum = value;
-
-	this->initial = maximum;
-	this->maximum = maximum;
-	this->initial_minimum = minimum;
-	this->minimum = minimum;
-}
-
-Resource::Resource(Resource *copy) : Attribute(0)
-{
-	this->current = copy->current;
-	this->initial = copy->initial;
-	this->maximum = copy->maximum;
-	this->minimum = copy->minimum;
-	this->initial_minimum = copy->initial_minimum;
-}
-
-Resource::Resource(float min, float max, float initial) : Attribute(initial)
+void Resource::_init(float min, float max)
 {
     this->modify_min(min);
     this->modify_max(max);
-    this->initial = initial;
-    this->current = max;
+    this->initial = this->current = max;
 }
 
 Resource::~Resource()
 {
 	// TODO Auto-generated destructor stub
+}
+
+Primarch* Resource::clone(bool with_id)
+{
+	Resource* to_ret = new Resource(this->minimum, this->maximum, this->current);
+	// std::cout << "Cloned Resource:\n";
+	// to_ret->pretty_print();
+	return to_ret;
+}
+
+void Resource::decrease(float amount)
+{
+	// std::cout << this->name << " from " << this->current;
+	this->current = std::max(this->minimum, this->current-amount);
+	// std::cout << " to " << this->current << '\n';
+
+    this->raise_event(boost::to_upper_copy(this->name + "_DECREASE"));
+}
+
+void Resource::increase(float amount)
+{
+	this->current = std::min(this->maximum, this->current+amount);
+
+    this->raise_event(boost::to_upper_copy(this->name + "_INCREASE"));
+}
+
+void Resource::modify(float amount)
+{
+	throw "Not supported!";
+/*	this->current = std::max(this->
+	this->maximum = std::max(this->minimum, this->minimum + amount);
+	std::cout << this->name << ": " << */
+}
+
+void Resource::reset()
+{
+	this->maximum = initial;
 }
 
 void Resource::modify_min(float value)
@@ -77,6 +81,11 @@ void Resource::modify_min(float value)
 void Resource::modify_max(float value)
 {
     this->maximum = value;
+}
+
+void Resource::pretty_print()
+{
+    std::cout << "Resource: " << this->name << " (" << this->id << ") " << this->minimum << '/' << this->current << '/' << this->maximum << '\n';
 }
 
 } /* namespace engine */

@@ -9,15 +9,13 @@
 
 #include <math.h>
 #include <list>
+#include <string>
+
+#include "RGR_Enum.h"
 
 namespace engine
 {
-enum RGR_Enum{  ANY = 1,
-                ENEMY = 2,
-                ALLY = 4,
-                OWNER = 8
-                };
-                    
+
 class RGR_List
 {
 public:
@@ -88,7 +86,13 @@ public:
 	 */
 	int get_as_mask();
 	
-private:
+	/**
+	 * Hard-coded method for getting string representations of enums. Naturally,
+	 * this is solely for debugging purposes.
+	 **/
+	static std::string to_string(RGR_Enum in);
+	
+protected:
     /**
      * List of RGR's.
      **/

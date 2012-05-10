@@ -9,53 +9,49 @@
 
 namespace engine {
 
-Action::Action(Primarch *source, Ability *abil, Primarch *target)
+Action::Action(RGR_Enum source, RGR_Enum target, Ability* abil)
 {
     this->source = source;
     this->target = target;
     this->ability = abil;
 }
 
-Action::Action(Primarch *source, Ability *abil, RGR_Enum target)
-{
-    this->source = source;
-    this->ability = abil;
-    
-    // Afvikle this->execute();
-}
-
 Action::~Action() {
 	// TODO Auto-generated destructor stub
 }
 
-void Action::execute()
+GameState* Action::execute(GameState *thru)
 {
-	this->ability->effects;
-}
+	// Clone.
+	GameState* state = thru->clone();
 
-void Action::generate_effects()
-{
+	Character* source = state->get_rgr(this->source);
+	Character* target = state->get_rgr(this->target);
 
-	//Forskellige forsøg.. Men tror sq ikke de virker..
-	/*
-	for(std::vector<EffectDefinition<Effect> >::iterator i = this->ability->effects.begin();
-		i != this->ability->effects.end(); i++)
+	std::vector<Effect*> *effects = this->generate_effects();
+	for (std::vector<Effect*>::iterator iter = effects->begin(); iter != effects->end(); iter++)
 	{
-		for(std::vector<Effect>::iterator j = this->ability->effects.at(i); j != *i.end(); j++)
-		{
+		Effect *ef = dynamic_cast<Effect*>(*iter);
 
-		}
+		ef->execute(source, target);
 	}
 
-	for(unsigned int i = 0; i < this->ability->effects.size(); i++)
-	{
-		for(unsigned int j = 0; j < this->ability->effects.size(); j++)
-		{
-			this->ability->effects[i];
-		}
-	}
-*/
+	return state;
 }
 
+std::vector<Effect*> *Action::generate_effects()
+{
+	std::vector<Effect*> *tmp = &this->ability->effects;
+	std::vector<Effect*> *out = new std::vector<Effect*>();;
+
+	Effect *ef;
+
+	for(std::vector<Effect*>::iterator i = tmp->begin(); i != tmp->end(); i++)
+	{
+		ef = (*i);
+		out->push_back(dynamic_cast<Effect*>(ef->clone()));
+	}
+	return out;
+}
 
 } /* namespace engine */

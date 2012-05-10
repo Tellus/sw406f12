@@ -1,0 +1,6 @@
+\subsection{A turn}
+To give an idea of how a turn is defined in \langname{} here follows a description:
+A turn is where a character performs an action, this is over simplifying it though since there is more behind the curtains.
+What happens is that a character is chosen from a list of active characters, be they two or more, after a character is chosen their available actions are listed and run through calculations. These calculations are better defined within each character's behaviour but what it boils down to is the calculated game state, in which the simulation will end in after running all possible action outcomes. This is the artificial intelligence given to all characters, a result of the most optimal action performed, which is stored as the next action to perform, making the characters able to 'think' one turn ahead.
+Now when an action is returned from the behavioural calculation, the character performs said action and the turn is ended.
+After this the next character is chosen from the list and a turn repeats itself.

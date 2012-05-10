@@ -1,35 +1,43 @@
 
-To communicate with a computer, one is required to 'speak' the same language as the computer. A computer's language is pre-defined by the computer's producer, and generally referred to as \emph{machine code} or \emph{machine instructions}.\\
-Today software developers make use of various programming languages. Each language deals with an area of functionality,  although some have been created more as a joke than a functional language. These languages have to be translated for the computer and this is done with tools called compilers.\\
+To communicate with a computer, one is required to 'speak' the same language as the computer. A computer's language is pre-defined by the producer of the computer, and generally referred to as \emph{machine code} or \emph{machine instructions}.\\
+Today's software developers make use of various programming languages and each language deals with an area of functionality. These languages have to be translated for the computer and this is done with tools called compilers.\\
 When developing, the choice of programming language can be vital to the project's success and functionality.\\\\
 In this report, a description of the development-process of a new language is laid out.
 
 \section{\langname{}}
-In this project we want to address the interest for a role-playing based language. The purpose of the language is to define entities, found in various role-playing games, these include characters, skills and more.\\
-To do this we construct a language which should catch the intuitive and simple characteristics of character sheets, which are information containers for various role-playing games.
+In this project we want to address the interest for a role-playing based language. The purpose of the language is to define characters, skills, attributes, effects etc, commonly found in role-playing games.\\
+To do this a language is constructed which should catch the intuitive and simple characteristics of character sheets, which are information containers for various role-playing games.
 
 \section{Role-playing}
-Role-playing games have been around for some time now and exist in many forms.
-These include \emph{Computer role-playing}- and \emph{Pen \& Paper role-playing-games}, both a focus in this project.\\
-In role-playing games, players take on the roles of fictitious characters, either created by the players themselves or by the developers of the game.\\
-Characters are defined by their abilities and attributes, meaning that everything that matters gets assigned a number to represent how 'good' an ability or an attribute is. In \emph{Pen \& Paper games} a character is not much more than an idea built around various numbers, these numbers representing everything that matters in the given world.\\ For example the strength and charisma of a character can tell you how hard a character can hit and how well they can handle social situations. Most games however break as much as possible down to numbers; appearance, intellect, luck and more.
+\ac{rpgs} have been commercially available since the 1970\'s and exist in various forms.
+There are three known; \emph{Computer-}, \emph{Pen \& Paper-} and \emph{Live Action \ac{rpgs}}, the first two being a focus in this project.\\
+In \ac{rpgs}, players take on the roles of fictitious characters, either created by the players themselves or by the developers of the game.\\
+Characters are defined by their abilities and attributes, meaning that each ability is assigned a number that represents how 'good' the character is using a given ability. This is also the case with attributes and certain 'traits' (e.g superpowers and disciplines). An attribute is value on a scale of some minimum number to some maximum, where each value indicates how much better or worse a character is compared to other beings in the game world. Take for example the attributes strength and charisma. Strength tells you how strong a character is, often used to measure how much they can lift and how hard they can hit. Charisma is a character's social skill level, used to measure how well they can handle social situations. Most games break as much as possible down to numbers; appearance, intellect, luck and more.
 This should in a way contribute to the level of realism in events and outcomes while playing.\\
 The first modern \emph{Pen \& Paper role-playing game} to be released commercially is the game \emph{Dungeons \& Dragons}, which was first published in 1974.\cite{wikidnd}
 \emph{Dungeons \& Dragons} can therefore be thought of as the pioneer of role-playing games.
-\subsection*{Pen \& Paper}
-When playing \emph{Pen \& Paper games} the players generally use dice (see figure \vref{dice}) to determine an outcome of an activity. To help keep track of a character's attributes and other information, a character sheet is used.
-As the name inclines writing tools and something to write on is required (character sheets are generally printed on a piece of paper).
+
+\subsection{Character creation}
+
+How a character is created varies from system to system. Common for most is that the characters have statistics (stats) describing them, such as Health Points (HP), which describes how much damage a character can take before dying and Strength, which describes how much damage a character can do to others. How much HP a character has can, for example, be decided by rolling dice, be computed from other stats or assigned based on the player's choice of race.
+
+\subsection{Pen \& Paper}
+When playing \emph{Pen \& Paper games} the players generally use various dice (see figure \vref{dice}) to determine an outcome of an activity, for example an attack, where the outcome determines if the attack is successful and thereafter how much damage is inflicted. To help keep track of a character's attributes and other information, a character sheet is used.
+These are the participants: A \ac{gm} is responsible for control of non-player characters, environment, the setting of the adventure and has the final say in conflicts. The players control their individual characters, around which the adventure revolves.
+A game scenario can be described as following: The \ac{gm} prepares an adventure for the players and lays down additional rules if needed. Participants are seated around a table with their character sheets and a number of dice. Each player has created a character to use in the given adventure. The \ac{gm} describes the setting and series of events, playing all non-Player characters. The players roleplay their characters and determine their actions by themselves. When an action is required from a specific player, they can determine the outcome of the action by rolling a specific set of dice.
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.4]{img/rpgdice.png}
+\includegraphics[scale=0.35]{img/rpgdice.png}
 \caption{Dice for role-playing purposes}
 %\cite{rpgdice}
 \label{dice}
 \end{figure}
-\subsection*{Digitised}
-In \emph{Computer role-playing games} the outcome of an activity is determined by measures implemented by the developers, this can be an imitation of a dice roll (variation) or a static calculation (pre-calculated).
-To keep track of character information, a digitised character sheet is often accessible, where the player can customise his character to some degree.\\
-Due to the increasing popularity of role-playing games, the benefit of a role-playing based programming language becomes greater.
+
+\subsection{Digitised}
+In \emph{Computer role-playing games} the outcome of an activity is determined by measures implemented by the developers. This can be an imitation of a dice roll (variation) or a static calculation (pre-calculated).
+To keep track of character information, a digitised character sheet is often accessible, where the player can customise their character to some degree.\\
+In computer role-playing games the player will often be given a set of possible actions to choose from, and it is up to the player to determine which one suits the situation best. The opponents are pre-programmed to react in a certain way to various events, such as low HP.
+
 \pagebreak
 
 %source: (wikidnd) http://en.wikipedia.org/wiki/History_of_role-playing_games

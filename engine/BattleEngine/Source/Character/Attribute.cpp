@@ -10,26 +10,19 @@
 namespace engine
 {
 
-void Attribute::modify(int amount)
-{
-	this->current += amount;
-}
-
-Attribute::Attribute(int value)
-{
-	this->current = value;
-	this->initial = value;
-}
-
 Attribute::Attribute()
 {
 	// TODO Auto-generated constructor stub
 }
 
-Attribute::Attribute(Attribute *copy)
+Attribute::Attribute(float start)
 {
-	this->current = copy->current;
-	this->initial = copy->initial;
+    this->set_initial(start);
+}
+
+Attribute::Attribute(int initial)
+{
+    this->set_initial((float)initial);
 }
 
 Attribute::~Attribute()
@@ -37,9 +30,23 @@ Attribute::~Attribute()
 	// Nothing to clean...
 }
 
-Attribute::Attribute(float start)
+Primarch* Attribute::clone(bool with_id)
 {
-    this->current = this->initial = start;
+	Attribute *ret = new Attribute();
+	ret->initial = this->initial;
+	ret->current = this->current;
+	
+	return ret;
+}
+
+void Attribute::set_initial(float init)
+{
+    this->current = this->initial = init;
+}
+
+void Attribute::modify(float amount)
+{
+	this->current += amount;
 }
 
 void Attribute::increase(float amount)
@@ -69,6 +76,11 @@ void Attribute::reset()
 float Attribute::get_current()
 {
 	return this->current;
+}
+
+void Attribute::pretty_print()
+{
+    std::cout << "Attribute: " << this->name << " (" << this->id << ")\n";
 }
 
 } /* namespace engine */
