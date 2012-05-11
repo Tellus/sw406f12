@@ -5,7 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
+#ifndef RGR_LIST_H_
+#define RGR_LIST_H_
 
 #include <math.h>
 #include <list>
@@ -106,3 +107,5 @@ protected:
 };
 
 }
+
+#endif

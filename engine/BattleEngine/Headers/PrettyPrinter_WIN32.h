@@ -5,7 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
+#ifndef PRETTY_PRINTER_WIN32_H_
+#define PRETTY_PRINTER_WIN32_H_
 
 #include <iostream>
 #include <Windows.h>
@@ -39,3 +40,5 @@ enum FG_COLOR {
 
 
 }
+
+#endif

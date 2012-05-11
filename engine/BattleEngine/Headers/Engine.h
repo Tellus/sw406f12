@@ -5,7 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
+#ifndef ENGINE_H_
+#define ENGINE_H_
 
 #include <memory>
 
@@ -126,3 +127,5 @@ private:
 };
 
 }
+
+#endif

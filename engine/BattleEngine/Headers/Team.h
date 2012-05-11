@@ -5,7 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
+#ifndef TEAM_H_
+#define TEAM_H_
 
 #include <list>
 #include <algorithm>
@@ -39,3 +40,5 @@ public:
 };
 
 }
+
+#endif

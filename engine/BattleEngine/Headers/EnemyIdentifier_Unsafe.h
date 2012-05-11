@@ -5,7 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
+#ifndef ENEMY_IDENTIFIER_UNSAFE_H_
+#define ENEMY_IDENTIFIER_UNSAFE_H_
 
 #include <list>
 
@@ -25,3 +26,5 @@ public:
 };
 
 }
+
+#endif

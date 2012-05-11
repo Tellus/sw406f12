@@ -5,7 +5,8 @@
  *      Author: Johannes
  */ 
 
-#pragma once
+#ifndef INVALID_RGR_EXCEPTION_H_
+#define INVALID_RGR_EXCEPTION_H_
 
 #include <exception>
 #include <string>
@@ -21,3 +22,5 @@ public:
 	virtual const char* what() const throw();
 };
 }
+
+#endif

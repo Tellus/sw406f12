@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SIMPLE_WIN_CONDITION_H_
+#define SIMPLE_WIN_CONDITION_H_
 
 #include "WinCondition.h"
 
@@ -16,3 +17,5 @@ public:
 };
 
 }
+
+#endif

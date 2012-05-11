@@ -5,9 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
-
-// #include "GameState.h"
+#ifndef RGR_IDENTIFIER_H_
+#define RGR_IDENTIFIER_H_
 
 #include "Character.h"
 
@@ -43,3 +42,5 @@ private:
 };
 
 }
+
+#endif

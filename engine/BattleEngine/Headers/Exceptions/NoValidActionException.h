@@ -5,7 +5,8 @@
  *      Author: Johannes
  */ 
 
-#pragma once
+#ifndef NO_VALID_ACTION_H_
+#define NO_VALID_ACTION_H_
 
 #include <exception>
 #include <string>
@@ -21,3 +22,5 @@ public:
 	virtual const char* what() const throw();
 };
 }
+
+#endif

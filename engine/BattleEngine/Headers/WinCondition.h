@@ -5,7 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
+#ifndef WIN_CONDITION_H_
+#define WIN_CONDITION_H_
 
 #include <memory>
 
@@ -28,3 +29,5 @@ public:
 };
 
 }
+
+#endif

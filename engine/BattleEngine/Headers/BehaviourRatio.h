@@ -5,7 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
+#ifndef BEHAVIOUR_RATIO_H_
+#define BEHAVIOUR_RATIO_H_
 
 #include "RGR_Enum.h"
 #include <string>
@@ -46,3 +47,5 @@ public:
 };
 
 } /* namespace engine */
+
+#endif

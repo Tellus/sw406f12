@@ -18,6 +18,7 @@
 
 // The exceptions.
 #include "Exceptions/ResourceDoesNotExistException.h"
+#include "Exceptions/DuplicateKeyException.h"
 
 // The built-ins.
 #include <string>

@@ -5,7 +5,8 @@
  *      Author: Johannes
  */ 
 
-#pragma once
+#ifndef DUPLICATE_KEY_H_
+#define DUPLICATE_KEY_H_
 
 #include <exception>
 #include <string>
@@ -21,3 +22,5 @@ public:
 	virtual const char* what() const throw();
 };
 }
+
+#endif
