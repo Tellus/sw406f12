@@ -12,6 +12,7 @@
 #include <string>
 
 #include "RGR_Enum.h"
+#include "Exceptions/InvalidRGRException.h"
 
 namespace engine
 {
@@ -91,6 +92,12 @@ public:
 	 * this is solely for debugging purposes.
 	 **/
 	static std::string to_string(RGR_Enum in);
+	
+	/**
+	 * Hard-coded method for getting enum representations from strings. Used
+	 * by the string parsed version of EventCondition, among others.
+	 **/
+	static RGR_Enum to_enum(std::string in);
 	
 protected:
     /**

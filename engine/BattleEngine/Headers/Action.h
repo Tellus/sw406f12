@@ -30,6 +30,8 @@ public:
 	 **/
 	Action(RGR_Enum source, RGR_Enum target, Ability* abil);
 	
+	Action(ActionDefinition to_use);
+	
 	/**
 	 * Creates a new cloned GameState and runs the effects on it.
 	 * \param thru The GameState to run the execution through.
@@ -37,14 +39,11 @@ public:
 	 */
 	GameState* execute(GameState *thru);
 
-    // Primarch *source, *target;
-	/**
-	 * RGR references to the targets of this particular action. Typically, this
-	 * will distill the list of targets of an Ability down to the few necessary.
-	 */
-	RGR_Enum source, target;
-
-    Ability *ability;
+    /**
+     * Definition of the Action. This dictates the formal parameters, whlie 
+     * execute will affect an actual GameState.
+     **/
+    ActionDefinition action_def;
 
 protected:
     /**

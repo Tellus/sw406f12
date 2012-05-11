@@ -108,4 +108,16 @@ std::string RGR_List::to_string(RGR_Enum in)
     }
 }
 
+RGR_Enum RGR_List::to_enum(std::string in)
+{
+    if (in == "ANY") return ANY;
+    if (in == "ENEMY") return ENEMY;
+    if (in == "ALLY") return ALLY;
+    if (in == "OWNER") return OWNER;
+    if (in == "ALL") return ALL;
+
+    std::string tmp = "The RGR " + in + "is unknown.";
+    throw InvalidRGRException(tmp);
+}
+
 }

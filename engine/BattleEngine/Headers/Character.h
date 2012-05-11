@@ -15,16 +15,22 @@
 #include "ContEffect.h"
 #include "Resource.h"
 #include "Behaviour.h"
+#include "ActionDefinition.h"
+#include "EventCondition.h"
 
 // The exceptions.
 #include "Exceptions/ResourceDoesNotExistException.h"
+#include "Exceptions/DuplicateKeyException.h"
 
 // The built-ins.
 #include <string>
 #include <map>
 #include <list>
+#include <utility>
 
 namespace engine {
+
+typedef std::pair<EventCondition*, ActionDefinition*> event_action_pair;
 
 // Forward declaration... hm.
 class GameState;
@@ -43,7 +49,12 @@ public:
     /** Membesr analogous to InvaderScript implementation. **/
 	std::map<std::string, Attribute*> attributes;
 	std::map<std::string, Resource*> resources;
+
 	std::map<std::string, Ability*> abilities;
+
+    /**
+     * Continuous effects. Unused.
+     **/
 	std::list<ContEffect*> cont_effects;
 	Behaviour* behaviour;
 
@@ -113,6 +124,22 @@ public:
 	bool has_ability(std::string name);
 	
 	virtual void pretty_print();
+	
+	/**
+	 * List of EventCondition objects. These are iterated by the engine or
+	 * GameState to check if any forced action should be taken instead of the
+	 * default Behaviour method.
+	 **/
+	std::list<event_action_pair> event_conditions;
+	
+	/**
+	 * Adds a new event to the Character.
+	 * \param condition Condition formatted as noted in EventCondition::EventCondition(std::string).
+	 * \param def The ActionDefinition to bind it to.
+	 **/
+	void add_event(std::string condition, ActionDefinition* def);
+	
+	void add_event(EventCondition ev, ActionDefinition ad);
 	
 private:
     void _init();

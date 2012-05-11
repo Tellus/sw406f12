@@ -42,7 +42,10 @@ Source/System/PrimarchIndexer.cpp \
 Source/System/Exceptions/PrimarchDoesNotExistException.cpp \
 Source/System/Exceptions/NoValidActionException.cpp \
 Source/System/Exceptions/EventLockedException.cpp \
-Source/System/GameEvent.cpp
+Source/System/GameEvent.cpp \
+Source/Character/EventCondition.cpp \
+Source/System/ActionDefinition.cpp
+
 U_SOURCES = \
 User/Source/SexyAbility.cpp \
 User/Source/AttackAbility.cpp \

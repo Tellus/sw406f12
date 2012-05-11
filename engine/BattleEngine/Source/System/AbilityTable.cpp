@@ -82,7 +82,7 @@ GameState *AbilityTable::get_next_state()
         
     if (this->best_action == NULL)
         std::cout << "ERROR! Null Action!\n";
-    else if (this->best_action->ability == 0 || this->best_action->ability == NULL)
+    else if (this->best_action->action_def.ability == NULL)
         std::cout << "ERROR! Ability was null for some reason!\n";
 
     delete actions;
@@ -96,7 +96,7 @@ float AbilityTable::get_action_piggy(Action *a)
 	GameState *new_state = a->execute(this->state);
     
     // Get piggy.
-	Character *ch = new_state->get_rgr(a->source);
+	Character *ch = new_state->get_rgr(a->action_def.source);
     float piggy = ch->get_piggy(new_state);
     
     // Destroy clone.

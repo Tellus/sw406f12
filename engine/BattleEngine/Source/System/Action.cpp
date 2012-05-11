@@ -11,10 +11,16 @@ namespace engine {
 
 Action::Action(RGR_Enum source, RGR_Enum target, Ability* abil)
 {
-    this->source = source;
-    this->target = target;
-    this->ability = abil;
+    this->action_def = ActionDefinition(source, target, abil);
+    // HI!
 }
+
+Action::Action(ActionDefinition to_use)
+{
+    this->action_def = to_use;
+    // Oh, hai!
+}
+
 
 Action::~Action() {
 	// TODO Auto-generated destructor stub
@@ -25,8 +31,8 @@ GameState* Action::execute(GameState *thru)
 	// Clone.
 	GameState* state = thru->clone();
 
-	Character* source = state->get_rgr(this->source);
-	Character* target = state->get_rgr(this->target);
+	Character* source = state->get_rgr(this->action_def.source);
+	Character* target = state->get_rgr(this->action_def.target);
 
 	std::vector<Effect*> *effects = this->generate_effects();
 	for (std::vector<Effect*>::iterator iter = effects->begin(); iter != effects->end(); iter++)
@@ -41,7 +47,7 @@ GameState* Action::execute(GameState *thru)
 
 std::vector<Effect*> *Action::generate_effects()
 {
-	std::vector<Effect*> *tmp = &this->ability->effects;
+	std::vector<Effect*> *tmp = &this->action_def.ability->effects;
 	std::vector<Effect*> *out = new std::vector<Effect*>();;
 
 	Effect *ef;
