@@ -51,3 +51,5 @@ private:
 };
 
 } /* namespace engine */
+
+#endif

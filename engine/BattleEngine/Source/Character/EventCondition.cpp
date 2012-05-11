@@ -77,7 +77,7 @@ EventCondition::EventCondition(std::string to_parse)
     this->target = RGR_List::to_enum(rgr);
 }
 
-COMPARISON_ENUM str_to_enum(std::string in)
+COMPARISON_ENUM EventCondition::str_to_enum(std::string in)
 {
     // UGLYNESS INCOMING!
     if (in == "==") return EQUAL;

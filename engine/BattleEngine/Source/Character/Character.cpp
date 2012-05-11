@@ -177,15 +177,15 @@ void Character::add_event(std::string ev, ActionDefinition* ac)
 {
     this->event_conditions.push_back(event_action_pair(
         new EventCondition(ev),
-        ac);
+        ac));
 }
-/*
-void Character::add_event(EventCondition ev, ActionDefinition* ac)
+
+void Character::add_event(EventCondition* ev, ActionDefinition* ac)
 {
     this->event_conditions.push_back(
         event_action_pair(
             ev,
-            ac);
+            ac));
 }
-*/
+
 } /* namespace engine */

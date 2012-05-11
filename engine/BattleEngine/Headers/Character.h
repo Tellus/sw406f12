@@ -139,7 +139,7 @@ public:
 	 **/
 	void add_event(std::string condition, ActionDefinition* def);
 	
-	void add_event(EventCondition ev, ActionDefinition ad);
+	void add_event(EventCondition* ev, ActionDefinition* ad);
 	
 private:
     void _init();
