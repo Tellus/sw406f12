@@ -5,7 +5,8 @@
  *      Author: Johannes
  */ 
 
-#pragma once
+#ifndef RESOURCE_DOES_NOT_EXIST_H_
+#define RESOURCE_DOES_NOT_EXIST_H_
 
 #include <exception>
 #include <string>
@@ -21,3 +22,5 @@ public:
 	virtual const char* what() const throw();
 };
 }
+
+#endif 

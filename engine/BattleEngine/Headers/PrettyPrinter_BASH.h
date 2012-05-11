@@ -5,7 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
+#ifndef PRETTY_PRINTER_BASH_H_
+#define PRETTY_PRINTER_BASH_H_
 
 #include <iostream>
 
@@ -36,3 +37,5 @@ enum BG_COLOR {
 };
 
 }
+
+#endif

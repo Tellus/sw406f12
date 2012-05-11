@@ -5,7 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
+#ifndef OWNER_IDENTIFIER_H_
+#define OWNER_IDENTIFIER_H_
 
 #include <list>
 
@@ -24,3 +25,5 @@ public:
 };
 
 }
+
+#endif

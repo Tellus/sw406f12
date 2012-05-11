@@ -4,8 +4,9 @@
  *  Created on: 06/05/2012
  *      Author: Johannes
  */
-
-#pragma once
+ 
+#ifndef GAME_EVENT_H_
+#define GAME_EVENT_H_
 
 #include <list>
 #include <utility>
@@ -93,3 +94,5 @@ private:
 };
 
 } /* namespace engine */
+
+#endif

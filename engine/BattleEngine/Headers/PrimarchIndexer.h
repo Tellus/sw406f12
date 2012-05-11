@@ -5,7 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
+#ifndef PRIMARCH_INDEXER_H_
+#define PRIMARCH_INDEXER_H_
 
 #include <list>
 #include <algorithm>
@@ -52,3 +53,5 @@ private:
 };
 
 } /* namespace engine */
+
+#endif

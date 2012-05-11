@@ -5,7 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
+#ifndef PRIMARCH_H_
+#define PRIMARCH_H_
 
 #include <iostream>
 #include <string>
@@ -161,3 +162,5 @@ private:
 };
 
 }
+
+#endif

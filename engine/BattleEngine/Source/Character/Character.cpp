@@ -6,7 +6,6 @@
  */
 
 #include "Character.h"
-#include "Exceptions/DuplicateKeyException.h"
 
 namespace engine {
 
@@ -98,7 +97,7 @@ std::map<std::string, Attribute*> Character::get_attributes()
 void Character::add_resource(std::string name, Resource *res)
 {
 	if (this->has_resource(name))
-		throw new DuplicateKeyException("Character::resources already contains a key at " + name + ".");
+		throw DuplicateKeyException("Character::resources already contains a key at " + name + ".");
 	else
 	{
 		this->resources[name] = res;
@@ -174,4 +173,19 @@ float Character::get_piggy(GameState* from)
 	return this->behaviour->get_piggy(from);
 }
 
+void Character::add_event(std::string ev, ActionDefinition* ac)
+{
+    this->event_conditions.push_back(event_action_pair(
+        new EventCondition(ev),
+        ac);
+}
+/*
+void Character::add_event(EventCondition ev, ActionDefinition* ac)
+{
+    this->event_conditions.push_back(
+        event_action_pair(
+            ev,
+            ac);
+}
+*/
 } /* namespace engine */

@@ -5,7 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
+#ifndef FULL_BEHAVIOUR_H_
+#define FULL_BEHAVIOUR_H_
 
 #include "Behaviour.h"
 #include "BehaviourRatio.h"

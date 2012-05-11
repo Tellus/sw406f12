@@ -5,7 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
+#ifndef PRETTY_PRINTER_H_
+#define PRETTY_PRINTER_H_
  
 #include <string>
 #include <iostream>
@@ -75,3 +76,5 @@ private:
 };
 
 }
+
+#endif

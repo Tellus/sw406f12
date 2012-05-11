@@ -5,7 +5,8 @@
  *      Author: Ezphares
  */
 
-#pragma once
+#ifndef GAMESTATE_H_
+#define GAMESTATE_H_
 
 // I'm too slow to figure an alternative to forward declaration.
 namespace engine{
@@ -31,3 +32,5 @@ public:
 };
 
 } /* namespace engine */
+
+#endif

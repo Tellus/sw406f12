@@ -5,7 +5,8 @@
  *      Author: Johannes
  */
 
-#pragma once
+#ifndef RGR_ENUM_H_
+#define RGR_ENUM_H_
 
 namespace engine
 {
@@ -18,3 +19,5 @@ enum RGR_Enum{  ANY = 1,
                 };
 
 }
+
+#endif
