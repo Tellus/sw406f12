@@ -100,6 +100,55 @@ bool Primarch::has_child(int c_id, bool deep)
 	return false;
 }
 
+bool Primarch::has_child(std::string name, bool deep)
+{
+	for (std::list<Primarch*>::iterator iter = this->children.begin();
+		 iter != this->children.end();
+		 iter++)
+	{
+	    // Regular check.
+		if ((*iter)->name == name) return true;
+		else
+		{
+		    // Deep check.
+		    if (deep && ((*iter)->has_child(name), deep)) return true;
+		}
+	}
+
+	return false;
+}
+
+Primarch* Primarch::get_child(std::string name, bool deep)
+{
+    Primarch* to_ret;
+    std::list<Primarch*>::iterator finder;
+        
+    // Shallow search.
+    finder = std::find_if(this->children.begin(),
+                         this->children.end(),
+                         [name](Primarch* cp){ return cp->name == name;});
+    
+    if (finder == this->children.end() && deep)
+    {
+        for (std::list<Primarch*>::iterator iter = this->children.begin();
+             iter != this->children.end();
+             iter++)
+        {
+            try
+            {
+                to_ret = (*iter)->get_child(name, deep);
+                return to_ret;
+            }
+            catch (PrimarchDoesNotExistException e)
+            {
+                // Do nothing, just catch it for safety :D
+            }
+        }    
+    }
+    
+    throw PrimarchDoesNotExistException("The requested object is not contained in this Primarch.");
+}
+
 Primarch* Primarch::get_child(int c_id, bool deep)
 {
     // Performing a prelim check is noble, but costs about as much as the search
@@ -167,6 +216,11 @@ void Primarch::raise_event(std::string name)
     
     this->pending_events.push_back(
         new GameEvent(this, boost::to_upper_copy(name)));
+}
+
+std::string Primarch::get_default_name(std::string in)
+{
+	return in + "_" + boost::lexical_cast<std::string>(this->id);
 }
 
 }

@@ -14,6 +14,8 @@ Ability::Ability()
     this->_init();
     
     this->cost_health = this->cost_mana = 0;
+
+	this->name = this->get_default_name("Ability");
 }
 
 Ability::Ability(float cost_health, float cost_mana)
@@ -86,6 +88,20 @@ void Ability::pretty_print()
     {
         (*eff_iter)->pretty_print();
     }
+}
+
+float Ability::get_value()
+{
+	float ret = 0;
+	
+	for (std::vector<Effect*>::iterator iter = this->effects.begin();
+		 iter != this->effects.end();
+		 iter++)
+	{
+		ret += (*iter)->get_value();
+	}
+
+	return ret;
 }
 
 } /* namespace engine */

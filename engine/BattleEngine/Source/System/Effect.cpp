@@ -12,8 +12,7 @@ namespace engine {
 
 Effect::Effect()
 {
-	// TODO Auto-generated constructor stub
-
+	// Stub
 }
 
 Effect::~Effect()
@@ -21,15 +20,22 @@ Effect::~Effect()
 	// TODO Auto-generated destructor stub
 }
 
-Effect::Effect(RGR_Enum source, RGR_Enum target)
+Effect::Effect(RGR_Enum s, RGR_Enum t, std::string member, float amount)
 {
-    this->target_rgr = target;
-    this->source_rgr = source;
+    this->target_rgr = s;
+    this->source_rgr = t;
+	this->member = member;
+	this->amount = amount;
 }
 
 void Effect::pretty_print()
 {
     std::cout << "Effect: '" << this->name << "' (" << this->id << ")\n";
+}
+
+float Effect::get_value()
+{
+	return this->amount;
 }
 
 } /* namespace engine */

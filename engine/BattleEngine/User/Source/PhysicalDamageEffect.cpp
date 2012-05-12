@@ -10,7 +10,7 @@
 namespace testbattle{
 
 PhysicalDamageEffect::PhysicalDamageEffect(engine::RGR_Enum s, engine::RGR_Enum t)
-    : engine::Effect(s, t) {}
+    : engine::Effect(s, t, "Health", -20) {}
 
 PhysicalDamageEffect::PhysicalDamageEffect() : engine::Effect() {}
 

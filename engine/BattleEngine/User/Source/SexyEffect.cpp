@@ -9,7 +9,10 @@
 
 namespace testbattle{
 
-SexyEffect::SexyEffect() : engine::Effect() {}
+SexyEffect::SexyEffect()
+{
+	// Stub.
+}
 
 void SexyEffect::execute(Primarch* s, Primarch* t)
 {

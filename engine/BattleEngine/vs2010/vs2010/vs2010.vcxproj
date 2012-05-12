@@ -40,7 +40,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\git\sw406f12\engine\BattleEngine\Headers;$(IncludePath)</IncludePath>
+    <IncludePath>D:\git\sw406f12\engine\BattleEngine\User\Headers;D:\coding\cpp\boost_1_49_0;D:\git\sw406f12\engine\BattleEngine\Headers;$(IncludePath)</IncludePath>
     <SourcePath>D:\git\sw406f12\engine\BattleEngine\Source;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,7 +80,6 @@
     <ClInclude Include="..\..\Headers\Ability.h" />
     <ClInclude Include="..\..\Headers\AbilityTable.h" />
     <ClInclude Include="..\..\Headers\Action.h" />
-    <ClInclude Include="..\..\Headers\AttackAbility.h" />
     <ClInclude Include="..\..\Headers\Attribute.h" />
     <ClInclude Include="..\..\Headers\Behaviour.h" />
     <ClInclude Include="..\..\Headers\BehaviourRatio.h" />
@@ -92,6 +91,7 @@
     <ClInclude Include="..\..\Headers\EnemyIdentifier.h" />
     <ClInclude Include="..\..\Headers\EnemyIdentifier_Unsafe.h" />
     <ClInclude Include="..\..\Headers\Engine.h" />
+    <ClInclude Include="..\..\Headers\EventCondition.h" />
     <ClInclude Include="..\..\Headers\EventListener.h" />
     <ClInclude Include="..\..\Headers\Events\PrimarchEvent.h" />
     <ClInclude Include="..\..\Headers\Events\ResourceEvent.h" />
@@ -105,10 +105,7 @@
     <ClInclude Include="..\..\Headers\FullBehaviour.h" />
     <ClInclude Include="..\..\Headers\GameEvent.h" />
     <ClInclude Include="..\..\Headers\GameState.h" />
-    <ClInclude Include="..\..\Headers\HealAbility.h" />
-    <ClInclude Include="..\..\Headers\HealEffect.h" />
     <ClInclude Include="..\..\Headers\OwnerIdentifier.h" />
-    <ClInclude Include="..\..\Headers\PhysicalDamageEffect.h" />
     <ClInclude Include="..\..\Headers\PrettyPrinter.h" />
     <ClInclude Include="..\..\Headers\Primarch.h" />
     <ClInclude Include="..\..\Headers\PrimarchIndexer.h" />
@@ -116,30 +113,33 @@
     <ClInclude Include="..\..\Headers\RGRIdentifier.h" />
     <ClInclude Include="..\..\Headers\RGR_Enum.h" />
     <ClInclude Include="..\..\Headers\RGR_List.h" />
-    <ClInclude Include="..\..\Headers\SexyAbility.h" />
-    <ClInclude Include="..\..\Headers\SexyEffect.h" />
     <ClInclude Include="..\..\Headers\SimpleWinCondition.h" />
     <ClInclude Include="..\..\Headers\Team.h" />
     <ClInclude Include="..\..\Headers\WinCondition.h" />
+    <ClInclude Include="..\..\User\Headers\AttackAbility.h" />
+    <ClInclude Include="..\..\User\Headers\ForceHeal.h" />
+    <ClInclude Include="..\..\User\Headers\HealAbility.h" />
+    <ClInclude Include="..\..\User\Headers\HealEffect.h" />
+    <ClInclude Include="..\..\User\Headers\Orc.h" />
+    <ClInclude Include="..\..\User\Headers\PhysicalDamageEffect.h" />
+    <ClInclude Include="..\..\User\Headers\SexyAbility.h" />
+    <ClInclude Include="..\..\User\Headers\SexyEffect.h" />
+    <ClInclude Include="..\..\User\Headers\Smart.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\AttackAbility.cpp" />
     <ClCompile Include="..\..\Source\Character\Ability.cpp" />
     <ClCompile Include="..\..\Source\Character\Attribute.cpp" />
     <ClCompile Include="..\..\Source\Character\Character.cpp" />
     <ClCompile Include="..\..\Source\Character\ContEffect.cpp" />
+    <ClCompile Include="..\..\Source\Character\EventCondition.cpp" />
     <ClCompile Include="..\..\Source\Character\Primarch.cpp" />
     <ClCompile Include="..\..\Source\Character\Resource.cpp" />
-    <ClCompile Include="..\..\Source\HealAbility.cpp" />
-    <ClCompile Include="..\..\Source\HealEffect.cpp" />
-    <ClCompile Include="..\..\Source\PhysicalDamageEffect.cpp" />
     <ClCompile Include="..\..\Source\PrettyPrinter.cpp" />
     <ClCompile Include="..\..\Source\program.cpp" />
-    <ClCompile Include="..\..\Source\SexyAbility.cpp" />
-    <ClCompile Include="..\..\Source\SexyEffect.cpp" />
     <ClCompile Include="..\..\Source\SimpleWinCondition.cpp" />
     <ClCompile Include="..\..\Source\System\AbilityTable.cpp" />
     <ClCompile Include="..\..\Source\System\Action.cpp" />
+    <ClCompile Include="..\..\Source\System\ActionDefinition.cpp" />
     <ClCompile Include="..\..\Source\System\Behaviour.cpp" />
     <ClCompile Include="..\..\Source\System\BehaviourRatio.cpp" />
     <ClCompile Include="..\..\Source\System\BehaviourRatios\AttributeRatio.cpp" />
@@ -147,8 +147,6 @@
     <ClCompile Include="..\..\Source\System\Effect.cpp" />
     <ClCompile Include="..\..\Source\System\Engine.cpp" />
     <ClCompile Include="..\..\Source\System\EventListener.cpp" />
-    <ClCompile Include="..\..\Source\System\Events\PrimarchEvent.cpp" />
-    <ClCompile Include="..\..\Source\System\Events\ResourceEvent.cpp" />
     <ClCompile Include="..\..\Source\System\Exceptions\DuplicateKeyException.cpp" />
     <ClCompile Include="..\..\Source\System\Exceptions\EventLockedException.cpp" />
     <ClCompile Include="..\..\Source\System\Exceptions\InvalidRGRException.cpp" />
@@ -167,6 +165,12 @@
     <ClCompile Include="..\..\Source\System\RGR_List.cpp" />
     <ClCompile Include="..\..\Source\System\Team.cpp" />
     <ClCompile Include="..\..\Source\System\WinCondition.cpp" />
+    <ClCompile Include="..\..\User\Source\AttackAbility.cpp" />
+    <ClCompile Include="..\..\User\Source\HealAbility.cpp" />
+    <ClCompile Include="..\..\User\Source\HealEffect.cpp" />
+    <ClCompile Include="..\..\User\Source\PhysicalDamageEffect.cpp" />
+    <ClCompile Include="..\..\User\Source\SexyAbility.cpp" />
+    <ClCompile Include="..\..\User\Source\SexyEffect.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

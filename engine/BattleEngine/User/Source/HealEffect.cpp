@@ -9,10 +9,13 @@
 
 namespace testbattle{
 
-HealEffect::HealEffect() : engine::Effect() {}
+HealEffect::HealEffect()
+{
+	// Stub
+}
 
 HealEffect::HealEffect(engine::RGR_Enum s, engine::RGR_Enum t) :
-    engine::Effect(s, t)
+    engine::Effect(s, t, "Health", 10)
 {
     // Empty, see intializer.
 }
@@ -24,8 +27,6 @@ void HealEffect::execute(engine::Primarch* s, engine::Primarch* t)
 
     // Heals for 40 health.
 	tchar->get_resource("Health")->increase(10);
-	// Costs a bit, too.
-	schar->get_resource("Mana")->decrease(20);
 }
 
 engine::Primarch* HealEffect::clone(bool with_id)

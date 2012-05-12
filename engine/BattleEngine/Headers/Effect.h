@@ -27,7 +27,7 @@ public:
      * be usable, it is not guaranteed in the API.
      **/
 	Effect();
-	Effect(RGR_Enum s, RGR_Enum t);
+	Effect(RGR_Enum s, RGR_Enum t, std::string member, float amount);
 	virtual ~Effect();
 
 	// Re-defined as pure virtual here to make it easier for dumb Effect programmers (... me, for example).
@@ -46,6 +46,16 @@ public:
 	RGR_Enum source_rgr;
 	
 	/**
+	 * The name of the Primarch member of the target to affect.
+	 **/
+	std::string member;
+
+	/**
+	 * The amount to change the member with on execute.
+	 **/
+	float amount;
+
+	/**
 	 * Makes the changes to source and target as defined by the subclassed
 	 * Effect.
 	 * \param in_state The state to make changes within.
@@ -53,6 +63,8 @@ public:
 	virtual void execute(Primarch* s, Primarch* t) = 0;
 	
 	virtual void pretty_print();
+
+	float get_value();
 };
 
 } /* namespace engine */

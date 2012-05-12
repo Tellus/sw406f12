@@ -16,6 +16,7 @@
 #include "AbilityTable.h"
 
 #include "FullBehaviour.h"
+#include "BehaviourRatio.h"
 #include "BehaviourRatios/ResourceRatio.h"
 #include "BehaviourRatios/AttributeRatio.h"
 
@@ -64,6 +65,49 @@ Character* make_joe()
     johannes->add_ability("Attack", new AttackAbility());
 
 	return johannes;
+}
+
+Character* make_joe_clean()
+{
+	Character *johannes = new Character();
+	johannes->name = "Johannes";
+
+	johannes->add_resource(new Resource("Health", 0, 100));
+	johannes->add_resource(new Resource("Mana", 0, 100));
+
+	johannes->add_attribute(new Attribute("Strength", 17));
+	johannes->add_attribute(new Attribute("Intelligence", 25));
+	johannes->add_attribute(new Attribute("Sexyness", 10000));
+
+	FullBehaviour* beh = new FullBehaviour();
+	johannes->behaviour = beh;
+	beh->add_ratio(new BehaviourRatio(OWNER, "Health", 2));
+	beh->add_ratio(new BehaviourRatio(ENEMY, "Health", -1));
+
+	return johannes;
+}
+
+Character* make_biggi_clean()
+{
+    Character *biggi = new Character();
+    biggi->name = "Biggi";
+    
+    // PrettyPrinter::print("Resources...\n", FG_YELLOW);
+	biggi->add_resource(new Resource("Health", 0, 250));
+	biggi->add_resource(new Resource("Mana", 0, 50));
+
+	biggi->add_attribute(new Attribute("Strength", 50));
+	biggi->add_attribute(new Attribute("Intelligence", 1));
+	biggi->add_attribute(new Attribute("Sexyness", -5));
+    
+	// Behaviour
+	biggi->behaviour = make_fighter_behaviour();
+
+    // Abilities.
+    // PrettyPrinter::print("Abilities...\n", FG_YELLOW);
+    // biggi->add_ability("Maul", new AttackAbility());
+
+	return biggi;
 }
 
 Character* make_biggi()

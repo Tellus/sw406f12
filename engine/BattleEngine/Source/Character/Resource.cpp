@@ -10,6 +10,20 @@
 namespace engine
 {
 
+Resource::Resource(std::string name, float min, float max, float init) :
+	Attribute(initial)
+{
+	this->_init(min, max);
+	this->name = name;
+}
+
+Resource::Resource(std::string name, float min, float max) :
+	Attribute(0)
+{
+	this->_init(min, max);
+	this->name = name;
+}
+
 Resource::Resource(float min, float max, float init) :
     Attribute(initial)
 {

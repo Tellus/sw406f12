@@ -105,6 +105,17 @@ void Character::add_resource(std::string name, Resource *res)
 	}
 }
 
+void Character::add_resource(Resource* res)
+{
+	if (this->has_resource(res->name))
+		throw DuplicateKeyException("Character::resources already contains a key at " + res->name + ".");
+	else
+	{
+		this->resources[res->name] = res;
+		this->add_child(res);
+	}
+}
+
 void Character::add_attribute(std::string name, Attribute *att)
 {
 	if (this->has_attribute(name))
@@ -119,6 +130,20 @@ void Character::add_attribute(std::string name, Attribute *att)
 	}
 }
 
+void Character::add_attribute(Attribute *att)
+{
+	if (this->has_attribute(att->name))
+	{
+		std::string tmp = "Character::attributes already contains a key at " + att->name + ".";
+		throw DuplicateKeyException(tmp);
+	}
+	else
+	{
+		this->attributes[att->name] = att;
+		this->add_child(att);
+	}
+}
+
 void Character::add_ability(std::string name, Ability *abil)
 {
     if (this->has_ability(name))
@@ -129,6 +154,20 @@ void Character::add_ability(std::string name, Ability *abil)
     else
     {
         this->abilities[name] = abil;
+		this->add_child(abil);
+    }
+}
+
+void Character::add_ability(Ability *abil)
+{
+    if (this->has_ability(abil->name))
+    {
+		std::string tmp = "Character::resources already contains a key at " + abil->name + ".";
+		throw DuplicateKeyException(tmp);
+    }
+    else
+    {
+        this->abilities[abil->name] = abil;
 		this->add_child(abil);
     }
 }
@@ -186,6 +225,11 @@ void Character::add_event(EventCondition* ev, ActionDefinition* ac)
         event_action_pair(
             ev,
             ac));
+}
+
+float Character::get_value()
+{
+	return this->get_resource("Health")->get_current();
 }
 
 } /* namespace engine */

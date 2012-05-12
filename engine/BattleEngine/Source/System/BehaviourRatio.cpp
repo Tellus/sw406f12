@@ -22,4 +22,16 @@ Primarch* BehaviourRatio::get_target(GameState* from)
 	return from->get_rgr(this->target);
 }
 
+float BehaviourRatio::calculate(GameState* from)
+{
+	Character* t = from->get_rgr(this->target);
+
+	return t->get_child(this->name)->get_value() * this->ratio;
+}
+
+BehaviourRatio* BehaviourRatio::clone()
+{
+	return new BehaviourRatio(this->target, this->name, this->ratio);
+}
+
 } /* namespace engine */
