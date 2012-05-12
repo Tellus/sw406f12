@@ -10,19 +10,16 @@
 namespace engine
 {
 
-Attribute::Attribute()
-{
-	// TODO Auto-generated constructor stub
-}
-
 Attribute::Attribute(float start)
 {
     this->set_initial(start);
+	this->name = this->get_default_name("Attribute");
 }
 
-Attribute::Attribute(int initial)
+Attribute::Attribute(std::string name, float initial)
 {
-    this->set_initial((float)initial);
+	this->name = name;
+	this->set_initial(initial);
 }
 
 Attribute::~Attribute()
@@ -76,6 +73,11 @@ void Attribute::reset()
 float Attribute::get_current()
 {
 	return this->current;
+}
+
+float Attribute::get_value()
+{
+	return this->get_current();
 }
 
 void Attribute::pretty_print()

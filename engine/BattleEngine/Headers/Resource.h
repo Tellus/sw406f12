@@ -27,6 +27,8 @@ protected:
 
 public:
 	/* At maximum = -1, set it to value */
+	Resource(std::string name, float min, float max, float init);
+	Resource(std::string name, float min, float max);
 	Resource(float min, float max, float init);
 	Resource(float min, float max);
 	virtual ~Resource();
@@ -51,7 +53,6 @@ public:
 	void modify_max(float value);
 	
 	void pretty_print();
-
 private:
 	void _init(float min, float max);
 };

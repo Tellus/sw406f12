@@ -19,9 +19,10 @@ protected:
 	float current, initial;
 
 public:
-	Attribute();
-	Attribute(float start);
-	Attribute(int initial);
+	Attribute(float start = 0);
+	// Attribute(int initial = 0);
+	Attribute(std::string name, float initial = 0);
+	// Attribute(std::string name, int initial = 0);
 	virtual ~Attribute();
 
 	virtual Primarch *clone(bool with_id);
@@ -59,6 +60,7 @@ public:
 	
 	void pretty_print();
 	
+	virtual float get_value();
 private:
     /**
      * Sets the initial values.

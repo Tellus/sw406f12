@@ -64,6 +64,7 @@ public:
      * \param attribute Pointer to the Attribute to add.
      **/
 	void add_attribute(std::string name, Attribute *attribute);
+	void add_attribute(Attribute* attribute);
 	
 	/**
 	 * Add a new Resource to the Character.
@@ -71,11 +72,13 @@ public:
 	 * \param resource Reference to the Resource object to add.
 	 **/
 	void add_resource(std::string name, Resource *resource);
+	void add_resource(Resource* resource);
 	
 	/**
 	 * Adds an ability to the list of available abilities to the character.
 	 **/
 	void add_ability(std::string name, Ability *abil);
+	void add_ability(Ability* abil);
 	
 	/**
 	 * Retrieves the Character's current piggy (happiness) value.
@@ -141,6 +144,10 @@ public:
 	
 	void add_event(EventCondition* ev, ActionDefinition* ad);
 	
+	/**
+	 * Returns piggy. Best way to describe the Character's *current* value.
+	 **/
+	float get_value();
 private:
     void _init();
 };

@@ -36,6 +36,10 @@ public:
 
 	Primarch* clone(bool with_id = false);
     
+	/**
+	 * Returns something completely nonsensical.
+	 **/
+	float get_value();
 private:
     /**
      * Used by constructors for the initializations shared between them all.

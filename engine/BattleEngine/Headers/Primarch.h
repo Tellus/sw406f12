@@ -12,6 +12,7 @@
 #include <string>
 #include <map>
 #include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include "GameEvent.h"
 #include "Exceptions/PrimarchDoesNotExistException.h"
@@ -90,15 +91,49 @@ public:
 	std::map<std::string, std::list<callback>> get_callbacks();
 	
 	/**
-	 * Less-than check.
+	 * Should return a float value representing the current value of the Primarch.
+	 * For Resource and Attribute, this is most likely current. For the rest...
+	 * well ... I'm up for votes!
 	 **/
-//	virtual bool lt(Primarch* p);
-	
-	/**
-	 * Less-than check, int version
-	 **/
-//	virtual bool lt(int p);
+	virtual float get_value() = 0;
 
+	/**
+	 * Adds a child Primarch.
+	 **/
+    void add_child(Primarch* c);
+    
+	/**
+	 * Removes a child Primarch.
+	 **/
+    void remove_child(Primarch* c);
+    
+	/**
+	 * Removes a child Primarch.
+	 **/
+    void remove_child(int i);
+
+	/**
+	 * Checks to see if a child exists in the Primarch.
+	 * \param i Primarch ID of the Child to find.
+	 * \param go_deep True if the search should recurse into each child if not
+	 * found.
+	 * \note This is a breadth-first search.
+	 **/
+    bool has_child(int i, bool go_deep = false);
+
+	bool has_child(std::string name, bool deep = false);
+
+    /**
+     * Retrieves a child Primarch from the object.
+     * \param c_id The Primarch ID of the child to retrieve.
+     * \param deep True if this should be performed as a full depth
+     * breadth-first search.
+     **/
+    Primarch* get_child(int c_id, bool deep = false);
+
+	Primarch* get_child(std::string name, bool deep = false);
+
+	const std::list<Primarch*>* get_children();
 protected:
 
 	std::map<std::string, std::list<callback>> _callbacks;
@@ -116,47 +151,14 @@ protected:
      **/
     std::list<Primarch*> children;
 
-	/**
-	 * Adds a child Primarch.
-	 **/
-    void add_child(Primarch* c);
-    
-	/**
-	 * Removes a child Primarch.
-	 **/
-    void remove_child(Primarch* c);
-    
-	/**
-	 * Removes a child Primarch.
-	 **/
-    void remove_child(int i);
-    
-	/**
-	 * Checks to see if a child exists in the Primarch.
-	 **/
-    // bool has_child(Primarch* c);
-    
-	/**
-	 * Checks to see if a child exists in the Primarch.
-	 * \param i Primarch ID of the Child to find.
-	 * \param go_deep True if the search should recurse into each child if not
-	 * found.
-	 * \note This is a breadth-first search.
-	 **/
-    bool has_child(int i, bool go_deep = false);
-
-    /**
-     * Retrieves a child Primarch from the object.
-     * \param c_id The Primarch ID of the child to retrieve.
-     * \param deep True if this should be performed as a full depth
-     * breadth-first search.
-     **/
-    Primarch* get_child(int c_id, bool deep = false);
-
-	const std::list<Primarch*>* get_children();
-
     void raise_event(std::string type);
 
+	/**
+	 * Creates a new name for the Primarch, in case non was suggested.
+	 * \param type The type of the subclass ("Resource", for example).
+	 * \return A string in the basic form ("<type>_<id>").
+	 **/
+	std::string get_default_name(std::string type);
 private:
     static long _id_counter;
 };

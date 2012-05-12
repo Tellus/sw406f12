@@ -41,9 +41,9 @@ public:
 	/**
 	 * Calculates.
 	 **/
-	virtual float calculate(GameState* from) = 0;
+	virtual float calculate(GameState* from);
 
-	virtual BehaviourRatio* clone() = 0;
+	virtual BehaviourRatio* clone();
 };
 
 } /* namespace engine */
