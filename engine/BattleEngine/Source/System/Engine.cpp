@@ -99,6 +99,8 @@ void Engine::run()
 
 	while (!this->win_condition->is_met(this->current_state))
 	{
+		// TODO: Add event condition handling.
+
 		/*
 		std::cout << "*********************\n";
 		std::cout << "Pre-execution state:\n";
@@ -118,21 +120,15 @@ void Engine::run()
 		*/
 		at = new AbilityTable(this->current_state);
     
+		// TODO: There's a malign health calculation here!
 		this->current_state = at->get_next_state();
 
-		// Harvest all pending events.
-		
+		std::cout << this->current_state->current_char->name << " used " << at->best_action->action_def.ability->name << " on " << RGR_List::to_string(at->best_action->action_def.target) << ".\n";
 
-		// Raise all pending events.
-
-		
-
-		/*
 		std::cout << "*********************\n";
 		std::cout << "Post-execution state:\n";
 		this->current_state->pretty_print();
 		std::cout << "*********************\n";
-		*/
 	}
 
 	std::cout << "Game over! Thanks for playing. Insert Coin.\n";

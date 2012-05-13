@@ -50,7 +50,8 @@ Resource::~Resource()
 
 Primarch* Resource::clone(bool with_id)
 {
-	Resource* to_ret = new Resource(this->name, this->minimum, this->maximum, this->current);
+	Resource* to_ret = new Resource(this->name, this->minimum, this->maximum, this->initial);
+	to_ret->current = this->current;
 	// std::cout << "Cloned Resource:\n";
 	// to_ret->pretty_print();
 	return to_ret;
@@ -75,7 +76,7 @@ void Resource::increase(float amount)
 void Resource::modify(float amount)
 {
 	if (amount < 0)
-		this->decrease(amount);
+		this->decrease(amount * -1);
 	else if (amount > 0)
 		this->increase(amount);
 	// throw "Not supported!";

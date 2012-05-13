@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
     PrettyPrinter::print("BattleEngine v1 alpha.\n", FG_YELLOW);
 
 	// Uncomment to perform basic initialization, cloning and AI test.
-	base_test();
+	// base_test();
 
 	/*** BEGIN TRUE ENGINE TEST ***/
 
@@ -202,7 +202,9 @@ int main(int argc, char *argv[])
 	game->current_state->pretty_print();
 	game->win_condition = new SimpleWinCondition();
 	game->add_child(make_joe_clean());
-	game->add_child(make_biggi_clean());
+	Character *sex = make_joe_clean();
+	sex->name = "Biggi";
+	game->add_child(sex);
 	game->run();
 
 	game->current_state->pretty_print();
