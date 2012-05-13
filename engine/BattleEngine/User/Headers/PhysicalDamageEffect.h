@@ -18,12 +18,7 @@ namespace testbattle {
 class PhysicalDamageEffect : public engine::Effect
 {
 public:
-    PhysicalDamageEffect();
-	PhysicalDamageEffect(engine::RGR_Enum s, engine::RGR_Enum t);
-
-    virtual void execute(engine::Primarch* s, engine::Primarch* t);
-
-	Primarch* clone(bool with_id = false);
+	PhysicalDamageEffect();
 };
 
 }

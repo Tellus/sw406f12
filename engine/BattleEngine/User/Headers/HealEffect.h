@@ -19,11 +19,6 @@ class HealEffect : public engine::Effect
 {
 public:
 	HealEffect();
-    HealEffect(engine::RGR_Enum s, engine::RGR_Enum t);
-    
-    void execute(Primarch* s, Primarch* t);
-
-	Primarch* clone(bool with_id = false);
 };
 
 }

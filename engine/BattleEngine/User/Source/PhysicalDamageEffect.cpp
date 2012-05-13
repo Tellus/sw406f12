@@ -9,22 +9,13 @@
 
 namespace testbattle{
 
-PhysicalDamageEffect::PhysicalDamageEffect(engine::RGR_Enum s, engine::RGR_Enum t)
-    : engine::Effect(s, t, "Health", -20) {}
-
-PhysicalDamageEffect::PhysicalDamageEffect() : engine::Effect() {}
-
-void PhysicalDamageEffect::execute(Primarch* s, Primarch* t)
+PhysicalDamageEffect::PhysicalDamageEffect()
 {
-	engine::Character *tchar = dynamic_cast<engine::Character*>(t);
-
-    tchar->get_resource("Health")->decrease(20);
-}
-
-engine::Primarch* PhysicalDamageEffect::clone(bool with_id)
-{
-	engine::Effect *to_ret = new PhysicalDamageEffect(*this);
-	return to_ret;
+	this->name = "Physical Effect";
+	this->amount = -20;
+	this->member = "Health";
+	this->target_rgr = engine::TARGET;
+	this->source_rgr = engine::OWNER;
 }
 
 };

@@ -48,12 +48,12 @@ Source/System/ActionDefinition.cpp \
 Source/System/RGRIdentifier/TargetIdentifier.cpp
 
 U_SOURCES = \
-User/Source/SexyAbility.cpp \
+# User/Source/SexyAbility.cpp \
 User/Source/AttackAbility.cpp \
 User/Source/HealAbility.cpp \
 User/Source/HealEffect.cpp \
 User/Source/PhysicalDamageEffect.cpp \
-User/Source/SexyEffect.cpp 
+# User/Source/SexyEffect.cpp 
 # User/Orc.cpp 
 
 # Object versions of sources.

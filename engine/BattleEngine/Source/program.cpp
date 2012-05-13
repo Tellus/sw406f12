@@ -17,8 +17,6 @@
 
 #include "FullBehaviour.h"
 #include "BehaviourRatio.h"
-#include "BehaviourRatios/ResourceRatio.h"
-#include "BehaviourRatios/AttributeRatio.h"
 
 #include "Effect.h"
 
@@ -37,8 +35,8 @@ using namespace testbattle;
 FullBehaviour* make_fighter_behaviour()
 {
 	FullBehaviour *nb = new FullBehaviour();
-	nb->add_ratio(new ResourceRatio(ENEMY, "Health", -0.5));
-	nb->add_ratio(new ResourceRatio(OWNER, "Health", 1));
+	nb->add_ratio(new BehaviourRatio(ENEMY, "Health", -0.5));
+	nb->add_ratio(new BehaviourRatio(OWNER, "Health", 2));
 
 	return nb;
 }
@@ -59,8 +57,19 @@ Character* make_joe_clean()
 	johannes->behaviour = beh;
 	beh->add_ratio(new BehaviourRatio(OWNER, "Health", 2));
 	beh->add_ratio(new BehaviourRatio(ENEMY, "Health", -1));
+	
+	johannes->add_ability(new AttackAbility());
+	johannes->add_ability(new HealAbility());
 
-	Ability* abil = new Ability("Sexy", 0, 10);
+	johannes->event_conditions.push_back(
+		new event_action_pair(
+			new EventCondition(OWNER, "Health", LESS_THAN, "50"),
+			new ActionDefinition(OWNER, OWNER, johannes->get_child("Heal"))));
+
+	/*
+	Ability* abil;
+
+	abil = new Ability("Sexy", 0, 10);
 	abil->add_child(new Effect(OWNER, TARGET, "Health", -20));
 	abil->add_child(new Effect(OWNER, OWNER, "Health", 10));
 
@@ -77,6 +86,7 @@ Character* make_joe_clean()
 	abil->effects.push_back(new Effect(OWNER, TARGET, "Health", 30));
 	abil->add_rgr(ENEMY);
 	abil->add_rgr(OWNER);
+	*/
 
 	return johannes;
 }

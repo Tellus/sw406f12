@@ -9,31 +9,14 @@
 
 namespace testbattle{
 
+
 HealEffect::HealEffect()
 {
-	// Stub
-}
-
-HealEffect::HealEffect(engine::RGR_Enum s, engine::RGR_Enum t) :
-    engine::Effect(s, t, "Health", 10)
-{
-    // Empty, see intializer.
-}
-
-void HealEffect::execute(engine::Primarch* s, engine::Primarch* t)
-{
-	engine::Character* tchar = dynamic_cast<engine::Character*>(t);
-	engine::Character* schar = dynamic_cast<engine::Character*>(s);
-
-    // Heals for 40 health.
-	tchar->get_resource("Health")->increase(10);
-}
-
-engine::Primarch* HealEffect::clone(bool with_id)
-{
-	HealEffect* he = new HealEffect(this->source_rgr, this->target_rgr);
-
-	return he;
+	this->name = "Heal Effect";
+	this->amount = 10;
+	this->member = "Health";
+	this->target_rgr = engine::TARGET;
+	this->source_rgr = engine::OWNER;
 }
 
 };
