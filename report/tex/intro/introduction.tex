@@ -6,12 +6,13 @@ In this report, a description of the development-process of a new language is la
 
 \section{\langname{}}
 In this project we want to address the interest for a role-playing based language. The purpose of the language is to define characters, skills, attributes, effects etc, commonly found in role-playing games.\\
-To do this a language is constructed which should catch the intuitive and simple characteristics of character sheets, which are information containers for various role-playing games.
+To do this a language is constructed, which should catch the intuitive and simple characteristics of character sheets. Character sheets can be thought of as information containers for various role-playing games. They keep track of the character's skill- and health-state as well as inventory (for reference see appendix \vref{charsheet}).
 
 \section{Role-playing}
-\ac{rpgs} have been commercially available since the 1970\'s and exist in various forms.
-There are three known; \emph{Computer-}, \emph{Pen \& Paper-} and \emph{Live Action \ac{rpgs}}, the first two being a focus in this project.\\
-In \ac{rpgs}, players take on the roles of fictitious characters, either created by the players themselves or by the developers of the game.\\
+\ac{rpgs} have been commercially available since the 1970's and exist in various forms. \ac{rpgs} can be described as interactive storytelling, meaning that the players take part in ''writing'' the adventure being played. When actions are unrestricted and players are free to do as they please the adventure becomes more than a story, evolving into an interactive activity between the players and the storyteller.
+There are currently three types available; \emph{Computer-}, \emph{Pen \& Paper-} and \emph{Live Action \ac{rpgs}}, the first two being a focus in this project.\\
+In \ac{rpgs}, players take on the roles of fictitious characters, most often created by the players themselves.\\
+When playing \emph{Pen \& Paper- \ac{rpgs}}, a core rulebook is used, to solve conflicts, get inspiration for adventures, character creation reference and more. In \emph{Computer- \ac{rpgs}}, the rulebook is replaced with static rules implemented in the game world, however developers often provide useful information (much like rulebooks) for the players in the form of a guide or a codex.
 Characters are defined by their abilities and attributes, meaning that each ability is assigned a number that represents how 'good' the character is using a given ability. This is also the case with attributes and certain 'traits' (e.g superpowers and disciplines). An attribute is value on a scale of some minimum number to some maximum, where each value indicates how much better or worse a character is compared to other beings in the game world. Take for example the attributes strength and charisma. Strength tells you how strong a character is, often used to measure how much they can lift and how hard they can hit. Charisma is a character's social skill level, used to measure how well they can handle social situations. Most games break as much as possible down to numbers; appearance, intellect, luck and more.
 This should in a way contribute to the level of realism in events and outcomes while playing.\\
 The first modern \emph{Pen \& Paper role-playing game} to be released commercially is the game \emph{Dungeons \& Dragons}, which was first published in 1974.\cite{wikidnd}
@@ -19,10 +20,13 @@ The first modern \emph{Pen \& Paper role-playing game} to be released commercial
 
 \subsection{Character creation}
 
-How a character is created varies from system to system. Common for most is that the characters have statistics (stats) describing them, such as Health Points (HP), which describes how much damage a character can take before dying and Strength, which describes how much damage a character can do to others. How much HP a character has can, for example, be decided by rolling dice, be computed from other stats or assigned based on the player's choice of race.
+How a character is created varies from system to system. Common for most is that the characters all have statistics (stats) describing them.
+Stats are the term used for all numerical values in the character description. They can indicate a certain status amongst peers (e.g on a scale of 0 - 10), serve as a counter for how often a certain ability or item can be used, tell a character's level of skill and/or trait (such as Strength) and last but not least they keep track of the character's resources (such as Health Points (HP).
+HP is a measure for how much damage a character can take before dying. Strength can be used to calculate how much damage a character can do to others. Depending on what stat is in question, it can be decided by rolling dice, be computed from other stats, assigned specifically by the player or based on the player's choice of race.
 
 \subsection{Pen \& Paper}
-When playing \emph{Pen \& Paper games} the players generally use various dice (see figure \vref{dice}) to determine an outcome of an activity, for example an attack, where the outcome determines if the attack is successful and thereafter how much damage is inflicted. To help keep track of a character's attributes and other information, a character sheet is used.
+\todo{More details about GM}
+When playing \emph{Pen \& Paper games} the players generally use various dice (see figure \ref{dice}) to determine an outcome of an activity, for example an attack, where the outcome determines if the attack is successful and thereafter how much damage is inflicted. To help keep track of a character's attributes and other information, a character sheet is used.
 These are the participants: A \ac{gm} is responsible for control of non-player characters, environment, the setting of the adventure and has the final say in conflicts. The players control their individual characters, around which the adventure revolves.
 A game scenario can be described as following: The \ac{gm} prepares an adventure for the players and lays down additional rules if needed. Participants are seated around a table with their character sheets and a number of dice. Each player has created a character to use in the given adventure. The \ac{gm} describes the setting and series of events, playing all non-Player characters. The players roleplay their characters and determine their actions by themselves. When an action is required from a specific player, they can determine the outcome of the action by rolling a specific set of dice.
 \begin{figure}[!h]
