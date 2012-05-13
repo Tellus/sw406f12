@@ -69,12 +69,10 @@ public:
     
     static void register_identifier(RGRIdentifier *r);
 
-private:
-	/**
-	 * Private initialization function.
-	 */
-	void _init();
-public:
+	void set_target(Character* t);
+
+	Character* get_target();
+
 	// Sets a Character to be on a specific team. Vital for some RGRIdentifiers to work properly.
 	bool set_team_aff(int t_id, Character* to_set);
 	// Finds the team that the Character is on, if any.
@@ -85,6 +83,15 @@ public:
 	 * Gets the highest team id registered so far.
 	 */
 	int max_team_id();
+
+protected:
+	Character* target_character;
+
+private:
+	/**
+	 * Private initialization function.
+	 */
+	void _init();
 };
 
 } /* namespace engine */

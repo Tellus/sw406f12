@@ -11,17 +11,15 @@ namespace engine
 {
 
 Resource::Resource(std::string name, float min, float max, float init) :
-	Attribute(initial)
+	Attribute(name, initial)
 {
 	this->_init(min, max);
-	this->name = name;
 }
 
 Resource::Resource(std::string name, float min, float max) :
-	Attribute(0)
+	Attribute(name, 0)
 {
 	this->_init(min, max);
-	this->name = name;
 }
 
 Resource::Resource(float min, float max, float init) :
@@ -52,7 +50,7 @@ Resource::~Resource()
 
 Primarch* Resource::clone(bool with_id)
 {
-	Resource* to_ret = new Resource(this->minimum, this->maximum, this->current);
+	Resource* to_ret = new Resource(this->name, this->minimum, this->maximum, this->current);
 	// std::cout << "Cloned Resource:\n";
 	// to_ret->pretty_print();
 	return to_ret;
@@ -76,7 +74,11 @@ void Resource::increase(float amount)
 
 void Resource::modify(float amount)
 {
-	throw "Not supported!";
+	if (amount < 0)
+		this->decrease(amount);
+	else if (amount > 0)
+		this->increase(amount);
+	// throw "Not supported!";
 /*	this->current = std::max(this->
 	this->maximum = std::max(this->minimum, this->minimum + amount);
 	std::cout << this->name << ": " << */

@@ -38,4 +38,27 @@ float Effect::get_value()
 	return this->amount;
 }
 
+void Effect::modify(float amount)
+{
+	this->amount = amount;
+}
+
+void Effect::execute(Primarch* s, Primarch* t)
+{
+	t->get_child(this->member)->modify(this->amount);
+}
+
+Primarch* Effect::clone(bool with_id)
+{
+	// Effect* eff = new Effect(this->source, this->target
+	Effect* eff = new Effect(this->source_rgr, this->target_rgr, this->member, this->amount);
+
+	eff->name = this->name;
+
+	if (with_id)
+		eff->id = this->id;
+
+	return eff;
+}
+
 } /* namespace engine */

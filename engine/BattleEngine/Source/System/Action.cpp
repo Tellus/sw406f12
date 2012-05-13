@@ -34,6 +34,9 @@ GameState* Action::execute(GameState *thru)
 	Character* source = state->get_rgr(this->action_def.source);
 	Character* target = state->get_rgr(this->action_def.target);
 
+	// Set target.
+	state->set_target(target);
+
 	std::vector<Effect*> *effects = this->generate_effects();
 	for (std::vector<Effect*>::iterator iter = effects->begin(); iter != effects->end(); iter++)
 	{

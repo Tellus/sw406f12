@@ -145,6 +145,10 @@ Primarch* Primarch::get_child(std::string name, bool deep)
             }
         }    
     }
+	else if (finder != this->children.end())
+	{
+		return (*finder);
+	}
     
     throw PrimarchDoesNotExistException("The requested object is not contained in this Primarch.");
 }

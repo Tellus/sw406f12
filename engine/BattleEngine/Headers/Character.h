@@ -148,6 +148,8 @@ public:
 	 * Returns piggy. Best way to describe the Character's *current* value.
 	 **/
 	float get_value();
+
+	void modify(float amount);
 private:
     void _init();
 };

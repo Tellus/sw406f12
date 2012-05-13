@@ -44,7 +44,8 @@ Source/System/Exceptions/NoValidActionException.cpp \
 Source/System/Exceptions/EventLockedException.cpp \
 Source/System/GameEvent.cpp \
 Source/Character/EventCondition.cpp \
-Source/System/ActionDefinition.cpp
+Source/System/ActionDefinition.cpp \
+Source/System/RGRIdentifier/TargetIdentifier.cpp
 
 U_SOURCES = \
 User/Source/SexyAbility.cpp \

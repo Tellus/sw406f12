@@ -98,6 +98,12 @@ public:
 	virtual float get_value() = 0;
 
 	/**
+	 * Attempts to modify the current value of the Primarch. This has no effect
+	 * in some cases (which is bad design - feh).
+	 **/
+	virtual void modify(float amount) = 0;
+
+	/**
 	 * Adds a child Primarch.
 	 **/
     void add_child(Primarch* c);

@@ -103,6 +103,8 @@ std::string RGR_List::to_string(RGR_Enum in)
             return "OWNER";
         case ALL:
             return "ALL";
+		case TARGET:
+			return "TARGET";
         default:
             return "UNKNOWN";
     }
@@ -115,6 +117,7 @@ RGR_Enum RGR_List::to_enum(std::string in)
     if (in == "ALLY") return ALLY;
     if (in == "OWNER") return OWNER;
     if (in == "ALL") return ALL;
+	if (in == "TARGET") return TARGET;
 
     std::string tmp = "The RGR " + in + "is unknown.";
     throw InvalidRGRException(tmp);

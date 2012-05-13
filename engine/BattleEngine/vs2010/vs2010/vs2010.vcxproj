@@ -114,6 +114,7 @@
     <ClInclude Include="..\..\Headers\RGR_Enum.h" />
     <ClInclude Include="..\..\Headers\RGR_List.h" />
     <ClInclude Include="..\..\Headers\SimpleWinCondition.h" />
+    <ClInclude Include="..\..\Headers\TargetIdentifier.h" />
     <ClInclude Include="..\..\Headers\Team.h" />
     <ClInclude Include="..\..\Headers\WinCondition.h" />
     <ClInclude Include="..\..\User\Headers\AttackAbility.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="..\..\Source\System\RGRIdentifier\EnemyIdentifier.cpp" />
     <ClCompile Include="..\..\Source\System\RGRIdentifier\EnemyIdentifier_Unsafe.cpp" />
     <ClCompile Include="..\..\Source\System\RGRIdentifier\OwnerIdentifier.cpp" />
+    <ClCompile Include="..\..\Source\System\RGRIdentifier\TargetIdentifier.cpp" />
     <ClCompile Include="..\..\Source\System\RGR_List.cpp" />
     <ClCompile Include="..\..\Source\System\Team.cpp" />
     <ClCompile Include="..\..\Source\System\WinCondition.cpp" />

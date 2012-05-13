@@ -34,6 +34,7 @@ void Engine::_init()
 
 	this->current_state->register_identifier(new EnemyIdentifier());
 	this->current_state->register_identifier(new OwnerIdentifier());
+	this->current_state->register_identifier(new TargetIdentifier());
 }
 
 void Engine::add_child(Primarch* to_add)
