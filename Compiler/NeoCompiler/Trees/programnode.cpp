@@ -53,6 +53,7 @@ void ProgramNode::emit(codegen::EmissionData *data)
 			"Behaviour.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
 			"FullBehaviour.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
 			"BehaviourRatio.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
+			"EventListener.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
 			"example_ruleset.h\"\n" << // TODO: Headers
 			"using namespace engine;\n" <<
 			"using namespace testbattle;\n" <<
@@ -69,10 +70,9 @@ void ProgramNode::emit(codegen::EmissionData *data)
 	em->stream.open("generated.cpp", std::ios::out);
 
 	em->stream << "#include \"generated.h\"\n" <<
-			"using namespace engine;\n" <<
 			"namespace generated\n{\n" <<
 			"void run()\n{\n" <<
-			"\tEngine *game = new Engine();\n" <<
+			"\tengine::Engine *game = new engine::Engine();\n" <<
 			"\tgame->win_condition = new SimpleWinCondition();\n";
 
 	for (it = this->children.begin(); it != this->children.end(); it++)

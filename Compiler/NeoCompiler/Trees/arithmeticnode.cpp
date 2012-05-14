@@ -61,13 +61,20 @@ void ArithmeticNode::print(std::size_t indent)
 
 void ArithmeticNode::emit(codegen::EmissionData *data)
 {
-	data->stream << "(";
+	if (this->op == "()")
+	{
+		data->stream << "(";
 
-	this->children.front()->emit(data);
-	data->stream << " " << this->op << " ";
-	this->children.back()->emit(data);
+		this->emit_children(data);
 
-	data->stream << ")";
+		data->stream << ")";
+	}
+	else
+	{
+		this->children.front()->emit(data);
+		data->stream << " " << this->op << " ";
+		this->children.back()->emit(data);
+	}
 }
 
 } /* namespace trees */

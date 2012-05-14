@@ -63,7 +63,11 @@ void DeclarationNode::emit(codegen::EmissionData *data)
 
 	if (this->superclass == "Behaviour") { data->stream << "Full"; }
 
-	data->stream << this->superclass << "\n{\n\t" << this->subclass <<
+	data->stream << this->superclass;
+
+	if (this->superclass == "Event") { data->stream << "Listener"; }
+
+	data->stream << "\n{\n\t" << this->subclass <<
 			"()\n\t{\n";
 
 	if (this->superclass == "Character")
@@ -75,7 +79,7 @@ void DeclarationNode::emit(codegen::EmissionData *data)
 	{
 
 		data->data = codegen::EmitEvent;
-		data->stream << "\t\t/* Not yet implemented */\n";
+		data->stream << "\t\t// Explicit Data:\n";
 	}
 	else if (this->superclass == "Behaviour")
 	{

@@ -42,7 +42,6 @@ token_match *RegexManager::match(std::string *buffer)
 			ret->type = (*it).first;
 			ret->value = match[0];
 			ret->lines = this->count_newlines(match[0]);
-			//break;
 		}
 	}
 	if (ret == NULL)
@@ -108,6 +107,7 @@ void RegexManager::initialize_regex()
 	this->add_regex(tokens::TokentypeDivide, "^/");
 
 	this->add_regex(tokens::TokentypeEqual, "^==?");
+	this->add_regex(tokens::TokentypeEqual, "^!=?");
 	this->add_regex(tokens::TokentypeGreater, "^>");
 	this->add_regex(tokens::TokentypeGreaterEqual, "^>=");
 	this->add_regex(tokens::TokentypeLess, "^<");

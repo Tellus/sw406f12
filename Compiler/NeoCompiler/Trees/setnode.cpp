@@ -67,9 +67,12 @@ void SetNode::emit(codegen::EmissionData *data)
 
 			std::string seperator = ", ";
 			if (data->data & codegen::EmitNegativeList)
-				seperator += "-";
+				seperator += "-1 * (";
 
 			this->emit_children(data, seperator);
+
+			if (data->data & codegen::EmitNegativeList)
+				data->stream << ")";
 
 			data->stream << "));\n";
 		}

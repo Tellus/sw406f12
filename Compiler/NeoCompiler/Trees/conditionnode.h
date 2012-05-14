@@ -20,6 +20,7 @@ public:
 
 	void visit(typecheck::scope *current_scope);
 	void print(std::size_t indent = 0);
+	void emit(codegen::EmissionData *data);
 
 	std::string op;
 };

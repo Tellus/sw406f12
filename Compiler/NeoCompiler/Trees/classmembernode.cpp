@@ -53,8 +53,16 @@ void ClassMemberNode::emit(codegen::EmissionData *data)
 		this->children.front()->emit(data);
 
 		data->stream << "());\n";
-	} // TODO: Any more special cases. All lists, basically.
-	else if (data->data & codegen::EmitBehaviour)
+	}
+	else if (data->data == (codegen::EmitCharacter | codegen::EmitEventList))
+	{
+		data->stream << "\t\tthis->add_event(new ";
+
+		this->children.front()->emit(data);
+
+		data->stream << "());\n";
+	}
+	else if (data->data & (codegen::EmitBehaviour | codegen::EmitEventCondition))
 	{
 		this->emit_children(data, ", ");
 	}
