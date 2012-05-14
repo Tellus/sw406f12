@@ -87,6 +87,12 @@ public:
     GameState *get_next_state();
     
     /**
+     * Executes an action. Use this as a force scenario, when a condition for
+     * event has been met.
+     **/
+    GameState* force_action(ActionDefinition* action);
+    
+    /**
      * Simulates an action on a cloned state and returns the state's active
      * character's resulting piggy value.
      * \param a The Action to perform.

@@ -33,6 +33,8 @@ enum COMPARISON_ENUM{   LESS_THAN = 1,
 class EventCondition
 {
 public:
+    EventCondition();
+
     /**
      * Creates a new, ready, EventCondition.
      * \param trg The target of the condition comparison.
@@ -76,6 +78,12 @@ public:
     COMPARISON_ENUM comparison;
     
     COMPARISON_ENUM str_to_enum(std::string in);
+    
+    /**
+     * Performs comparison in relation to an input value.
+     * \param to The value to compare to.
+     **/
+    bool compare(float to);
 };
 
 }

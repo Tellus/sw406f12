@@ -14,7 +14,7 @@ AttackAbility::AttackAbility() :
     Ability("Attack", 0, 0)
 {
     this->effects.push_back(new PhysicalDamageEffect());
-    this->add_rgr(engine::RGR_Enum::ENEMY);
+    this->add_rgr(engine::ENEMY);
 }
 
 }

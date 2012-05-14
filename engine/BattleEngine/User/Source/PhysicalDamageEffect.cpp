@@ -12,19 +12,23 @@ namespace testbattle{
 PhysicalDamageEffect::PhysicalDamageEffect(engine::RGR_Enum s, engine::RGR_Enum t)
     : engine::Effect(s, t, "Health", -20) {}
 
-PhysicalDamageEffect::PhysicalDamageEffect() : engine::Effect() {}
+PhysicalDamageEffect::PhysicalDamageEffect(engine::RGR_Enum s, engine::RGR_Enum t, float amount)
+    : engine::Effect(s, t, "Health", amount) {}
 
 void PhysicalDamageEffect::execute(Primarch* s, Primarch* t)
 {
 	engine::Character *tchar = dynamic_cast<engine::Character*>(t);
+	engine::Character *schar = dynamic_cast<engine::Character*>(s);
 
-    tchar->get_resource("Health")->decrease(20);
+    engine::Attribute* str = schar->get_attribute("Strength");
+
+    tchar->get_resource("Health")->decrease(str->get_current() * this->amount);
 }
 
-engine::Primarch* PhysicalDamageEffect::clone(bool with_id)
+PhysicalDamageEffect::PhysicalDamageEffect() :
+    Effect(engine::OWNER, engine::TARGET, "Health", -20)
 {
-	engine::Effect *to_ret = new PhysicalDamageEffect(*this);
-	return to_ret;
+	this->name = "Physical Effect";
 }
 
 };

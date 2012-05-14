@@ -1,7 +1,8 @@
 # Compiler command.
 CC=g++
 # Flags.
-FLAGS=-ggdb -Wall -std=c++0x -ggdb
+# FLAGS=-ggdb -Wall -std=c++0x
+FLAGS=-Wall -std=c++0x
 # Includes.
 INCS=-I. -IHeaders -IUser/Headers
 # Linker switches.
@@ -48,13 +49,10 @@ Source/System/ActionDefinition.cpp \
 Source/System/RGRIdentifier/TargetIdentifier.cpp
 
 U_SOURCES = \
-User/Source/SexyAbility.cpp \
 User/Source/AttackAbility.cpp \
 User/Source/HealAbility.cpp \
 User/Source/HealEffect.cpp \
-User/Source/PhysicalDamageEffect.cpp \
-User/Source/SexyEffect.cpp 
-# User/Orc.cpp 
+User/Source/PhysicalDamageEffect.cpp
 
 # Object versions of sources.
 OBJECTS=$(SOURCES:.cpp=.o)
