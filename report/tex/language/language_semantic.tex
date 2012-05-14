@@ -8,6 +8,126 @@ Before a character gets to make its turn, win condition is checked, so that the 
 The semantics of the language is base at the environment-store model, which is a a model describing how variables are bound during a program execution. Each variable is bound to a storage cell, and the content of the storage cell is the value of the variable.
 
 \subsection{\langname{} semantics}
+
+
+	%{\Large[The real stuff]}
+	
+	$Character : CName \rightharpoonup Behaviour \times \mathcal{P}(AName) \times env \times EName \times Resource$\\
+	Character is decelerated from its name, and contains, behaviour, a list of abilities,, an environment which contain variables decelerated for the character, event, and its resources.  \\
+	$Ability: AName \rightharpoonup \mathcal{P}(RGR) \times Effect \times Integer \times Integer$\\
+	Ability is decelerated from it name, and it contains, a \ac{rgr}, an effect and an integer which represent the cost of the ability, and an 			other integer which represent the damage(or heal) the ability does.\\
+	$RGR = \{\texttt{owner, enemy}\}$\\
+	\ac{rgr} is the set of keyword, used for references.\\
+	$Behaviour: BName \rightharpoonup \mathcal{P}(RGR \times VName \times Integer)$\\
+	
+	$Event : EName \rightharpoonup Trigger \times Condition \times AName$\\
+	$Resource : RName \rightharpoonup Integer \times Integer$\\\\
+	
+\begin{table}
+\begin{tabular}{l l}
+\\ \hline \\
+\small{\textsc{[Char-Dec]}} \\
+ & \large{${\frac{\langle env, Health, Mana, sto, etc \rangle \; \Rightarrow \; env'}{\langle \texttt{make }  CName \texttt{ from } Character, \;
+Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
+ & \footnotesize{$\Rightarrow env \; \vdash \; \langle sto, Attribute, HP, Integer \rangle$} \\
+ \footnotesize{Where} $env'=$ &  \footnotesize{$env[Health \mapsto l] [\texttt{next} \mapsto \texttt{new } l, sto \mapsto std]$} \\
+ & \footnotesize{$env[Mana \mapsto \texttt{new } l][\texttt{next } \mapsto \texttt{new new } l, sto \mapsto std]$} \\
+ & \footnotesize{etc.} \\
+ \\ \hline
+\end{tabular}
+\label{tbl:devC}
+\caption{Transitions rules for Character deceleration, (\textsl{Remember to explain the ect.'s})}
+\end{table}	
+
+\begin{table}
+\begin{tabular}{l l}
+ \\ \hline \\
+ \small{\textsc{[Event-Dec]}} & \\
+ & \footnotesize{$\langle Char ,Ability, Behaviour, Event; \; Event EName, Trigger, Condition, AName \rangle ; \; S \Rightarrow$} \\
+ & \footnotesize{$\langle Char, Ability, Behaviour, Event; Event[EName \mapsto (Trigger, Condition, AName)]; S \rangle$} \\
+ \\ \hline
+\end{tabular}
+\label{tbl:devE}
+\caption{Transitions rules for Event deceleration}
+\end{table}
+
+\begin{table}
+\begin{tabular}{l l}
+\\ \hline \\
+\small{\textsc{[Ability-Dec]}}& \\
+ & \footnotesize{$\langle Char, Ability, Behaviour, Event; \; Ability AName RGR, Effect, Int, Int \rangle \; \Rightarrow$} \\
+ & \footnotesize{$\langle Char, Ability[AName \mapsto (RGR, Effect, Int, Int)], Behaviour, Event; S \rangle$} \\
+\\ \hline
+\end{tabular}
+\label{tbl:decA}
+\caption{Transitions rules for Ability declaration}
+\end{table}
+
+\begin{table}
+\begin{tabular}{l l l}
+\\ \hline \\
+\small{\textsc{[Behaviour-Dec]}} & \\
+ & \footnotesize{$\langle Char, Ability, Behaviour, Event; Behaviour BName,$} & \footnotesize{$RGR_1, VName_1, Integer_1$} \\
+ & & \footnotesize{$RGR_2, VName_2, Integer_2$}\\
+ & & \footnotesize{$RGR_3, VName_3, Integer_3$} \\
+ & & \footnotesize{$\vdots$} \\
+ & & \footnotesize{$RGR_n, VName_n, Integer_n  \rangle ; S \; \Rightarrow$} \\
+\end{tabular}
+\begin{tabular}{l p{0.97\textwidth}}
+ & \footnotesize{$\langle Char, Ability, Behaviour', Event \rangle; S$} \\ %& \color{white} \footnotesize{$RGR_1, VName_1, Integer_1 \Rightarrow$} \\
+\footnotesize{Where $Behaviour' = $} & \footnotesize{$Behaviour[BName \mapsto {\bigcup^{n}_{i = 0}} (RGR_i, VName_i, Integer_i)]$} \\
+\\  \hline 
+\end{tabular}
+\label{tbl:decB}
+\caption{Transition rules for Behaviour deceleration}
+\end{table}
+
+\begin{table}
+\begin{tabular}{l l}
+\\ \hline \\
+\small{\textsc{[Turn]}} & \\
+ & \footnotesize{$Char, Behaviour, Ability, Event, Resource \vdash \langle Active, Next, sto \rangle \Rightarrow \langle Next, Active, sto \rangle$} \\
+ \\
+\footnotesize{Where} & \footnotesize{$Char(Active) = (Behaviour, \mathcal{P}(AName), env, Ename, Resource)$} \\
+\footnotesize{And} & \footnotesize{$Env(Health) > 0$} \\
+ & \footnotesize{$\forall e \in Events. Event(e) \rightarrow_b f \! \! f$} \\
+ & \footnotesize{$Be = Behaviour(Beh)$} \\
+\\ \hline
+\end{tabular}
+\label{tbl:Turn}
+\caption{Transition rules for Turn.}
+\end{table}
+
+\begin{table}
+\begin{tabular}{l l}
+\\ \hline \\
+\small{\textsc{[Ability-Exe]} & \\
+& \footnotesize{$Char_{Active}, Char_{Next}, Ability \vdash \langle AName, sto \rangle \Rightarrow \langle sto[Char_{Active}(Mana) \; -\!\! = cost] \rangle$} \\
+\footnotesize{Where} & \footnotesize{$ef\!f = (enemy, ef\!f, cost, ef\!fMana)$\\
+ & \footnotesize{$ef\!fect(sto, Char_{Next}, ef\!fMana) = sto'$}\\
+\\ \hline
+\end{tabular}
+\label{tbl:abi-exe}
+\caption{Transition rules for execution of an ability}
+\end{table}
+
+
+\begin{table}
+\begin{tabular}{l l}
+\\ \hline \\
+\small{\textsc{Physical-Dmg} & \\
+ & \footnotesize{$Physical \langle sto, l \rangle \Rightarrow sto[l \mapsto x - i]$} \\
+ \\ \hline
+\end{tabular}
+\label{tbl:physical}
+\caption{Transition rule for Physical damage}
+\end{table}
+
+%%%%%%%%%%%%%
+% Vi har nogle regler der skal beskrives med brødtekst.
+% Kan ikke lige huske hvilke der mangler lige nu.. Det håber jeg at Danny kan hjælpe med at huske........
+%%%%%%%%%%%%%
+\begin{comment}
 Five parts are highlighted for semantic description, these are  \emph{Declaration}, \emph{Turn}, \emph{AI}, \emph{Action} and \emph{Wincon}.\\
 The first one 'Declaration' is the main function of \langname{} and the four that follow are not included in the language itself but in the engine.
 A turn is a character takes an action, based at the outcome of the AI calculation \\
@@ -15,7 +135,7 @@ AI is calculation, which simulates every possible outcome, based on the possible
 Action is an event, which will make change for the stored values of the enemy character, or the character itself.\\
 Wincon is a conditional check to see if the \emph{winning condition} is met.\\\\
 
-\begin{comment}
+
 The semantics for the relevant parts of \langname{} are defined as follows:
 \begin{itemize}
 	\item $EnvD$ is a declaration-environment
@@ -106,10 +226,10 @@ $\dfrac{env_{C} \vdash c \rightarrow_{h} h}{\text{win} \rightarrow_{b} tt}$ & $\
 \end{center}
 Wincon is special, because it is a boolean expression. \\
 The rules evaluates true, if the demanded character $c$, has health evaluating to the value $h$, and the value is less or equal to zero, else et evaluates false, and the game will the continue.
-\end{comment}
+
 \pagebreak
 
-\begin{comment}
+
 	$D_C ::= \text{make } c \text{ from } Character C \{ D_A, D_R, D_B \}; D_C | \varepsilon$\\
 	%D_C is a declaration of a character
 	$D_A ::= A: v; D_A | \varepsilon$\\
@@ -158,59 +278,47 @@ The rules evaluates true, if the demanded character $c$, has health evaluating t
 [Act-Empty]\\
 	$env_c, sto \vdash \langle calc:A, s \rangle \Rightarrow \langle s \rangle$\\
 	where $A = \varepsilon$\\
-	\\
+	\\	1
 	\end{comment}
+\begin{comment}
+	[Turn]\\
+	%1\\
+	\\
+	\\
+	\\
+	\\
+	---------------------------------\\
+
 	
-	[The real stuff]
+	sideb-- 
 	
-	$Character : CName \rightharpoonup Behaviour \times P(AName) \times env \times EName \times Resource$\\
-	$Ability: AName \rightharpoonup P(RGR) \times Effect \times Integer$\\
-	$RGR = {owner, enemy}$\\
-	$Behaviour: BName \rightharpoonup P(P(RGR) \times VName \times Integer \times Integer)$\\
-	$Event : EName \rightharpoonup Trigger \times Condition \times AName$\\
-	$Resource : RName \rightharpoonup Integer \times Integer$\\\\
 	
-	[Char-Dec]\\
-	$\langle env, Health, Mana, sto, etc \rangle$\\
-	$env[Health \mapsto l] next \mapsto new l, sto \mapsto
-	sto$\\\\
-	-------------------------------------\\
-	$make CName from Character, Name, A_D, R_D, Ability, Behaviour, Events$\\
-	$env \vdash \langle sto, Attribute, HP, Integer \rangle$\\\\	
+	\\
 	
-	[Event-Dec]\\
-	$\langle Char ,Ability, Behaviour, Event; Event EName, Trigger, Condition, AName \rangle ; S$\\ $\rightarrow$\\
-	$\langle char, ability, behaviour, event; Event[EName \mapsto (Trigger, Condition, AName)]; S \rangle$\\\\
+\pagebreak
+%	$env[Health \mapsto l] [next \mapsto new l, sto \mapsto
+%	sto$]\\\\
+%	-------------------------------------\\
+ % $ \frac{$
 	
-	[Ability-Dec]\\
-	$\langle Char, Ability, Behaviour, Event; Ability AName RGR, Effect, Int, Int \rangle$\\ $\rightarrow$\\
-	$\langle Char, Ability[AName \mapsto (RGR, Effect, Int, Int)], Behaviour, Event; S \rangle$\\\\
+	%[Event-Dec]\\
+
+%	\\\\
 	
-	[Behaviour-Dec]\\
-	$\langle Char, Ability, Behaviour, Event; Behaviour BName, RGR_1, VName_1, Integer_1 \rangle; S$\\ \hfill $RGR_2, VName_2, Integer_2$\\
-	\hfill $RGR_3, VName_3, Integer_3$\\
+%	\\
+%	\\
+%	\\\\
+	
+
+	\\
+	\\
 	.\\
 	.\\
 	.\\
-	\hfill $RGR_n, VName_n, Integer_n$\\
+	\hfill \\
 	$\rightarrow$\\
-	$\langle Char, Ability, Behaviour[BName \mapsto \bigcup_{i = 0}^{n} (RGR_i, VName_i, Integer_i)], Event \rangle; S$\\
+	\\
 	
 	Yay declarations.... almost done
 	\\\\
-	
-	[Turn]\\
-	$Char, Behaviour, Ability, Event, Resource \vdash \langle Active, Next, sto \rangle \Rightarrow \langle Next, Active, sto \rangle$\\
-	$Char(Active) = (Behaviour, P(AName), env, Ename, Resource)$\\
-	$Cond(Health) > 0$\\
-	$\forall e \in Events Event(e) \rightarrow_b ff$\\
-	$Be - Behaviour(Beh)$\\
-	---------------------------------\\
-	$Char_{Active}, Char_{Next}, Ability \vdash \langle AName, sto \rangle \Rightarrow \langle sto[Char_{Active}(Mana) -= cost] \rangle$\\
-	sideb-- $eff = (enemy, eff, cost, effM)$\\
-	$effect(sto, Char_{Next}, effM) = sto'$\\\\
-	
-	
-	$Physical \langle sto, l \rangle \Rightarrow sto[l \mapsto x - i]$\\
-	
-\pagebreak
+	\end{comment}
