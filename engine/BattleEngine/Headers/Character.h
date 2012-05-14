@@ -136,6 +136,8 @@ public:
 	
 	void add_event(EventListener* ec);
 	
+	std::list<EventListener*>* get_events();
+	
 	/**
 	 * Adds a new event to the Character.
 	 * \param condition Condition formatted as noted in EventCondition::EventCondition(std::string).

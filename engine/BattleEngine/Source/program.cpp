@@ -61,10 +61,9 @@ Character* make_joe_clean()
 	johannes->add_ability(new AttackAbility());
 	johannes->add_ability(new HealAbility());
 
-	johannes->event_conditions.push_back(
-		event_action_pair(
+    johannes->add_event(
 			new EventCondition(OWNER, "Health", LESS_THAN, 50),
-			new ActionDefinition(OWNER, OWNER, dynamic_cast<Ability*>(johannes->get_child("Heal")))));
+			new ActionDefinition(OWNER, OWNER, dynamic_cast<Ability*>(johannes->get_child("Heal"))));
 
 	/*
 	Ability* abil;
