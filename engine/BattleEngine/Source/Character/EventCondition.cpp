@@ -91,19 +91,22 @@ COMPARISON_ENUM EventCondition::str_to_enum(std::string in)
     if (in == ">" ) return GREATER_THAN;
     if (in == "<=") return LESS_THAN_OR_EQUAL;
     if (in == ">=") return GREATER_THAN_OR_EQUAL;
-/*
-    switch(in)
-    {
-        case "==": return EQUAL;
-        case "!=": return NOT_EQUAL;
-        case "<" : return LESS_THAN;
-        case ">" : return GREATER_THAN;
-        case "<=": return LESS_THAN_OR_EQUAL;
-        case ">=": return GREATER_THAN_OR_EQUAL;
-        default: throw exception("Bad input!");
-    }
-    */
+
     throw std::exception();
+}
+
+bool EventCondition::compare(float to)
+{
+    switch(this->comparison)
+    {
+        case EQUAL: return (to == this->value);
+        case NOT_EQUAL: return (to != this->value);
+        case LESS_THAN: return (to < this->value);
+        case GREATER_THAN: return (to > this->value);
+        case LESS_THAN_OR_EQUAL: return (to <= this->value);
+        case GREATER_THAN_OR_EQUAL: return (to >= this->value);
+        default: return false;
+    }
 }
 
 }

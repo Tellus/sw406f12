@@ -32,10 +32,18 @@ void AbilityTable::_init()
     return;
 }
 
+GameState* AbilityTable::force_action(ActionDefinition* action)
+{
+    Action* tmp_a = new Action(*action);
+
+    return tmp_a->execute(this->state);
+}
+
 GameState *AbilityTable::get_next_state()
 {
 /**
  Steps:
+   0. If queued action, run immediately and return.
    1. Get active Char (this->source).
    2. Get full Ability[x]Target table with validated abilities and targets.
    3. For each valid Action:
@@ -43,6 +51,27 @@ GameState *AbilityTable::get_next_state()
     b. Highest piggy value (and GameState) is stored. The others are discarded.
    4. Return resulting max state.
 **/
+    Character* ctmp = this->state->current_char;
+    
+    std::list<EventListener*>* events = ctmp->get_events();
+    std::list<EventListener*>::iterator el_iter;
+    
+    EventCondition* cond;
+    Character* e_targ;
+    
+    for (el_iter = events->begin();
+         el_iter != events->end();
+         el_iter++)
+    {
+        cond = (*el_iter)->condition;
+        e_targ = this->state->get_rgr(cond->target);
+        
+        if (cond->compare(e_targ->get_child(cond->member)->get_value()))
+        {
+            // Force.
+            return force_action((*el_iter)->action);
+        }
+    }
 
 	this->best_action = NULL;
 

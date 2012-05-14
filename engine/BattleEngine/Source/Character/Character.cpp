@@ -227,6 +227,11 @@ void Character::add_event(EventCondition* ev, ActionDefinition* ac)
     this->events.push_back(new EventListener(ev, ac));
 }
 
+std::list<EventListener*>* Character::get_events()
+{
+    return &(this->events);
+}
+
 float Character::get_value()
 {
 	return this->get_resource("Health")->get_current();
