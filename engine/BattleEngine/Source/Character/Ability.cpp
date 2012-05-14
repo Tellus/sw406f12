@@ -37,10 +37,7 @@ Ability::Ability(std::string name, float cost_health, float cost_mana) :
 
 Primarch* Ability::clone(bool with_id)
 {
-	Ability* to_ret = new Ability();// this->name, this->cost_health, this->cost_mana);
-	to_ret->name = this->name;
-	to_ret->cost_health = this->cost_health;
-	to_ret->cost_mana = this->cost_mana;
+	Ability* to_ret = new Ability(this->name, this->cost_health, this->cost_mana);
 
 	Effect* new_eff;
 
@@ -102,6 +99,11 @@ float Ability::get_value()
 	}
 
 	return ret;
+}
+
+void Ability::modify(float amount)
+{
+	// No effect. Could be a ratio, crit... something?
 }
 
 } /* namespace engine */

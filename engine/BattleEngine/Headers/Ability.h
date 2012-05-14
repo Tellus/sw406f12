@@ -40,6 +40,8 @@ public:
 	 * Returns something completely nonsensical.
 	 **/
 	float get_value();
+
+	void modify(float amount);
 private:
     /**
      * Used by constructors for the initializations shared between them all.

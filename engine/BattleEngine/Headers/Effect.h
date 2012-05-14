@@ -30,8 +30,7 @@ public:
 	Effect(RGR_Enum s, RGR_Enum t, std::string member, float amount);
 	virtual ~Effect();
 
-	// Re-defined as pure virtual here to make it easier for dumb Effect programmers (... me, for example).
-	virtual Primarch *clone(bool with_id = false) = 0;
+	virtual Primarch *clone(bool with_id = false);
 
 	/**
 	 * RGR to the target of the effect. We use the generalised form for Effects
@@ -60,11 +59,13 @@ public:
 	 * Effect.
 	 * \param in_state The state to make changes within.
 	 **/
-	virtual void execute(Primarch* s, Primarch* t) = 0;
+	virtual void execute(Primarch* s, Primarch* t);
 	
 	virtual void pretty_print();
 
 	float get_value();
+
+	void modify(float amount);
 };
 
 } /* namespace engine */

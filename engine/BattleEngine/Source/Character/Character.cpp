@@ -232,4 +232,9 @@ float Character::get_value()
 	return this->get_resource("Health")->get_current();
 }
 
+void Character::modify(float amount)
+{
+	// Does absolutely nothing.
+}
+
 } /* namespace engine */

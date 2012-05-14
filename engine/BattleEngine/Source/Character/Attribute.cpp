@@ -16,7 +16,8 @@ Attribute::Attribute(float start)
 	this->name = this->get_default_name("Attribute");
 }
 
-Attribute::Attribute(std::string name, float initial)
+Attribute::Attribute(std::string name, float initial) :
+	Primarch(name)
 {
 	this->name = name;
 	this->set_initial(initial);
@@ -29,8 +30,7 @@ Attribute::~Attribute()
 
 Primarch* Attribute::clone(bool with_id)
 {
-	Attribute *ret = new Attribute();
-	ret->initial = this->initial;
+	Attribute *ret = new Attribute(this->name, this->initial);
 	ret->current = this->current;
 	
 	return ret;

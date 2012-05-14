@@ -196,6 +196,11 @@ int GameState::get_char_team(Character* c_id)
 	return this->get_char_team(c_id->id);
 }
 
+Character* GameState::get_target()
+{
+	return this->target_character;
+}
+
 int GameState::max_team_id()
 {
 	int hi = -std::numeric_limits<int>::infinity();
@@ -212,6 +217,16 @@ int GameState::max_team_id()
 	}
 
 	return hi;
+}
+
+/**
+ * Sets a globalised target var. This is primarily used by the TARGET identifier,
+ * but can have several other uses, too.
+ * \param t Character to target.
+ **/ 
+void GameState::set_target(Character *t)
+{
+	this->target_character = t;
 }
 
 }

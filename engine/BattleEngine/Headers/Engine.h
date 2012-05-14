@@ -18,6 +18,7 @@
 
 #include "EnemyIdentifier.h"
 #include "OwnerIdentifier.h"
+#include "TargetIdentifier.h"
 
 namespace engine
 {
