@@ -15,8 +15,7 @@
 #include "ContEffect.h"
 #include "Resource.h"
 #include "Behaviour.h"
-#include "ActionDefinition.h"
-#include "EventCondition.h"
+#include "EventListener.h"
 
 // The exceptions.
 #include "Exceptions/ResourceDoesNotExistException.h"
@@ -133,7 +132,9 @@ public:
 	 * GameState to check if any forced action should be taken instead of the
 	 * default Behaviour method.
 	 **/
-	std::list<event_action_pair> event_conditions;
+	std::list<EventListener*> events;
+	
+	void add_event(EventListener* ec);
 	
 	/**
 	 * Adds a new event to the Character.

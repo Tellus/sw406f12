@@ -172,6 +172,11 @@ void Character::add_ability(Ability *abil)
     }
 }
 
+void Character::add_event(EventListener* ec)
+{
+    this->events.push_back(ec);
+}
+
 std::map<std::string, Ability*> Character::get_abilities()
 {
 	return this->abilities;
@@ -214,17 +219,12 @@ float Character::get_piggy(GameState* from)
 
 void Character::add_event(std::string ev, ActionDefinition* ac)
 {
-    this->event_conditions.push_back(event_action_pair(
-        new EventCondition(ev),
-        ac));
+    this->events.push_back(new EventListener(new EventCondition(ev), ac));
 }
 
 void Character::add_event(EventCondition* ev, ActionDefinition* ac)
 {
-    this->event_conditions.push_back(
-        event_action_pair(
-            ev,
-            ac));
+    this->events.push_back(new EventListener(ev, ac));
 }
 
 float Character::get_value()

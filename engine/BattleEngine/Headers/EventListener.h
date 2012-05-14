@@ -22,10 +22,11 @@ class EventListener
 {
 public:
 	EventListener();
+	EventListener(EventCondition* ec, ActionDefinition* ac);
 	virtual ~EventListener();
 	
-	EventCondition condition;
-	ActionDefinition action;
+	EventCondition* condition;
+	ActionDefinition* action;
 	
 	/**
 	 * Sets the condition for the event's execution. Roughly equivalent to
