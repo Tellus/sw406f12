@@ -1,7 +1,8 @@
 # Compiler command.
 CC=g++
 # Flags.
-FLAGS=-ggdb -Wall -std=c++0x -ggdb
+# FLAGS=-ggdb -Wall -std=c++0x
+FLAGS=-Wall -std=c++0x
 # Includes.
 INCS=-I. -IHeaders -IUser/Headers
 # Linker switches.

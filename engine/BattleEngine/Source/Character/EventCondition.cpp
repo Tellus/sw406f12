@@ -10,6 +10,11 @@
 namespace engine
 {
 
+EventCondition::EventCondition()
+{
+    // Stubby stub.
+}
+
 EventCondition::EventCondition(RGR_Enum trg, std::string m, COMPARISON_ENUM comp, float val):
     target(trg),
     member(m),

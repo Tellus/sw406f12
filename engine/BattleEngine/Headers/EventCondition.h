@@ -33,6 +33,8 @@ enum COMPARISON_ENUM{   LESS_THAN = 1,
 class EventCondition
 {
 public:
+    EventCondition();
+
     /**
      * Creates a new, ready, EventCondition.
      * \param trg The target of the condition comparison.
