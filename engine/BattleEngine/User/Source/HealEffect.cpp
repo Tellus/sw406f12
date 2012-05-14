@@ -15,10 +15,10 @@ HealEffect::HealEffect()
 }
 
 HealEffect::HealEffect(engine::RGR_Enum s, engine::RGR_Enum t) :
-    engine::Effect(s, t, "Health", 10)
-{
-    // Empty, see intializer.
-}
+    engine::Effect(s, t, "Health", 10) {}
+
+HealEffect::HealEffect(engine::RGR_Enum s, engine::RGR_Enum t, float amount) :
+    engine::Effect(s, t, "Health", amount) {}
 
 void HealEffect::execute(engine::Primarch* s, engine::Primarch* t)
 {

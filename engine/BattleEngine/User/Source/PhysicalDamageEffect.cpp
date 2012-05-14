@@ -12,6 +12,9 @@ namespace testbattle{
 PhysicalDamageEffect::PhysicalDamageEffect(engine::RGR_Enum s, engine::RGR_Enum t)
     : engine::Effect(s, t, "Health", -20) {}
 
+PhysicalDamageEffect::PhysicalDamageEffect(engine::RGR_Enum s, engine::RGR_Enum t, float amount)
+    : engine::Effect(s, t, "Health", amount) {}
+
 PhysicalDamageEffect::PhysicalDamageEffect() : engine::Effect() {}
 
 void PhysicalDamageEffect::execute(Primarch* s, Primarch* t)
