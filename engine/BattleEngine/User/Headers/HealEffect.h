@@ -20,10 +20,9 @@ class HealEffect : public engine::Effect
 public:
 	HealEffect();
     HealEffect(engine::RGR_Enum s, engine::RGR_Enum t);
+    HealEffect(engine::RGR_Enum s, engine::RGR_Enum t, float amount);
     
-    void execute(Primarch* s, Primarch* t);
-
-	Primarch* clone(bool with_id = false);
+    virtual ~HealEffect();
 };
 
 }

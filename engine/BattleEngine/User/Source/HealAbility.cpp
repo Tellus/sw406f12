@@ -15,7 +15,7 @@ HealAbility::HealAbility() :
 {
     HealEffect *eff = new HealEffect();
     this->effects.push_back(eff);
-    this->add_rgr(engine::RGR_Enum::OWNER);
+    this->add_rgr(engine::OWNER);
 }
 
 
