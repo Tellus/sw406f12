@@ -40,7 +40,7 @@ void IdentifierNode::emit(codegen::EmissionData *data)
 {
 	if (this->id == "target" || this->id == "owner")
 		std::transform(this->id.begin(), this->id.end(), this->id.begin(), (int (*)(int))std::toupper);
-	else if (data->data & codegen::EmitBehaviour)
+	else if (data->data & (codegen::EmitBehaviour | codegen::EmitEventCondition))
 		this->id = "\"" + this->id + "\"";
 
 	data->stream << this->id;

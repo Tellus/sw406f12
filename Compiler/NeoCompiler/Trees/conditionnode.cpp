@@ -44,4 +44,23 @@ void ConditionNode::print(std::size_t indent)
 			<< ")" << std::endl;
 	this->print_children(indent);
 }
+
+void ConditionNode::emit(codegen::EmissionData *data)
+{
+	std::string comparison = "EQUAL";
+
+	if (this->op == "!=")
+		comparison = "NOT_EQUAL";
+	else if (this->op == ">")
+		comparison = "GREATER_THAN";
+	else if (this->op == ">=")
+		comparison = "GREATER_THAN_OR_EQUAL";
+	else if (this->op == "<")
+		comparison = "LESS_THAN";
+	else if (this->op == "<=")
+		comparison = "LESS_THAN_OR_EQUAL";
+
+
+	this->emit_children(data, ", " + comparison + ", ");
+}
 } /* namespace trees */

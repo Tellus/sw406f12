@@ -75,6 +75,12 @@ void CallNode::emit(codegen::EmissionData *data)
 
 		data->stream << "));\n";
 	}
+	else if (data->data == codegen::EmitEvent)
+	{
+		data->stream << this->identifier << "(), ";
+
+		this->emit_children(data);
+	}
 }
 
 } /* namespace trees */

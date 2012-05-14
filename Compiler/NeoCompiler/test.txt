@@ -4,6 +4,7 @@ I like orcs!
 
 make Cure from Ability
 {
+	name: "Cure";
     mana_cost: 10;
     targets: [self, ally];
     effects: [Heal(target, 20)];
@@ -13,8 +14,8 @@ make Cure from Ability
 make ForceHeal from Event
 {
     triggers: [owner.health.decrease];
-    conditions: [owner.health <= 10];
-    actions: [Cure(owner)];
+    condition: owner.health <= 10;
+    action: Cure(owner);
 }
 
 make Smart from Behaviour
@@ -29,7 +30,7 @@ make Orc from Character
 {
     name: "Hello Kitty";
 
-	health: 50;
+	health: 50 * (10 / 5);
 	mana: 100;
     strength: 10;
     stamina: 9;
