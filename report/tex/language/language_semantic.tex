@@ -1,4 +1,5 @@
 \section{Language semantics}
+\begin{comment}
 The language is a language used for  of a role-playing characters. I addiction to the language is an battle engine, which simulates a battle between the  character. \\
 The engine works, so that lets one character make an action, then the turn end, and the other character then gets to make its action. \\
 The action a character makes, is calculated by an AI-behaviour. The AI-behaviour is base at a behaviour declared for the character. \\
@@ -8,21 +9,36 @@ Before a character gets to make its turn, win condition is checked, so that the 
 The semantics of the language is base at the environment-store model, which is a a model describing how variables are bound during a program execution. Each variable is bound to a storage cell, and the content of the storage cell is the value of the variable.
 
 \subsection{\langname{} semantics}
-
+\end{comment}
 
 	%{\Large[The real stuff]}
-	
-	$Character : CName \rightharpoonup Behaviour \times \mathcal{P}(AName) \times env \times EName \times Resource$\\
-	Character is decelerated from its name, and contains, behaviour, a list of abilities,, an environment which contain variables decelerated for the character, event, and its resources.  \\
-	$Ability: AName \rightharpoonup \mathcal{P}(RGR) \times Effect \times Integer \times Integer$\\
-	Ability is decelerated from it name, and it contains, a \ac{rgr}, an effect and an integer which represent the cost of the ability, and an 			other integer which represent the damage(or heal) the ability does.\\
-	$RGR = \{\texttt{owner, enemy}\}$\\
-	\ac{rgr} is the set of keyword, used for references.\\
-	$Behaviour: BName \rightharpoonup \mathcal{P}(RGR \times VName \times Integer)$\\
-	
-	$Event : EName \rightharpoonup Trigger \times Condition \times AName$\\
-	$Resource : RName \rightharpoonup Integer \times Integer$\\\\
-	
+The semantic of \langname{} is based at the environment-store model, described i section \ref{sec:semantic}.
+The semantic is split in to two parts; decelerations in \langname{}, and the engine used for executing a battle between two declared characters.
+
+In \langname{} it is possible for the user to use references, and thereby referring to a character. The references in \langname{} is called \ac{rgrs}, and in the definition of the semantic of \langname{}, a \ac{rgr} is the set of keyword used to refer characters. \textbf{RGR} is defined,  
+%
+$$\mathbf{RGR} = \{\texttt{owner, enemy}\}$$
+%
+\ac{rgrs} is used in the deceleration of abilities and behaviour. An ability is declared by a name and contains; the possible targets for the ability, an effect corresponding to the ability, a value representing the mana cost of the ability and a second value representing the damage done by the ability.
+
+Therefore it is needed to keep track of the bindings of an ability, for this, an \textit{ability environment} is used. The set of ability environments is called \textbf{Ability}. 
+Given an ability name \textit{AName}, an ability environment must hold information about, targets, effect, cost, and damage. Therefore the definition of the set of ability environments \textbf{Ability} is:
+%
+$$\mathbf{Ability: AName \rightharpoonup \mathcal{P}(RGR) \times Effect \times Integer \times Integer}$$
+%
+As mention \ac{rgr} is used for behaviour as well. A behaviour is declared by a name, and it contains a list of 3-tuples (\textbf{RGR}, \textbf{VName}, \textbf{Integer}), where \textbf{RGR} is the reference to the involved character, \textbf{VName} is the name of the involved attribute and \textbf{Integer} is a value representing the priority of the attribute.
+When a character is declared, it is needed to keep track of the binding of the character. To keep track of the bindings a \textit{character environment} is used. The set of character environments is called \textbf{Character}.
+Given a character name \textit{CName}, a character environment must hold information about the behaviour, abilities, attributes, event and resources bounded to the character. Therefore the definition of the set of character environment \textbf{Character} is:
+$$\mathbf{Character} : \mathbf{CName} \rightharpoonup \mathbf{Behaviour} \times \mathbf{\mathcal{P}(AName)} \times \mathbf{EnvV} \times \mathbf{EName} \times \mathbf{Resource}$$
+Character is decelerated from its name, and contains, behaviour, a list of abilities,, an environment which contain variables decelerated for the character, event, and its resources.  
+
+Ability is decelerated from it name, and it contains, a \ac{rgr}, an effect and an integer which represent the cost of the ability, and an 			other integer which represent the damage(or heal) the ability does.
+
+\ac{rgr} is the set of keyword, used for references.
+$$\mathbf{Behaviour: BName \rightharpoonup \mathcal{P}(RGR \times VName \times Integer)}$$
+$$\mathbf{Event : EName \rightharpoonup Trigger \times Condition \times AName}$$
+$$\mathbf{Resource : RName \rightharpoonup Integer \times Integer}$$
+		
 \begin{table}
 \begin{tabular}{l l}
 \\ \hline \\
@@ -73,7 +89,7 @@ Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
  & & \footnotesize{$\vdots$} \\
  & & \footnotesize{$RGR_n, VName_n, Integer_n  \rangle ; S \; \Rightarrow$} \\
 \end{tabular}
-\begin{tabular}{l p{0.97\textwidth}}
+\begin{tabular}{l p{0.92\textwidth}}
  & \footnotesize{$\langle Char, Ability, Behaviour', Event \rangle; S$} \\ %& \color{white} \footnotesize{$RGR_1, VName_1, Integer_1 \Rightarrow$} \\
 \footnotesize{Where $Behaviour' = $} & \footnotesize{$Behaviour[BName \mapsto {\bigcup^{n}_{i = 0}} (RGR_i, VName_i, Integer_i)]$} \\
 \\  \hline 
