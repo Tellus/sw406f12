@@ -28,7 +28,7 @@ trees::AbstractSyntaxNode *Parser::accept_expression()
 }
 \end{lstlisting}
 
-As seen above the accept-functions return an \ac{ast}-node and accept no arguments. In this case, the function should accept an expression, and so a new node of the type arithmetic node is created and an abstract syntax node is instantiated to encompass the left-hand side, and the function accept_term() is run on this. 
+As seen above the accept-functions return an \ac{ast}-node and accept no arguments. In this case, the function should accept an expression, and so a new node of the type arithmetic node is created and an abstract syntax node is instantiated to encompass the left-hand side, and the function accept\_term() is run on this. 
 
 The function checks whether any operators follow the expression, and if none do the left-hand side is returned, so that no empty nodes are created for operators that are not present.
 
