@@ -24,21 +24,42 @@ $$\mathbf{RGR} = \{\texttt{owner, enemy}\}$$
 Therefore it is needed to keep track of the bindings of an ability, for this, an \textit{ability environment} is used. The set of ability environments is called \textbf{Ability}. 
 Given an ability name \textit{AName}, an ability environment must hold information about, targets, effect, cost, and damage. Therefore the definition of the set of ability environments \textbf{Ability} is:
 %
-$$\mathbf{Ability: AName \rightharpoonup \mathcal{P}(RGR) \times Effect \times Integer \times Integer}$$
+$$\mathbf{Ability: \; AName \rightharpoonup \mathcal{P}(RGR) \times Effect \times Integer \times Integer}$$
 %
-As mention \ac{rgr} is used for behaviour as well. A behaviour is declared by a name, and it contains a list of 3-tuples (\textbf{RGR}, \textbf{VName}, \textbf{Integer}), where \textbf{RGR} is the reference to the involved character, \textbf{VName} is the name of the involved attribute and \textbf{Integer} is a value representing the priority of the attribute.
-When a character is declared, it is needed to keep track of the binding of the character. To keep track of the bindings a \textit{character environment} is used. The set of character environments is called \textbf{Character}.
-Given a character name \textit{CName}, a character environment must hold information about the behaviour, abilities, attributes, event and resources bounded to the character. Therefore the definition of the set of character environment \textbf{Character} is:
-$$\mathbf{Character} : \mathbf{CName} \rightharpoonup \mathbf{Behaviour} \times \mathbf{\mathcal{P}(AName)} \times \mathbf{EnvV} \times \mathbf{EName} \times \mathbf{Resource}$$
+As mention \ac{rgr} is used for behaviour as well. A behaviour is declared by a name, and it contains a list of 3-tuples (\textbf{RGR}, \textbf{VName}, \textbf{Integer}), where \textbf{RGR} is the reference to the involved character, \textbf{VName} is the name of the involved attribute and \textbf{Integer} is a value representing the priority of the attribute. To keep track of the bindings of a behaviour, a \textit{behaviour environment} is used. The set of behaviour environments is called \textbf{Behaviour}.
+A behaviour environment must, given a behaviour name \textit{BName}, must hold information of the list of 3-tuples. Therefore the definition of the set of behaviour environments is:
+%
+$$\mathbf{Behaviour: \; BName \rightharpoonup \mathcal{P}(RGR \times VName \times Integer)}$$
+%
+%Event
+For decelerating forced action for a character, \langname{} makes it possible for a user to declare event, which contains a trigger(decrease of health), a condition(health below 10\%) and an ability to execute, when both the trigger and the condition is meet.
+A \textit{event environment} is used to keep track of the binding for events. The set of event environments is called \textbf{Event}.
+Given an event name, the event environment must hold information about the trigger, condition and ability. Therefore the definition of teh set of event environments is:
+%
+$$\mathbf{Event : \; EName \rightharpoonup Trigger \times Condition \times AName}$$
+%
+%Resource
+
+When a character is declared, it is declared with some resources as health and mana. The resources have an maximum and minimum value. A resource therefore have bindings for the two values, and to keep track of teh bindings a \textit{resource environment} is used. 
+The set of resource environments is called \textbf{Resource}, and i defined:
+%
+$$\mathbf{Resource : \; RName \rightharpoonup Integer \times Integer}$$
+%
+It is also needed to keep track of the binding of the character it self. To keep track of the bindings a \textit{character environment} is used. The set of character environments is called \textbf{Character}.
+Given a character name \textit{CName}, a character environment must hold information about the behaviour, abilities, attributes, event and resources bounded to the character. Therefore the definition of the set of character environments \textbf{Character} is:
+%
+$$\mathbf{Character} : \; \mathbf{CName} \rightharpoonup \mathbf{Behaviour} \times \mathbf{\mathcal{P}(AName)} \times \mathbf{EnvV} \times \mathbf{EName} \times \mathbf{Resource}$$
+%
+\begin{comment}
 Character is decelerated from its name, and contains, behaviour, a list of abilities,, an environment which contain variables decelerated for the character, event, and its resources.  
 
 Ability is decelerated from it name, and it contains, a \ac{rgr}, an effect and an integer which represent the cost of the ability, and an 			other integer which represent the damage(or heal) the ability does.
 
 \ac{rgr} is the set of keyword, used for references.
-$$\mathbf{Behaviour: BName \rightharpoonup \mathcal{P}(RGR \times VName \times Integer)}$$
-$$\mathbf{Event : EName \rightharpoonup Trigger \times Condition \times AName}$$
-$$\mathbf{Resource : RName \rightharpoonup Integer \times Integer}$$
-		
+
+
+\end{comment}
+
 \begin{table}
 \begin{tabular}{l l}
 \\ \hline \\
