@@ -13,7 +13,8 @@ The semantics of the language is base at the environment-store model, which is a
 
 	%{\Large[The real stuff]}
 The semantics of \langname{} are based on the environment-store model, described in section \ref{sec:semantic}.
-The semantics are split into two parts; declarations in \langname{}, and the inner workings of the engine used to simulate a battle between two characters.\\
+The semantics are split into two parts; declarations in \langname{}, and the inner workings of the engine used to simulate a battle between two characters.
+\subsubsection*{\langname{}}
 In \langname{} it is possible for the user to use references, they are called \ac{rgrs}. In the semantics of \langname{}, \ac{rgr} is a set of keywords used to refer to characters.\\ \textbf{RGR} is defined as follows;  
 %
 $$\mathbf{RGR} = \{\texttt{owner, enemy}\}$$
@@ -24,11 +25,15 @@ Given an ability name \textit{AName}, an ability environment must hold informati
 %
 $$\mathbf{Ability: \; AName \rightharpoonup \mathcal{P}(RGR) \times Effect \times Integer \times Integer}$$
 %
+Transition rules for declaration of abilities can be seen in table \ref{tbl:decA}.
+
 As mentioned, \ac{rgrs} are used for behaviour as well. A behaviour is declared by a name and it contains a list of 3-tuples (\textbf{\ac{rgr}}, \textbf{VName}, \textbf{Integer}), where \textbf{\ac{rgr}} is a reference to the involved character, \textbf{VName} is the name of the involved attribute and \textbf{Integer} is a value representing the priority of the attribute. To keep track of the bindings of a behaviour, a \textit{behaviour environment} is used. The set of behaviour environments is called \textbf{Behaviour}.
 A behaviour environment must, given a behaviour name \textit{BName}, hold information of the list of 3-tuples. Therefore the definition of the set of behaviour environments is:
 %
 $$\mathbf{Behaviour: \; BName \rightharpoonup \mathcal{P}(RGR \times VName \times Integer)}$$
 %
+Transition rules for declaration of behaviour can be seen i table \ref{tbl:decB}.
+
 %Event
 For declaring forced action for a character, \langname{} makes it possible for a user to declare event, which contains a trigger(decrease of health), a condition(health below 10\%) and an ability to execute when both the trigger and the condition is meet.
 A \textit{event environment} is used to keep track of the binding for events. The set of event environments is called \textbf{Event}.
@@ -36,8 +41,9 @@ Given an event name, the event environment must hold information about the trigg
 %
 $$\mathbf{Event : \; EName \rightharpoonup Trigger \times Condition \times AName}$$
 %
-%Resource
+Transition rules for declaration of event can be seen in table \ref{tbl:devE}.
 
+%Resource
 When a character is declared, they are declared with some resources like health and mana. The resources have a maximum and minimum value. A resource therefore has bindings for the two values. To keep track of these bindings a \textit{resource environment} is used.\\
 The set of resource environments is called \textbf{Resource}, and is defined as follows:
 %
@@ -48,43 +54,8 @@ Given a character name \textit{CName}, a character environment must hold informa
 %
 $$\mathbf{Character} : \; \mathbf{CName} \rightharpoonup \mathbf{Behaviour} \times \mathbf{\mathcal{P}(AName)} \times \mathbf{EnvV} \times \mathbf{EName} \times \mathbf{Resource}$$
 %
-\begin{comment}
-Character is decelerated from its name, and contains, behaviour, a list of abilities,, an environment which contain variables decelerated for the character, event, and its resources.  
+Transition rules for declaration of character can be seen i table \ref{tbl:devC}.
 
-Ability is decelerated from it name, and it contains, a \ac{rgr}, an effect and an integer which represent the cost of the ability, and an 			other integer which represent the damage(or heal) the ability does.
-
-\ac{rgr} is the set of keyword, used for references.
-
-
-\end{comment}
-
-\begin{table}
-\begin{tabular}{l l}
-\\ \hline \\
-\small{\textsc{[Char-Dec]}} \\
- & \large{${\frac{\langle env, Health, Mana, sto, etc \rangle \; \Rightarrow \; env'}{\langle \texttt{make }  CName \texttt{ from } Character, \;
-Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
- & \footnotesize{$\Rightarrow env \; \vdash \; \langle sto, Attribute, HP, Integer \rangle$} \\
- \footnotesize{Where} $env'=$ &  \footnotesize{$env[Health \mapsto l] [\texttt{next} \mapsto \texttt{new } l, sto \mapsto std]$} \\
- & \footnotesize{$env[Mana \mapsto \texttt{new } l][\texttt{next } \mapsto \texttt{new new } l, sto \mapsto std]$} \\
- & \footnotesize{etc.} \\
- \\ \hline
-\end{tabular}
-\label{tbl:devC}
-\caption{Transition rules for Character declaration, (\textsl{Remember to explain the ect.'s})}
-\end{table}	
-
-\begin{table}
-\begin{tabular}{l l}
- \\ \hline \\
- \small{\textsc{[Event-Dec]}} & \\
- & \footnotesize{$\langle Char ,Ability, Behaviour, Event; \; Event EName, Trigger, Condition, AName \rangle ; \; S \Rightarrow$} \\
- & \footnotesize{$\langle Char, Ability, Behaviour, Event; Event[EName \mapsto (Trigger, Condition, AName)]; S \rangle$} \\
- \\ \hline
-\end{tabular}
-\label{tbl:devE}
-\caption{Transition rules for Event declaration}
-\end{table}
 
 \begin{table}
 \begin{tabular}{l l}
@@ -94,8 +65,8 @@ Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
  & \footnotesize{$\langle Char, Ability[AName \mapsto (RGR, Effect, Int, Int)], Behaviour, Event; S \rangle$} \\
 \\ \hline
 \end{tabular}
-\label{tbl:decA}
 \caption{Transition rules for Ability declaration}
+\label{tbl:decA}
 \end{table}
 
 \begin{table}
@@ -113,9 +84,40 @@ Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
 \footnotesize{Where $Behaviour' = $} & \footnotesize{$Behaviour[BName \mapsto {\bigcup^{n}_{i = 0}} (RGR_i, VName_i, Integer_i)]$} \\
 \\  \hline 
 \end{tabular}
-\label{tbl:decB}
 \caption{Transition rules for Behaviour declaration}
+\label{tbl:decB}
 \end{table}
+
+\begin{table}
+\begin{tabular}{l l}
+ \\ \hline \\
+ \small{\textsc{[Event-Dec]}} & \\
+ & \footnotesize{$\langle Char ,Ability, Behaviour, Event; \; Event EName, Trigger, Condition, AName \rangle ; \; S \Rightarrow$} \\
+ & \footnotesize{$\langle Char, Ability, Behaviour, Event; Event[EName \mapsto (Trigger, Condition, AName)]; S \rangle$} \\
+ \\ \hline
+\end{tabular}
+\caption{Transition rules for Event declaration}
+\label{tbl:devE}
+\end{table}
+
+\begin{table}
+\begin{tabular}{l l}
+\\ \hline \\
+\small{\textsc{[Char-Dec]}} \\
+ & \large{${\frac{\langle env, Health, Mana, sto, etc \rangle \; \Rightarrow \; env'}{\langle \texttt{make }  CName \texttt{ from } Character, \;
+Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
+ & \footnotesize{$\Rightarrow env \; \vdash \; \langle sto, Attribute, HP, Integer \rangle$} \\
+ \footnotesize{Where} $env'=$ &  \footnotesize{$env[Health \mapsto l] [\texttt{next} \mapsto \texttt{new } l, sto \mapsto std]$} \\
+ & \footnotesize{$env[Mana \mapsto \texttt{new } l][\texttt{next } \mapsto \texttt{new new } l, sto \mapsto std]$} \\
+ & \footnotesize{etc.} \\
+ \\ \hline
+\end{tabular}
+\caption{Transition rules for Character declaration, (\textsl{Remember to explain the ect.'s})}
+\label{tbl:devC}
+\end{table}	
+
+\subsection*{\langname{} battle-engine}
+this is test text
 
 \begin{table}
 \begin{tabular}{l l}
@@ -129,8 +131,8 @@ Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
  & \footnotesize{$Be = Behaviour(Beh)$} \\
 \\ \hline
 \end{tabular}
+\caption{Transition rules for Turn}
 \label{tbl:Turn}
-\caption{Transition rules for Turn.}
 \end{table}
 
 \begin{table}
@@ -142,8 +144,8 @@ Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
  & \footnotesize{$ef\!fect(sto, Char_{Next}, ef\!fMana) = sto'$}\\
 \\ \hline
 \end{tabular}
-\label{tbl:abi-exe}
 \caption{Transition rules for execution of an ability}
+\label{tbl:abi-exe}
 \end{table}
 
 
@@ -154,14 +156,11 @@ Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
  & \footnotesize{$Physical \langle sto, l \rangle \Rightarrow sto[l \mapsto x - i]$} \\
  \\ \hline
 \end{tabular}
-\label{tbl:physical}
 \caption{Transition rule for Physical damage}
+\label{tbl:physical}
 \end{table}
 
 %%%%%%%%%%%%%
 % Vi har nogle regler der skal beskrives med brødtekst.
 % Kan ikke lige huske hvilke der mangler lige nu.. Det håber jeg at Danny kan hjælpe med at huske........
 %%%%%%%%%%%%%
-$$\frac{\textbf{uden d}}{\textbf{uden d}}$$
-
-$$\dfrac{\textbf{med d}}{\textbf{med d}}$$
