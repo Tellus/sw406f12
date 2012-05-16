@@ -30,7 +30,12 @@ tokens::Token *Parser::advance(FORMAT_TOKENTYPE type)
 	}
 	else
 	{
-		throw "Parse Error: Unexpected token";
+		std::stringstream msg;
+		// TODO: Human readable token types? Do we REALLY need that?
+		msg << "Unexpected token (received " << this->input() << ", expected " <<
+				type << ")";
+
+		throw new errors::CompileError("Parse Error", msg.str(), this->current->file, this->current->line);
 	}
 }
 
@@ -98,7 +103,7 @@ trees::AbstractSyntaxNode *Parser::accept_assignment()
 	if (at != tokens::TokentypeAssign && at != tokens::TokentypePlusAssign &&
 			at != tokens::TokentypeMinusAssign && at != tokens::TokentypeMultiplyAssign &&
 			at != tokens::TokentypeDivideAssign)
-	{ throw "Parse Error: Expected assignment type"; }
+	{ throw new errors::CompileError("Parse Error", "Expected assignment type", this->current->file, this->current->line); }
 	node->assignment_type = this->advance()->value;
 
 	node->add_child(this->accept_value());
@@ -281,7 +286,7 @@ trees::AbstractSyntaxNode *Parser::accept_single_value()
 		return this->accept_class_member();
 	}
 
-	throw "Parse Error: Expected a valid value.";
+	throw new errors::CompileError("Parse Error", "Expected a valid value", this->current->file, this->current->line);
 }
 
 trees::AbstractSyntaxNode *Parser::accept_class_member()

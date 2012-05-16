@@ -39,7 +39,7 @@ void AssignmentNode::visit(typecheck::scope *current_scope)
 
 	this->type = s->assigned_from;
 
-	if ((this->type & typecheck::MetatypeReference) && (!this->type & typecheck::TypeReferenceEffect))
+	if ((this->type & typecheck::MetatypeReference) && (!this->type & typecheck::TypeReferenceEvent))
 	{
 		// This should make sure only event listeners can be deep-referenced.
 		if (this->children.front()->dynamic)
