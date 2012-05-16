@@ -52,6 +52,11 @@ int main(int argc, char* argv[])
 		std::cout << ex << std::endl;
 		return 0;
 	}
+	catch (errors::CompileError *e)
+	{
+		std::cout << e->what();
+		return 0;
+	}
 
 	tree->emit();
 

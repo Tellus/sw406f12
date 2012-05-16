@@ -189,7 +189,6 @@ void AssignmentNode::emit(codegen::EmissionData *data)
 				data->stream << ");\n";
 			}
 			break;
-		// TODO: Other cases
 	}
 }
 
