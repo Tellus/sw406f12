@@ -67,8 +67,8 @@ void SymbolTable::initialize()
 	this->add_symbol(&this->behaviour, "owner", MetatypeNone, TypeReferenceCharacter, &this->character);
 
 	this->add_symbol(&this->event, "triggers", TypeList | TypeReferenceEvent, MetatypeNone, NULL);
-	this->add_symbol(&this->event, "conditions", TypeList | TypeBool, MetatypeNone, NULL);
-	this->add_symbol(&this->event, "actions", TypeList | TypeReferenceAbility | TypeCall, MetatypeNone, NULL);
+	this->add_symbol(&this->event, "condition", TypeBool, MetatypeNone, NULL);
+	this->add_symbol(&this->event, "action", TypeReferenceAbility | TypeCall, MetatypeNone, NULL);
 	this->add_symbol(&this->event, "owner", MetatypeNone, TypeReferenceCharacter, &this->character);
 
 	this->add_symbol(&this->attribute, "current", TypeNumber, TypeNumber, NULL);

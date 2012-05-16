@@ -1,5 +1,5 @@
-Hai
+report contains LaTeX report.
 
-Added text to test Redmine syncing.
+engine/BattleEngine contains the run-time lib/engine.
 
-Again.
+Compiler/NeoCompiler contains the langname compiler.

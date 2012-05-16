@@ -101,7 +101,11 @@ void AssignmentNode::emit(codegen::EmissionData *data)
 			}
 			else if (this->type == (typecheck::TypeList | typecheck::TypeReferenceEvent))
 			{
-				data->stream << "\t\t/*Events not yet implemented*/\n";
+				data->data |= codegen::EmitEventList;
+
+				this->emit_children(data);
+
+				data->data &= codegen::EmitClass;
 			}
 			else if (this->identifier == "behaviour")
 			{
@@ -112,7 +116,6 @@ void AssignmentNode::emit(codegen::EmissionData *data)
 				data->stream << "();\n";
 			}
 
-			// TODO: Events
 			break;
 		case codegen::EmitAbility:
 			if (this->type == typecheck::TypeString)
@@ -164,6 +167,27 @@ void AssignmentNode::emit(codegen::EmissionData *data)
 			this->emit_children(data);
 
 			data->data &= codegen::EmitClass;
+			break;
+
+		case codegen::EmitEvent:
+			if (this->identifier == "action")
+			{
+				data->stream << "\t\tthis->set_action(new ";
+
+				this->emit_children(data);
+
+				data->stream << ");\n";
+			}
+			else if (this->identifier == "condition")
+			{
+				data->stream << "\t\tthis->set_condition(";
+				data->data |= codegen::EmitEventCondition;
+
+				this->emit_children(data);
+
+				data->data &= codegen::EmitClass;
+				data->stream << ");\n";
+			}
 			break;
 		// TODO: Other cases
 	}

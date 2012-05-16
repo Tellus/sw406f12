@@ -53,13 +53,16 @@
 % 3. Language definition.
 \input{tex/language/chapter_language}
 
-% 4. Engine construction.
+% 4. Engine design
+\input{tex/enginedesign/chapter_engine}
+
+% 5. Engine and compiler construction.
 \input{tex/construction/chapter_construction}
 
-% 5. Evaluation
+% 6. Evaluation
 \input{tex/evaluation/chapter_evaluation}
 
-% 6. Conclusion
+% 7. Conclusion
 \input{tex/conclusion/chapter_conclusion}
 
 \addcontentsline{toc}{part}{Listings}
@@ -70,11 +73,11 @@
 
 % Change headings for bibliography. Looks fucked otherwise, I think.
 % Page design from fancyhdr.
-\fancyhead{}
-\fancyfoot{}
-\fancyhead[RO,LE]{\leftmark}
-\fancyfoot[C]{\thepage}
-\setlength{\headheight}{23pt}
+%\fancyhead{}
+%\fancyfoot{}
+%\fancyhead[RO,LE]{\leftmark}
+%\fancyfoot[C]{\thepage}
+%\setlength{\headheight}{23pt}
 
 % Afslut med bibliografien
 
@@ -86,7 +89,7 @@
 % 4. Bilag
 \appendix{}
 \addcontentsline{toc}{part}{Appendix}
-\input{tex/appendix/question_sheets}
+%\input{tex/appendix/question_sheets}
 \input{tex/appendix/char_sheet}
 
 \end{document}

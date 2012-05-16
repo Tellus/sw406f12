@@ -56,13 +56,15 @@ trees::AbstractSyntaxNode *Parser::accept_program()
 {
 	trees::ProgramNode *node = new trees::ProgramNode();
 
-	while (this->input() == tokens::TokentypeMake)
+	// Temporary solution for multiple files.
+	while (this->input() != tokens::TokentypeNone)
 	{
-		node->add_child(this->accept_declaration());
+		while (this->input() == tokens::TokentypeMake)
+		{
+			node->add_child(this->accept_declaration());
+		}
+		this->advance(tokens::TokentypeEnd);
 	}
-
-	this->advance(tokens::TokentypeEnd);
-
 	return node;
 }
 
@@ -169,7 +171,7 @@ trees::AbstractSyntaxNode *Parser::accept_condition()
 	FORMAT_TOKENTYPE op = this->input();
 	if (op != tokens::TokentypeEqual && op != tokens::TokentypeGreater &&
 			op != tokens::TokentypeGreaterEqual && op != tokens::TokentypeLess &&
-			op != tokens::TokentypeLessEqual)
+			op != tokens::TokentypeLessEqual && op != tokens::TokentypeNotEqual)
 	{
 		return lhs;
 	}
@@ -225,8 +227,11 @@ trees::AbstractSyntaxNode *Parser::accept_factor()
 {
 	if (this->input() == tokens::TokentypeLParan)
 	{
+		trees::ArithmeticNode *node = new trees::ArithmeticNode();
+		node->op = "()";
+
 		this->advance(tokens::TokentypeLParan);
-		trees::AbstractSyntaxNode *node = this->accept_expression();
+		node->add_child(this->accept_expression());
 		this->advance(tokens::TokentypeRParan);
 		return node;
 	}
