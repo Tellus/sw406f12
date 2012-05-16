@@ -2,6 +2,9 @@
 
 #include "../Token/token.h"
 #include "../Trees/abstractsyntaxtree.h"
+#include "../ErrorHandling/compileerror.h"
+
+#include <sstream>
 
 namespace parser
 {

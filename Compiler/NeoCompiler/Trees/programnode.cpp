@@ -44,7 +44,7 @@ void ProgramNode::emit(codegen::EmissionData *data)
 	em->data = codegen::EmitNone;
 	em->stream.open("generated.h", std::ios::out);
 
-	em->stream << "#include \"" << codegen::EmitHeaderDirectory <<
+	em->stream << "#pragma once\n#include \"" << codegen::EmitHeaderDirectory <<
 			"Engine.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
 			"Character.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
 			"Ability.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
@@ -54,7 +54,7 @@ void ProgramNode::emit(codegen::EmissionData *data)
 			"FullBehaviour.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
 			"BehaviourRatio.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
 			"EventListener.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
-			"example_ruleset.h\"\n" << // TODO: Headers
+			"example_ruleset.h\"\n" <<
 			"using namespace engine;\n" <<
 			"using namespace testbattle;\n" <<
 			"namespace generated\n{\n";

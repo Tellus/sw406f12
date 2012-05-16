@@ -52,7 +52,6 @@ void SymbolTable::initialize()
 	this->add_symbol(&this->character, "abilities", TypeList | TypeReferenceAbility, MetatypeNone, NULL);
 	this->add_symbol(&this->character, "events", TypeList | TypeReferenceEvent, MetatypeNone, NULL);
 	this->add_symbol(&this->character, "behaviour", TypeReferenceBehaviour, MetatypeNone, NULL);
-	this->add_symbol(&this->character, "owner", MetatypeNone, TypeReferenceCharacter, &this->character);
 
 	this->add_symbol(&this->ability, "name", TypeString, TypeString, NULL);
 	this->add_symbol(&this->ability, "effects", TypeList | TypeReferenceEffect | TypeCall, MetatypeNone, NULL);
@@ -117,6 +116,17 @@ void SymbolTable::add_symbol(scope *target, std::string key, FORMAT_TYPE assigne
 	std::pair<std::string, Symbol*> insert(key, s);
 	target->insert(insert);
 }
+
+scope SymbolTable::global(scope *s)
+{
+	scope global;
+
+	global.insert(s->begin(), s->end());
+	global.insert(this->declarations.begin(), this->declarations.end());
+
+	return global;
+}
+
 
 
 } /* namespace typecheck */
