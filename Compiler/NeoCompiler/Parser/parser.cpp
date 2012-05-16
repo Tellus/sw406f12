@@ -252,7 +252,6 @@ trees::AbstractSyntaxNode *Parser::accept_single_value()
 	{
 		trees::NumberNode *node = new trees::NumberNode();
 		node->raw = this->advance(tokens::TokentypeNumber)->value;
-		// TODO: Parse
 		return node;
 	}
 
@@ -260,7 +259,6 @@ trees::AbstractSyntaxNode *Parser::accept_single_value()
 	{
 		trees::BooleanNode *node = new trees::BooleanNode();
 		node->raw = this->advance(tokens::TokentypeBool)->value;
-		// TODO: Parse
 		return node;
 	}
 

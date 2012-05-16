@@ -35,6 +35,5 @@ const FORMAT_EMISSIONDATA EmitEffectList = EmitTargetsList << 1;
 const FORMAT_EMISSIONDATA EmitNegativeList = EmitEffectList << 1;
 
 const FORMAT_EMISSIONDATA EmitEventCondition = EmitNegativeList << 1;
-// TODO: Lists for subtasks.
 
 } /*namespace codegen*/
