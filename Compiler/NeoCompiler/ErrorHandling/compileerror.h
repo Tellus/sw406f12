@@ -18,11 +18,10 @@ public:
 	std::string what();
 	std::string where();
 
-private:
-	std::string _type;
-	std::string _message;
-	std::string _file;
-	int _line;
+	std::string type;
+	std::string message;
+	std::string file;
+	int line;
 };
 
 } /* namespace errors */

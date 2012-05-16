@@ -56,7 +56,7 @@ void Generator::character_post(std::fstream &stream, std::list<std::string> &ass
 
 	if (!this->list_contains(assignments, "magic_power"))
 	{
-		stream << "\t\tthis->add_attribute(\"attack_power\", (" <<
+		stream << "\t\tthis->add_attribute(\"magic_power\", (" <<
 				"\n\t\t\t\tthis->get_attribute(\"intelligence\")->get_current() " <<
 				"/ 2) + 1);\n";
 	}
@@ -69,7 +69,7 @@ void Generator::character_post(std::fstream &stream, std::list<std::string> &ass
 
 	if (!this->list_contains(assignments, "mana"))
 	{
-		stream << "\t\tthis->add_resource(\"health\", 0, " <<
+		stream << "\t\tthis->add_resource(\"mana\", 0, " <<
 				"\n\t\t\t\tthis->get_attribute(\"intelligence\")->get_current() * 15);\n";
 	}
 

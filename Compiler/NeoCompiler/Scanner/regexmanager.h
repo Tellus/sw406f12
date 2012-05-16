@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Token/tokentypes.h"
+#include "../ErrorHandling/CompileError.h"
 
 #include <boost/regex.hpp>
 #include <map>

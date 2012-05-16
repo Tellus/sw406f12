@@ -46,7 +46,7 @@ token_match *RegexManager::match(std::string *buffer)
 	}
 	if (ret == NULL)
 	{
-		throw "Syntax Error";
+		throw new errors::CompileError("Syntax Error", "No token matched");
 	}
 
 	buffer->erase(0, ret->value.length());
@@ -115,7 +115,7 @@ void RegexManager::initialize_regex()
 
 	this->add_regex(tokens::TokentypeComment, "^(//.*?\\n)|(/\\*.*?\\*/)");
 
-	this->add_regex(tokens::TokentypeIdentifier, "^\\w[\\w\\d]*");
+	this->add_regex(tokens::TokentypeIdentifier, "^[a-zA-Z][\\w]*");
 	this->add_regex(tokens::TokentypeMake, "^make");
 	this->add_regex(tokens::TokentypeFrom, "^from");
 	this->add_regex(tokens::TokentypeReference, "(^owner)|(^this)");

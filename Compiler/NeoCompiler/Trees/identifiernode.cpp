@@ -18,7 +18,7 @@ IdentifierNode::~IdentifierNode()
 
 void IdentifierNode::visit(typecheck::scope *current_scope)
 {
-	typecheck::Symbol *s = typecheck::SymbolTable::handle().lookup(current_scope, this->id, true);
+	typecheck::Symbol *s = typecheck::SymbolTable::handle().lookup(current_scope, this->id);
 
 	if (s == NULL)
 		throw "Type Error: Undefined reference.";
