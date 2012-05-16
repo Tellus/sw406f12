@@ -1,2 +1,8 @@
 \subsection{Symbol table}
-Some about the implementation of the symbol table to come here
+The symbol table is implemented as a class with the necessary scopes: declaration, character, ability, behaviour, event, resource and attribute). Whenever a new valid declaration is encountered it is added to a map in the declaration scope with the key being a string and the value being the symbol. Adding symbols is a trivial function. 
+\vspace{10pt}
+A symbol is a struct containing information about what type the symbol was assigned from (e.g. a number, if Health is assigned a value), what type the symbol assigns (e.g. a reference, if something is assigned to Health) and a scope reference to show, which scope is entered by using the reference operator "." (such as Health.max). 
+\vspace{10pt}
+The symbol table provides a lookup function to check, if a symbol is in the table. The function, given a scope, a lookup-string and a boolean to determine if the lookup is global, simply goes through the table checking if any entries match the string provided in the function call and returns it if it exists. If the lookup is global it checks both the given scope and the declarations scope. When the symbol table is initialized it adds all the keywords in \langname{}.
+\vspace{10pt}
+Had the symbol table been more complicated a hash table would've been prudent, however given the small size of it, implementing it as maps is most likely just as good.

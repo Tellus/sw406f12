@@ -1,14 +1,27 @@
 \section{Engine}
-While the \langname{} compiler chain parses, validates and translates program code, the result cannot be run on its own. The compiler must be complemented by a run-time library, an interpreter or perhaps some form of virtual machine that will support the execution of a \langname{}-defined battle scenario. A run-time environment has been developed in parallel with the compiler, enabling coded scenarios to be resolved as described by the turn-based semantics. This section will describe the inner workings of the engine, its basic design, architecture and form.
-\begin{comment}
+While the \langname{} compiler chain parses, validates and translates program code, the result cannot be run on its own. The engine complements the compiler by exposing a simple API that allows for the resolution of battle scenarios described in \langname{}\todo{Did I write this once already?}.
+
+This section describes how the engine was implemented, particularly how the implementation language and compiler code generation concerns affected the final design.
+
+\subsection{Platform}
+The engine was implemented in $C++$ just like the compiler, partially because of language acclimatisation but mostly in order to simplify any bonding between the two pieces of the system. \todo{Depending on final implementation, write about either the two-process "compile \langname{}, compile $C++$, run" or the single-process "compile \langname{}, execute).}
+
+\subsection{Decision-making}
+Characters' decision-making is defined non-deterministically. This trait means that a singular path through a game cannot be determined. Instead, it is necessary to calculate all possible outcomes to determine the optimal game state for a Character. To achieve this, the entire game state needed to be atomically contained and easily replicatable. From there it is a simple matter of a brute-force serial approach to combining abilities and valid targets to modify a temporary game state, measuring the resulting piggy value.
+
 \begin{figure}
-\includegraphics[scale=1]{img/engine_class_design}
-\caption{The abstract class design of the engine.}
+\missingfigure{Insert a figure demonstrating the cloning hierarchy.}
+\caption{\label{figure:implementation:engine:cloning}An image giving an impression of the cloning mechanism throughout the Primarch and GameState hierarchies.}
 \end{figure}
-\end{comment}
 
-\subsection{Base philosophy}
-The stated intention of the engine is to simulate a scenario according to the definitions set up by the \langname{} code. This results in the need for several features, both for convenience and correctness.
+\subsection{Design revisited}
+The somewhat open-ended cross referencing allowed in \langname{} necessitates a data model wherein game objects are closely related where crossovers may happen. This referencing is apparent mostly when setting Attribute and Resource values \todo{We probably have something in syntax/semantics about RGR.Member syntax and meaning.}. The prime method of generalising this access across Primarchs was to introduce a Primarch superclass in the engine that supplied the following functionality:
 
-\subsubsection{Data types}
-The seven basic data types of \langname{} should be mapped to similarly functioning classes within the engine's framework. The compiler's code generation stage - in particular, the templates it utilises - are vastly simplified by defining them in the engine. This has the added benefit of allowing us to better define the engine before any \langname{} code has even been written. The end result is effective delegation of responsibilities. The code generator should by no means be weighed down by lengthy class implementations, when it should instead make use of small, efficient templates.
+\subsubsection*{Meta identifiers}
+Adding a human-readable string representation of a Primarch identifier together with a unique global integer identifier allows for seeking Primarch instances without knowing its type prior to retrieval. This is useful when requesting the value of the member "Power" when it is unknown whether that member is a Resource or an Attribute. While the global id is unique between container entities (two Characters do not have the same "Health" Resource), the name "Health" can be shared between them.
+
+\subsubsection*{Generalised value}
+All Primarchs must implement a notion of a "value", representing their current state. This makes very little practical sense for Effects, Ability instance or Characters in the current language design. However, it eases the implementation of working with values for Resource and Attributes.
+
+\subsubsection*{Containment and cloning}
+Each Primarch is in itself a potential container for other Primarchs. Several of the Primarchs contain other Primarchs, and unifying this concept across classes reduces the amount of redundant code throughout the project. Furthermore, this tree-like structure allows for a unified method for cloning an entire Character's structure for use in a parallel GameState for Behaviour calculations.

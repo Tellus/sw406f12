@@ -1,4 +1,5 @@
 \section{Language semantics}
+\begin{comment}
 The language is a language used for  of a role-playing characters. I addiction to the language is an battle engine, which simulates a battle between the  character. \\
 The engine works, so that lets one character make an action, then the turn end, and the other character then gets to make its action. \\
 The action a character makes, is calculated by an AI-behaviour. The AI-behaviour is base at a behaviour declared for the character. \\
@@ -8,49 +9,36 @@ Before a character gets to make its turn, win condition is checked, so that the 
 The semantics of the language is base at the environment-store model, which is a a model describing how variables are bound during a program execution. Each variable is bound to a storage cell, and the content of the storage cell is the value of the variable.
 
 \subsection{\langname{} semantics}
-
+\end{comment}
 
 	%{\Large[The real stuff]}
-	
-	$Character : CName \rightharpoonup Behaviour \times \mathcal{P}(AName) \times env \times EName \times Resource$\\
-	Character is decelerated from its name, and contains, behaviour, a list of abilities,, an environment which contain variables decelerated for the character, event, and its resources.  \\
-	$Ability: AName \rightharpoonup \mathcal{P}(RGR) \times Effect \times Integer \times Integer$\\
-	Ability is decelerated from it name, and it contains, a \ac{rgr}, an effect and an integer which represent the cost of the ability, and an 			other integer which represent the damage(or heal) the ability does.\\
-	$RGR = \{\texttt{owner, enemy}\}$\\
-	\ac{rgr} is the set of keyword, used for references.\\
-	$Behaviour: BName \rightharpoonup \mathcal{P}(RGR \times VName \times Integer)$\\
-	
-	$Event : EName \rightharpoonup Trigger \times Condition \times AName$\\
-	$Resource : RName \rightharpoonup Integer \times Integer$\\\\
-	
-\begin{table}
-\begin{tabular}{l l}
-\\ \hline \\
-\small{\textsc{[Char-Dec]}} \\
- & \large{${\frac{\langle env, Health, Mana, sto, etc \rangle \; \Rightarrow \; env'}{\langle \texttt{make }  CName \texttt{ from } Character, \;
-Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
- & \footnotesize{$\Rightarrow env \; \vdash \; \langle sto, Attribute, HP, Integer \rangle$} \\
- \footnotesize{Where} $env'=$ &  \footnotesize{$env[Health \mapsto l] [\texttt{next} \mapsto \texttt{new } l, sto \mapsto std]$} \\
- & \footnotesize{$env[Mana \mapsto \texttt{new } l][\texttt{next } \mapsto \texttt{new new } l, sto \mapsto std]$} \\
- & \footnotesize{etc.} \\
- \\ \hline
-\end{tabular}
-\label{tbl:devC}
-\caption{Transitions rules for Character deceleration, (\textsl{Remember to explain the ect.'s})}
-\end{table}	
+The semantics of \langname{} are based on the environment-store model, described in section \ref{sec:semantic}.
+The semantics are split into two parts; declarations in \langname{}, and the inner workings of the engine used to simulate a battle between two characters.
+\subsubsection*{\langname{}}
+In \langname{} it is possible for the user to use references, they are called \ac{rgrs}. In the semantics of \langname{}, \ac{rgr} is a set of keywords used to refer to characters.\\ \textbf{RGR} is defined as follows;  
+%
+$$\mathbf{RGR} = \{\texttt{owner, enemy}\}$$
+%
+\ac{rgrs} are used in the declaration of abilities and behaviour. An ability is declared by a name and contains; the targets to be effected by the ability, an effect corresponding carried out by the ability and two values. The first value representing the mana cost of the ability and the second representing the damage done.\\
+To keep track of the bindings of an ability, an \textit{ability environment} is used. The set of ability environments is called \textbf{Ability}. 
+Given an ability name \textit{AName}, an ability environment must hold information about, targets, effect, cost, and damage. Therefore the definition of the set of ability environments \textbf{Ability} is:
+%
+$$\mathbf{Ability: \; AName \rightharpoonup \mathcal{P}(RGR) \times Effect \times Integer \times Integer}$$
+%
+Transition rules for declaration of ability are of the form
+%
+{\small $$\langle Char, Ability, Behaviour, Event \rangle \Rightarrow_{DecA} \langle Char, Ability', Bahavior, Event \rangle$$}
+%
+The transition system for ability declaration is 
 
-\begin{table}
 \begin{tabular}{l l}
- \\ \hline \\
- \small{\textsc{[Event-Dec]}} & \\
- & \footnotesize{$\langle Char ,Ability, Behaviour, Event; \; Event EName, Trigger, Condition, AName \rangle ; \; S \Rightarrow$} \\
- & \footnotesize{$\langle Char, Ability, Behaviour, Event; Event[EName \mapsto (Trigger, Condition, AName)]; S \rangle$} \\
- \\ \hline
+$\Gamma_{DecA} = $ & $\mathbf{Character \times Ability \times Bahaviour \times Event}$ \\
+$\Rightarrow_{DecA}$ & \\
+$T_{DecA} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event}$ \\
 \end{tabular}
-\label{tbl:devE}
-\caption{Transitions rules for Event deceleration}
-\end{table}
-
+\\\\
+$\Rightarrow_{DecA}$ is defined by the rules in table \ref{tbl:decA}.\\\\
+%
 \begin{table}
 \begin{tabular}{l l}
 \\ \hline \\
@@ -59,10 +47,29 @@ Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
  & \footnotesize{$\langle Char, Ability[AName \mapsto (RGR, Effect, Int, Int)], Behaviour, Event; S \rangle$} \\
 \\ \hline
 \end{tabular}
+\caption{Transition rules for $\Rightarrow_{DecA}$}
 \label{tbl:decA}
-\caption{Transitions rules for Ability declaration}
 \end{table}
+%
+As mentioned, \ac{rgrs} are used for behaviour as well. A behaviour is declared by a name and it contains a list of 3-tuples (\textbf{\ac{rgr}}, \textbf{VName}, \textbf{Integer}), where \textbf{\ac{rgr}} is a reference to the involved character, \textbf{VName} is the name of the involved attribute and \textbf{Integer} is a value representing the priority of the attribute. To keep track of the bindings of a behaviour, a \textit{behaviour environment} is used. The set of behaviour environments is called \textbf{Behaviour}.
+A behaviour environment must, given a behaviour name \textit{BName}, hold information of the list of 3-tuples. Therefore the definition of the set of behaviour environments is:
+%
+$$\mathbf{Behaviour: \; BName \rightharpoonup \mathcal{P}(RGR \times VName \times Integer)}$$
+%
+Transition rules for declaration of behaviour are of the form
+%
+{\small $$\langle Char, Ability, Behaviour, Event \rangle \Rightarrow_{DecB} \langle Char, Ability, Bahavior', Event \rangle$$}
+%
+The transition system for declaration of behaviour is
 
+\begin{tabular}{l l}
+$\Gamma_{DecB} = $ & $\mathbf{Character \times Ability \times Bahaviour \times Event}$ \\
+$\Rightarrow_{DecB}$ & \\
+$T_{DecB} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event}$ \\
+\end{tabular}
+\\\\
+$\Rightarrow_{DecB}$ is defined by the rules in table \ref{tbl:decB}.\\\\
+%
 \begin{table}
 \begin{tabular}{l l l}
 \\ \hline \\
@@ -73,14 +80,87 @@ Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
  & & \footnotesize{$\vdots$} \\
  & & \footnotesize{$RGR_n, VName_n, Integer_n  \rangle ; S \; \Rightarrow$} \\
 \end{tabular}
-\begin{tabular}{l p{0.97\textwidth}}
+\begin{tabular}{l p{0.92\textwidth}}
  & \footnotesize{$\langle Char, Ability, Behaviour', Event \rangle; S$} \\ %& \color{white} \footnotesize{$RGR_1, VName_1, Integer_1 \Rightarrow$} \\
 \footnotesize{Where $Behaviour' = $} & \footnotesize{$Behaviour[BName \mapsto {\bigcup^{n}_{i = 0}} (RGR_i, VName_i, Integer_i)]$} \\
 \\  \hline 
 \end{tabular}
+\caption{Transition rules for $\Rightarrow_{DecB}$}
 \label{tbl:decB}
-\caption{Transition rules for Behaviour deceleration}
 \end{table}
+%
+%Event
+For declaring forced action for a character, \langname{} makes it possible for a user to declare event, which contains a trigger(decrease of health), a condition(health below 10\%) and an ability to execute when both the trigger and the condition is meet.
+A \textit{event environment} is used to keep track of the binding for events. The set of event environments is called \textbf{Event}.
+Given an event name, the event environment must hold information about the trigger, condition and ability. Therefore the definition of the set of event environments is:
+%
+$$\mathbf{Event : \; EName \rightharpoonup Trigger \times Condition \times AName}$$
+%
+Transition rules for declaration of event are of the form
+%
+{\small $$\langle Char, Ability, Behaviour, Event \rangle \Rightarrow_{DecE} \langle Char, Ability, Bahavior, Event' \rangle$$}
+%
+The transition system for declaration of event is
+
+\begin{tabular}{l l}
+$\Gamma_{DecE} = $ & $\mathbf{Character \times Ability \times Bahaviour \times Event}$ \\
+$\Rightarrow_{DecE}$ & \\
+$T_{DecE} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event}$ \\
+\end{tabular}
+\\\\
+$\Rightarrow_{DecE}$ is defined by the rules in table \ref{tbl:decE}.\\\\
+%Transition rules for declaration of event can be seen in table \ref{tbl:devE}.
+%
+\begin{table}
+\begin{tabular}{l l}
+ \\ \hline \\
+ \small{\textsc{[Event-Dec]}} & \\
+ & \footnotesize{$\langle Char ,Ability, Behaviour, Event; \; Event EName, Trigger, Condition, AName \rangle ; \; S \Rightarrow$} \\
+ & \footnotesize{$\langle Char, Ability, Behaviour, Event; Event[EName \mapsto (Trigger, Condition, AName)]; S \rangle$} \\
+ \\ \hline
+\end{tabular}
+\caption{Transition rules for $\Rightarrow_{DecE}$}
+\label{tbl:decE}
+\end{table}
+%
+%Resource
+When a character is declared, they are declared with some resources like health and mana. The resources have a maximum and minimum value. A resource therefore has bindings for the two values. To keep track of these bindings a \textit{resource environment} is used.\\
+The set of resource environments is called \textbf{Resource}, and is defined as follows:
+%
+$$\mathbf{Resource : \; RName \rightharpoonup Integer \times Integer}$$
+%
+It is also required to keep track of the bindings of the character itself. To keep track of the bindings a \textit{character environment} is used. The set of character environments is called \textbf{Character}.
+Given a character name \textit{CName}, a character environment must hold information about the behaviour, abilities, attributes, events and resources bound to the character. Therefore the definition of the set of character environments \textbf{Character} is:
+%
+$$\mathbf{Character} : \; \mathbf{CName} \rightharpoonup \mathbf{Behaviour} \times \mathbf{\mathcal{P}(AName)} \times \mathbf{EnvV} \times \mathbf{EName} \times \mathbf{Resource}$$
+%
+Transition rules for declaration of character are of the form
+%
+{\small $$\langle CName, A_D, R_D, Ability, Behaviour, Events \rangle
+\Rightarrow_{DecC} 
+ \langle sto, Attribute, HP, Integer \rangle$$}
+% can be seen i table \ref{tbl:decC}.
+%
+\begin{table}
+\begin{tabular}{l l}
+\\ \hline \\
+\small{\textsc{[Char-Dec]}} \\
+ & \large{${\frac{\langle env, Health, Mana, sto, etc \rangle \; \Rightarrow \; env'}
+ {\langle \texttt{make }  CName \texttt{ from } Character, \; CName, A_D, R_D, Ability, Behaviour, Events \rangle}}$}\\
+ & \footnotesize{$\Rightarrow env \; \vdash \; \langle sto, Attribute, HP, Integer \rangle$} \\
+ \footnotesize{Where} $env'=$ &  \footnotesize{$env[Health \mapsto l] [\texttt{next} \mapsto \texttt{new } l, sto \mapsto std]$} \\
+ & \footnotesize{$env[Mana \mapsto \texttt{new } l][\texttt{next } \mapsto \texttt{new new } l, sto \mapsto std]$} \\
+ & \footnotesize{etc.} \\
+ \\ \hline
+\end{tabular}
+\caption{Transition rules for $\Rightarrow_{DecC}$ (\textsl{Remember to explain the ect.'s})}
+\label{tbl:decC}
+\end{table}	
+%
+\todo{Missing some declarations, which should be described with clean text}
+\subsection*{\langname{} battle-engine}
+this is test text
+\todo{Write the last of it}
 
 \begin{table}
 \begin{tabular}{l l}
@@ -94,8 +174,8 @@ Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
  & \footnotesize{$Be = Behaviour(Beh)$} \\
 \\ \hline
 \end{tabular}
+\caption{Transition rules for Turn}
 \label{tbl:Turn}
-\caption{Transition rules for Turn.}
 \end{table}
 
 \begin{table}
@@ -107,8 +187,8 @@ Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
  & \footnotesize{$ef\!fect(sto, Char_{Next}, ef\!fMana) = sto'$}\\
 \\ \hline
 \end{tabular}
-\label{tbl:abi-exe}
 \caption{Transition rules for execution of an ability}
+\label{tbl:abi-exe}
 \end{table}
 
 
@@ -119,206 +199,11 @@ Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
  & \footnotesize{$Physical \langle sto, l \rangle \Rightarrow sto[l \mapsto x - i]$} \\
  \\ \hline
 \end{tabular}
-\label{tbl:physical}
 \caption{Transition rule for Physical damage}
+\label{tbl:physical}
 \end{table}
 
 %%%%%%%%%%%%%
 % Vi har nogle regler der skal beskrives med brødtekst.
 % Kan ikke lige huske hvilke der mangler lige nu.. Det håber jeg at Danny kan hjælpe med at huske........
 %%%%%%%%%%%%%
-\begin{comment}
-Five parts are highlighted for semantic description, these are  \emph{Declaration}, \emph{Turn}, \emph{AI}, \emph{Action} and \emph{Wincon}.\\
-The first one 'Declaration' is the main function of \langname{} and the four that follow are not included in the language itself but in the engine.
-A turn is a character takes an action, based at the outcome of the AI calculation \\
-AI is calculation, which simulates every possible outcome, based on the possible actions a character can make. \\
-Action is an event, which will make change for the stored values of the enemy character, or the character itself.\\
-Wincon is a conditional check to see if the \emph{winning condition} is met.\\\\
-
-
-The semantics for the relevant parts of \langname{} are defined as follows:
-\begin{itemize}
-	\item $EnvD$ is a declaration-environment
-	\item $env_{D}$ is an element in the set $EnvD$
-	\item $EnvC$ is a character-environment
-	\item $env_{c}$ is an element in the set $EnvC$
-	\item $StoreS$ is a set of locations and their bindings
-	\item $sto$ is an element in the set $Stores$
-	\item $Pending$ is a list of pending characters
-	\item $ActioN$ is a set of available actions
-	\item $act$ is an element in the set $ActioN$
-\end{itemize}
-\pagebreak
-The rules for the five parts are as follows:
-\begin{center}
-\begin{tabular}{ c }
-\textbf{Declaration}\\
-\hline
- \\
-$\langle env_{D}, env_{C}, sto \rangle \rightarrow$\\
-$\langle env_{C}', sto' \rangle$\\
-\end{tabular}
-\end{center}
-The transitions system for declarations is $(\Gamma_{DV}, \rightarrow_{DV}, T_{DV})$, whose configurations are defined by \\
-\begin{tabular}{l l l}
-$\Gamma_{DV}$ & $=$ & $(EnvD \times EnvC \times StoreS) \cup (EnvD, StoreS),$ \\
-$T_{DV}$ & $=$ & $EnvC \times StoreS$ \\
-\end{tabular}
-\begin{center}
-\begin{tabular}{ l l }
-\multicolumn{2}{c}{\textbf{Turn}}\\
-\hline
- & \\
-$\langle Pending, env_{C}, sto \rangle \Rightarrow$ & \\
-$\langle Pending', env_{C}, sto \rangle$ & $\text{if wincon } \rightarrow_{b} ff$\\
- & \\
-$\langle Pending, env_{C}, sto \rangle \Rightarrow$ & \\
-$\langle Pending, env_{C}, sto \rangle$ & $\text{if wincon } \rightarrow_{b} tt$\\
-\end{tabular}
-\end{center}
-
-The transition system for turns is $(\Gamma_{TURN}, \Rightarrow_{TURN}, T_{TUNR})$, whose configurations are defined by\\
-\\
-\begin{tabular}{l l l }
-$\Gamma_{TURN}$ & $=$ & $(Pending \times EnvC \times StoreS)$ \\
-$T_{TURN}$ & $=$ & $(Pending \times EnvC \times StoreS)$\\
-\end{tabular}
-
-\begin{center}
-\begin{tabular}{ c }
-\textbf{AI}\\
-\hline
- \\
-$\langle Pending, env_{C}, sto, Action \rangle \Rightarrow$\\
-$\langle Pending, env_{C}, sto, act \rangle$\\
-\end{tabular}
-\end{center}
-The transition system for AI is $(\Gamma_{AI}, \Rightarrow_{AI}, T_{AI})$, whose configurations are defined by \\
-\begin{tabular}{l l l }
-$\Gamma_{AI}$ & $=$ & $(Pending \times EnvC \times StoreS \times ActioN)$ \\
-$T_{AI}$ & $=$ & $(Pending \times EnvC \times StoreS \times ActioN)$ \\
-
-\end{tabular}
-\begin{center}
-\begin{tabular}{ c }
-\textbf{Action}\\
-\hline
- \\
-$\langle env_{C}, Pending, sto, act \rangle \Rightarrow$\\
-$\langle env_{C}, Pending, sto', act \rangle$\\
-\end{tabular}
-\end{center}
-The transition system for Action is $(\Gamma_{ACT}, \Rightarrow_{ACT}, T_{ACT})$, whose configurations are defined by \\
-\begin{tabular}{l l l }
-$\Gamma_{ACT}$ & $=$ & $(Pending \times EnvC \times StoreS \times ActioN)$ \\
-$T_{ACT}$ & $=$ & $(Pending \times EnvC \times StoreS \times ActioN)$ \\
-
-\end{tabular}
-\begin{center}
-\begin{tabular}{ l l }
-\multicolumn{2}{c}{\textbf{Wincon}}\\
-\hline
- & \\
-$\dfrac{env_{C} \vdash c \rightarrow_{h} h}{\text{win} \rightarrow_{b} ff}$ & $\text{if } h > 0$\\
- & \\
-$\dfrac{env_{C} \vdash c \rightarrow_{h} h}{\text{win} \rightarrow_{b} tt}$ & $\text{if } h \leq 0$\\
-\end{tabular}
-\end{center}
-Wincon is special, because it is a boolean expression. \\
-The rules evaluates true, if the demanded character $c$, has health evaluating to the value $h$, and the value is less or equal to zero, else et evaluates false, and the game will the continue.
-
-\pagebreak
-
-
-	$D_C ::= \text{make } c \text{ from } Character C \{ D_A, D_R, D_B \}; D_C | \varepsilon$\\
-	%D_C is a declaration of a character
-	$D_A ::= A: v; D_A | \varepsilon$\\
-	%D_A is a declaration of an attribute
-	$D_R ::= \text{make } r \text{ from } Resource: v; D_R | \varepsilon$\\
-	%D_R is a declaration of a resource
-	$D_{AB} ::= \text{make } ab \text{ from } Ability \{ List[Rgr], List[effects], cost_h, cost_m \}; D_{AB} | \varepsilon$\\
-	%D_{AB} is a declaration of an ability
-	%cost_h is health cost
-	%cost_m is mana cost
-	$D_B ::= \text{make } b \text{ from } Behaviour \{positiv | negativ : [Rgr.member, v]\}; D_B | \varepsilon$\\
-	%D_B is a declaration of a behaviour
-
-	
-	$D_C \in Env_C$\\
-	$D_A \in Env_A$\\
-	$D_R \in Env_R$\\
-	$D_B \in Env_B$\\
-	$D_{AB} \in Env_{AB}$\\
-	$D_E \in Env_E$\\
-	\\
-	
-	$\mathbf{Env_A} = \textbf{Att} \cup \{ \texttt{next} \} \rightharpoonup \mathbf{Loc}$\\
-	%Att is the id of an ability
-	%next is the next available loc
-	%loc is the location
-	$\mathbf{Sto_A} = \textbf{Loc} \rightharpoonup \mathbb{Z}$\\
-	% Z is the value of attributes
-	\\
-	$\mathbf{Env_R} = \textbf{Res} \cup \{ \texttt{next} \} \rightharpoonup \mathbf{Loc}$\\
-	%Res is the id of a resource
-	$\mathbf{Sto_R} = \textbf{Loc} \rightharpoonup \mathbb{Z}$\\
-	\\
-	$\mathbf{Env_B} = \textbf{Beh} \cup \{ \texttt{next} \} \rightharpoonup \mathbf{Loc}$\\
-	%Beh is the id of a behaviour
-	$\mathbf{Sto_B} = \textbf{Loc} \rightharpoonup \mathbb{Z}$\\
-	\\
-	
-
-
-[Act-New]\\
-	$env_c, sto \vdash \langle calc:A, s \rangle \Rightarrow \langle s'; calc:A', s \rangle$\\
-	where $s' = env_c, sto \vdash s[piggy \mapsto v]$\\
-	and $A' = Action[new]$\\
-	
-[Act-Empty]\\
-	$env_c, sto \vdash \langle calc:A, s \rangle \Rightarrow \langle s \rangle$\\
-	where $A = \varepsilon$\\
-	\\	1
-	\end{comment}
-\begin{comment}
-	[Turn]\\
-	%1\\
-	\\
-	\\
-	\\
-	\\
-	---------------------------------\\
-
-	
-	sideb-- 
-	
-	
-	\\
-	
-\pagebreak
-%	$env[Health \mapsto l] [next \mapsto new l, sto \mapsto
-%	sto$]\\\\
-%	-------------------------------------\\
- % $ \frac{$
-	
-	%[Event-Dec]\\
-
-%	\\\\
-	
-%	\\
-%	\\
-%	\\\\
-	
-
-	\\
-	\\
-	.\\
-	.\\
-	.\\
-	\hfill \\
-	$\rightarrow$\\
-	\\
-	
-	Yay declarations.... almost done
-	\\\\
-	\end{comment}
