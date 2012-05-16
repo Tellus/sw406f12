@@ -25,38 +25,20 @@ Given an ability name \textit{AName}, an ability environment must hold informati
 %
 $$\mathbf{Ability: \; AName \rightharpoonup \mathcal{P}(RGR) \times Effect \times Integer \times Integer}$$
 %
-Transition rules for declaration of abilities can be seen in table \ref{tbl:decA}.
+Transition rules for declaration of ability are of the form
+%
+{\small $$\langle Char, Ability, Behaviour, Event \rangle \Rightarrow_{DecA} \langle Char, Ability', Bahavior, Event \rangle$$}
+%
+The transition system for ability declaration is 
 
-As mentioned, \ac{rgrs} are used for behaviour as well. A behaviour is declared by a name and it contains a list of 3-tuples (\textbf{\ac{rgr}}, \textbf{VName}, \textbf{Integer}), where \textbf{\ac{rgr}} is a reference to the involved character, \textbf{VName} is the name of the involved attribute and \textbf{Integer} is a value representing the priority of the attribute. To keep track of the bindings of a behaviour, a \textit{behaviour environment} is used. The set of behaviour environments is called \textbf{Behaviour}.
-A behaviour environment must, given a behaviour name \textit{BName}, hold information of the list of 3-tuples. Therefore the definition of the set of behaviour environments is:
+\begin{tabular}{l l}
+$\Gamma_{DecA} = $ & $\mathbf{Character \times Ability \times Bahaviour \times Event}$ \\
+$\Rightarrow_{DecA}$ & \\
+$T_{DecA} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event}$ \\
+\end{tabular}
+\\\\
+$\Rightarrow_{DecA}$ is defined by the rules in table \ref{tbl:decA}.\\\\
 %
-$$\mathbf{Behaviour: \; BName \rightharpoonup \mathcal{P}(RGR \times VName \times Integer)}$$
-%
-Transition rules for declaration of behaviour can be seen i table \ref{tbl:decB}.
-
-%Event
-For declaring forced action for a character, \langname{} makes it possible for a user to declare event, which contains a trigger(decrease of health), a condition(health below 10\%) and an ability to execute when both the trigger and the condition is meet.
-A \textit{event environment} is used to keep track of the binding for events. The set of event environments is called \textbf{Event}.
-Given an event name, the event environment must hold information about the trigger, condition and ability. Therefore the definition of the set of event environments is:
-%
-$$\mathbf{Event : \; EName \rightharpoonup Trigger \times Condition \times AName}$$
-%
-Transition rules for declaration of event can be seen in table \ref{tbl:devE}.
-
-%Resource
-When a character is declared, they are declared with some resources like health and mana. The resources have a maximum and minimum value. A resource therefore has bindings for the two values. To keep track of these bindings a \textit{resource environment} is used.\\
-The set of resource environments is called \textbf{Resource}, and is defined as follows:
-%
-$$\mathbf{Resource : \; RName \rightharpoonup Integer \times Integer}$$
-%
-It is also required to keep track of the bindings of the character itself. To keep track of the bindings a \textit{character environment} is used. The set of character environments is called \textbf{Character}.
-Given a character name \textit{CName}, a character environment must hold information about the behaviour, abilities, attributes, events and resources bound to the character. Therefore the definition of the set of character environments \textbf{Character} is:
-%
-$$\mathbf{Character} : \; \mathbf{CName} \rightharpoonup \mathbf{Behaviour} \times \mathbf{\mathcal{P}(AName)} \times \mathbf{EnvV} \times \mathbf{EName} \times \mathbf{Resource}$$
-%
-Transition rules for declaration of character can be seen i table \ref{tbl:devC}.
-
-
 \begin{table}
 \begin{tabular}{l l}
 \\ \hline \\
@@ -65,10 +47,29 @@ Transition rules for declaration of character can be seen i table \ref{tbl:devC}
  & \footnotesize{$\langle Char, Ability[AName \mapsto (RGR, Effect, Int, Int)], Behaviour, Event; S \rangle$} \\
 \\ \hline
 \end{tabular}
-\caption{Transition rules for Ability declaration}
+\caption{Transition rules for $\Rightarrow_{DecA}$}
 \label{tbl:decA}
 \end{table}
+%
+As mentioned, \ac{rgrs} are used for behaviour as well. A behaviour is declared by a name and it contains a list of 3-tuples (\textbf{\ac{rgr}}, \textbf{VName}, \textbf{Integer}), where \textbf{\ac{rgr}} is a reference to the involved character, \textbf{VName} is the name of the involved attribute and \textbf{Integer} is a value representing the priority of the attribute. To keep track of the bindings of a behaviour, a \textit{behaviour environment} is used. The set of behaviour environments is called \textbf{Behaviour}.
+A behaviour environment must, given a behaviour name \textit{BName}, hold information of the list of 3-tuples. Therefore the definition of the set of behaviour environments is:
+%
+$$\mathbf{Behaviour: \; BName \rightharpoonup \mathcal{P}(RGR \times VName \times Integer)}$$
+%
+Transition rules for declaration of behaviour are of the form
+%
+{\small $$\langle Char, Ability, Behaviour, Event \rangle \Rightarrow_{DecB} \langle Char, Ability, Bahavior', Event \rangle$$}
+%
+The transition system for declaration of behaviour is
 
+\begin{tabular}{l l}
+$\Gamma_{DecB} = $ & $\mathbf{Character \times Ability \times Bahaviour \times Event}$ \\
+$\Rightarrow_{DecB}$ & \\
+$T_{DecB} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event}$ \\
+\end{tabular}
+\\\\
+$\Rightarrow_{DecB}$ is defined by the rules in table \ref{tbl:decB}.\\\\
+%
 \begin{table}
 \begin{tabular}{l l l}
 \\ \hline \\
@@ -84,10 +85,32 @@ Transition rules for declaration of character can be seen i table \ref{tbl:devC}
 \footnotesize{Where $Behaviour' = $} & \footnotesize{$Behaviour[BName \mapsto {\bigcup^{n}_{i = 0}} (RGR_i, VName_i, Integer_i)]$} \\
 \\  \hline 
 \end{tabular}
-\caption{Transition rules for Behaviour declaration}
+\caption{Transition rules for $\Rightarrow_{DecB}$}
 \label{tbl:decB}
 \end{table}
+%
+%Event
+For declaring forced action for a character, \langname{} makes it possible for a user to declare event, which contains a trigger(decrease of health), a condition(health below 10\%) and an ability to execute when both the trigger and the condition is meet.
+A \textit{event environment} is used to keep track of the binding for events. The set of event environments is called \textbf{Event}.
+Given an event name, the event environment must hold information about the trigger, condition and ability. Therefore the definition of the set of event environments is:
+%
+$$\mathbf{Event : \; EName \rightharpoonup Trigger \times Condition \times AName}$$
+%
+Transition rules for declaration of event are of the form
+%
+{\small $$\langle Char, Ability, Behaviour, Event \rangle \Rightarrow_{DecE} \langle Char, Ability, Bahavior, Event' \rangle$$}
+%
+The transition system for declaration of event is
 
+\begin{tabular}{l l}
+$\Gamma_{DecE} = $ & $\mathbf{Character \times Ability \times Bahaviour \times Event}$ \\
+$\Rightarrow_{DecE}$ & \\
+$T_{DecE} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event}$ \\
+\end{tabular}
+\\\\
+$\Rightarrow_{DecE}$ is defined by the rules in table \ref{tbl:decE}.\\\\
+%Transition rules for declaration of event can be seen in table \ref{tbl:devE}.
+%
 \begin{table}
 \begin{tabular}{l l}
  \\ \hline \\
@@ -96,28 +119,48 @@ Transition rules for declaration of character can be seen i table \ref{tbl:devC}
  & \footnotesize{$\langle Char, Ability, Behaviour, Event; Event[EName \mapsto (Trigger, Condition, AName)]; S \rangle$} \\
  \\ \hline
 \end{tabular}
-\caption{Transition rules for Event declaration}
-\label{tbl:devE}
+\caption{Transition rules for $\Rightarrow_{DecE}$}
+\label{tbl:decE}
 \end{table}
-
+%
+%Resource
+When a character is declared, they are declared with some resources like health and mana. The resources have a maximum and minimum value. A resource therefore has bindings for the two values. To keep track of these bindings a \textit{resource environment} is used.\\
+The set of resource environments is called \textbf{Resource}, and is defined as follows:
+%
+$$\mathbf{Resource : \; RName \rightharpoonup Integer \times Integer}$$
+%
+It is also required to keep track of the bindings of the character itself. To keep track of the bindings a \textit{character environment} is used. The set of character environments is called \textbf{Character}.
+Given a character name \textit{CName}, a character environment must hold information about the behaviour, abilities, attributes, events and resources bound to the character. Therefore the definition of the set of character environments \textbf{Character} is:
+%
+$$\mathbf{Character} : \; \mathbf{CName} \rightharpoonup \mathbf{Behaviour} \times \mathbf{\mathcal{P}(AName)} \times \mathbf{EnvV} \times \mathbf{EName} \times \mathbf{Resource}$$
+%
+Transition rules for declaration of character are of the form
+%
+{\small $$\langle CName, A_D, R_D, Ability, Behaviour, Events \rangle
+\Rightarrow_{DecC} 
+ \langle sto, Attribute, HP, Integer \rangle$$}
+% can be seen i table \ref{tbl:decC}.
+%
 \begin{table}
 \begin{tabular}{l l}
 \\ \hline \\
 \small{\textsc{[Char-Dec]}} \\
- & \large{${\frac{\langle env, Health, Mana, sto, etc \rangle \; \Rightarrow \; env'}{\langle \texttt{make }  CName \texttt{ from } Character, \;
-Name, A_D, R_D, Ability, Behaviour, Events\rangle}}$}\\
+ & \large{${\frac{\langle env, Health, Mana, sto, etc \rangle \; \Rightarrow \; env'}
+ {\langle \texttt{make }  CName \texttt{ from } Character, \; CName, A_D, R_D, Ability, Behaviour, Events \rangle}}$}\\
  & \footnotesize{$\Rightarrow env \; \vdash \; \langle sto, Attribute, HP, Integer \rangle$} \\
  \footnotesize{Where} $env'=$ &  \footnotesize{$env[Health \mapsto l] [\texttt{next} \mapsto \texttt{new } l, sto \mapsto std]$} \\
  & \footnotesize{$env[Mana \mapsto \texttt{new } l][\texttt{next } \mapsto \texttt{new new } l, sto \mapsto std]$} \\
  & \footnotesize{etc.} \\
  \\ \hline
 \end{tabular}
-\caption{Transition rules for Character declaration, (\textsl{Remember to explain the ect.'s})}
-\label{tbl:devC}
+\caption{Transition rules for $\Rightarrow_{DecC}$ (\textsl{Remember to explain the ect.'s})}
+\label{tbl:decC}
 \end{table}	
-
+%
+\todo{Missing some declarations, which should be described with clean text}
 \subsection*{\langname{} battle-engine}
 this is test text
+\todo{Write the last of it}
 
 \begin{table}
 \begin{tabular}{l l}
