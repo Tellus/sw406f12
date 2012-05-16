@@ -1,2 +1,9 @@
 \section{Semantics theory}\label{sec:semantic}
-\todo{Get general description and short introduction to what semantics are all about form Transitions and Trees}
+\emph{''Programming language semantics is the study of mathematical models of and methods for describing and reasoning about the behaviour of programs.''}\cite{transtrees}\\
+The before citation pretty much sums up the whole meaning of semantics, in detail it means that programming language semantics describe the inner workings of a program in a mathematical form.\\
+Two forms of operational semantics are generally used when describing program behaviour, \emph{Natural semantics} also known as ''Big-step'' and \emph{Structural operational semantics} also known as ''Small-step''.
+Natural semantics describe an entire computation in a single transition;
+$ \gamma \rightarrow \gamma' $.
+Where $\gamma'$ is always a terminal configuration.
+Structural operational semantics describe a single step of a larger computation in a transition and the $ \gamma' $ is not necessarily a terminal configuration.\\
+Both have their pros and cons, Natural semantics are easier to formulate than the other, sacrificing details in the process and not able to describe non-terminating programs. Structural operational semantics can be quite complex to formulate and in contrast to Natural semantics, have detail and describe all types of programs terminating or non-terminating.\cite{opsemantics}\cite{transtrees}
