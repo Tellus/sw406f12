@@ -1,2 +1,35 @@
-\subsection{Lexer}
-Some about the implementation of the lexer to come here
+\subsection{Scanner}
+%RegEx
+%Hvis et token bliver matchet af 2 regexes bliver længste match brugt
+%Hvis match er lige lange er indført STL sortering af maps til kontrol af valg
+The scanner is implemented using the Boost regular expression library for C++, with PERL syntax. It takes a list of files and returns a stream of tokens in the form of a linked list. At the beginning of the process if the file list is not empty a file is opened, and the content is loaded into the buffer. The scanner then scans from the buffer until it is empty, opens a new file and repeats until there are no more files.
+
+The token class has the following info: type, value, file, line and a pointer to the next token. The file and line info ensures that if a syntactical error is encountered the scanner can output in which file and on what line the error is. 
+
+The RegExManager class initiates the regular expressions that recognize all tokens in \langname{}. The tokens are trimmed so that superfluous whitespaces are removed and then a match function is run, checking if the scanned character(s) match any tokens. If a token matches 2 regular expression the longest match is used. This makes sure that e.g. the token "+=", which matches both "+=" and "+", is recognized as the proper type of token. The main loop of the match() function is shown below:
+
+\begin{lstlisting}[language = c++]
+	for (std::map<REGEX_MAP_TYPE>::iterator it = this->expressions.begin();
+			it != this->expressions.end(); it++) {
+		if (boost::regex_search((*buffer), match, *(*it).second, flags))
+		{
+			if (!match[0].matched)
+				continue;
+			if (ret != NULL)
+			{
+				if ((unsigned int)match[0].length() > ret->value.length())
+				{
+					delete ret;
+				}
+				else { continue; }
+			}
+			ret = new token_match;
+			ret->type = (*it).first;
+			ret->value = match[0];
+			ret->lines = this->count_newlines(match[0]);
+		}
+	}
+\end{lstlisting}
+
+Should two tokens happen to be the same length the \ac{STL} sorting of maps allows for control of which token type is assigned - the token will then be assigned the first type to match. The token type is an unsigned int and certain types are given a delay if they should be evaluated later than other token types. As an example the keywords "make" and "from" would match both their proper token types and the token type "Identifier". However, because the type Identifier is given a delay, the keywords will always get their proper token type.
+

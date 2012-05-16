@@ -1,10 +1,11 @@
 \pagebreak
 \section{Syntax theory}
-% ~Hornbjerg
+\todo{RENE SKRIV DETTE HER}
 \subsection{Regular expressions}
-Every programming language, has some basic symbols, these could be ``expression'', ``value'' etc. %These basic symbols have to be specified, so it is possible for a compiler to determine, if the programmer has made a mistake. \\
-One of the ways to specify the structure of a language's syntax and ''basic symbols'' is with the use of \ac{regex}.\cite{Fischer2010}
-%Different ways to specify the basic symbols, of a programming language, exist, although, most programming languages use \ac{regex} to specified the basic symbols. \cite{Fischer2010}
+\ac{regex} provides flexible means to recognise words and text. \ac{regex} can be very useful when manipulating text or searching for occurrences of certain strings.\\
+Programming languages generally have some basic symbols, these could be ``expression'', ``value'', ''declaration'' etc. \ac{regex} is used by many compilers to recognise these types of symbols.
+One of the ways to specify the structure of a language's syntax and ''basic symbols'' is with the use of \ac{regex}.\cite{Fischer2010}\\
+One could think of \ac{regex} as a form of a pattern with the option for more control over the number of strings that get matched. A specific word could be written in two ways, for example, American english and British english often make use of the same word with one alphabetical letter changed. Let's say we want to match the word ''recognize''. Given the fact that some are likely to write it like this: ''recognise'', we want to match both cases. With a \ac{regex} we can specify it as such; <recogni(s|z?)e>. This way both words get matched.\\
 
 \ac{regex} is built, using regular operations, these operations are; union ``$\cup$'', concatenation ``$\circ$'' and star ``$\ast$''.
 \begin{description}
@@ -12,7 +13,7 @@ One of the ways to specify the structure of a language's syntax and ''basic symb
 	\item Concatenation works as a ``followed by'' operator, which means the expression $0 \circ 1$ evaluates to $0$ followed by a $1$.
 	\item Star works as a ``zero or more'' operator, meaning that the expression $0^{\ast}$ has an evaluation range from none to infinite $0$'s.
 \end{description}
-Summing up, the \ac{regex} $(0 \cup 1) \circ 0^{\ast}$ evaluates a $0$ or $1$ followed by zero or more $0$'s. \cite{syntax_book}
+Summing up, the \ac{regex} $(0 \cup 1) \circ 0^{\ast}$ evaluates a $0$ or $1$ followed by zero or more $0$'s. \cite{syntax_book}\\
 
 \subsection{\ac{cfgs}}
 Every language, whether it is English, German, or some other language, have some specified grammar, used for making sentence in the languages. The grammar of the languages is specified by rules, which describe how to use the grammar correctly. \\
