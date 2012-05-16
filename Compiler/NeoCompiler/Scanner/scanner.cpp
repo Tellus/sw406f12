@@ -54,7 +54,7 @@ void Scanner::open_file()
 	std::ifstream stream(this->files.front().c_str());
 	stream.unsetf(std::ios::skipws); // We want to preserve whitespace here, to seperate identifiers
 	if (!stream.good())
-		throw "I/O error";
+		throw new errors::CompileError("I/O error", "Could not read file", this->files.front());
 	this->buffer = std::string((std::istream_iterator<char>(stream)),
 			std::istream_iterator<char>());
 	stream.close();
@@ -70,17 +70,25 @@ tokens::Token *Scanner::make_token()
 
 	tokens::Token *ret;
 
-	token_match *temp = this->regex_manager->match(&this->buffer);
-	if (temp != NULL)
+	token_match *temp;
+	try
 	{
-		ret = new tokens::Token(temp->type, temp->value, this->files.front(), this->line);
-		this->line += temp->lines;
-		delete temp;
+		temp = this->regex_manager->match(&this->buffer);
 	}
-	else
+	catch (errors::CompileError *e)
 	{
-		throw "Syntax Error!";
+		e->file = this->files.front();
+		e->line = this->line;
+
+		if (this->first != NULL)
+			e->message += " after '" + this->first->value + "'";
+
+		throw e;
 	}
+
+	ret = new tokens::Token(temp->type, temp->value, this->files.front(), this->line);
+	this->line += temp->lines;
+	delete temp;
 
 	return ret;
 }

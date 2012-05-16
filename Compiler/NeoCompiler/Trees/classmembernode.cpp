@@ -18,13 +18,15 @@ ClassMemberNode::~ClassMemberNode()
 void ClassMemberNode::visit(typecheck::scope *current_scope)
 {
 	std::list<AbstractSyntaxNode*>::iterator it;
-	typecheck::scope *s = current_scope;
+	typecheck::scope *s = current_scope, temp;
 	typecheck::SymbolTable &t = typecheck::SymbolTable::handle();
 
 	if (s == &t.behaviour && this->children.size() != 2)
 		throw "Type Error: Wrong listening type for behaviour";
 
-	// TODO: Only first children should be global, optimally.
+	temp = t.global(s);
+
+	s = &temp;
 
 	for (it = this->children.begin(); it != this->children.end(); it++)
 	{

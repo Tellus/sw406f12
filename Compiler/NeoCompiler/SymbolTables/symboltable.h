@@ -22,6 +22,10 @@ public:
 
 	static SymbolTable &handle();
 
+	void add_symbol(scope *target, std::string key, FORMAT_TYPE assgined_from, FORMAT_TYPE assigns, scope *reference);
+	Symbol *lookup(scope *s, std::string id, bool global = false);
+	scope global(scope *s);
+
 	scope declarations;
 
 	scope character;
@@ -33,8 +37,6 @@ public:
 	scope resource;
 	scope con_effect;
 
-	void add_symbol(scope *target, std::string key, FORMAT_TYPE assgined_from, FORMAT_TYPE assigns, scope *reference);
-	Symbol *lookup(scope* s, std::string id, bool global = false);
 
 private:
 	void initialize();

@@ -17,15 +17,13 @@ int main(int argc, char* argv[])
 	{
 		stream = scanner->scan();
 	}
-	catch (char const *ex)
+	catch (errors::CompileError *e)
 	{
-		std::cout << ex << std::endl;
+		std::cout << e->what() << " at " << e->where();
 		return 0;
 	}
 
 	std::cout << "Scanning done." << std::endl;
-
-	stream->print();
 
 	parser::Parser *parser = new parser::Parser();
 
@@ -35,9 +33,9 @@ int main(int argc, char* argv[])
 	{
 		tree = parser->parse(stream);
 	}
-	catch (char const *ex)
+	catch (errors::CompileError *e)
 	{
-		std::cout << ex << std::endl;
+		std::cout << e->what() << " at " << e->where();
 		return 0;
 	}
 
@@ -49,7 +47,7 @@ int main(int argc, char* argv[])
 	{
 		tree->visit(&table.declarations);
 	}
-	catch (char const *ex)
+	catch (char const *ex) // TODO: Switch to CompileError
 	{
 		std::cout << ex << std::endl;
 		return 0;
