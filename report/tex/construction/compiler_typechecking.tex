@@ -1,0 +1,81 @@
+\subsection{Type Checking}
+
+The implementation of type checking proved challenging given the constraints of the language. For example, the fact that the design had the same syntax for lists and pairs but with fundamentally different ways of working made type checking quite a hassle.
+\vspace{10pt}
+Type checking is done on the nodes of the AST via the visit function. The type checker checks that the statements given are valid in their context. The primary concern with the type checking of the language is scope checking, illustrated below with the visit function for the declaration node:
+
+\begin{lstlisting}[language = c++]
+void DeclarationNode::visit(typecheck::scope *current_scope)
+{
+	typecheck::SymbolTable &table = typecheck::SymbolTable::handle();
+
+	typecheck::Symbol *s = table.lookup(current_scope, this->subclass, false);
+	if (s != NULL)
+		throw "Duplicate declaration";
+
+	s = table.lookup(current_scope, this->superclass, false);
+
+	if (s != NULL)
+	{
+		table.add_symbol(current_scope, this->subclass, s->assigned_from, s->assigns, s->reference);
+		std::cout << "TC: " << this->subclass << " declared as type " << this->superclass << std::endl;
+
+		std::list<AbstractSyntaxNode*>::iterator it;
+		for (it = this->children.begin(); it != this->children.end(); it++)
+		{
+			if (!this->unique_assignment(((AssignmentNode*)(*it))->identifier))
+				throw "Type Error: Duplicate assignment";
+
+			(*it)->visit(s->reference);
+		}
+		return;
+	}
+
+	throw "Type Error: Superclass not found";
+}
+\end{lstlisting}
+
+As shown, the function takes a scope as its parameter. It creates a reference to the symbols table with the handle function, and then performs a lookup to see, if the subclass declared is already in the symbol table. For example, the declaration "make Orc from Character" is checked to see, if the subclass "Orc" is already declared. If it is, it throws a duplicate error, telling the using that this subclass has already been defined. If the subclass check comes out clean it then checks the superclass, in this case "Character". If the superclass exists, the function adds the subclass to the declaration scope and for each child of the node runs a function to check if this is a unique assignment. The unique\_assignment function goes through the list of existing assignments and checks, if there are any duplicates. If not, it calls the visit function on each child.
+\vspace{10pt}
+Should the superclass not be found, e.g. if "make Orc from WrongSuperclass" is declared, the type check will throw an error, and tell the user this.
+\vspace{10pt}
+Checking that assignments are performed with the correct types is done in the assignment node with the following code:
+
+\begin{lstlisting}[language = c++]
+void AssignmentNode::visit(typecheck::scope *current_scope)
+{
+	typecheck::SymbolTable &table = typecheck::SymbolTable::handle();
+
+	typecheck::Symbol *s = table.lookup(current_scope, this->identifier, false);
+	if (s == NULL)
+		throw "Type Error: Invalid target of assignment";
+
+	std::cout << "  TC: Assigning " << this->identifier << std::endl;
+
+	this->children.front()->visit(current_scope);
+
+	FORMAT_TYPE t = this->children.front()->type;
+
+	if ((t & typecheck::TypePair) && !(t & typecheck::TypeList))
+	{
+		t = ((t & ~typecheck::TypePair) | typecheck::TypeList);
+	}
+
+	if (t != s->assigned_from)
+		throw "Type Error: Invalid assignment type";
+
+	this->type = s->assigned_from;
+
+	if ((this->type & typecheck::MetatypeReference) && (!this->type & typecheck::TypeReferenceEvent))
+	{
+		// This should make sure only event listeners can be deep-referenced.
+		if (this->children.front()->dynamic)
+			throw "Type Error: Deep-reference to static object.";
+	}
+
+	return;
+}
+\end{lstlisting}
+The visit function here first checks if the identifier is in the current scope and throws an error if not. It then performs the visit function on the first (and only) child of this node. 
+\vspace{10pt}
+Should the child be a pair, but not a list, the child is transformed into a list via bitwise-operations. The function then checks if the type of the child is the type the function would like to assign from. If these do not match, an "invalid assignment type"-error is thrown. Lastly the function checks to make sure that only events can be referenced through more than one reference operator.
