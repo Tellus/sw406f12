@@ -49,12 +49,12 @@ public:
 	/**
 	 * List of all registered listeners for this event.
 	 **/
-	std::list<std::pair<void*, game_event_fp>> listeners;
+	std::list<std::pair<void*, game_event_fp> > listeners;
 
 	/**
 	 * The listener currently being invoked.
 	 **/
-	std::list<std::pair<void*, game_event_fp>>::iterator current_listener;
+	std::list<std::pair<void*, game_event_fp> >::iterator current_listener;
 
 	/**
 	 * Adds another listener object to the list. This method is *locked* once event

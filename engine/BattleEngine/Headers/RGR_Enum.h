@@ -16,7 +16,8 @@ enum RGR_Enum{  ANY = 1,
                 ALLY = 4,
                 OWNER = 8,
                 ALL = 16,
-				TARGET = 32
+				TARGET = 32,
+				SELF = OWNER
                 };
 
 }
