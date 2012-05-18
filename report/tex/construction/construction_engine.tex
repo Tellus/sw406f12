@@ -1,7 +1,5 @@
 \section{Engine}
-While the \langname{} compiler chain parses, validates and translates program code, the result cannot be run on its own. The engine complements the compiler by exposing a simple API that allows for the resolution of battle scenarios described in \langname{}\todo{Did I write this once already?}.
-
-This section describes how the engine was implemented, particularly how the implementation language and compiler code generation concerns affected the final design.
+This section presents relevant parts of the engine's implementation. The main focus is the parts of the engine design that are exposed to and used by the compiler. The considerations are further nuanced by the implementation language $C++$. By identifying necessary design extensions, the section deals with object identification in a game's state, cloning the game state during the decision-making step and an abbreviated version of the implemented decision-making algorithm.
 
 \subsection{Platform}
 The engine was implemented in $C++$ just like the compiler, partially because of language acclimatisation but mostly in order to simplify any bonding between the two pieces of the system. The compiler chain supports two modes of operation: compiling to engine-compatible $C++$ or initialising directly into an engine instance. This was primarily a result of design-indecision during implementation, but the platform-specific designs necessary to support the latter ended up creating a much simpler API for the prior, a net gain.

@@ -129,4 +129,9 @@ private:
 
 }
 
+namespace generated
+{
+	void run();
+}
+
 #endif
