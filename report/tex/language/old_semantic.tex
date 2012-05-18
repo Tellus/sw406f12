@@ -1,0 +1,201 @@
+\begin{comment}
+Character is decelerated from its name, and contains, behaviour, a list of abilities,, an environment which contain variables decelerated for the character, event, and its resources.  
+
+Ability is decelerated from it name, and it contains, a \ac{rgr}, an effect and an integer which represent the cost of the ability, and an 			other integer which represent the damage(or heal) the ability does.
+
+\ac{rgr} is the set of keyword, used for references.
+
+Five parts are highlighted for semantic description, these are  \emph{Declaration}, \emph{Turn}, \emph{AI}, \emph{Action} and \emph{Wincon}.\\
+The first one 'Declaration' is the main function of \langname{} and the four that follow are not included in the language itself but in the engine.
+A turn is a character takes an action, based at the outcome of the AI calculation \\
+AI is calculation, which simulates every possible outcome, based on the possible actions a character can make. \\
+Action is an event, which will make change for the stored values of the enemy character, or the character itself.\\
+Wincon is a conditional check to see if the \emph{winning condition} is met.\\\\
+
+
+The semantics for the relevant parts of \langname{} are defined as follows:
+\begin{itemize}
+	\item $EnvD$ is a declaration-environment
+	\item $env_{D}$ is an element in the set $EnvD$
+	\item $EnvC$ is a character-environment
+	\item $env_{c}$ is an element in the set $EnvC$
+	\item $StoreS$ is a set of locations and their bindings
+	\item $sto$ is an element in the set $Stores$
+	\item $Pending$ is a list of pending characters
+	\item $ActioN$ is a set of available actions
+	\item $act$ is an element in the set $ActioN$
+\end{itemize}
+\pagebreak
+The rules for the five parts are as follows:
+\begin{center}
+\begin{tabular}{ c }
+\textbf{Declaration}\\
+\hline
+ \\
+$\langle env_{D}, env_{C}, sto \rangle \rightarrow$\\
+$\langle env_{C}', sto' \rangle$\\
+\end{tabular}
+\end{center}
+The transitions system for declarations is $(\Gamma_{DV}, \rightarrow_{DV}, T_{DV})$, whose configurations are defined by \\
+\begin{tabular}{l l l}
+$\Gamma_{DV}$ & $=$ & $(EnvD \times EnvC \times StoreS) \cup (EnvD, StoreS),$ \\
+$T_{DV}$ & $=$ & $EnvC \times StoreS$ \\
+\end{tabular}
+\begin{center}
+\begin{tabular}{ l l }
+\multicolumn{2}{c}{\textbf{Turn}}\\
+\hline
+ & \\
+$\langle Pending, env_{C}, sto \rangle \Rightarrow$ & \\
+$\langle Pending', env_{C}, sto \rangle$ & $\text{if wincon } \rightarrow_{b} ff$\\
+ & \\
+$\langle Pending, env_{C}, sto \rangle \Rightarrow$ & \\
+$\langle Pending, env_{C}, sto \rangle$ & $\text{if wincon } \rightarrow_{b} tt$\\
+\end{tabular}
+\end{center}
+
+The transition system for turns is $(\Gamma_{TURN}, \Rightarrow_{TURN}, T_{TUNR})$, whose configurations are defined by\\
+\\
+\begin{tabular}{l l l }
+$\Gamma_{TURN}$ & $=$ & $(Pending \times EnvC \times StoreS)$ \\
+$T_{TURN}$ & $=$ & $(Pending \times EnvC \times StoreS)$\\
+\end{tabular}
+
+\begin{center}
+\begin{tabular}{ c }
+\textbf{AI}\\
+\hline
+ \\
+$\langle Pending, env_{C}, sto, Action \rangle \Rightarrow$\\
+$\langle Pending, env_{C}, sto, act \rangle$\\
+\end{tabular}
+\end{center}
+The transition system for AI is $(\Gamma_{AI}, \Rightarrow_{AI}, T_{AI})$, whose configurations are defined by \\
+\begin{tabular}{l l l }
+$\Gamma_{AI}$ & $=$ & $(Pending \times EnvC \times StoreS \times ActioN)$ \\
+$T_{AI}$ & $=$ & $(Pending \times EnvC \times StoreS \times ActioN)$ \\
+
+\end{tabular}
+\begin{center}
+\begin{tabular}{ c }
+\textbf{Action}\\
+\hline
+ \\
+$\langle env_{C}, Pending, sto, act \rangle \Rightarrow$\\
+$\langle env_{C}, Pending, sto', act \rangle$\\
+\end{tabular}
+\end{center}
+The transition system for Action is $(\Gamma_{ACT}, \Rightarrow_{ACT}, T_{ACT})$, whose configurations are defined by \\
+\begin{tabular}{l l l }
+$\Gamma_{ACT}$ & $=$ & $(Pending \times EnvC \times StoreS \times ActioN)$ \\
+$T_{ACT}$ & $=$ & $(Pending \times EnvC \times StoreS \times ActioN)$ \\
+
+\end{tabular}
+\begin{center}
+\begin{tabular}{ l l }
+\multicolumn{2}{c}{\textbf{Wincon}}\\
+\hline
+ & \\
+$\dfrac{env_{C} \vdash c \rightarrow_{h} h}{\text{win} \rightarrow_{b} ff}$ & $\text{if } h > 0$\\
+ & \\
+$\dfrac{env_{C} \vdash c \rightarrow_{h} h}{\text{win} \rightarrow_{b} tt}$ & $\text{if } h \leq 0$\\
+\end{tabular}
+\end{center}
+Wincon is special, because it is a boolean expression. \\
+The rules evaluates true, if the demanded character $c$, has health evaluating to the value $h$, and the value is less or equal to zero, else et evaluates false, and the game will the continue.
+
+\pagebreak
+
+
+	$D_C ::= \text{make } c \text{ from } Character C \{ D_A, D_R, D_B \}; D_C | \varepsilon$\\
+	%D_C is a declaration of a character
+	$D_A ::= A: v; D_A | \varepsilon$\\
+	%D_A is a declaration of an attribute
+	$D_R ::= \text{make } r \text{ from } Resource: v; D_R | \varepsilon$\\
+	%D_R is a declaration of a resource
+	$D_{AB} ::= \text{make } ab \text{ from } Ability \{ List[Rgr], List[effects], cost_h, cost_m \}; D_{AB} | \varepsilon$\\
+	%D_{AB} is a declaration of an ability
+	%cost_h is health cost
+	%cost_m is mana cost
+	$D_B ::= \text{make } b \text{ from } Behaviour \{positiv | negativ : [Rgr.member, v]\}; D_B | \varepsilon$\\
+	%D_B is a declaration of a behaviour
+
+	
+	$D_C \in Env_C$\\
+	$D_A \in Env_A$\\
+	$D_R \in Env_R$\\
+	$D_B \in Env_B$\\
+	$D_{AB} \in Env_{AB}$\\
+	$D_E \in Env_E$\\
+	\\
+	
+	$\mathbf{Env_A} = \textbf{Att} \cup \{ \texttt{next} \} \rightharpoonup \mathbf{Loc}$\\
+	%Att is the id of an ability
+	%next is the next available loc
+	%loc is the location
+	$\mathbf{Sto_A} = \textbf{Loc} \rightharpoonup \mathbb{Z}$\\
+	% Z is the value of attributes
+	\\
+	$\mathbf{Env_R} = \textbf{Res} \cup \{ \texttt{next} \} \rightharpoonup \mathbf{Loc}$\\
+	%Res is the id of a resource
+	$\mathbf{Sto_R} = \textbf{Loc} \rightharpoonup \mathbb{Z}$\\
+	\\
+	$\mathbf{Env_B} = \textbf{Beh} \cup \{ \texttt{next} \} \rightharpoonup \mathbf{Loc}$\\
+	%Beh is the id of a behaviour
+	$\mathbf{Sto_B} = \textbf{Loc} \rightharpoonup \mathbb{Z}$\\
+	\\
+	
+
+
+[Act-New]\\
+	$env_c, sto \vdash \langle calc:A, s \rangle \Rightarrow \langle s'; calc:A', s \rangle$\\
+	where $s' = env_c, sto \vdash s[piggy \mapsto v]$\\
+	and $A' = Action[new]$\\
+	
+[Act-Empty]\\
+	$env_c, sto \vdash \langle calc:A, s \rangle \Rightarrow \langle s \rangle$\\
+	where $A = \varepsilon$\\
+	\\	1
+	\end{comment}
+\begin{comment}
+	[Turn]\\
+	%1\\
+	\\
+	\\
+	\\
+	\\
+	---------------------------------\\
+
+	
+	sideb-- 
+	
+	
+	\\
+	
+\pagebreak
+%	$env[Health \mapsto l] [next \mapsto new l, sto \mapsto
+%	sto$]\\\\
+%	-------------------------------------\\
+ % $ \frac{$
+	
+	%[Event-Dec]\\
+
+%	\\\\
+	
+%	\\
+%	\\
+%	\\\\
+	
+
+	\\
+	\\
+	.\\
+	.\\
+	.\\
+	\hfill \\
+	$\rightarrow$\\
+	\\
+	
+	Yay declarations.... almost done
+	\\\\
+	\end{comment}
