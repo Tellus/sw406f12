@@ -59,7 +59,7 @@ void DeclarationNode::emit(codegen::EmissionData *data)
 {
 	codegen::Generator &gen = codegen::Gen();
 
-	data->stream << "class " << this->subclass << " : ";
+	data->stream << "class " << this->subclass << " : public ";
 
 	if (this->superclass == "Behaviour") { data->stream << "Full"; }
 
