@@ -49,7 +49,7 @@ void Generator::character_post(std::fstream &stream, std::list<std::string> &ass
 
 	if (!this->list_contains(assignments, "attack_power"))
 	{
-		stream << "\t\tthis->add_attribute(new Attribute((\"attack_power\", (" <<
+		stream << "\t\tthis->add_attribute(new Attribute(\"attack_power\", (" <<
 				"\n\t\t\t\tthis->get_attribute(\"strength\")->get_current() " <<
 				"/ 2) + 1));\n";
 	}
