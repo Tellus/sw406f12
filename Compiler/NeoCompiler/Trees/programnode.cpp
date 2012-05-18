@@ -46,6 +46,7 @@ void ProgramNode::emit(codegen::EmissionData *data)
 
 	em->stream << "#pragma once\n#include \"" << codegen::EmitHeaderDirectory <<
 			"Engine.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
+			"SimpleWinCondition.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
 			"Character.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
 			"Ability.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
 			"Attribute.h\"\n#include \"" << codegen::EmitHeaderDirectory <<
