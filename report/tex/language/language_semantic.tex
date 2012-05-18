@@ -253,31 +253,76 @@ $\Rightarrow_{A\_exe}$ is defined by the rules in table \ref{tbl:abi-exe}.
 \label{tbl:abi-exe}
 \end{table}
 
-Behaviour description to come
-\todo{describe behaviour}
+Every ability causes an effect, these effect can not be defined in \langname{}. Instead the possible effects are predefined in the battle-engine. 
+The possible effects are \textit{physical damage} and \textit{heal}. 
+
+The transition rules for execution of an effect are of the form
+{\small $$EName \langle sto, l \rangle \Rightarrow_{eff} sto[x \mapsto l \pm i]$$}
+%
+The transition system for execution of an effect is 
+
+\begin{tabular}{l l}
+$\Gamma_{eff} = $ & $ \mathbf{Sto \times Loc}$ \\
+$\Rightarrow_{eff}$ & \\
+$T_{eff} = $ & $\mathbf{Sto}$ \\
+\end{tabular}
+\\\\
+$\Rightarrow_{eff}$ are defined by the rules in table \ref{tbl:physical}.\\
+
+\begin{table}[!h]
+\begin{tabular}{l p{0.8\textwidth}}
+\\ \hline \\
+\small{[\textsc{Physical-Dmg}]} & \\
+ & \footnotesize{$Physical \langle sto, l \rangle \Rightarrow_{eff} sto[l \mapsto x - i]$} \\
+ \\
+\small{[\textsc{Heal}]} & \\
+ & \footnotesize{$Heal \langle sto, l \rangle \Rightarrow_{eff} sto[l \mapsto x + i]$} \\
+ \\ \hline
+\end{tabular}
+\caption{Transition rule for $\Rightarrow_{eff}$}
+\label{tbl:physical}
+\end{table}
+If no event is triggered during a turn, the action to be executed have to be calculated based on the behaviour declared in \langname{}.
+The calculations is done by an algorithm, and because this algorithm is complex, and would turn into a long description, if it were to be described by a semantic transition rule, it is instead described by pseudo-code.
+The algorithm calculates a value called \texttt{piggy}-value. The size of the \texttt{piggy}-value determines whether the action is good or not, the greater the value, the better the action.
+The size of the \texttt{piggy}-value is considered, based on the values declared in the behaviour of the character.\\
+The pseudo-code is as follow \\\\
+%Behaviour description to come
+\textsc{Chose-Action}
+\begin{lstlisting}[mathescape]
+actions := List of Action
+
+max_piggy := - $\infty$
+
+for each Action a $\in$ actions{
+
+    new GameState tmp_state := a.execute()
+    
+    new_piggy := tmp_state.get_piggy()
+    
+    if(new_piggy > max_piggy){
+        max_piggy := new_piggy
+        best_action := a
+        }
+    }
+return best_action
+\end{lstlisting}
+
+
+
+%\todo{describe behaviour}
 %Test text..
 \begin{comment}
 Missing:
 Behaviour
-Event/forced behaviour
-Win-condition
-
+%Event/forced behaviour
+%Win-condition
 \end{comment}
 
 
 %\pagebreak
 %
-\begin{table}[!h]
-\begin{tabular}{l l}
-\\ \hline \\
-\small{\textsc{Physical-Dmg}} & \\
- & \footnotesize{$Physical \langle sto, l \rangle \Rightarrow sto[l \mapsto x - i]$} \\
- \\ \hline
-\end{tabular}
-\caption{Transition rule for Physical damage}
-\label{tbl:physical}
-\end{table}
-\todo{Not sure if this have to be in}
+%\todo{Not sure if this have to be in}
 %%%%%%%%%%%%%
 % Vi har nogle regler der skal beskrives med brødtekst.
 % Kan ikke lige huske hvilke der mangler lige nu.. Det håber jeg at Danny kan hjælpe med at huske........
