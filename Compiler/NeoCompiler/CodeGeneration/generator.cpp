@@ -27,13 +27,13 @@ void Generator::character_post(std::fstream &stream, std::list<std::string> &ass
 	{
 		if (!this->list_contains(assignments, req_attr[i]))
 		{
-			stream << "\t\tthis->add_attribute(new attribute(\"" << req_attr[i] << "\", 0));\n";
+			stream << "\t\tthis->add_attribute(new Attribute(\"" << req_attr[i] << "\", 0));\n";
 		}
 	}
 
 	if (!this->list_contains(assignments, "defense"))
 	{
-		stream << "\t\tthis->add_attribute(new attribute(\"defense\", (" <<
+		stream << "\t\tthis->add_attribute(new Attribute(\"defense\", (" <<
 				"\n\t\t\t\tthis->get_attribute(\"stamina\")->get_current() + " <<
 				"\n\t\t\t\tthis->get_attribute(\"agility\")->get_current()) / 3" <<
 				"));\n";
@@ -41,7 +41,7 @@ void Generator::character_post(std::fstream &stream, std::list<std::string> &ass
 
 	if (!this->list_contains(assignments, "magic_defense"))
 	{
-		stream << "\t\tthis->add_attribute(new attribute(\"magic_defense\", (" <<
+		stream << "\t\tthis->add_attribute(new Attribute(\"magic_defense\", (" <<
 				"\n\t\t\t\tthis->get_attribute(\"stamina\")->get_current() + " <<
 				"\n\t\t\t\tthis->get_attribute(\"intelligence\")->get_current()) / 3" <<
 				"));\n";
@@ -49,27 +49,27 @@ void Generator::character_post(std::fstream &stream, std::list<std::string> &ass
 
 	if (!this->list_contains(assignments, "attack_power"))
 	{
-		stream << "\t\tthis->add_attribute(new attribute((\"attack_power\", (" <<
+		stream << "\t\tthis->add_attribute(new Attribute((\"attack_power\", (" <<
 				"\n\t\t\t\tthis->get_attribute(\"strength\")->get_current() " <<
 				"/ 2) + 1));\n";
 	}
 
 	if (!this->list_contains(assignments, "magic_power"))
 	{
-		stream << "\t\tthis->add_attribute(new attribute(\"magic_power\", (" <<
+		stream << "\t\tthis->add_attribute(new Attribute(\"magic_power\", (" <<
 				"\n\t\t\t\tthis->get_attribute(\"intelligence\")->get_current() " <<
 				"/ 2) + 1));\n";
 	}
 
 	if (!this->list_contains(assignments, "health"))
 	{
-		stream << "\t\tthis->add_resource(new resource(\"health\", 0, " <<
+		stream << "\t\tthis->add_resource(new Resource(\"health\", 0, " <<
 				"\n\t\t\t\tthis->get_attribute(\"stamina\")->get_current() * 20));\n";
 	}
 
 	if (!this->list_contains(assignments, "mana"))
 	{
-		stream << "\t\tthis->add_resource(new resource(\"mana\", 0, " <<
+		stream << "\t\tthis->add_resource(new Resource(\"mana\", 0, " <<
 				"\n\t\t\t\tthis->get_attribute(\"intelligence\")->get_current() * 15));\n";
 	}
 
