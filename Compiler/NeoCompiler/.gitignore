@@ -1,0 +1,5 @@
+*.o
+generated.cpp
+generated.h
+neocompiler
+neocompiler.exe

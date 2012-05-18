@@ -12,10 +12,10 @@ The semantics of the language is base at the environment-store model, which is a
 \subsection{\langname{} semantics}
 \end{comment}
 
-	%{\Large[The real stuff]}
+%{\Large[The real stuff]}
 The semantics of \langname{} are based on the environment-store model, described in section \ref{sec:semantic}.
 The semantics are split into two parts; declarations in \langname{}, and the inner workings of the engine used to simulate a battle between two characters.
-\subsubsection*{\langname{}}
+\subsection*{\langname{}}
 In \langname{} it is possible for the user to use references, they are called \ac{rgrs}. In the semantics of \langname{}, \ac{rgr} is a set of keywords used to refer to characters.\\ \textbf{RGR} is defined as follows;  
 %
 $$\mathbf{RGR} = \{\texttt{owner, enemy}\}$$
@@ -214,7 +214,7 @@ $\Rightarrow_{TURN}$ is defined by the rules in table \ref{tbl:Turn}.\\\\
 \\ \hline \\
 \small{\textsc{[Turn]}} & \\
  & \footnotesize{$Char, Behaviour, Ability, Event, Resource \vdash \langle Active, Next, sto \rangle \Rightarrow_{TURN} \langle Next, Active, sto \rangle$} \\
- \\
+% \\
 \footnotesize{Where} & \footnotesize{$Char(Active) = (Behaviour, \mathcal{P}(AName), env, EName, Resource)$} \\
 \footnotesize{And} & \footnotesize{$Env(Health) > 0$ (win-condition not meet)} \\
  & \footnotesize{$\forall e \in Events. Event(e) \rightarrow_b f \! \! f$} \\
@@ -252,7 +252,10 @@ $\Rightarrow_{A\_exe}$ is defined by the rules in table \ref{tbl:abi-exe}.
 \caption{Transition rules for $\Rightarrow_{A\_exe}$}
 \label{tbl:abi-exe}
 \end{table}
-%
+
+Behaviour description to come
+\todo{describe behaviour}
+%Test text..
 \begin{comment}
 Missing:
 Behaviour
@@ -262,7 +265,7 @@ Win-condition
 \end{comment}
 
 
-\pagebreak
+%\pagebreak
 %
 \begin{table}[!h]
 \begin{tabular}{l l}

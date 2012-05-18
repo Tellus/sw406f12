@@ -27,12 +27,12 @@ public:
 
 	Ability();
 	Ability(float cost_health, float cost_mana);
-    Ability(std::string name, float cost_health, float cost_mana);
+        Ability(std::string name, float cost_health, float cost_mana);
 	virtual ~Ability();
 	
 	float cost_health, cost_mana;
     
-    void pretty_print();
+        void pretty_print();
 
 	Primarch* clone(bool with_id = false);
     
@@ -40,6 +40,8 @@ public:
 	 * Returns something completely nonsensical.
 	 **/
 	float get_value();
+
+	void add_effect(Effect* to_add);
 
 	void modify(float amount);
 private:
