@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Token/Token.h"
+#include "../Token/token.h"
 #include "regexmanager.h"
 
 #include <string>

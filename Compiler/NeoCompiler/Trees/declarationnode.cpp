@@ -67,7 +67,7 @@ void DeclarationNode::emit(codegen::EmissionData *data)
 
 	if (this->superclass == "Event") { data->stream << "Listener"; }
 
-	data->stream << "\n{\n\t" << this->subclass <<
+	data->stream << "\n{\npublic:\n\t" << this->subclass <<
 			"()\n\t{\n";
 
 	if (this->superclass == "Character")
@@ -108,7 +108,7 @@ void DeclarationNode::emit(codegen::EmissionData *data)
 	else
 		data->stream << "\t\t// None for this type.\n";
 
-	data->stream << "\t}\n}\n";
+	data->stream << "\t}\n};\n";
 }
 
 bool DeclarationNode::unique_assignment(std::string id)
