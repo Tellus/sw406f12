@@ -1,4 +1,5 @@
 \section{Language semantics}
+%I don't like this anymore :/ ~Hornbjerg
 \begin{comment}
 The language is a language used for  of a role-playing characters. I addiction to the language is an battle engine, which simulates a battle between the  character. \\
 The engine works, so that lets one character make an action, then the turn end, and the other character then gets to make its action. \\
@@ -39,7 +40,7 @@ $T_{DecA} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event}
 \\\\
 $\Rightarrow_{DecA}$ is defined by the rules in table \ref{tbl:decA}.\\\\
 %
-\begin{table}
+\begin{table}[!h]
 \begin{tabular}{l l}
 \\ \hline \\
 \small{\textsc{[Ability-Dec]}}& \\
@@ -70,7 +71,7 @@ $T_{DecB} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event}
 \\\\
 $\Rightarrow_{DecB}$ is defined by the rules in table \ref{tbl:decB}.\\\\
 %
-\begin{table}
+\begin{table}[!h]
 \begin{tabular}{l l l}
 \\ \hline \\
 \small{\textsc{[Behaviour-Dec]}} & \\
@@ -111,7 +112,7 @@ $T_{DecE} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event}
 $\Rightarrow_{DecE}$ is defined by the rules in table \ref{tbl:decE}.\\\\
 %Transition rules for declaration of event can be seen in table \ref{tbl:devE}.
 %
-\begin{table}
+\begin{table}[!h]
 \begin{tabular}{l l}
  \\ \hline \\
  \small{\textsc{[Event-Dec]}} & \\
@@ -129,6 +130,7 @@ The set of resource environments is called \textbf{Resource}, and is defined as 
 %
 $$\mathbf{Resource : \; RName \rightharpoonup Integer \times Integer}$$
 %
+There is no written transition rules and system for \textbf{Resource}, because resource is not declared for it self. Resources are declared in the same step as a character is declared.
 It is also required to keep track of the bindings of the character itself. To keep track of the bindings a \textit{character environment} is used. The set of character environments is called \textbf{Character}.
 Given a character name \textit{CName}, a character environment must hold information about the behaviour, abilities, attributes, events and resources bound to the character. Therefore the definition of the set of character environments \textbf{Character} is:
 %
@@ -136,12 +138,27 @@ $$\mathbf{Character} : \; \mathbf{CName} \rightharpoonup \mathbf{Behaviour} \tim
 %
 Transition rules for declaration of character are of the form
 %
+{\small $$\langle dec_C, A_D, R_D, Ability, Behaviour, Events \rangle
+\Rightarrow_{DecC} 
+\langle sto, Char' \rangle$$}
+\begin{comment}
 {\small $$\langle CName, A_D, R_D, Ability, Behaviour, Events \rangle
 \Rightarrow_{DecC} 
- \langle sto, Attribute, HP, Integer \rangle$$}
-% can be seen i table \ref{tbl:decC}.
+\langle sto, Attribute, HP, Integer \rangle$$}
+\end{comment}
 %
-\begin{table}
+The transition system for declaration of character is 
+
+\begin{tabular}{l l}
+$\Gamma_{DecC} = $ & $\mathbf{DecC \times EnvV \times Resource \times Ability \times Bahaviour \times Event}$ \\
+$\Rightarrow_{DecC}$ & \\
+$T_{DecC} = $ & $\mathbf{Character \times Sto}$ \\
+\end{tabular}
+\\\\
+\todo{I'm not sure this system is right, but I guess Danny will comment on it Friday}
+$\Rightarrow_{DecC}$ is defined by the rules in table \ref{tbl:decC}\todo{explain ect.'s}.\\\\
+
+\begin{table}[!h]
 \begin{tabular}{l l}
 \\ \hline \\
 \small{\textsc{[Char-Dec]}} \\
@@ -156,43 +173,98 @@ Transition rules for declaration of character are of the form
 \caption{Transition rules for $\Rightarrow_{DecC}$ (\textsl{Remember to explain the ect.'s})}
 \label{tbl:decC}
 \end{table}	
-%
-\todo{Missing some declarations, which should be described with clean text}
-\subsection*{\langname{} battle-engine}
-this is test text
-\todo{Write the last of it}
+The declaration of attributes and effects are not described above. As it can be seen i table \ref{tbl:decC} there is used an environment $env$, which is the environment used to keep track of bindings of attributes.
 
-\begin{table}
+Effects are not described, because it is currently not possible for a user to declare 'user-effects'. The effect are hard-coded in the engine, and therefore it is not possible for at user to declare, and therefore the declaration of effect are not described in the semantic of \langname{}.
+%
+%
+%\todo{Missing some declarations, which should be described with clean text}
+\subsection*{\langname{} battle-engine}
+%this is test text
+The battle-engine for \langname{} runs in turns, each turn is executed if a certain win-condition is not met. 
+The win-condition is (like effects) hard-coded in the engine, and it is therefore not possible for a user to specify the win-condition in the \langname{} language. At this point, the win-condition is met, if the enemy of the current character has zero or less \ac{hp}.
+
+At the start of each turn, the win-condition is therefore checked, if it is met the battle ends, else the turn is executed in the following way;
+
+\begin{description}
+\item[1] The character which have to make an action during the current turn is chosen.
+\item[2] It is checked whether an event is triggered, if so the forced action is executed and point \textbf{3} and \textbf{4} are skipped. The event is basically a boolean expression consisting of a trigger and a condition. As long as both values do not evaluate to true, the event expression is false and the turn continues to point \textbf{3}.
+\item[3] Based on the declared behaviour, the best action to execute is calculated and chosen, by simulation every possible action and the outcome of it.
+\item[4] The chosen best action is executed.
+\item[5] A new turn start an the win-condition is checked.
+\item[5] If the win-condition is not met the turn continue from point \textbf{1}.
+\end{description}
+
+The only thing a turn does when it is executed all alone, it swapping the current character with the next character, so the current character becomes the next, and the next character becomes the current.\\
+
+Transition rules for execution of a turn are of the form
+{\small $$Char, Behaviour, Ability, Event, Resource \vdash \langle Active, Next, sto \rangle \Rightarrow_{TURN} \langle Next, Active, sto \rangle$$}
+The transition system for execution of a turn is
+
+%\todo{Write the last of it}
+\begin{tabular}{l l}
+$\Gamma_{TURN} = $ & $\mathbf{Character \times Sto}$ \\
+$\Rightarrow_{TURN}$ & \\
+$T_{TURN} = $ & $\mathbf{Character \times Sto}$ \\
+\end{tabular}
+\\\\
+$\Rightarrow_{TURN}$ is defined by the rules in table \ref{tbl:Turn}.\\\\
+\begin{table}[!h]
 \begin{tabular}{l l}
 \\ \hline \\
 \small{\textsc{[Turn]}} & \\
- & \footnotesize{$Char, Behaviour, Ability, Event, Resource \vdash \langle Active, Next, sto \rangle \Rightarrow \langle Next, Active, sto \rangle$} \\
+ & \footnotesize{$Char, Behaviour, Ability, Event, Resource \vdash \langle Active, Next, sto \rangle \Rightarrow_{TURN} \langle Next, Active, sto \rangle$} \\
  \\
-\footnotesize{Where} & \footnotesize{$Char(Active) = (Behaviour, \mathcal{P}(AName), env, Ename, Resource)$} \\
-\footnotesize{And} & \footnotesize{$Env(Health) > 0$} \\
+\footnotesize{Where} & \footnotesize{$Char(Active) = (Behaviour, \mathcal{P}(AName), env, EName, Resource)$} \\
+\footnotesize{And} & \footnotesize{$Env(Health) > 0$ (win-condition not meet)} \\
  & \footnotesize{$\forall e \in Events. Event(e) \rightarrow_b f \! \! f$} \\
  & \footnotesize{$Be = Behaviour(Beh)$} \\
 \\ \hline
 \end{tabular}
-\caption{Transition rules for Turn}
+\caption{Transition rules for $\Rightarrow_{TURN}$}
 \label{tbl:Turn}
 \end{table}
+%
+During a turn an ability is executed. The execution of an ability changes the values of the one(or both) of the involved characters .
+All abilities have mana cost, default set to zero. When an ability is executed, the cost of that given ability is subtracted from the mana pool of the executing character. \\
 
-\begin{table}
+Transition rules for execution of an ability are of the form
+%
+{\small $$Char_{Active}, Char_{Next}, Ability \vdash \langle AName, sto \rangle \Rightarrow_{A\_exe} \langle sto' \rangle$$}
+The transition system for execution of an ability is
+
+\begin{tabular}{l l}
+$\Gamma_{A\_exe} = $ & $\mathbf{Character \times Sto}$ \\
+$\Rightarrow_{A\_exe}$ & \\
+$T_{A\_exe} = $ & $\mathbf{Sto}$ \\
+\end{tabular}
+\\\\
+$\Rightarrow_{A\_exe}$ is defined by the rules in table \ref{tbl:abi-exe}.
+\begin{table}[!h]
 \begin{tabular}{l l}
 \\ \hline \\
 \small{\textsc{[Ability-Exe]}} & \\
-& \footnotesize{$Char_{Active}, Char_{Next}, Ability \vdash \langle AName, sto \rangle \Rightarrow \langle sto[Char_{Active}(Mana) \; -\!\! = cost] \rangle$} \\
+& \footnotesize{$Char_{Active}, Char_{Next}, Ability \vdash \langle AName, sto \rangle \Rightarrow_{A\_exe} \langle sto[Char_{Active}(Mana) \; -\!\! = cost] \rangle$} \\
 \footnotesize{Where} & \footnotesize{$ef\!f = (enemy, ef\!f, cost, ef\!fMana)$}\\
  & \footnotesize{$ef\!fect(sto, Char_{Next}, ef\!fMana) = sto'$}\\
 \\ \hline
 \end{tabular}
-\caption{Transition rules for execution of an ability}
+\caption{Transition rules for $\Rightarrow_{A\_exe}$}
 \label{tbl:abi-exe}
 \end{table}
+%
+\begin{comment}
+Missing:
+Behaviour
+Event/forced behaviour
+Win-condition
+
+\end{comment}
 
 
-\begin{table}
+\pagebreak
+%
+\begin{table}[!h]
 \begin{tabular}{l l}
 \\ \hline \\
 \small{\textsc{Physical-Dmg}} & \\
@@ -202,7 +274,7 @@ this is test text
 \caption{Transition rule for Physical damage}
 \label{tbl:physical}
 \end{table}
-
+\todo{Not sure if this have to be in}
 %%%%%%%%%%%%%
 % Vi har nogle regler der skal beskrives med brødtekst.
 % Kan ikke lige huske hvilke der mangler lige nu.. Det håber jeg at Danny kan hjælpe med at huske........

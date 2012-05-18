@@ -1,6 +1,6 @@
-\pagebreak
 \section{Syntax theory}
-\todo{RENE SKRIV DETTE HER}
+Syntax is defined as the form of the expressions and statements of a language, be it a natural spoken language like English or a programming language. A language is a set of strings, constructed with characters from the language's alphabet. The syntax defines the correct structure of a language and to describe the syntax, notation techniques exist. These techniques are better described in sections \ref{sec:cfg} and \ref{sec:ebnf}.
+
 \subsection{Regular expressions}
 \ac{regex} provides flexible means to recognise words and text. \ac{regex} can be very useful when manipulating text or searching for occurrences of certain strings.\\
 Programming languages generally have some basic symbols, these could be ``expression'', ``value'', ''declaration'' etc. \ac{regex} is used by many compilers to recognise these types of symbols.
@@ -16,13 +16,13 @@ One could think of \ac{regex} as a form of a pattern with the option for more co
 Summing up, the \ac{regex} $(0 \cup 1) \circ 0^{\ast}$ evaluates a $0$ or $1$ followed by zero or more $0$'s. \cite{syntax_book}\\
 
 \subsection{\ac{cfgs}}
-Every language, whether it is English, German, or some other language, have some specified grammar, used for making sentence in the languages. The grammar of the languages is specified by rules, which describe how to use the grammar correctly. \\
-Every source code of a program, written in some programming language also consist of some sentence. Specify how a correct sentence in programming languages i written, the programming language uses a set of rules called the \textit{syntax} of the language. \\
-The syntax of a programming language is usually described using an \ac{cfg}, which can be formed i different ways. Two of the most common forms is \ac{bnf} and \ac{ebnf}. \\
+\label{sec:cfg}
+The syntax of a programming language is usually described using a \ac{cfg}, which can be formed i different ways. Two of the most common forms is \ac{bnf} and \ac{ebnf}. \\
 \\
-\ac{cfgs} was first described in the middle of the 1950s by Noam Chromsky \cite{concepts_prog_lang}. A \ac{cfg} is a collection of substitutions rules. The rules consist of two kinds of symbols; \textit{nonterminals} also know as \textit{variable} and \textit{terminals}. Each rule in a \ac{cfg} is formed as a line. The line determines how to substitute one (ore more) \textit{variables} with another variable or terminal \cite{syntax_book}.
+\ac{cfg} was first described in the middle of the 1950s by Noam Chromsky \cite{concepts_prog_lang}. A \ac{cfg} is a collection of substitutions rules. The rules consist of two kinds of symbols; \textit{nonterminals} also know as \textit{variable} and \textit{terminals}. Each rule in a \ac{cfg} is formed as a line. The line determines how to substitute one (ore more) \textit{variables} with another variable or terminal \cite{syntax_book}.
 
 \subsubsection*{\ac{ebnf}}
+\label{sec:ebnf}
 The \ac{ebnf} notation is an extended version of the \ac{bnf} notation. Both the \ac{bnf} notation and the \ac{ebnf} notation are \ac{cfg}'s, and therefore used for describing syntax of programming languages. The \ac{bnf} notation was introduced by John Backus, and the was later modified by Peter Naur, hence the notation was called \ac{bnf}. \\
 The \ac{bnf} notation has though time been extended i several ways, and even though all the extensions is not exactly the same, they are all called \ac{ebnf}. The extended notation was supposed to make the notation more readable and writeable. The \ac{bnf} notation and the \ac{ebnf} notation have the same power of description. \cite{concepts_prog_lang}
 
@@ -59,4 +59,7 @@ $<\texttt{assign}>$ & $\rightarrow$ & $<\texttt{var}> \; = \; <\texttt{expressio
 \end{tabular}
 
 where $<\texttt{assign}>$ is an abstract representation of an assignment statement, and the rule specifies that $<\texttt{assign}>$ is defined as an instance of the abstraction $<\texttt{var}>$ followed by the `=' symbol, and then followed by the abstraction $<\texttt{expression}>$.
+\\\\
+Every language, whether it is English, German, or some other language, have some specified grammar, used for making sentence in the languages. The grammar of the languages is specified by rules, which describe how to use the grammar correctly. \\
+Every source code of a program, written in some programming language also consist of some sentence. Specify how a correct sentence in programming languages i written, the programming language uses a set of rules called the \textit{syntax} of the language. \\
 \end{comment}
