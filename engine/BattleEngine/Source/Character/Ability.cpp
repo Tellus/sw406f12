@@ -106,4 +106,9 @@ void Ability::modify(float amount)
 	// No effect. Could be a ratio, crit... something?
 }
 
+void Ability::add_effect(Effect* to_add)
+{
+    this->add_child(to_add);
+}
+
 } /* namespace engine */
