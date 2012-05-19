@@ -1,0 +1,74 @@
+
+/*This is a comment, harr harr */
+
+make FalconPunch from Ability
+{
+	name: "Falcon Punch!";
+	targets: [enemy];
+	effects: [PhysicalDamage(target, 99)];
+}
+
+make FalconKick from Ability
+{
+	name: "Falcon Kick!";
+	mana_cost: 50;
+	targets: [enemy];
+	effects: [PhysicalDamage(target, 999)];
+}
+
+make Awesome from Behaviour
+{
+    positive: [[owner.health, 10]];
+    
+    negative: [[enemy.health, 999]];
+}
+
+make CaptainFalcon from Character
+{
+    name: "Captain Falcon";
+    
+    stamina: 99;
+    intelligence: 99;
+    strength: 99;
+    
+    abilites: [FalconPunch, FalconKick];
+    behaviour: Awesome;
+}
+
+/*Another comment lololol */
+
+make Doom from Ability
+{
+    name: "DOOOOM!"
+    mana_cost: (100 + (enemy.mana - owner.strength));
+    targets: [enemy];
+    effects: [PhysicalDamage(target, 9999)];
+}
+
+make Poke from Ability
+{
+    name: "Pokey pokey";
+    targets: [enemy];
+    effects: [PhysicalDamage(target, 40)];
+}
+
+make Cuddly from Behaviour
+{
+    positive: [[owner.health, 50]];
+    
+    negative: [[enemy.health, 80]];
+}
+
+make YoMoma from Character
+{
+    name: "Yo Moma!";
+    
+    health: 9000 + 1; /*Over NINETHOUSAND!*/
+    mana: 150;
+    strength: 2;
+    intelligence
+    
+    abilites: [Doom, Poke];
+    behaviour: Cuddly;
+}
+    

@@ -118,7 +118,7 @@ protected:
 	 * A complete mapping (EVENT_TYPE -> [Primarch*]) of which event types
 	 * have been registered to specific callback functions.
 	 **/
-	std::map<std::string, std::list<callback>> registered_event_listeners;
+	std::map<std::string, std::list<callback> > registered_event_listeners;
 
 	void get_callbacks();
 
@@ -127,6 +127,11 @@ private:
 	void _init(void);
 };
 
+}
+
+namespace generated
+{
+	void run();
 }
 
 #endif

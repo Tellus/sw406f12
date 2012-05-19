@@ -88,7 +88,7 @@ public:
 	 * For example, this should for a Character Primarch return callbacks for
 	 * RESOURCE_DECREASE and the like.
 	 **/
-	std::map<std::string, std::list<callback>> get_callbacks();
+	std::map<std::string, std::list<callback> > get_callbacks();
 	
 	/**
 	 * Should return a float value representing the current value of the Primarch.
@@ -142,7 +142,7 @@ public:
 	const std::list<Primarch*>* get_children();
 protected:
 
-	std::map<std::string, std::list<callback>> _callbacks;
+	std::map<std::string, std::list<callback> > _callbacks;
 
     /**
      * List of events waiting to be raised.

@@ -1,4 +1,5 @@
 \section{Language semantics}
+%I don't like this anymore :/ ~Hornbjerg
 \begin{comment}
 The language is a language used for  of a role-playing characters. I addiction to the language is an battle engine, which simulates a battle between the  character. \\
 The engine works, so that lets one character make an action, then the turn end, and the other character then gets to make its action. \\
@@ -11,10 +12,10 @@ The semantics of the language is base at the environment-store model, which is a
 \subsection{\langname{} semantics}
 \end{comment}
 
-	%{\Large[The real stuff]}
+%{\Large[The real stuff]}
 The semantics of \langname{} are based on the environment-store model, described in section \ref{sec:semantic}.
 The semantics are split into two parts; declarations in \langname{}, and the inner workings of the engine used to simulate a battle between two characters.
-\subsubsection*{\langname{}}
+\subsection*{\langname{}}
 In \langname{} it is possible for the user to use references, they are called \ac{rgrs}. In the semantics of \langname{}, \ac{rgr} is a set of keywords used to refer to characters.\\ \textbf{RGR} is defined as follows;  
 %
 $$\mathbf{RGR} = \{\texttt{owner, enemy}\}$$
@@ -180,6 +181,22 @@ Effects are not described, because it is currently not possible for a user to de
 %\todo{Missing some declarations, which should be described with clean text}
 \subsection*{\langname{} battle-engine}
 %this is test text
+The battle-engine for \langname{} runs in turns, each turn is executed if a certain win-condition is not met. 
+The win-condition is (like effects) hard-coded in the engine, and it is therefore not possible for a user to specify the win-condition in the \langname{} language. At this point, the win-condition is met, if the enemy of the current character has zero or less \ac{hp}.
+
+At the start of each turn, the win-condition is therefore checked, if it is met the battle ends, else the turn is executed in the following way;
+
+\begin{description}
+\item[1] The character which have to make an action during the current turn is chosen.
+\item[2] It is checked whether an event is triggered, if so the forced action is executed and point \textbf{3} and \textbf{4} are skipped. The event is basically a boolean expression consisting of a trigger and a condition. As long as both values do not evaluate to true, the event expression is false and the turn continues to point \textbf{3}.
+\item[3] Based on the declared behaviour, the best action to execute is calculated and chosen, by simulation every possible action and the outcome of it.
+\item[4] The chosen best action is executed.
+\item[5] A new turn start an the win-condition is checked.
+\item[5] If the win-condition is not met the turn continue from point \textbf{1}.
+\end{description}
+
+The only thing a turn does when it is executed all alone, it swapping the current character with the next character, so the current character becomes the next, and the next character becomes the current.\\
+
 Transition rules for execution of a turn are of the form
 {\small $$Char, Behaviour, Ability, Event, Resource \vdash \langle Active, Next, sto \rangle \Rightarrow_{TURN} \langle Next, Active, sto \rangle$$}
 The transition system for execution of a turn is
@@ -197,9 +214,9 @@ $\Rightarrow_{TURN}$ is defined by the rules in table \ref{tbl:Turn}.\\\\
 \\ \hline \\
 \small{\textsc{[Turn]}} & \\
  & \footnotesize{$Char, Behaviour, Ability, Event, Resource \vdash \langle Active, Next, sto \rangle \Rightarrow_{TURN} \langle Next, Active, sto \rangle$} \\
- \\
-\footnotesize{Where} & \footnotesize{$Char(Active) = (Behaviour, \mathcal{P}(AName), env, Ename, Resource)$} \\
-\footnotesize{And} & \footnotesize{$Env(Health) > 0$} \\
+% \\
+\footnotesize{Where} & \footnotesize{$Char(Active) = (Behaviour, \mathcal{P}(AName), env, EName, Resource)$} \\
+\footnotesize{And} & \footnotesize{$Env(Health) > 0$ (win-condition not meet)} \\
  & \footnotesize{$\forall e \in Events. Event(e) \rightarrow_b f \! \! f$} \\
  & \footnotesize{$Be = Behaviour(Beh)$} \\
 \\ \hline
@@ -208,6 +225,9 @@ $\Rightarrow_{TURN}$ is defined by the rules in table \ref{tbl:Turn}.\\\\
 \label{tbl:Turn}
 \end{table}
 %
+During a turn an ability is executed. The execution of an ability changes the values of the one(or both) of the involved characters .
+All abilities have mana cost, default set to zero. When an ability is executed, the cost of that given ability is subtracted from the mana pool of the executing character. \\
+
 Transition rules for execution of an ability are of the form
 %
 {\small $$Char_{Active}, Char_{Next}, Ability \vdash \langle AName, sto \rangle \Rightarrow_{A\_exe} \langle sto' \rangle$$}
@@ -232,29 +252,77 @@ $\Rightarrow_{A\_exe}$ is defined by the rules in table \ref{tbl:abi-exe}.
 \caption{Transition rules for $\Rightarrow_{A\_exe}$}
 \label{tbl:abi-exe}
 \end{table}
+
+Every ability causes an effect, these effect can not be defined in \langname{}. Instead the possible effects are predefined in the battle-engine. 
+The possible effects are \textit{physical damage} and \textit{heal}. 
+
+The transition rules for execution of an effect are of the form
+{\small $$EName \langle sto, l \rangle \Rightarrow_{eff} sto[l \mapsto x \pm i]$$}
 %
+The transition system for execution of an effect is 
+
+\begin{tabular}{l l}
+$\Gamma_{eff} = $ & $ \mathbf{Sto \times Loc}$ \\
+$\Rightarrow_{eff}$ & \\
+$T_{eff} = $ & $\mathbf{Sto}$ \\
+\end{tabular}
+\\\\
+$\Rightarrow_{eff}$ are defined by the rules in table \ref{tbl:physical}.\\
+
+\begin{table}[!h]
+\begin{tabular}{l p{0.8\textwidth}}
+\\ \hline \\
+\small{[\textsc{Physical-Dmg}]} & \\
+ & \footnotesize{$Physical \langle sto, l \rangle \Rightarrow_{eff} sto[l \mapsto x - i]$} \\
+ \\
+\small{[\textsc{Heal}]} & \\
+ & \footnotesize{$Heal \langle sto, l \rangle \Rightarrow_{eff} sto[l \mapsto x + i]$} \\
+ \\ \hline
+\end{tabular}
+\caption{Transition rule for $\Rightarrow_{eff}$}
+\label{tbl:physical}
+\end{table}
+If no event is triggered during a turn, the action to be executed have to be calculated based on the behaviour declared in \langname{}.
+The calculations is done by an algorithm, and because this algorithm is complex, and would turn into a long description, if it were to be described by a semantic transition rule, it is instead described by pseudo-code.
+The algorithm calculates a value called \texttt{piggy}-value. The size of the \texttt{piggy}-value determines whether the action is good or not, the greater the value, the better the action.
+The size of the \texttt{piggy}-value is considered, based on the values declared in the behaviour of the character.\\
+The pseudo-code is as follow \\\\
+%Behaviour description to come
+\textsc{Chose-Action}
+\begin{lstlisting}[mathescape]
+actions := List of Action
+
+max_piggy := - $\infty$
+
+for each Action a $\in$ actions{
+
+    new GameState tmp_state := a.execute()
+    
+    new_piggy := tmp_state.get_piggy()
+    
+    if(new_piggy > max_piggy){
+        max_piggy := new_piggy
+        best_action := a
+        }
+    }
+return best_action
+\end{lstlisting}
+
+
+
+%\todo{describe behaviour}
+%Test text..
 \begin{comment}
 Missing:
 Behaviour
-Event/forced behaviour
-Win-condition
-
+%Event/forced behaviour
+%Win-condition
 \end{comment}
 
 
-\pagebreak
+%\pagebreak
 %
-\begin{table}[!h]
-\begin{tabular}{l l}
-\\ \hline \\
-\small{\textsc{Physical-Dmg}} & \\
- & \footnotesize{$Physical \langle sto, l \rangle \Rightarrow sto[l \mapsto x - i]$} \\
- \\ \hline
-\end{tabular}
-\caption{Transition rule for Physical damage}
-\label{tbl:physical}
-\end{table}
-\todo{Not sure if this have to be in}
+%\todo{Not sure if this have to be in}
 %%%%%%%%%%%%%
 % Vi har nogle regler der skal beskrives med brødtekst.
 % Kan ikke lige huske hvilke der mangler lige nu.. Det håber jeg at Danny kan hjælpe med at huske........

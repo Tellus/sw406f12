@@ -116,6 +116,7 @@ RGR_Enum RGR_List::to_enum(std::string in)
     if (in == "ENEMY") return ENEMY;
     if (in == "ALLY") return ALLY;
     if (in == "OWNER") return OWNER;
+    if (in == "SELF") return SELF;
     if (in == "ALL") return ALL;
 	if (in == "TARGET") return TARGET;
 
