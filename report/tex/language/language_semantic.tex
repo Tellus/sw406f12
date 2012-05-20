@@ -22,7 +22,8 @@ $$\mathbf{RGR} = \{\texttt{owner, enemy}\}$$
 %
 \ac{rgrs} are used in the declaration of abilities and behaviour. An ability is declared by a name and contains; the targets to be effected by the ability, an effect corresponding carried out by the ability and two values. The first value representing the mana cost of the ability and the second representing the damage done.\\
 To keep track of the bindings of an ability, an \textit{ability environment} is used. The set of ability environments is called \textbf{Ability}. 
-Given an ability name \textit{AName}, an ability environment must hold information about, targets, effect, cost, and damage. Therefore the definition of the set of ability environments \textbf{Ability} is:
+Given an ability name \textit{AName}, an ability environment must hold information about, targets, effect, cost, and damage. Note that \ac{rgrs} are given within a powerset (written as $\mathcal{P}$).
+Therefore the definition of the set of ability environments \textbf{Ability} is:
 %
 $$\mathbf{Ability: \; AName \rightharpoonup \mathcal{P}(RGR) \times Effect \times Integer \times Integer}$$
 %
