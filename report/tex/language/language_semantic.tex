@@ -22,8 +22,7 @@ $$\mathbf{RGR} = \{\texttt{owner, enemy}\}$$
 %
 \ac{rgrs} are used in the declaration of abilities and behaviour. An ability is declared by a name and contains; the targets to be effected by the ability, an effect corresponding carried out by the ability and two values. The first value representing the mana cost of the ability and the second representing the damage done.\\
 To keep track of the bindings of an ability, an \textit{ability environment} is used. The set of ability environments is called \textbf{Ability}. 
-Given an ability name \textit{AName}, an ability environment must hold information about, targets, effect, cost, and damage. Note that \ac{rgrs} are given within a powerset (written as $\mathcal{P}$).
-Therefore the definition of the set of ability environments \textbf{Ability} is:
+Given an ability name \textit{AName}, an ability environment must hold information about, targets, effect, cost, and damage. Therefore the definition of the set of ability environments \textbf{Ability} is:
 %
 $$\mathbf{Ability: \; AName \rightharpoonup \mathcal{P}(RGR) \times Effect \times Integer \times Integer}$$
 %
@@ -92,7 +91,7 @@ $\Rightarrow_{DecB}$ is defined by the rules in table \ref{tbl:decB}.\\\\
 \end{table}
 %
 %Event
-For declaring forced action for a character, \langname{} makes it possible for a user to declare event, which contains a trigger(decrease of health), a condition(health below 10\%) and an ability to execute when both the trigger and the condition is meet.
+For declaring forced action for a character, \langname{} makes it possible for a user to declare event, which contains a trigger(decrease of health), a condition(health below 10\%) and an ability to execute when both the trigger and the condition is met.
 A \textit{event environment} is used to keep track of the binding for events. The set of event environments is called \textbf{Event}.
 Given an event name, the event environment must hold information about the trigger, condition and ability. Therefore the definition of the set of event environments is:
 %
@@ -217,7 +216,7 @@ $\Rightarrow_{TURN}$ is defined by the rules in table \ref{tbl:Turn}.\\\\
  & \footnotesize{$Char, Behaviour, Ability, Event, Resource \vdash \langle Active, Next, sto \rangle \Rightarrow_{TURN} \langle Next, Active, sto \rangle$} \\
 % \\
 \footnotesize{Where} & \footnotesize{$Char(Active) = (Behaviour, \mathcal{P}(AName), env, EName, Resource)$} \\
-\footnotesize{And} & \footnotesize{$Env(Health) > 0$ (win-condition not meet)} \\
+\footnotesize{And} & \footnotesize{$Env(Health) > 0$ (win-condition not met)} \\
  & \footnotesize{$\forall e \in Events. Event(e) \rightarrow_b f \! \! f$} \\
  & \footnotesize{$Be = Behaviour(Beh)$} \\
 \\ \hline
