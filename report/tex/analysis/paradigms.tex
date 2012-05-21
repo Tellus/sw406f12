@@ -5,19 +5,19 @@ Within computer programming, a \emph{paradigm} is a model or framework for probl
 \emph{A programming paradigm is a collection of conceptual patterns that together mold the design process and ultimately determine a program's structure.}
 \end{quote}
 
-The granularity with which paradigms are defined varies somewhat between sources. While \citeauthor{paradigms1992} keeps to the understanding that a paradigm is a larger philosophy of solving problems computationally, other sources maintain that a paradigm can be considered on the level of techniques (\citeauthor{paradigms1978} on divide and conquer \cite{paradigms1978}). Within the context of this report, we constrain ourselves to the more abstract form as presented by the former in order to better represent the higher levels of paradigms. The point of the discussion is to present an overview of the major paradigms, their main points of interest and perceived strengths/weaknesses of each. Following the convention of authors of both articles, we shall refer to a language that allows a paradigm to be used fully as a language that \emph{supports} the paradigm.
+The granularity with which paradigms are defined varies somewhat between sources. While \citeauthor{paradigms1992} keeps to the understanding that a paradigm is a larger philosophy of solving problems computationally, other sources maintain that a paradigm can be considered on the level of techniques\cite{paradigms1978}. The report is constrained to the more abstract form as presented by the former in order to better represent the higher levels of paradigms. The point of the discussion is to present an overview of the major paradigms, their main points of interest and perceived the strengths/weaknesses of each. Following the convention of authors of both articles, a language that allows a paradigm to be used fully is referred to as a language that \emph{supports} the paradigm.
 
-The discussion of paradigms is is key in considering how the target users are intended work with the designed language. By far most modern languages today do not constrain themselves to a single paradigm, instead supporting a variety of different approaches to better fit with the overall design of the language and its uses. As examples, $C++$ supports procedural, functional, object-oriented and generic paradigms, while $SQL$ supports both declarative and imperative approaches. In considering the target audience of the language, we must determine the paradigms that would ease their work while remaining effective. The remainder of this section describes the major categories of paradigms (as described by Sebesta\cite{concepts_prog_lang}) with brief examples of underlying paradigms.
+The discussion of paradigms is key in considering how the target users are expected to work with the designed language. By far most modern languages today do not constrain themselves to a single paradigm, instead supporting a variety of different approaches to better fit with the overall design of the language and its uses. As examples, $C++$ supports procedural, functional, object-oriented and generic paradigms, while $SQL$ supports both declarative and imperative approaches. In considering the target audience of the language, the paradigms that would ease their work while remaining effective are determined. The remainder of this section describes the major categories of paradigms (as described by Sebesta\cite{concepts_prog_lang}) with brief examples of underlying paradigms.
 
 \subsection{Imperative}
-The imperative paradigm is perhaps the one most naturally mapped to the actual architecture of modern computer systems. In it, an abstract storage model (predominantly the Von Neumann architecture, wherein data and program are stored alongside one another in main memory) of the computer system is utilised. This naturally leads to the use of variables as metaphors for memory cells to store data and some form of structured programming to encourage the stepwise execution of adjacent memory cells.
+The imperative paradigm is perhaps the one most naturally mapped to the actual architecture of modern computer systems. In it, an abstract storage model of the computer system is utilised, predominantly the Von Neumann architecture, wherein data and program are stored alongside one another in main memory. This leads to the use of variables as metaphors for memory cells to store data and some form of structured programming to encourage the stepwise execution of adjacent memory cells.
 
-This basis in the architecture lead to several supporting paradigms, notably structured programming and object oriented programming.
+This basis in the architecture leads to several supporting paradigms, notably structured programming and object oriented programming.
 
 \subsubsection*{Structured programming}
-Programming within the imperative domain using only instruction jumps was a very daunting task, and often code with many branches of execution and repetitions would wind up as proverbial ''spaghetti'' code as the only formal way of executing anything but the next instruction was the GOTO statement.
+Programming within the imperative domain using only instruction jumps was a very daunting task. Code, with many branches of execution and repetitions, would wind up as proverbial ''spaghetti'' code as the only formal way of executing anything but the next instruction was the GOTO statement. A notable opponent of the GOTO statement was Edsger W. Dijkstra.\cite{goto}
 
-Structured programming eased the implementation task by introducing notions of blocks, branching control structures and loops. While the final machine code will often still rely on the roots of procedural programming, these abstractions in higher programming languages vastly simplify the task for problem solving for programmers.
+Structured programming eased the implementation task by introducing notions of blocks, branching control structures and loops. While the final machine code will often still rely on the roots of procedural programming, these abstractions in higher programming languages vastly simplify the task of problem solving for programmers.
 
 \subsubsection*{Object oriented}
 Object oriented programming emerged with the advent of data-oriented programming. Where procedure-oriented methods focused on an algorithmic approach to problem solving (the necessary steps involved in creating the solution), data-oriented programming instead works with abstract data types that model the problem and solution.
@@ -27,7 +27,7 @@ The approach encapsulates procedures and variables within objects to create a mo
 Furthermore the object oriented method introduced inheritance and polymorphism, extending the basic notion of classes of objects with similar representations to hierarchies of objects with shared ancestors while offering specialised implementations.
 
 \subsection{Functional}
-The functional paradigms focus on mimicking the notion of functions from mathematics as closely as possible. This results in shedding such concepts as states and iterations. Consider a mathematical function $f(x) = x*3+7$, where the value $x$ from the domain set is applied to the expression $x*3+7$, resulting in an element from the value set. In \emph{Scheme}, this function could be represented as
+The functional paradigms focus on mimicking the notion of functions from mathematics as closely as possible. This results in shedding such concepts as states and iterations. Consider a mathematical function $f(x) = x \times 3+7$, where the value $x$ from the domain set is applied to the expression $x \times 3+7$, resulting in an element from the value set. In \emph{Scheme}, this function could be represented as
 
 \begin{lstlisting}
 (DEFINE (fun x)
@@ -42,7 +42,7 @@ and used with
 (fun val)
 \end{lstlisting}
 
-Note the complete lack of variables and any direct sequenced execution. Values are defined as constant expressions and passed as arguments (from the domain set) to a function that \emph{defines} the corresponding element in the value set. The function
+Note the use of named constants. Values are defined as constant expressions and passed as arguments (from the domain set) to a function that \emph{defines} the corresponding element in the value set. The function
 
 \[
 f(x) =
