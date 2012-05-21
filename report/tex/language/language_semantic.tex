@@ -13,14 +13,14 @@ The semantics of the language is base at the environment-store model, which is a
 \end{comment}
 
 %{\Large[The real stuff]}
-The semantics of \langname{} are based on the environment-store model, described in section \ref{sec:semantic}.
+The semantics of \langname{} are based on the environment-store model, described in section \ref{subsec:env-sto}.
 The semantics are split into two parts; declarations in \langname{}, and the inner workings of the engine used to simulate a battle between two characters.
 \subsection*{\langname{}}
 In \langname{} it is possible for the user to use references, they are called \ac{rgrs}. In the semantics of \langname{}, \ac{rgr} is a set of keywords used to refer to characters.\\ \textbf{RGR} is defined as follows;  
 %
 $$\mathbf{RGR} = \{\texttt{owner, enemy}\}$$
 %
-\ac{rgrs} are used in the declaration of abilities and behaviour. An ability is declared by a name and contains; the targets to be effected by the ability, an effect corresponding carried out by the ability and two values. The first value representing the mana cost of the ability and the second representing the damage done.\\
+\ac{rgrs} are used in the declaration of abilities and behaviour. An ability is declared by a name and contains; the targets to be effected by the ability, an effect carried out by the ability and two values. The first value representing the mana cost of the ability and the second representing the damage done.\\
 To keep track of the bindings of an ability, an \textit{ability environment} is used. The set of ability environments is called \textbf{Ability}. 
 Given an ability name \textit{AName}, an ability environment must hold information about, targets, effect, cost, and damage. Therefore the definition of the set of ability environments \textbf{Ability} is:
 %
@@ -91,7 +91,7 @@ $\Rightarrow_{DecB}$ is defined by the rules in table \ref{tbl:decB}.\\\\
 \end{table}
 %
 %Event
-For declaring forced action for a character, \langname{} makes it possible for a user to declare event, which contains a trigger(decrease of health), a condition(health below 10\%) and an ability to execute when both the trigger and the condition is meet.
+For declaring forced action for a character, \langname{} makes it possible for a user to declare event, which contains a trigger(decrease of health), a condition(health below 10\%) and an ability to execute when both the trigger and the condition is met.
 A \textit{event environment} is used to keep track of the binding for events. The set of event environments is called \textbf{Event}.
 Given an event name, the event environment must hold information about the trigger, condition and ability. Therefore the definition of the set of event environments is:
 %
@@ -130,7 +130,7 @@ The set of resource environments is called \textbf{Resource}, and is defined as 
 %
 $$\mathbf{Resource : \; RName \rightharpoonup Integer \times Integer}$$
 %
-There is no written transition rules and system for \textbf{Resource}, because resource is not declared for it self. Resources are declared in the same step as a character is declared.
+There are no written transition rules or systems for \textbf{Resource}, because resource is not declared standalone. Resources are declared as soon as a character is declared.
 It is also required to keep track of the bindings of the character itself. To keep track of the bindings a \textit{character environment} is used. The set of character environments is called \textbf{Character}.
 Given a character name \textit{CName}, a character environment must hold information about the behaviour, abilities, attributes, events and resources bound to the character. Therefore the definition of the set of character environments \textbf{Character} is:
 %
@@ -175,27 +175,28 @@ $\Rightarrow_{DecC}$ is defined by the rules in table \ref{tbl:decC}\todo{explai
 \end{table}	
 The declaration of attributes and effects are not described above. As it can be seen i table \ref{tbl:decC} there is used an environment $env$, which is the environment used to keep track of bindings of attributes.
 
-Effects are not described, because it is currently not possible for a user to declare 'user-effects'. The effect are hard-coded in the engine, and therefore it is not possible for at user to declare, and therefore the declaration of effect are not described in the semantic of \langname{}.
+It is not possible for a user to declare custom effects. The effects are hard-coded in the engine and therefore the declaration of effects is not described in the semantics of \langname{}.
 %
 %
 %\todo{Missing some declarations, which should be described with clean text}
 \subsection*{\langname{} battle-engine}
 %this is test text
 The battle-engine for \langname{} runs in turns, each turn is executed if a certain win-condition is not met. 
-The win-condition is (like effects) hard-coded in the engine, and it is therefore not possible for a user to specify the win-condition in the \langname{} language. At this point, the win-condition is met, if the enemy of the current character has zero or less \ac{hp}.
+The win-condition is (like effects) hard-coded in the engine, and is therefore not possible, for a user, to specify in the \langname{} language. In the current implementation, the win-condition is met if the enemy of the current character has zero or less \ac{hp}.
 
-At the start of each turn, the win-condition is therefore checked, if it is met the battle ends, else the turn is executed in the following way;
+At the start of each turn, the win-condition is checked. If it is met, the battle ends, else a turn is executed in the following way;
 
 \begin{description}
-\item[1] The character which have to make an action during the current turn is chosen.
-\item[2] It is checked whether an event is triggered, if so the forced action is executed and point \textbf{3} and \textbf{4} are skipped. The event is basically a boolean expression consisting of a trigger and a condition. As long as both values do not evaluate to true, the event expression is false and the turn continues to point \textbf{3}.
-\item[3] Based on the declared behaviour, the best action to execute is calculated and chosen, by simulation every possible action and the outcome of it.
-\item[4] The chosen best action is executed.
-\item[5] A new turn start an the win-condition is checked.
-\item[5] If the win-condition is not met the turn continue from point \textbf{1}.
+\item[1] The character who is to be taking action the current turn is chosen.
+\item[2] It is checked whether an event is triggered, if not the turn continues to point \textbf{3}, else the forced action is executed and point \textbf{3} and \textbf{4} are skipped.\\
+\emph{\small{Note that the event is basically a boolean expression consisting of a trigger and a condition. As long as both values do not evaluate to true, the event expression is false and the turn continues to point \textbf{3}.}}
+\item[3] Based on the declared behaviour, the best action to execute is calculated and chosen, by simulating every possible action.
+\item[4] The chosen action is executed.
+\item[5] A new turn starts and the win-condition is checked.
+\item[5] If the win-condition is not met the turn continues from point \textbf{1}.
 \end{description}
 
-The only thing a turn does when it is executed all alone, it swapping the current character with the next character, so the current character becomes the next, and the next character becomes the current.\\
+The only thing a turn does when it is executed, is swapping the current character with the next character, so the current character becomes the next, and the next character becomes the current.\\
 
 Transition rules for execution of a turn are of the form
 {\small $$Char, Behaviour, Ability, Event, Resource \vdash \langle Active, Next, sto \rangle \Rightarrow_{TURN} \langle Next, Active, sto \rangle$$}
@@ -216,7 +217,7 @@ $\Rightarrow_{TURN}$ is defined by the rules in table \ref{tbl:Turn}.\\\\
  & \footnotesize{$Char, Behaviour, Ability, Event, Resource \vdash \langle Active, Next, sto \rangle \Rightarrow_{TURN} \langle Next, Active, sto \rangle$} \\
 % \\
 \footnotesize{Where} & \footnotesize{$Char(Active) = (Behaviour, \mathcal{P}(AName), env, EName, Resource)$} \\
-\footnotesize{And} & \footnotesize{$Env(Health) > 0$ (win-condition not meet)} \\
+\footnotesize{And} & \footnotesize{$Env(Health) > 0$ (win-condition not met)} \\
  & \footnotesize{$\forall e \in Events. Event(e) \rightarrow_b f \! \! f$} \\
  & \footnotesize{$Be = Behaviour(Beh)$} \\
 \\ \hline
@@ -225,7 +226,7 @@ $\Rightarrow_{TURN}$ is defined by the rules in table \ref{tbl:Turn}.\\\\
 \label{tbl:Turn}
 \end{table}
 %
-During a turn an ability is executed. The execution of an ability changes the values of the one(or both) of the involved characters .
+During a turn an ability is executed. The execution of an ability changes the values of the one (or both) of the involved characters .
 All abilities have mana cost, default set to zero. When an ability is executed, the cost of that given ability is subtracted from the mana pool of the executing character. \\
 
 Transition rules for execution of an ability are of the form
@@ -282,13 +283,14 @@ $\Rightarrow_{eff}$ are defined by the rules in table \ref{tbl:physical}.\\
 \caption{Transition rule for $\Rightarrow_{eff}$}
 \label{tbl:physical}
 \end{table}
-If no event is triggered during a turn, the action to be executed have to be calculated based on the behaviour declared in \langname{}.
-The calculations is done by an algorithm, and because this algorithm is complex, and would turn into a long description, if it were to be described by a semantic transition rule, it is instead described by pseudo-code.
+If no event is triggered during a turn, the action to be executed has to be calculated based on the behaviour declared in \langname{}.
+The calculations are done by a complex algorithm and would turn into a long description, if it was to be described by a semantic transition rule. It is instead described by pseudo-code.
 The algorithm calculates a value called \texttt{piggy}-value. The size of the \texttt{piggy}-value determines whether the action is good or not, the greater the value, the better the action.
 The size of the \texttt{piggy}-value is considered, based on the values declared in the behaviour of the character.\\
 The pseudo-code is as follow \\\\
 %Behaviour description to come
 \textsc{Chose-Action}
+%\texttt{
 \begin{lstlisting}[mathescape]
 actions := List of Action
 
@@ -307,7 +309,7 @@ for each Action a $\in$ actions{
     }
 return best_action
 \end{lstlisting}
-
+The pseudo-code describes how every possible action is simulated, and based on the \texttt{piggy}-value, the best action is chosen and returned.
 
 
 %\todo{describe behaviour}

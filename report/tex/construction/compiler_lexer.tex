@@ -31,5 +31,5 @@ The RegExManager class initiates the regular expressions that recognize all toke
 	}
 \end{lstlisting}
 
-Should two tokens happen to be the same length the \ac{STL} sorting of maps allows for control of which token type is assigned - the token will then be assigned the first type to match. The token type is an unsigned int and certain types are given a delay if they should be evaluated later than other token types. As an example the keywords "make" and "from" would match both their proper token types and the token type "Identifier". However, because the type Identifier is given a delay, the keywords will always get their proper token type.
+Should two tokens happen to be the same length the \ac{stl} sorting of maps allows for control of which token type is assigned - the token will then be assigned the first type to match. The token type is an unsigned int and certain types are given a delay if they should be evaluated later than other token types. As an example the keywords "make" and "from" would match both their proper token types and the token type "Identifier". However, because the type Identifier is given a delay, the keywords will always get their proper token type.
 

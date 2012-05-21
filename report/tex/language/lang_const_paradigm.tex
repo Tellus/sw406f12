@@ -1,20 +1,21 @@
 \subsection{Paradigm}
 \label{language:paradigm}
-\langname{} has taken on traits of declarative programming languages that focuses on letting the programmer describe \emph{what} they want, but not necessarily \emph{how}. It is evident in the three basic interaction methods in the language: \emph{declaration}, \emph{assignment} and \emph{construction}. All three are demonstrated in the following snippet. \todo{Double check the syntax for Fireball.Costs - I can't remember how we referenced members like that.}
+\langname{} has taken on traits of declarative programming languages, as can be seen in the three basic interaction methods in the language: \emph{declaration}, \emph{assignment} and \emph{construction}.
+%\langname{} has taken on traits of declarative programming languages that focuses on letting the programmer describe \emph{what} they want, but not necessarily \emph{how}. It is evident in the three basic interaction methods in the language: \emph{declaration}, \emph{assignment} and \emph{construction}.
+All three are demonstrated in the following snippet. %\todo{Double check the syntax for Fireball.Costs - I can't remember how we referenced members like that.}
 
 \begin{lstlisting}[language=fflang]
 make Fireball from Ability
 {
-	Costs: [[user.Resources[Mana],-10]];
-	Targets: [all];
-	Effects: [
-				[FireDamage(10,target)],
-				[FireDot(3,3,12)]
+	mana_cost: 10;
+	targets: [enemy];
+	effects: [
+				[FireDamage(target, 20)]
 			];
 }
 \end{lstlisting}
 
-The user-defined type of Ability, in this example called \emph{Fireball}, is declared and its members are assigned the necessary values. Notice the syntax for each of the effects ($<EffectName>(<param_1>, \cdots ,<param_n>)$), reminiscent of procedure calls in many other languages, and indeed the best equivalent would be that of a class constructor. This code is all that is necessary in order to implement Fireball into the game and make it available to characters.
+The user-defined Ability, \emph{Fireball}, is declared and its members are assigned the necessary values. Notice the syntax for each of the effects ($<EffectName>(<param_1>, \cdots ,<param_n>)$), reminiscent of procedure calls in many other languages, and indeed the best equivalent would be that of a class constructor. This code is all that is necessary in order to implement Fireball into the game and make it available to characters.
 While not strictly adherent to any single rule system, each base type in the language models a particular part of systems that was deemed almost universal across those reviewed. For example, many abilities of characters have a cost associated with them, especially magic abilities like Heal, which replenished HP. %TODO: Acronym?
 %As an example, 4th edition of \ac{dnd} limits the number of times an ability, can be used as a number of times per game day, encounter (battle) or ``at will'' (without restriction). Both types should be possible with the generalised assignment method and should thus cater to many different systems \todo{Test/confirm/analyse/look}. All other base types contain similar members (see the language reference for full descriptions).
 The type members and the method of declaration attempts to mimic the filling out of character sheets (see appendix \vref{charsheet} for an example) in pen and paper role-playing games. When a player or \ac{gm} fills out a character sheet they will, line for line, write the values for the character in appropriate fields. These are erased and updated as necessary, for example, when the character takes damage.
