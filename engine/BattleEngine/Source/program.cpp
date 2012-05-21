@@ -35,8 +35,8 @@ using namespace testbattle;
 FullBehaviour* make_fighter_behaviour()
 {
 	FullBehaviour *nb = new FullBehaviour();
-	nb->add_ratio(new BehaviourRatio(ENEMY, "Health", -0.5));
-	nb->add_ratio(new BehaviourRatio(OWNER, "Health", 2));
+	nb->add_ratio(new BehaviourRatio(ENEMY, "health", -0.5));
+	nb->add_ratio(new BehaviourRatio(OWNER, "health", 2));
 
 	return nb;
 }
@@ -46,23 +46,23 @@ Character* make_joe_clean()
 	Character *johannes = new Character();
 	johannes->name = "Johannes";
 
-	johannes->add_resource(new Resource("Health", 0, 100));
-	johannes->add_resource(new Resource("Mana", 0, 100));
+	johannes->add_resource(new Resource("health", 0, 100));
+	johannes->add_resource(new Resource("mana", 0, 100));
 
-	johannes->add_attribute(new Attribute("Strength", 17));
-	johannes->add_attribute(new Attribute("Intelligence", 25));
-	johannes->add_attribute(new Attribute("Sexyness", 10000));
+	johannes->add_attribute(new Attribute("strength", 17));
+	johannes->add_attribute(new Attribute("intelligence", 25));
+	johannes->add_attribute(new Attribute("sexyness", 10000));
 
 	FullBehaviour* beh = new FullBehaviour();
 	johannes->behaviour = beh;
-	beh->add_ratio(new BehaviourRatio(OWNER, "Health", 2));
-	beh->add_ratio(new BehaviourRatio(ENEMY, "Health", -1));
+	beh->add_ratio(new BehaviourRatio(OWNER, "health", 2));
+	beh->add_ratio(new BehaviourRatio(ENEMY, "health", -1));
 	
 	johannes->add_ability(new AttackAbility());
 	johannes->add_ability(new HealAbility());
 
     johannes->add_event(
-			new EventCondition(OWNER, "Health", LESS_THAN, 50),
+			new EventCondition(OWNER, "health", LESS_THAN, 50),
 			new ActionDefinition(OWNER, OWNER, dynamic_cast<Ability*>(johannes->get_child("Heal"))));
 
 	/*
@@ -96,12 +96,12 @@ Character* make_biggi_clean()
     biggi->name = "Biggi";
     
     // PrettyPrinter::print("Resources...\n", FG_YELLOW);
-	biggi->add_resource(new Resource("Health", 0, 250));
-	biggi->add_resource(new Resource("Mana", 0, 50));
+	biggi->add_resource(new Resource("health", 0, 250));
+	biggi->add_resource(new Resource("mana", 0, 50));
 
-	biggi->add_attribute(new Attribute("Strength", 50));
-	biggi->add_attribute(new Attribute("Intelligence", 1));
-	biggi->add_attribute(new Attribute("Sexyness", -5));
+	biggi->add_attribute(new Attribute("strength", 50));
+	biggi->add_attribute(new Attribute("intelligence", 1));
+	biggi->add_attribute(new Attribute("sexyness", -5));
     
 	// Behaviour
 	biggi->behaviour = make_fighter_behaviour();
@@ -111,7 +111,7 @@ Character* make_biggi_clean()
     // biggi->add_ability("Maul", new AttackAbility());
 	Ability* abil = new Ability("Maul", 0, 0);
 	
-	abil->add_child(new Effect(OWNER, TARGET, "Health", -10));
+	abil->add_child(new Effect(OWNER, TARGET, "health", -10));
 	biggi->add_ability(abil);
 
 	return biggi;

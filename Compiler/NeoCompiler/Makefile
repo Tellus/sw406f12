@@ -6,7 +6,7 @@ FLAGS=-Wall -std=c++0x
 # INCS=-I. -ITrees -IErrorHandling -IParser -IToken -ICodeGeneration -ISymbolTables -IScanner
 INCS=-I.
 # Linker switches.
-LIB=-L /usr/lib -lboost_regex
+LIB=-L/usr/lib/ -lboost_regex
 SOURCES= \
 ./Trees/assignmentnode.cpp \
 ./Trees/declarationnode.cpp \
@@ -30,7 +30,7 @@ SOURCES= \
 ./CodeGeneration/generator.cpp \
 ./SymbolTables/symboltable.cpp \
 ./Scanner/scanner.cpp \
-./Scanner/regexmanager.cpp \
+./Scanner/regexmanager.cpp
 
 # Object versions of sources.
 OBJECTS=$(SOURCES:.cpp=.o)
