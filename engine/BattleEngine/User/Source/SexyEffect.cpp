@@ -19,8 +19,8 @@ void SexyEffect::execute(Primarch* s, Primarch* t)
 	engine::Character* schar = dynamic_cast<engine::Character*>(s);
 	engine::Character* tchar = dynamic_cast<engine::Character*>(t);
 
-	tchar->get_resource("Health")->increase(4);
-	schar->get_resource("Mana")->decrease(10);
+	tchar->get_resource("health")->increase(4);
+	schar->get_resource("mana")->decrease(10);
 }
 
 engine::Primarch* SexyEffect::clone(bool with_id)
