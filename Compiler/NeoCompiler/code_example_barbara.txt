@@ -1,0 +1,58 @@
+make Hammertime from Ability
+{
+		name: "STOP! Hammertime!";
+		targets: [enemy];
+		effects: [PhysicalDamage(target, 85)];
+}
+
+make Freezeray from Ability
+{
+	name: "It's not a death ray or an ice beam, that's all Jhonny Snow.";
+	teargets: [enemy];
+	effects: [PhysicalDamage(target 100)];
+}
+
+/*AWH YEAH, comment time!
+This comment spans TWO lines!*/
+
+make Heal from Ability
+{
+	name: "Heal";
+	mana_cost: 50;
+	targets: [self];
+	effects: [Heal(target, 100)];
+}
+
+make Derp from Behaviour
+{
+	positive:[[owner.health, 80], [owner.mana, 40]];
+	negative:[[enemy.health, 60, enemy.mana, 30]];
+}
+
+make Hurr from Behaviour
+{
+	positive:[[owner.health, 100]];
+	negative:[[enemy.mana, 40]];
+}
+
+make HerpDerp from Character
+{
+	name: "Herp Derp"
+	health: 500;
+	mana: 100;
+	strength: 100;
+	
+	abilities:[Freezeray, Heal];
+	behaviour: Derp;
+}
+
+make HurrDurr from Character
+{
+	name: "Hurr Durr";
+	health: 450;
+	mana: 200;
+	strength: 120;
+	
+	abilities:[Hammertime, Heal];
+	behaviour: Hurr;
+}
