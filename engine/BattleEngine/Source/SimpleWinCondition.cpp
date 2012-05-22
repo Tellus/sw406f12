@@ -35,7 +35,7 @@ bool SimpleWinCondition::is_met(GameState* check)
 		{
 			tmp_c = dynamic_cast<Character*>(check->get_child_by_id(*char_iter));
 
-			if (tmp_c->get_resource("Health")->get_current() <= 0)
+			if (tmp_c->get_resource("health")->get_current() <= 0)
 			{
 				return true;
 			}

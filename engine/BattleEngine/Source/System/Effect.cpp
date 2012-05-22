@@ -13,6 +13,8 @@ namespace engine {
 Effect::Effect()
 {
 	// Stub
+	this->amount = 1; // Otherwise, most derived effects will have a zero-effect
+	                  // magnitude.
 }
 
 Effect::~Effect()

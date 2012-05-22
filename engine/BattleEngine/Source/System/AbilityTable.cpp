@@ -156,8 +156,8 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
     {
         // Get abil. Test cost.
         abil = (iter->second);
-        if (abil->cost_health <= from->get_resource("Health")->get_current() &&
-            abil->cost_mana <= from->get_resource("Mana")->get_current())
+        if (abil->cost_health <= from->get_resource("health")->get_current() &&
+            abil->cost_mana <= from->get_resource("mana")->get_current())
                 usable.push_back((iter->second));
     }
     

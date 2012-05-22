@@ -79,6 +79,7 @@ clean:
 	if test -f $(EXECUTABLE)$(EXT); then rm $(EXECUTABLE)$(EXT); fi
 	if test -d $(OBJ_DIR); then rm -r $(OBJ_DIR); fi
 	rm $(OBJECTS)
+	rm $(U_OBJECTS)
 	
 .cpp.o:
 	$(CC) -c $(FLAGS) $(CFLAGS) $(INCS) $(LIB) $< -o $@
