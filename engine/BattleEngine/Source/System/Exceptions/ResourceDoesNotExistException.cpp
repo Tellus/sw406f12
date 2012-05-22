@@ -20,9 +20,4 @@ ResourceDoesNotExistException::~ResourceDoesNotExistException() throw()
     // Empty, though defined.
 }
 
-const char* ResourceDoesNotExistException::what() const throw()
-{
-	return this->msg.c_str();
-}
-
 }

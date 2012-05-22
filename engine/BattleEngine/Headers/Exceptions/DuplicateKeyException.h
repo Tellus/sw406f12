@@ -8,18 +8,23 @@
 #ifndef DUPLICATE_KEY_H_
 #define DUPLICATE_KEY_H_
 
-#include <exception>
-#include <string>
+#include "BaseException.h"
  
 namespace engine {
-class DuplicateKeyException : public std::exception
+
+class DuplicateKeyException : public BaseException
 {
 public:
-	std::string msg;
-
+    /**
+     * Creates a new DuplicateKeyException with a specific message. For some
+     * reason, the compiler errors out if you concatenate in the call.
+     **/ 
 	DuplicateKeyException(std::string mess);
+	
+	/**
+	 * Destructor. Unimplemented, but necessary.
+	 **/
 	~DuplicateKeyException() throw();
-	virtual const char* what() const throw();
 };
 }
 

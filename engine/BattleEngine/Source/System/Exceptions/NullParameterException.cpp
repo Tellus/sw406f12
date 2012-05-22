@@ -20,9 +20,4 @@ NullParameterException::~NullParameterException() throw()
     // Empty, though defined.
 }
 
-const char* NullParameterException::what() const throw()
-{
-	return this->msg.c_str();
-}
-
 }

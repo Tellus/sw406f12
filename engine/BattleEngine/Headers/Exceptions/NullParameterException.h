@@ -8,18 +8,20 @@
 #ifndef NULL_PARAM_EXCEPTION_H_
 #define NULL_PARAM_EXCEPTION_H_
 
-#include <exception>
-#include <string>
+#include "BaseException.h"
  
 namespace engine {
-class NullParameterException : public std::exception
+class NullParameterException : public BaseException
 {
 public:
 	std::string msg;
 
 	NullParameterException(std::string mess);
+	
+	/**
+	 * Destructor. Unimplemented, but necessary.
+	 **/
 	~NullParameterException() throw();
-	virtual const char* what() const throw();
 };
 }
 

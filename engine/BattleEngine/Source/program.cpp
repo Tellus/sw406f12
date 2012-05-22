@@ -242,7 +242,12 @@ void base_test()
 	PrettyPrinter::print("Press any key to exit.");
 }
 
-int main(int argc, char *argv[])
+int curse_main(int argc, char** argv)
+{
+
+}
+
+int main(int argc, char** argv)
 {
     PrettyPrinter::print("BattleEngine v1 alpha.\n", FG_YELLOW);
 

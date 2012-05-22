@@ -8,19 +8,19 @@
 #ifndef PRIMARCH_DOES_NOT_EXIST_H_
 #define PRIMARCH_DOES_NOT_EXIST_H_
 
-#include <exception>
-#include <string>
+#include "BaseException.h"
  
 namespace engine {
-class PrimarchDoesNotExistException : public std::exception
+class PrimarchDoesNotExistException : public BaseException
 {
 public:
-	std::string msg;
-
 	PrimarchDoesNotExistException();
 	PrimarchDoesNotExistException(std::string mess);
+	
+	/**
+	 * Destructor. Unimplemented, but necessary.
+	 **/
 	virtual ~PrimarchDoesNotExistException() throw();
-	virtual const char* what() const throw();
 };
 }
 

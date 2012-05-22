@@ -8,9 +8,6 @@
 #ifndef RESOURCE_DOES_NOT_EXIST_H_
 #define RESOURCE_DOES_NOT_EXIST_H_
 
-#include <exception>
-#include <string>
-
 #include "PrimarchDoesNotExistException.h"
 
 namespace engine {
@@ -18,8 +15,11 @@ class ResourceDoesNotExistException : public PrimarchDoesNotExistException
 {
 public:
 	ResourceDoesNotExistException(std::string mess);
+	
+	/**
+	 * Destructor. Unimplemented, but necessary.
+	 **/
 	virtual ~ResourceDoesNotExistException() throw();
-	virtual const char* what() const throw();
 };
 }
 

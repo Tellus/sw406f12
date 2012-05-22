@@ -8,18 +8,18 @@
 #ifndef NO_VALID_ACTION_H_
 #define NO_VALID_ACTION_H_
 
-#include <exception>
-#include <string>
+#include "BaseException.h"
  
 namespace engine {
-class NoValidActionException : public std::exception
+class NoValidActionException : public BaseException
 {
 public:
-	std::string msg;
-
 	NoValidActionException(std::string mess);
+	
+	/**
+	 * Destructor. Unimplemented, but necessary.
+	 **/
 	~NoValidActionException() throw();
-	virtual const char* what() const throw();
 };
 }
 

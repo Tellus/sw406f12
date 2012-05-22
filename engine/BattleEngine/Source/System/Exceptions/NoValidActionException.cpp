@@ -20,9 +20,4 @@ NoValidActionException::~NoValidActionException() throw()
     // Empty, though defined.
 }
 
-const char* NoValidActionException::what() const throw()
-{
-	return this->msg.c_str();
-}
-
 }

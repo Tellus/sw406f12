@@ -8,18 +8,18 @@
 #ifndef EVENT_LOCKED_EXCEPTION_H_
 #define EVENT_LOCKED_EXCEPTION_H_
 
-#include <exception>
-#include <string>
+#include "BaseException.h"
  
 namespace engine {
-class EventLockedException : public std::exception
+class EventLockedException : public BaseException
 {
 public:
-	std::string msg;
-
 	EventLockedException(std::string mess);
+	
+	/**
+	 * Destructor. Unimplemented, but necessary.
+	 **/
 	~EventLockedException() throw();
-	virtual const char* what() const throw();
 };
 }
 

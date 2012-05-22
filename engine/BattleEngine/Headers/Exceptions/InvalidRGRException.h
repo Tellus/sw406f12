@@ -8,18 +8,18 @@
 #ifndef INVALID_RGR_EXCEPTION_H_
 #define INVALID_RGR_EXCEPTION_H_
 
-#include <exception>
-#include <string>
- 
+#include "BaseException.h"
+
 namespace engine {
-class InvalidRGRException : public std::exception
+class InvalidRGRException : public BaseException
 {
 public:
-	std::string msg;
-
 	InvalidRGRException(std::string mess);
+	
+    /**
+	 * Destructor. Unimplemented, but necessary.
+	 **/
 	~InvalidRGRException() throw();
-	virtual const char* what() const throw();
 };
 }
 
