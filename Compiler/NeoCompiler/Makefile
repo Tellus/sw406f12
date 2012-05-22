@@ -6,8 +6,9 @@ FLAGS=-Wall -std=c++0x
 # INCS=-I. -ITrees -IErrorHandling -IParser -IToken -ICodeGeneration -ISymbolTables -IScanner
 INCS=-I.
 # Linker switches.
-LIB=-L/usr/lib/ -lboost_regex
+LIB=-lboost_regex
 SOURCES= \
+./program.cpp \
 ./Trees/assignmentnode.cpp \
 ./Trees/declarationnode.cpp \
 ./Trees/setnode.cpp \
@@ -24,7 +25,6 @@ SOURCES= \
 ./Trees/referencekeynode.cpp \
 ./Trees/identifiernode.cpp \
 ./ErrorHandling/compileerror.cpp \
-./program.cpp \
 ./Parser/parser.cpp \
 ./Token/token.cpp \
 ./CodeGeneration/generator.cpp \
@@ -35,8 +35,6 @@ SOURCES= \
 # Object versions of sources.
 OBJECTS=$(SOURCES:.cpp=.o)
 
-U_OBJECTS=$(U_SOURCES:.cpp=.o)
-
 OBJ_DIR=obj
 
 EXECUTABLE=neocompiler
@@ -46,8 +44,8 @@ EXT=.exe
 
 all: init $(SOURCES) $(EXECUTABLE)
 
-$(EXECUTABLE): $(OBJECTS) $(U_OBJECTS)
-	$(CC) $(INCS) $(LIB) $(OBJECTS) $(U_OBJECTS) -o $@
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) -o $@ $(INCS) $(LIB) $(OBJECTS) $(LIB)
 
 init:
 	if test ! -d $(OBJ_DIR); then mkdir $(OBJ_DIR); fi
