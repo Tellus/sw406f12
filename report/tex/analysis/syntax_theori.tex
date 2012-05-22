@@ -1,32 +1,36 @@
 \section{Syntax theory}
-Syntax is defined as the form of the expressions and statements of a language, be it a natural spoken language like English or a programming language. A language is a set of strings, constructed with characters from the language's alphabet. The syntax defines the correct structure of a language and to describe the syntax, notation techniques exist. These techniques are better described in sections \ref{sec:cfg} and \ref{sec:ebnf}.
+Syntax is defined as the form of the expressions and statements of a language, be it a natural language like English or a programming language. A language is a set of strings, constructed with characters from the appertaining alphabet. The syntax defines the correct structure of a language and to formally describe the syntax, notation techniques exist.
 
 \subsection{Regular expressions}
-\ac{regex} provides flexible means to recognise words and text. \ac{regex} can be very useful when manipulating text or searching for occurrences of certain strings.\\
-Programming languages generally have some basic symbols, these could be ``expression'', ``value'', ''declaration'' etc. \ac{regex} is used by many compilers to recognise these types of symbols.
-One of the ways to specify the structure of a language's syntax and ''basic symbols'' is with the use of \ac{regex}.\cite{Fischer2010}\\
-One could think of \ac{regex} as a form of a pattern with the option for more control over the number of strings that get matched. A specific word could be written in two ways, for example, American english and British english often make use of the same word with one alphabetical letter changed. Let's say we want to match the word ''recognize''. Given the fact that some are likely to write it like this: ''recognise'', we want to match both cases. With a \ac{regex} we can specify it as such; <recogni(s|z?)e>. This way both words get matched.\\
+\ac{regex} provides flexible means to recognise words and text. \ac{regex} can be very useful when manipulating text or searching for occurrences of certain strings.
+
+Programming languages generally have some basic symbols. These could be ``expression'', ``value'', ''declaration'' etc. \ac{regex} is used by many compilers to recognise these types of symbols.\cite{Fischer2010}
+%One of the ways to specify the structure of a language's syntax and ''basic symbols'' is with the use of \ac{regex}.
+
+One could think of \ac{regex} as a form of a pattern with the option for more control over the number of strings that get matched. A specific word could be written in two ways, for example, American english and British english often make use of the same word with one alphabetical letter changed. Let's say we want to match the word ''recognize''. Given the fact that some are likely to write it like this: ''recognise'', we want to match both cases. With a \ac{regex} we can specify it as such; <recogni(s $\cup$ z)e>. This way both words get matched.\\
 
 \ac{regex} is built, using regular operations, these operations are; union ``$\cup$'', concatenation ``$\circ$'' and star ``$\ast$''.
 \begin{description}
-	\item Union works as an ``or'' operator, which means that the expression $0 \cup 1$ can either evaluate $0$ or $1$.
-	\item Concatenation works as a ``followed by'' operator, which means the expression $0 \circ 1$ evaluates to $0$ followed by a $1$.
-	\item Star works as a ``zero or more'' operator, meaning that the expression $0^{\ast}$ has an evaluation range from none to infinite $0$'s.
+	\item [Union] works as an ``or'' operator, which means that the expression $0 \cup 1$ can either evaluate $0$ or $1$.
+	\item [Concatenation] works as a ``followed by'' operator, which means the expression $0 \circ 1$ evaluates to $0$ followed by a $1$. Concatenation is often implicit, which means $0 \circ 1$ can be written $01$.
+	\item [Star] works as a ``zero or more'' operator, meaning that the expression $0^{\ast}$ has an evaluation range from none to infinite $0$'s.
 \end{description}
-Summing up, the \ac{regex} $(0 \cup 1) \circ 0^{\ast}$ evaluates a $0$ or $1$ followed by zero or more $0$'s. \cite{syntax_book}\\
+Summing up, the \ac{regex} $(0 \cup 1) 0^{\ast}$ recognises a $0$ or $1$ followed by none or more $0$'s. \cite{syntax_book}
 
 \subsection{\ac{cfgs}}
 \label{sec:cfg}
-The syntax of a programming language is usually described using a \ac{cfg}, which can be formed i different ways. Two of the most common forms is \ac{bnf} and \ac{ebnf}. \\
-\\
-\ac{cfg} was first described in the middle of the 1950s by Noam Chromsky \cite{concepts_prog_lang}. A \ac{cfg} is a collection of substitutions rules. The rules consist of two kinds of symbols; \textit{nonterminals} also know as \textit{variable} and \textit{terminals}. Each rule in a \ac{cfg} is formed as a line. The line determines how to substitute one (ore more) \textit{variables} with another variable or terminal \cite{syntax_book}.
+The syntax of a programming language is usually described using a \ac{cfg}, which can be formed i different ways. Two of the most common forms is \ac{bnf} and \ac{ebnf}.
 
-\subsection{\ac{ebnf}}
+Context-Free Grammar was first described in the middle of the 1950s by Noam Chomsky \cite{concepts_prog_lang}. A \ac{cfg} is a collection of substitution rules. The rules consist of two kinds of symbols; \textit{nonterminals} and \textit{terminals}. Each rule in a \ac{cfg} is formed as a line. Each line determines how to substitute a nonterminal with one or more nonterminals or terminals \cite{syntax_book}.
+
+\subsubsection*{\ac{ebnf}}
 \label{sec:ebnf}
-The \ac{ebnf} notation is an extended version of the \ac{bnf} notation. Both the \ac{bnf} notation and the \ac{ebnf} notation are \ac{cfg}'s, and therefore used for describing syntax of programming languages. The \ac{bnf} notation was introduced by John Backus, and the was later modified by Peter Naur, hence the notation was called \ac{bnf}. \\
-The \ac{bnf} notation has though time been extended i several ways, and even though all the extensions is not exactly the same, they are all called \ac{ebnf}. The extended notation was supposed to make the notation more readable and writeable. The \ac{bnf} notation and the \ac{ebnf} notation have the same power of description. \cite{concepts_prog_lang}
+The \ac{ebnf} notation is an extended version of the \ac{bnf} notation. Both the \ac{bnf} notation and the \ac{ebnf} notation are \ac{cfg}'s, and therefore used for describing syntax of programming languages. The \ac{bnf} notation was introduced by John Backus, and was later modified by Peter Naur, hence the notation was called \ac{bnf}.
 
-\subsection*{Writability and Readability}
+The \ac{bnf} notation has been extended in several ways, and even though all the extensions are not identical, they are all called \ac{ebnf}. The extended notation was supposed to make the notation more readable and writeable. The \ac{bnf} notation and the \ac{ebnf} notation have the same power of description. \cite{concepts_prog_lang}
+
+\subsection{Design criteria for syntax}
+\todo{Extend this shit, and restructure it}
 Two criteria were used to support the design of our language syntax, these are writability and readability. Writability is a measure for how convenient, for a programmer, a language is to write and readability is a measure for how easy a language is to understand and learn. These two have an extreme on each side of the scale, where a complex language can be extremely efficient due to type security, the number of operations and data structures, on the other side a simple one, made to be easy to use and learn often sacrifices some of the type security, operations and data structures to be more convenient for the user.
 \begin{comment}
 \begin{tabular}{l l l}

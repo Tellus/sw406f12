@@ -1,34 +1,31 @@
 \subsection{Inclusions}
-A feature of primarch and seed definitions, inclusions \todo{proper term?} is a notation to define a member of a primarch without explicitly instantiating with an identifier. An example:
+A feature of Primarch and seed definitions, inclusions is a notation to define a member of a Primarch without explicitly instantiating with an identifier. An example:
 \begin{lstlisting}[language=fflang]
-make Fireball from Ability
+make Attack from Ability
 {
-	targets: [target];
-	cost: [[owner.mana, 10]];
-	effects: [	FireDamage(target,5,12),
-				BurnDOT(target,5,2 to 5)
+	targets: [enemy];
+	effects: [	PhysicalDamage(target,12)
 			 ];
 }
 
-make Heal from Ability
+make Cure from Ability
 {
-	targets: [owner];
-	cost   : [[owner.mana, 7]];
-	effects: [Heal(target,2d8)];
+	targets: [self];
+	mana_cost   : 7
+	effects: [Heal(target,28)];
 }
 
 make BattleMageBehaviour from Behaviour
 {
 	positive : [[owner.health, 70]];
-	negative : [[team.enemy.health, 80]];
+	negative : [[enemy.health, 80]];
 }
 
 make Wizard from Character
 {
-	abilities : [Fireball, Heal, Attack];
+	abilities : [Cure, Attack];
 	behaviour : BattleMageBehaviour;
 	events    : [ ];
-	items     : [ ];
                  
     strength: 8;
     agility: 8;
@@ -39,4 +36,4 @@ make Wizard from Character
 }
 \end{lstlisting}
 
-In this example, we transcend Wizard from the Primarch Character, assigning new abilities and setting the value of attributes and resources as well as a proper behaviour. Notice that unlike imperative languages, only the type is given - no identifiers are necessary, since each entry of the type is considered unique (it is impossible to have two ''strength'' attributes on the same character.
+In this example, Wizard is made from the Primarch Character, and is assigned new abilities, values of attributes and resources as well as a behaviour. Notice that unlike imperative languages, only the identifier is given - no types are necessary, since each entry of the type is considered unique: It is impossible to have two Strength attributes on the same character.

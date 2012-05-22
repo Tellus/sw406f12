@@ -4,8 +4,9 @@ Many systems have complex conditions or calculations for some of their aspects.
 Analysing the target group's most popular systems, rules were exposed that cannot be easily expressed in a generalised declarative manner.
 An example is the health system of the revised Storyteller system from the \ac{wod} series of games. Three distinct types of damage cover the same seven points of health. Damage must be calculated on specific areas of these points, and have different healing times.
 Simpler examples of rules are damage calculations in most video \ac{rpgs},
-where certain attributes will lower the damage sustained from specific categories of damage. In Final Fantasy I, which is the rule set used as a guide for character creation and damage calculations, physical attack damage is determined from two formulae depending on the active character's class. Below is the calculations implemented in the engine, this is an almost exact copy of the attribute calculation from Final Fantasy I:
+where certain attributes will lower the damage sustained from specific categories of damage. In Final Fantasy I, which is the rule set used as a guide for character creation and damage calculations, physical attack damage is determined from two formulae depending on the active character's class. Below is the calculations implemented in the engine:
 
+\todo{FUKKEN FIIIIIX}
 \subsection{Implemented set}
 \label{language:implset}
 \begin{center}
@@ -64,4 +65,5 @@ Mana Points: & (Intelligence * 15)\\
 \emph{These are the Resources most often used in RPG systems. They represent physical health and magical energy respectively. Mana is the cost of Abilities.}
 \end{center}
 
-Additionally, it was decided that for simplicity a character would die, i.e. leave combat, once their HP reached 0. Also, due to the fact that Items were never included mana replenishing items such as mana potions are not available. This means that mana is a depleteable resource. It was also decided that a character wins combat if they are the only one still alive.
+Due to the fact that Items were never included, Mana replenishing items such as Mana Potions are not available. This means that mana is a depleteable resource.
+Additionally, it was decided that a character would die, i.e. leave combat, once their \ac{hp} reached 0.  It was also decided that a character wins combat if they are the last man standing.

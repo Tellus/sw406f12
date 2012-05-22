@@ -1,76 +1,69 @@
-\section{Language semantics}
+\section{\langname{} Semantics}
 %I don't like this anymore :/ ~Hornbjerg
-\begin{comment}
-The language is a language used for  of a role-playing characters. I addiction to the language is an battle engine, which simulates a battle between the  character. \\
-The engine works, so that lets one character make an action, then the turn end, and the other character then gets to make its action. \\
-The action a character makes, is calculated by an AI-behaviour. The AI-behaviour is base at a behaviour declared for the character. \\
-Before a character gets to make its turn, win condition is checked, so that the character does not get to make an action if its health is below zero.  
-
-\subsection{Environment-store model}
-The semantics of the language is base at the environment-store model, which is a a model describing how variables are bound during a program execution. Each variable is bound to a storage cell, and the content of the storage cell is the value of the variable.
-
-\subsection{\langname{} semantics}
-\end{comment}
 
 %{\Large[The real stuff]}
 The semantics of \langname{} are based on the environment-store model, described in section \ref{subsec:env-sto}.
 The semantics are split into two parts; declarations in \langname{}, and the inner workings of the engine used to simulate a battle between two characters.
-\subsection*{\langname{}}
-In \langname{} it is possible for the user to use references, they are called \ac{rgrs}. In the semantics of \langname{}, \ac{rgr} is a set of keywords used to refer to characters.\\ \textbf{RGR} is defined as follows;  
+\subsection*{Semantics}
+In the semantics of \langname{}, \ac{rgr} is a set of keywords used to refer to characters.\\ \textbf{RGR} is defined as follows;  
 %
-$$\mathbf{RGR} = \{\texttt{owner, enemy}\}$$
+$$\mathbf{RGR} = \{\texttt{owner, enemy}$$
 %
-\ac{rgrs} are used in the declaration of abilities and behaviour. An ability is declared by a name and contains; the targets to be effected by the ability, an effect carried out by the ability and two values. The first value representing the mana cost of the ability and the second representing the damage done.\\
+\ac{rgrs} are used in the declaration of abilities and behaviour. An ability is declared by a name and contains the targets to be affected by the ability, effects carried out by the ability and three values. The first value representing the Mana cost of the ability, the second representing the \ac{hp} and the third representing the magnitude of the ability.\\
 To keep track of the bindings of an ability, an \textit{ability environment} is used. The set of ability environments is called \textbf{Ability}. 
-Given an ability name \textit{AName}, an ability environment must hold information about, targets, effect, cost, and damage. Therefore the definition of the set of ability environments \textbf{Ability} is:
+Given an ability name \textit{AName}, an ability environment must hold information about, targets, cost and effects. Therefore the definition of the set of ability environments \textbf{Ability} is:
 %
-$$\mathbf{Ability: \; AName \rightharpoonup \mathcal{P}(RGR) \times Effect \times Integer \times Integer}$$
-%
-Transition rules for declaration of ability are of the form
-%
-{\small $$\langle Char, Ability, Behaviour, Event \rangle \Rightarrow_{DecA} \langle Char, Ability', Bahavior, Event \rangle$$}
-%
+$$\mathbf{Ability: \; AName \rightharpoonup \mathcal{P}(RGR) \times Integer \times Integer \times \mathcal{P}(Effect \times RGR \times Integer)}$$
+
 The transition system for ability declaration is 
 
 \begin{tabular}{l l}
-$\Gamma_{DecA} = $ & $\mathbf{Character \times Ability \times Bahaviour \times Event}$ \\
+$\Gamma_{DecA} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event \times AName \times}$\\ 
+ & $\mathbf{\mathcal{P}(RGR) \times Integer \times Integer \times \mathcal{P}(Effect \times RGR \times Integer)}$ \\
 $\Rightarrow_{DecA}$ & \\
 $T_{DecA} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event}$ \\
 \end{tabular}
 \\\\
 $\Rightarrow_{DecA}$ is defined by the rules in table \ref{tbl:decA}.\\\\
-%
+
 \begin{table}[!h]
 \begin{tabular}{l l}
 \\ \hline \\
 \small{\textsc{[Ability-Dec]}}& \\
- & \footnotesize{$\langle Char, Ability, Behaviour, Event; \; Ability AName RGR, Effect, Int, Int \rangle \; \Rightarrow$} \\
- & \footnotesize{$\langle Char, Ability[AName \mapsto (RGR, Effect, Int, Int)], Behaviour, Event; S \rangle$} \\
+\footnotesize{$\langle Char, Ability, Behaviour, Event; \; Ability AName,  RGR, Int, Int,$}
+ & \footnotesize{$Effect_1, RGR_1, Integer_1$} \\
+ &  \footnotesize{$Effect_2, RGR_2, Integer_2$}\\
+ &  \footnotesize{$Effect_3, RGR_3, Integer_3$} \\
+ &  \footnotesize{$\vdots$} \\
+ &  \footnotesize{$Effect_n, RGR_n, Integer_n \rangle \; \Rightarrow$} \\
+\end{tabular}
+\begin{tabular}{l p{0.92\textwidth}}
+ \footnotesize{$\langle Char, Ability[AName \mapsto (RGR, Integer, Integer, Effects)], Behaviour, Event; S \rangle$} \\
+ \footnotesize{Where $Effects = $} 
+ \footnotesize{${\bigcup^{n}_{i = 0}} (Effect_i, RGR_i, Integer_i)]$} \\
 \\ \hline
 \end{tabular}
 \caption{Transition rules for $\Rightarrow_{DecA}$}
 \label{tbl:decA}
 \end{table}
-%
+
+
 As mentioned, \ac{rgrs} are used for behaviour as well. A behaviour is declared by a name and it contains a list of 3-tuples (\textbf{\ac{rgr}}, \textbf{VName}, \textbf{Integer}), where \textbf{\ac{rgr}} is a reference to the involved character, \textbf{VName} is the name of the involved attribute and \textbf{Integer} is a value representing the priority of the attribute. To keep track of the bindings of a behaviour, a \textit{behaviour environment} is used. The set of behaviour environments is called \textbf{Behaviour}.
 A behaviour environment must, given a behaviour name \textit{BName}, hold information of the list of 3-tuples. Therefore the definition of the set of behaviour environments is:
-%
+
 $$\mathbf{Behaviour: \; BName \rightharpoonup \mathcal{P}(RGR \times VName \times Integer)}$$
-%
-Transition rules for declaration of behaviour are of the form
-%
-{\small $$\langle Char, Ability, Behaviour, Event \rangle \Rightarrow_{DecB} \langle Char, Ability, Bahavior', Event \rangle$$}
-%
+
 The transition system for declaration of behaviour is
 
 \begin{tabular}{l l}
-$\Gamma_{DecB} = $ & $\mathbf{Character \times Ability \times Bahaviour \times Event}$ \\
+$\Gamma_{DecB} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event \times}$ \\
+ & $\mathbf{BName \times \mathcal{P}(RGR \times VName \times Integer)}$\\
 $\Rightarrow_{DecB}$ & \\
 $T_{DecB} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event}$ \\
 \end{tabular}
 \\\\
 $\Rightarrow_{DecB}$ is defined by the rules in table \ref{tbl:decB}.\\\\
-%
+
 \begin{table}[!h]
 \begin{tabular}{l l l}
 \\ \hline \\
@@ -89,95 +82,84 @@ $\Rightarrow_{DecB}$ is defined by the rules in table \ref{tbl:decB}.\\\\
 \caption{Transition rules for $\Rightarrow_{DecB}$}
 \label{tbl:decB}
 \end{table}
-%
+
 %Event
-For declaring forced action for a character, \langname{} makes it possible for a user to declare event, which contains a trigger(decrease of health), a condition(health below 10\%) and an ability to execute when both the trigger and the condition is met.
+For declaring forced actions for a character, \langname{} makes it possible for a user to declare events, which contain a condition(health below 10\%) and an ability to execute when the conditions are met.
 A \textit{event environment} is used to keep track of the binding for events. The set of event environments is called \textbf{Event}.
-Given an event name, the event environment must hold information about the trigger, condition and ability. Therefore the definition of the set of event environments is:
-%
-$$\mathbf{Event : \; EName \rightharpoonup Trigger \times Condition \times AName}$$
-%
-Transition rules for declaration of event are of the form
-%
-{\small $$\langle Char, Ability, Behaviour, Event \rangle \Rightarrow_{DecE} \langle Char, Ability, Bahavior, Event' \rangle$$}
-%
+Given an event name, the event environment must hold information about the condition and ability. Therefore the definition of the set of event environments is:
+
+$$\mathbf{Event : \; EName \rightharpoonup Condition \times AName}$$
+
 The transition system for declaration of event is
 
 \begin{tabular}{l l}
-$\Gamma_{DecE} = $ & $\mathbf{Character \times Ability \times Bahaviour \times Event}$ \\
+$\Gamma_{DecE} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event \times}$ \\
+ & $\mathbf{ EName \times Condition \times AName}$ \\
 $\Rightarrow_{DecE}$ & \\
 $T_{DecE} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event}$ \\
 \end{tabular}
 \\\\
 $\Rightarrow_{DecE}$ is defined by the rules in table \ref{tbl:decE}.\\\\
 %Transition rules for declaration of event can be seen in table \ref{tbl:devE}.
-%
+
 \begin{table}[!h]
 \begin{tabular}{l l}
  \\ \hline \\
  \small{\textsc{[Event-Dec]}} & \\
- & \footnotesize{$\langle Char ,Ability, Behaviour, Event; \; Event EName, Trigger, Condition, AName \rangle ; \; S \Rightarrow$} \\
- & \footnotesize{$\langle Char, Ability, Behaviour, Event; Event[EName \mapsto (Trigger, Condition, AName)]; S \rangle$} \\
+ & \footnotesize{$\langle Char ,Ability, Behaviour, Event; \; Event EName, Condition, AName \rangle ; \; S \Rightarrow$} \\
+ & \footnotesize{$\langle Char, Ability, Behaviour, Event; Event[EName \mapsto (Condition, AName)]; S \rangle$} \\
  \\ \hline
 \end{tabular}
 \caption{Transition rules for $\Rightarrow_{DecE}$}
 \label{tbl:decE}
 \end{table}
-%
+
 %Resource
-When a character is declared, they are declared with some resources like health and mana. The resources have a maximum and minimum value. A resource therefore has bindings for the two values. To keep track of these bindings a \textit{resource environment} is used.\\
+When a character is declared, they are declared with some resources like \ac{hp} and Mana. The resources have a maximum and current value that can be set, while the minimum is set to 0. A resource therefore has bindings for the two values. To keep track of these bindings a \textit{resource environment} is used.\\
 The set of resource environments is called \textbf{Resource}, and is defined as follows:
-%
+
 $$\mathbf{Resource : \; RName \rightharpoonup Integer \times Integer}$$
-%
+
 There are no written transition rules or systems for \textbf{Resource}, because resource is not declared standalone. Resources are declared as soon as a character is declared.
 It is also required to keep track of the bindings of the character itself. To keep track of the bindings a \textit{character environment} is used. The set of character environments is called \textbf{Character}.
 Given a character name \textit{CName}, a character environment must hold information about the behaviour, abilities, attributes, events and resources bound to the character. Therefore the definition of the set of character environments \textbf{Character} is:
-%
-$$\mathbf{Character} : \; \mathbf{CName} \rightharpoonup \mathbf{Behaviour} \times \mathbf{\mathcal{P}(AName)} \times \mathbf{EnvV} \times \mathbf{EName} \times \mathbf{Resource}$$
-%
-Transition rules for declaration of character are of the form
-%
-{\small $$\langle dec_C, A_D, R_D, Ability, Behaviour, Events \rangle
-\Rightarrow_{DecC} 
-\langle sto, Char' \rangle$$}
-\begin{comment}
-{\small $$\langle CName, A_D, R_D, Ability, Behaviour, Events \rangle
-\Rightarrow_{DecC} 
-\langle sto, Attribute, HP, Integer \rangle$$}
-\end{comment}
-%
+
+$$\mathbf{Character} : \; \mathbf{CName} \rightharpoonup \mathbf{BName} \times \mathbf{\mathcal{P}(AName)} \times \mathbf{Attributes} \times \mathcal{P}(\mathbf{EName}) \times \mathbf{Resource}$$
+
+
 The transition system for declaration of character is 
 
 \begin{tabular}{l l}
-$\Gamma_{DecC} = $ & $\mathbf{DecC \times EnvV \times Resource \times Ability \times Bahaviour \times Event}$ \\
+$\Gamma_{DecC} = $ & $\mathbf{Character \times Attributes \times Resource \times Ability \times Behaviour \times Event \times}$ \\
+ & $\mathbf{CName \times BName \times \mathbf{\mathcal{P}(AName)} \times \mathcal{P}(\mathbf{EName}) \times Sto}$\\
 $\Rightarrow_{DecC}$ & \\
 $T_{DecC} = $ & $\mathbf{Character \times Sto}$ \\
 \end{tabular}
 \\\\
-\todo{I'm not sure this system is right, but I guess Danny will comment on it Friday}
-$\Rightarrow_{DecC}$ is defined by the rules in table \ref{tbl:decC}\todo{explain ect.'s}.\\\\
 
+$\Rightarrow_{DecC}$ is defined by the rules in table \ref{tbl:decC}\\\\
+\pagebreak
 \begin{table}[!h]
 \begin{tabular}{l l}
 \\ \hline \\
 \small{\textsc{[Char-Dec]}} \\
- & \large{${\frac{\langle env, Health, Mana, sto, etc \rangle \; \Rightarrow \; env'}
- {\langle \texttt{make }  CName \texttt{ from } Character, \; CName, A_D, R_D, Ability, Behaviour, Events \rangle}}$}\\
- & \footnotesize{$\Rightarrow env \; \vdash \; \langle sto, Attribute, HP, Integer \rangle$} \\
- \footnotesize{Where} $env'=$ &  \footnotesize{$env[Health \mapsto l] [\texttt{next} \mapsto \texttt{new } l, sto \mapsto std]$} \\
- & \footnotesize{$env[Mana \mapsto \texttt{new } l][\texttt{next } \mapsto \texttt{new new } l, sto \mapsto std]$} \\
+ & \large{${\frac{ character, abitity, behaviour, event, sto \; \vdash \langle A_D, R_D, ANames, BName, ENames \rangle \; \Rightarrow \; character', sto'}
+ {\langle \texttt{make }  CName \texttt{ from } Character, \; CName, A_D, R_D, ANames, BName, ENames \rangle \Rightarrow character', \;  sto'$}}}\\
+ %& \footnotesize{} \\
+ \footnotesize{Where} $character'=$ &  \footnotesize{$character[health \mapsto l] [\texttt{next} \mapsto \texttt{new } l, sto \mapsto std]$} \\
+ & \footnotesize{$character[mana \mapsto \texttt{new } l][\texttt{next } \mapsto \texttt{new new } l, sto \mapsto std]$} \\
  & \footnotesize{etc.} \\
  \\ \hline
 \end{tabular}
-\caption{Transition rules for $\Rightarrow_{DecC}$ (\textsl{Remember to explain the ect.'s})}
+\caption{Transition rules for $\Rightarrow_{DecC}$. Etc. are all Attributes, Abilities, Behaviour and Events for the character.}
 \label{tbl:decC}
 \end{table}	
+
 The declaration of attributes and effects are not described above. As it can be seen i table \ref{tbl:decC} there is used an environment $env$, which is the environment used to keep track of bindings of attributes.
 
 It is not possible for a user to declare custom effects. The effects are hard-coded in the engine and therefore the declaration of effects is not described in the semantics of \langname{}.
-%
-%
+
+
 %\todo{Missing some declarations, which should be described with clean text}
 \subsection*{\langname{} battle-engine}
 %this is test text
@@ -198,8 +180,6 @@ At the start of each turn, the win-condition is checked. If it is met, the battl
 
 The only thing a turn does when it is executed, is swapping the current character with the next character, so the current character becomes the next, and the next character becomes the current.\\
 
-Transition rules for execution of a turn are of the form
-{\small $$Char, Behaviour, Ability, Event, Resource \vdash \langle Active, Next, sto \rangle \Rightarrow_{TURN} \langle Next, Active, sto \rangle$$}
 The transition system for execution of a turn is
 
 %\todo{Write the last of it}
@@ -225,12 +205,12 @@ $\Rightarrow_{TURN}$ is defined by the rules in table \ref{tbl:Turn}.\\\\
 \caption{Transition rules for $\Rightarrow_{TURN}$}
 \label{tbl:Turn}
 \end{table}
-%
+
 During a turn an ability is executed. The execution of an ability changes the values of the one (or both) of the involved characters .
 All abilities have mana cost, default set to zero. When an ability is executed, the cost of that given ability is subtracted from the mana pool of the executing character. \\
 
 Transition rules for execution of an ability are of the form
-%
+
 {\small $$Char_{Active}, Char_{Next}, Ability \vdash \langle AName, sto \rangle \Rightarrow_{A\_exe} \langle sto' \rangle$$}
 The transition system for execution of an ability is
 
@@ -259,7 +239,7 @@ The possible effects are \textit{physical damage} and \textit{heal}.
 
 The transition rules for execution of an effect are of the form
 {\small $$EName \langle sto, l \rangle \Rightarrow_{eff} sto[l \mapsto x \pm i]$$}
-%
+
 The transition system for execution of an effect is 
 
 \begin{tabular}{l l}
@@ -283,6 +263,8 @@ $\Rightarrow_{eff}$ are defined by the rules in table \ref{tbl:physical}.\\
 \caption{Transition rule for $\Rightarrow_{eff}$}
 \label{tbl:physical}
 \end{table}
+
+
 If no event is triggered during a turn, the action to be executed has to be calculated based on the behaviour declared in \langname{}.
 The calculations are done by a complex algorithm and would turn into a long description, if it was to be described by a semantic transition rule. It is instead described by pseudo-code.
 The algorithm calculates a value called \texttt{piggy}-value. The size of the \texttt{piggy}-value determines whether the action is good or not, the greater the value, the better the action.
