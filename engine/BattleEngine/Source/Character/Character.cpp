@@ -187,6 +187,7 @@ Resource* Character::get_resource(std::string name)
 	if (this->has_resource(name)) return this->resources[name];
 	else
 	{
+	    std::cout << "Resource '" << name << "' not found on char '" << this->name << "'\n";
 		throw new ResourceDoesNotExistException("The requested resource does not exist.");
 	}
 }
@@ -234,7 +235,7 @@ std::list<EventListener*>* Character::get_events()
 
 float Character::get_value()
 {
-	return this->get_resource("Health")->get_current();
+	return this->get_resource("health")->get_current();
 }
 
 void Character::modify(float amount)

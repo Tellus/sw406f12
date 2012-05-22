@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Effect.h"
+#include "Attribute.h"
 #include "Character.h"
 
 namespace testbattle {

@@ -23,6 +23,18 @@ void PhysicalDamageEffect::execute(Primarch* s, Primarch* t)
     engine::Attribute* str = schar->get_attribute("strength");
 
     tchar->get_resource("health")->decrease(str->get_current() * this->amount);
+    
+    // Get owner strength
+    engine::Attribute* ostr = schar->get_attribute("strength");
+    float dmg = ostr->get_current()/2 + 1; // Should be WeaponDmg + Str/2 + 1.
+    
+    // Get target defense.
+    engine::Attribute* tdef = tchar->get_attribute("defense");
+             
+    // Final damage.
+    float dam = dmg - tdef->get_current();
+    
+    tchar->get_resource("health")->decrease(dam * this->amount);
 }
 
 PhysicalDamageEffect::PhysicalDamageEffect() :

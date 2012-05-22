@@ -52,6 +52,14 @@ Character* make_joe_clean()
 	johannes->add_attribute(new Attribute("strength", 17));
 	johannes->add_attribute(new Attribute("intelligence", 25));
 	johannes->add_attribute(new Attribute("sexyness", 10000));
+	johannes->add_attribute(new Attribute("stamina", 31));
+	johannes->add_attribute(new Attribute("agility", 12));
+	johannes->add_attribute(new Attribute("defense",
+	    (johannes->get_attribute("stamina")->get_current() +
+	     johannes->get_attribute("agility")->get_current())/3));
+	johannes->add_attribute(new Attribute("mdefense",
+	    (johannes->get_attribute("stamina")->get_current() +
+	     johannes->get_attribute("intelligence")->get_current())/3));
 
 	FullBehaviour* beh = new FullBehaviour();
 	johannes->behaviour = beh;
@@ -64,28 +72,6 @@ Character* make_joe_clean()
     johannes->add_event(
 			new EventCondition(OWNER, "health", LESS_THAN, 50),
 			new ActionDefinition(OWNER, OWNER, dynamic_cast<Ability*>(johannes->get_child("Heal"))));
-
-	/*
-	Ability* abil;
-
-	abil = new Ability("Sexy", 0, 10);
-	abil->add_child(new Effect(OWNER, TARGET, "Health", -20));
-	abil->add_child(new Effect(OWNER, OWNER, "Health", 10));
-
-	johannes->add_ability(abil);
-
-	abil = new Ability("Attack", 0, 0);
-	abil->effects.push_back(new Effect(OWNER, TARGET, "Health", -30));
-	abil->add_rgr(ENEMY);
-	abil->add_rgr(OWNER);
-
-	johannes->add_ability(abil);
-
-	abil = new Ability("Heal", 20, 0);
-	abil->effects.push_back(new Effect(OWNER, TARGET, "Health", 30));
-	abil->add_rgr(ENEMY);
-	abil->add_rgr(OWNER);
-	*/
 
 	return johannes;
 }
@@ -102,6 +88,14 @@ Character* make_biggi_clean()
 	biggi->add_attribute(new Attribute("strength", 50));
 	biggi->add_attribute(new Attribute("intelligence", 1));
 	biggi->add_attribute(new Attribute("sexyness", -5));
+	biggi->add_attribute(new Attribute("stamina", 47));
+	biggi->add_attribute(new Attribute("agility", 3));
+	biggi->add_attribute(new Attribute("defense",
+	    (biggi->get_attribute("stamina")->get_current() +
+	     biggi->get_attribute("agility")->get_current())/3));
+	biggi->add_attribute(new Attribute("mdefense",
+	    (biggi->get_attribute("stamina")->get_current() +
+	     biggi->get_attribute("intelligence")->get_current())/3));
     
 	// Behaviour
 	biggi->behaviour = make_fighter_behaviour();
@@ -111,7 +105,8 @@ Character* make_biggi_clean()
     // biggi->add_ability("Maul", new AttackAbility());
 	Ability* abil = new Ability("Maul", 0, 0);
 	
-	abil->add_child(new Effect(OWNER, TARGET, "health", -10));
+//	abil->add_child(new Effect(OWNER, TARGET, "health", -10));
+	abil->add_child(new PhysicalDamageEffect(OWNER, TARGET));
 	biggi->add_ability(abil);
 
 	return biggi;
