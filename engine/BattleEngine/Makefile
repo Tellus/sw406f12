@@ -32,8 +32,6 @@ Source/System/RGRIdentifier/OwnerIdentifier.cpp \
 Source/System/RGRIdentifier/EnemyIdentifier_Unsafe.cpp \
 Source/System/FullBehaviour.cpp \
 Source/System/BehaviourRatio.cpp \
-Source/System/BehaviourRatios/AttributeRatio.cpp \
-Source/System/BehaviourRatios/ResourceRatio.cpp \
 Source/System/Engine.cpp \
 Source/System/WinCondition.cpp \
 Source/System/AbilityTable.cpp \

@@ -15,12 +15,13 @@
 namespace engine
 {
 
+/**
+ * Abstract winning condition. Inherit and implement the is_met method to add a
+ * new win condition to an Engine instance.
+ **/
 class WinCondition
 {
 public:
-	WinCondition();
-	virtual ~WinCondition();
-
 	/**
 	 * Returns true if the win condition has been met. This is what subclasses
 	 * should override and implement on their own.

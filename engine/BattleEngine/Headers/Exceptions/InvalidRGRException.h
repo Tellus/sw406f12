@@ -11,9 +11,18 @@
 #include "BaseException.h"
 
 namespace engine {
+
+/**
+ * Thrown in contexts where an unknown (or invalid) RGR is requested.
+ * GameState will throw this if you try to use an unsupported RGR_Enum value.
+ **/
 class InvalidRGRException : public BaseException
 {
 public:
+    /**
+     * Creates a new instance with a specific message. For some
+     * reason, the compiler errors out if you concatenate in the call.
+     **/ 
 	InvalidRGRException(std::string mess);
 	
     /**

@@ -18,10 +18,22 @@
 namespace engine
 {
 
+/**
+ * RGRIdentifier responsible for resolving the RGR_Enum ENEMY.
+ **/
 class EnemyIdentifier : public RGRIdentifier
 {
 public:
+    /**
+     * Identifies an ENEMY Character in a GameState.
+     * \param from The GameState to analyse.
+     * \return The Character found, or NULL.
+     **/
     Character *identify(GameState *from);
+    
+    /** 
+     * Creates and initialises an EnemyIdentifier.
+     **/
     EnemyIdentifier();
 };
 

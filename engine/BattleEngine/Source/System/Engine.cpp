@@ -81,6 +81,12 @@ Character* Engine::get_next_character()
 	return dynamic_cast<Character*>(this->get_child_by_id(*(this->current_turn)));
 }
 
+void Engine::add_character(Character* to_add)
+{
+    int new_id = this->current_state->max_team_id()+1;
+    this->add_character(to_add, new_id);
+}
+
 void Engine::run()
 {
 	// Reset turn order.
@@ -166,29 +172,6 @@ void Engine::raise_events()
 
 	// Kill.
 	this->pending_events.clear();
-}
-
-void Engine::get_callbacks()
-{
-	// Opposed to raised events, callbacks are more persistent.
-	// We can't simply purge the list every time, but must construct
-	// one hiarchially...billy...silly.
-
-	// We do start, however, by emptying it. We're working one-offs right now.
-	this->registered_event_listeners.clear();
-
-	for (std::list<Primarch*>::iterator iter = this->children.begin();
-		 iter != this->children.end();
-		 iter++)
-	{
-		std::map<std::string, std::list<callback>> tmp = (*iter)->get_callbacks();
-		for (std::map<std::string, std::list<callback>>::iterator cb_iter = tmp.begin();
-			 cb_iter != tmp.end();
-			 cb_iter++)
-		{
-			this->registered_event_listeners[(*cb_iter).first].merge((*cb_iter).second);
-		}
-	}
 }
 
 }

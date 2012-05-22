@@ -10,17 +10,11 @@
 namespace engine
 {
 
-Attribute::Attribute(float start)
-{
-    this->set_initial(start);
-	this->name = this->get_default_name("Attribute");
-}
-
 Attribute::Attribute(std::string name, float initial) :
 	Primarch(name)
 {
 	this->name = name;
-	this->set_initial(initial);
+	this->initial = initial;
 }
 
 Attribute::~Attribute()
@@ -32,13 +26,9 @@ Primarch* Attribute::clone(bool with_id)
 {
 	Attribute *ret = new Attribute(this->name, this->initial);
 	ret->current = this->current;
+	ret->initial = this->initial;
 	
 	return ret;
-}
-
-void Attribute::set_initial(float init)
-{
-    this->current = this->initial = init;
 }
 
 void Attribute::modify(float amount)

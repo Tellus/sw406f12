@@ -9,15 +9,9 @@
  
 namespace engine {
 
-PrimarchDoesNotExistException::PrimarchDoesNotExistException()
-{
-
-}
-
 PrimarchDoesNotExistException::PrimarchDoesNotExistException(std::string msg)
 {
 	this->msg = msg;
-	this->what();
 }
 
 PrimarchDoesNotExistException::~PrimarchDoesNotExistException() throw()

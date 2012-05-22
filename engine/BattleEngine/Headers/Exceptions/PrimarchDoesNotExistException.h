@@ -11,10 +11,18 @@
 #include "BaseException.h"
  
 namespace engine {
+
+/**
+ * Generic exception used when a Primarch is requested from a PrimarchIndexer
+ * and the Primarch was not found.
+ **/
 class PrimarchDoesNotExistException : public BaseException
 {
 public:
-	PrimarchDoesNotExistException();
+    /**
+     * Creates a new instance with a specific message. For some
+     * reason, the compiler errors out if you concatenate in the call.
+     **/ 
 	PrimarchDoesNotExistException(std::string mess);
 	
 	/**

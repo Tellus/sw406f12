@@ -18,6 +18,11 @@
 namespace engine
 {
 
+/**
+ * RGR_List is a glorified std::list for RGR_Enum values. It also handles
+ * converting to/from std::string/RGR_Enum and has a few speedy methods for
+ * handling several enums at once.
+ **/
 class RGR_List
 {
 public:
@@ -31,14 +36,18 @@ public:
      * \param rogers A mask of RGR's to add during initialization.
      **/ 
     RGR_List(int rogers);
+    
+    /**
+     * \todo Implement or unplement?
+     **/
     virtual ~RGR_List();
         
 	/**
 	 * Adds a single RGR to the list..
-	 * \param Any value from the RGR_Enum.
+	 * \param rgr Any value from the RGR_Enum.
 	 * \note Duplicates are ignored.
 	 **/
-	void add_rgr(RGR_Enum);
+	void add_rgr(RGR_Enum rgr);
 	
 	/**
 	 * Checks if a given RGR is already added.

@@ -17,8 +17,18 @@
 
 namespace engine {
 
+/**
+ * The Action class defines an action to be taken. It allows for tracking
+ * Character choices as well as storing these choices without having impacted a
+ * GameState. They can also affect GameStates.
+ * Action distances itself from ActionDefinition in that it has the capability
+ * to help resolve RGR_Enums.
+ **/
 class Action {
 public:
+    /**
+     * \todo Implement.
+     **/
 	virtual ~Action();
 	
 	/**
@@ -30,6 +40,9 @@ public:
 	 **/
 	Action(RGR_Enum source, RGR_Enum target, Ability* abil);
 	
+	/**
+	 * Creates a new Action from an ActionDefinition.
+	 **/
 	Action(ActionDefinition to_use);
 	
 	/**

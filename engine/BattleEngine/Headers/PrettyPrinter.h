@@ -21,10 +21,17 @@
 namespace frontend
 {
 
+/**
+ * PrettyPrinter is intended as a platform-independant output stream that allows
+ * for easy text formatting (colour and intensity, foreground/background). May
+ * be superseded by ncurses usage.
+ **/
 class PrettyPrinter
 {
 public:
-
+    /**
+     * Prints a string to stdout.
+     **/
     static void print(std::string in);
 
     /**
@@ -60,6 +67,7 @@ private:
      * the wild.
      **/
     static std::string _buffer;
+    
 	static std::vector<int> _params;
     
     static void _empty_buffer();
@@ -68,9 +76,6 @@ private:
     static void _add_text(std::string in);
     static void _do_print(std::vector<int> params, std::string in);
     
-    /**
-     *
-     */
     static void _start_format();
     static void _end_format();
 };

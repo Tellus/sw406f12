@@ -33,6 +33,9 @@ enum COMPARISON_ENUM{   LESS_THAN = 1,
 class EventCondition
 {
 public:
+    /**
+     * Creates and initialises a new (unusable) EventCondition.
+     **/
     EventCondition();
 
     /**
@@ -40,7 +43,7 @@ public:
      * \param trg The target of the condition comparison.
      * \param m The member of the target to test.
      * \param comp The comparison method to use.
-     * \val The comparison value.
+     * \param val The comparison value.
      **/
     EventCondition(RGR_Enum trg, std::string m, COMPARISON_ENUM comp, float val);
 
@@ -77,6 +80,10 @@ public:
      **/
     COMPARISON_ENUM comparison;
     
+    /**
+     * Converts a valid RGR_Enum to its corresponding text representation.
+     * Mostly used by pretty_print methods.
+     **/
     COMPARISON_ENUM str_to_enum(std::string in);
     
     /**

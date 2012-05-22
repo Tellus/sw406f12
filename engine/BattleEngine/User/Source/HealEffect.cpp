@@ -9,11 +9,6 @@
 
 namespace testbattle{
 
-HealEffect::~HealEffect()
-{
-// Stub
-}
-
 HealEffect::HealEffect(engine::RGR_Enum s, engine::RGR_Enum t) :
     engine::Effect(s, t, "health", 10) {}
 

@@ -13,18 +13,42 @@
 
 namespace engine {
 
+/** 
+ * The Attribute Primarch is Strength, Intelligence and the like. It's quite
+ * simply put a float with a name and a reset button.
+ **/
 class Attribute : public Primarch
 {
 protected:
-	float current, initial;
+    /**
+     * Current value of the Attribute.
+     **/
+	float current;
+	
+	/**
+	 * Initial value of the Attribute.
+	 **/
+	float initial;
 
 public:
-	Attribute(float start = 0);
-	// Attribute(int initial = 0);
+	/**
+	 * Creates a new Attribute.
+	 * \param name Primarch Name of the Attribute.
+	 * \param initial Starting value of the Attribute.
+	 **/
 	Attribute(std::string name, float initial = 0);
-	// Attribute(std::string name, int initial = 0);
+	
+	/**
+	 *
+	 **/
 	virtual ~Attribute();
 
+    /**
+     * Creates an exact copy of the Attribute in its current state.
+     * \param with_id If true, the copy will be exact, i.e. the Attribute will
+     * be distinguishable from its original only in memory. If false, the 
+     * Attribute will be created as a new Attribute with a new Primarch Id.
+     **/
 	virtual Primarch *clone(bool with_id);
 	
 	/**
@@ -43,7 +67,7 @@ public:
 	 * Decrease the current value of the attribute.
 	 * \param amount Amount to decrease by.
 	 **/
-	void virtual decrease(float amonut);
+	void virtual decrease(float amount);
 	
 	/**
 	 * Resets the current value to the initial value.
@@ -56,16 +80,22 @@ public:
 	 **/
 	void virtual change(float amount);
 	
+	/**
+	 * Retrieves the current value of the Attribute.
+	 * \return The current value.
+	 **/
 	float get_current();
 	
+	/**
+	 * Outputs the Attribute's data in a human-readable format to stdout.
+	 **/
 	void pretty_print();
 	
+	/**
+	 * Inherited from Primarch. Proxy for get_current().
+	 * \see get_current()
+	 **/
 	virtual float get_value();
-private:
-    /**
-     * Sets the initial values.
-     **/
-    void set_initial(float start);
 };
 
 } /* namespace engine */

@@ -16,10 +16,24 @@ namespace engine
 // Forward declaration - ew.
 class GameState;
 
+/**
+ * Base class for any RGR_Enum identifier for GameStates. Subclasses are found
+ * in the RGRIdentifier subdirectory of Source/System.
+ **/
 class RGRIdentifier
 {
 public:
+    /**
+     * Creates and initialises a new RGRIdentifier. Currently, this is simply
+     * a question of denoting which RGR_Enum that the identifier works with.
+     **/
 	RGRIdentifier();
+
+    /**
+     * Creates and initialises a new RGRIdentifier. Currently, this is simply
+     * a question of denoting which RGR_Enum that the identifier works with.
+     * \param rgr_id RGR_Enum that this identifier should work with.
+     **/	
 	RGRIdentifier(int rgr_id);
 	virtual ~RGRIdentifier();
 	
@@ -38,6 +52,9 @@ public:
     virtual Character *identify(GameState *from) = 0;
     
 private:
+    /**
+     * Initialisation.
+     **/
     void _init();
 };
 

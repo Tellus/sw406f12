@@ -189,31 +189,6 @@ Primarch* Primarch::get_child(int c_id, bool deep)
     throw PrimarchDoesNotExistException("The requested object is not contained in this Primarch.");
 }
 
-std::map<std::string, std::list<callback>> Primarch::get_callbacks()
-{
-	// Opposed to raised events, callbacks are more persistent.
-	// We can't simply purge the list every time, but must construct
-	// one hiarchially...billy...silly.
-	// TODO: Moar pointers.
-
-	std::map<std::string, std::list<callback>> cb = this->_callbacks;
-
-	for (std::list<Primarch*>::iterator iter = this->children.begin();
-		 iter != this->children.end();
-		 iter++)
-	{
-		std::map<std::string, std::list<callback>> tmp = (*iter)->get_callbacks();
-		for (std::map<std::string, std::list<callback>>::iterator cb_iter = tmp.begin();
-			 cb_iter != tmp.end();
-			 cb_iter++)
-		{
-			cb[(*cb_iter).first].merge((*cb_iter).second);
-		}
-	}
-
-	return cb;
-}
-
 void Primarch::raise_event(std::string name)
 {
     GameEvent* e = new GameEvent();

@@ -11,9 +11,18 @@
 #include "BaseException.h"
  
 namespace engine {
+
+/**
+ * Exception thrown when you attempt to modify events during the raise sequence.
+ * That would seriously muck up your willy.
+ **/
 class EventLockedException : public BaseException
 {
 public:
+    /**
+     * Creates a new instance with a specific message. For some
+     * reason, the compiler errors out if you concatenate in the call.
+     **/ 
 	EventLockedException(std::string mess);
 	
 	/**

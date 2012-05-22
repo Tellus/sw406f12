@@ -14,24 +14,25 @@
 namespace engine {
 
 /**
- * Exception typically used when someone attempts to add something to a map
- * where the key is already taken (for example, a second Health resource), and
- * will result in this exception.
+ * Generic Engine exception. Should be considered abstract since using it
+ * is terribly unhelpful.
  **/
 class BaseException : public std::exception
 {
 public:
     /**
      * The message passed through with the exception itself. Should contain
-     * a friendly, human-readable message along with the name of the disputed
-     * key.
+     * a friendly, human-readable message.
      **/
 	std::string msg;
 
+    /**
+     * Constructs a BaseException with a very unhelpful error message.
+     **/
     BaseException();
 
     /**
-     * Creates a new DuplicateKeyException with a specific message. For some
+     * Creates a new instance with a specific message. For some
      * reason, the compiler errors out if you concatenate in the call.
      **/ 
 	BaseException(std::string mess);

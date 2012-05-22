@@ -31,8 +31,23 @@ namespace engine
 class Engine : public PrimarchIndexer
 {
 public:
+    /**
+     * Creates and initialises a new Engine instance without Characters and a
+     * baseline win condition.
+     **/
 	Engine();
+	
+	/**
+	 * Creates and initialises a new Engine instance without Characters and a
+	 * custom WinCondition.
+	 * \param win The WinCondition object to use for checks.
+	 **/
 	Engine(WinCondition* win);
+	
+	/**
+	 * Destroys ALL the things!
+	 * \todo Implement.
+	 **/
 	virtual ~Engine();
 
 	/**
@@ -72,11 +87,20 @@ public:
 	void add_child(Character* to_add);
 
 	/**
-	 * Adds another Character ot the roster, on a specific team.
+	 * Adds another Character to the roster, on a specific team.
 	 * \param to_add The Character to add.
+	 * \param team_id Team to add the Character to. If the Team does not exist,
+	 * it will be created.
 	 * \note This method CLONES the Character.
 	 */
 	void add_character(Character* to_add, int team_id);
+
+	/**
+	 * Adds another Character to the roster, on a new team.
+	 * \param to_add The Character to add.
+	 * \note This method CLONES the Character.
+	 */
+    void add_character(Character* to_add);
 
 	/**
 	 * Checks to see if the passed Character (by Primarch ID) is present in either
@@ -125,8 +149,6 @@ protected:
 	 * have been registered to specific callback functions.
 	 **/
 	std::map<std::string, std::list<callback> > registered_event_listeners;
-
-	void get_callbacks();
 
 private:
 	Character* _add_base_char(Character* to_add, int team_id = -1);

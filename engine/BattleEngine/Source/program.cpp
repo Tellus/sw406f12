@@ -20,7 +20,6 @@
 
 #include "Effect.h"
 
-#include "SexyAbility.h"
 #include "HealAbility.h"
 #include "AttackAbility.h"
 

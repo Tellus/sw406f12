@@ -27,9 +27,19 @@ namespace engine
 class PrimarchIndexer
 {
 public:
+    /**
+     * Creates and initialises a new PrimarchIndexer.
+     **/
 	PrimarchIndexer();
+	
+	/** 
+	 * \todo Implement?
+	 **/
 	virtual ~PrimarchIndexer();
 
+    /**
+     * List of the children Primarchs that this indexer contains.
+     **/
 	std::list<Primarch*> children;
 
 	/**
@@ -46,9 +56,16 @@ public:
      **/
     void add_child(Primarch *to_add);
 
+    /**
+     * Checks to see if a particular child is within this indexer.
+     * \param c_id Primarch Id of the child to find.
+     **/
 	bool has_child(int c_id);
 
 private:
+    /**
+     * Private initialiser method.
+     **/
 	void _init();
 };
 

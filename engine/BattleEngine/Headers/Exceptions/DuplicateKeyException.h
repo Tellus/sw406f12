@@ -12,6 +12,11 @@
  
 namespace engine {
 
+/**
+ * Exception typically used when someone attempts to add something to a map
+ * where the key is already taken (for example, a second Health resource), and
+ * will result in this exception.
+ **/
 class DuplicateKeyException : public BaseException
 {
 public:
