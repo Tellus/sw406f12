@@ -45,6 +45,12 @@ public:
      **/
     ActionDefinition action_def;
 
+    /**
+     * Creates a deep copy of the Action object.
+     * \return A completely independant copy of the Action object.
+     **/
+    Action* clone();
+
 protected:
     /**
      * Called by execute, to generate a collections of effects from effectDefinitions

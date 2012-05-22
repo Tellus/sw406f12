@@ -95,43 +95,37 @@ void Engine::run()
 	 * 4. Replace current_state with best state from AbilityTable.
 	 */
 
-	AbilityTable *at;
+    Action* last_action;
 
 	while (!this->win_condition->is_met(this->current_state))
 	{
-		// TODO: Add event condition handling.
+        last_action = this->step();
 
-		/*
-		std::cout << "*********************\n";
-		std::cout << "Pre-execution state:\n";
-		this->current_state->pretty_print();
-		std::cout << "*********************\n";
-		*/
-
-		this->current_state->current_char = dynamic_cast<Character*>(this->current_state->get_child_by_id(this->get_next_character()->id));
-
-		// Character* cur = this->current_state->current_char;
-		/*
-		std::cout << "*****\n";
-		std::cout << cur->name << "[" << cur << "] (" << cur->get_resource("Health")->get_current() << "/" << cur->get_resource("Mana")->get_current() << ") ponders their next move.\n";
-		std::cout << "*****\n";
-
-		this->current_state->pretty_print();
-		*/
-		at = new AbilityTable(this->current_state);
-    
-		// TODO: There's a malign health calculation here!
-		this->current_state = at->get_next_state();
-
-		std::cout << this->current_state->current_char->name << " used " << at->best_action->action_def.ability->name << " on " << RGR_List::to_string(at->best_action->action_def.target) << ".\n";
-
-		std::cout << "*********************\n";
-		std::cout << "Post-execution state:\n";
-		this->current_state->pretty_print();
-		std::cout << "*********************\n";
+        std::cout << this->current_state->current_char->name
+                  << " used "
+                  << last_action->action_def.ability->name
+                  << " on "
+                  << RGR_List::to_string(last_action->action_def.target)
+                  << ".\n";
 	}
 
 	std::cout << "Game over! Thanks for playing. Insert Coin.\n";
+}
+
+Action* Engine::step()
+{
+    AbilityTable* at;
+
+    this->current_state->current_char = dynamic_cast<Character*>(
+        this->current_state->get_child_by_id(
+            this->get_next_character()->id));
+
+    at = new AbilityTable(this->current_state);
+
+    // TODO: There's a malign health calculation here!
+    this->current_state = at->get_next_state();
+
+    return at->best_action->clone();
 }
 
 void Engine::harvest_events()

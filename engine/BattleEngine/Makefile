@@ -6,7 +6,8 @@ FLAGS=-Wall -std=c++0x
 # Includes.
 INCS=-I. -IHeaders -IUser/Headers
 # Linker switches.
-#LIB=
+LIB=-lboost_regex
+#LIB=-lboost_regex -lncurses
 SOURCES= \
 Source/Character/Ability.cpp \
 Source/Character/Attribute.cpp \
@@ -69,7 +70,7 @@ EXT=.exe
 all: init $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS) $(U_OBJECTS)
-	$(CC) $(INCS) $(LIB) $(OBJECTS) $(U_OBJECTS) -o $@
+	$(CC) -o $@ $(INCS) $(OBJECTS) $(U_OBJECTS) $(LIB) 
 
 init:
 	if test ! -d $(OBJ_DIR); then mkdir $(OBJ_DIR); fi
@@ -82,7 +83,7 @@ clean:
 	rm $(U_OBJECTS)
 	
 .cpp.o:
-	$(CC) -c $(FLAGS) $(CFLAGS) $(INCS) $(LIB) $< -o $@
+	$(CC) -c $< -o $@ $(FLAGS) $(INCS) $(LIB) 
 	
 dev: all
 	./$(EXECUTABLE)$(EXT)

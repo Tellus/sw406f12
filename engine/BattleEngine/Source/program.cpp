@@ -27,10 +27,59 @@
 // Other stuff.
 #include "PrettyPrinter.h"
 
+#include <ncurses.h>
+#include <menu.h>
+
 using namespace std;
 using namespace engine;
 using namespace frontend;
 using namespace testbattle;
+
+/**
+ * The PlayerWindow is a wrapper around a character and dynamically
+ * displays their data on request.
+ **/
+class PlayerWindow
+{
+public:
+    Character* player;
+    WINDOW* window;
+    
+    int x, y;
+    
+    PlayerWindow()
+    {
+        _init();
+    }
+    
+    PlayerWindow(Character* p)
+    {
+        _init();
+        this->player = p;
+    }
+    
+    void move_to(int x, int y)
+    {
+        mvwin(this->window, x, y);
+        this->x = x;
+        this->y = y;
+    }
+    
+    void move_by(int x, int y)
+    {
+        this->x += x;
+        this->y += y;
+        mvwin(this->window, this->x, this->y);
+    }
+    
+private:
+    void _init(int nx = 0, int ny = 0)
+    {
+        this->x = nx;
+        this->y = ny;
+        this->window = newwin(LINES-20, COLS-10, nx, ny);
+    }
+};
 
 FullBehaviour* make_fighter_behaviour()
 {

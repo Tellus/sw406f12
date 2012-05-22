@@ -90,6 +90,12 @@ public:
 	 * Runs until a win condition is encountered.
 	 */
 	void run();
+	
+	/**
+	 * Performs a single Character turn and stops.
+	 * \return Action object that represents the action taken by the Character.
+	 **/
+	Action* step();
 
 	/**
 	 * Iterates the turn counter and returns the Character who is
