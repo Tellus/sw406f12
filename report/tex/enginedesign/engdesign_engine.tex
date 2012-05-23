@@ -81,6 +81,35 @@ With the Primarchs now described as classes for the \ac{api}, it is possible to 
 
 The engine will sequentially run turns for Characters that are still in play until the preset win condition is reached (this can result in an infinite execution loop). Roughly, the engine's main workflow can be described thus:
 
+\begin{algorithm}
+	\SetAlgoLined	
+	
+	\While{win condition not met}
+	{
+		max\_piggy = -\infty \;	
+		
+		best\_state = none\;
+	
+		nchar = gamestate.next\_character\;
+		\ForEach{Ability a in nchar.abilities}
+		{
+			\ForEach{RGR t in Ability.valid\_targets}
+			{
+				tmp\_state = a.execute(t)\;
+				new\_piggy = tmp\_state.piggy()\;
+				\If{max\_piggy < new\_piggy}
+				{
+					max\_piggy = new\_piggy\;
+					best\_state = a.execute(t);
+				}
+			}
+		}
+		
+		gamestate = best\_state\;
+	}
+	\caption{\label{figure:engindesign:engine:algorithm}A battle's flow cycle.}
+\end{algorithm}
+
 \begin{enumerate}
 	\item If the win condition is met, break and output end result.
 	\item Get next Chararcter in turn order.
