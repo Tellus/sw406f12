@@ -65,8 +65,8 @@ std::vector<Effect*> *Action::generate_effects()
 
 Action* Action::clone()
 {
-    return new Action(this->action_def.target,
-                            this->action_def.source,
+    return new Action(
+                            this->action_def.source,this->action_def.target,
                             dynamic_cast<Ability*>(this->action_def.ability->clone()));
 }
 
