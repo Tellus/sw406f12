@@ -103,14 +103,27 @@ int main_curses(int argc, char** argv)
     joew->move_to(1,1);
     biggiw->move_to(COLS/2+1, 1);
     
+    // Action pointer.
+    Action* last_action = NULL;
+    
     // Reset terminal cursor.
-    move(0,0);    
+    move(0,0);
+    
+    // Start game loop.    
     while ((ch = getch()) != KEY_F(1))
     {
+        joew->player = dynamic_cast<Character*>(game->current_state->get_child_by_id(joew->player->id));
+        biggiw->player = dynamic_cast<Character*>(game->current_state->get_child_by_id(biggiw->player->id));
+        
+        if (last_action)
+        {
+            mvprintw(LINES - 3, 2, "Last action: %s", last_action->action_def.ability->name.c_str());
+        }
+    
         if (ch == 'c')
         {
             // Continue
-            game->step();
+            last_action = game->step();
         }
     
         // Update loop.

@@ -22,6 +22,8 @@ namespace engine {
 class Ability : public Primarch, public RGR_List
 {
 public:
+    Ability();
+
     /** 
      * Creates and initialises a new Ability.
      * \param name The name of the Ability.

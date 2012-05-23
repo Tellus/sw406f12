@@ -118,6 +118,7 @@ void Engine::run()
                   << " on "
                   << RGR_List::to_string(last_action->action_def.target)
                   << ".\n";
+        this->current_state->pretty_print();
 	}
 
 	std::cout << "Game over! Thanks for playing. Insert Coin.\n";

@@ -6,10 +6,14 @@
 
 namespace engine { namespace frontend { namespace curses {
 
+/**
+ * Generic curses entity. Useless on its own.
+ **/
 class Entity
 {
 public:
-    int x, y;
+    Entity(int x, int y);
+    Entity();
     
     virtual void move_to(int x, int y);
     
@@ -26,6 +30,8 @@ public:
     virtual void update() = 0;
     
     virtual std::string to_string();
+    
+    int x, y;
 };
 
 }}}

@@ -2,7 +2,7 @@
 CC=g++
 # Flags.
 # FLAGS=-ggdb -Wall -std=c++0x
-FLAGS=-Wall -std=c++0x -DW_NCURSES -ggdb
+FLAGS=-Wall -std=c++0x -DWO_NCURSES -ggdb
 # Includes.
 INCS=-I. -IHeaders -IUser/Headers
 # Linker switches.
@@ -63,7 +63,8 @@ User/test_generated.cpp
 FRONTEND_SOURCES = \
 Source/Frontend/Curses/Entity.cpp \
 Source/Frontend/Curses/PlayerWindow.cpp \
-Source/Frontend/Curses/Label.cpp
+Source/Frontend/Curses/Label.cpp \
+Source/Frontend/Curses/Window.cpp
 
 # Object versions of sources.
 OBJECTS=$(SOURCES:.cpp=.o)

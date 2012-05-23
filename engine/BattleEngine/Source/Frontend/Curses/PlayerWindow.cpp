@@ -2,29 +2,12 @@
 
 namespace engine { namespace frontend { namespace curses {
     
-PlayerWindow::PlayerWindow(Character* p)
+PlayerWindow::PlayerWindow(Character* p) :
+    Window(0, 0, (COLS-2) / 2, LINES - 20)
 {
-    this->_init(0, 0, (COLS-2) / 2, LINES - 20);
+    this->_init();
     this->player = p;
     this->load_char(p);
-}
-
-void PlayerWindow::move_to(int x, int y)
-{
-    this->_window_move(x, y);
-}
-
-void PlayerWindow::move_by(int x, int y)
-{
-    this->_window_move(this->x + x, this->y + y);
-}
-
-void PlayerWindow::_window_move(int x, int y)
-{
-    this->clear(false);
-    Entity::move_to(x,y);
-    mvwin(this->window, this->y, this->x);
-    box(this->window, 0, 0);
 }
 
 void PlayerWindow::render()
@@ -81,16 +64,6 @@ void PlayerWindow::render()
     lc++;
 }
 
-void PlayerWindow::clear(bool del)
-{
-    wborder(this->window, ' ', ' ', ' ',' ',' ',' ',' ',' ');
-    wrefresh(this->window);
-    if (del)
-    {
-        delwin(this->window);
-    }
-}
-
 void PlayerWindow::update()
 {
     // Stub for now.
@@ -108,17 +81,13 @@ void PlayerWindow::load_char(Character* c)
     this->abilities = &c->abilities;
 }
 
-void PlayerWindow::_init(int nx, int ny, int nw, int nh)
+void PlayerWindow::_init()
 {
-    this->x = nx;
-    this->y = ny;
-    this->height = nh;
-    this->width = nw;
-    this->window = newwin(this->height,
-                          this->width,
-                          this->x,
-                          this->y);
-    this->move_to(1,1);
+    this->window = newwin(
+        this->height,
+        this->width,
+        this->x,
+        this->y);
 }
 
 int PlayerWindow::get_leftx()

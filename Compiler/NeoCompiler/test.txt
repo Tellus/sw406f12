@@ -2,6 +2,14 @@
 I like orcs!
 */
 
+make Attack from Ability
+{
+    name: "Bash";
+    mana_cost: 0;
+    targets: [enemy];
+    effects: [PhysicalDamage(target, 20)];
+}
+
 make Cure from Ability
 {
 	name: "Cure";
@@ -34,9 +42,25 @@ make Orc from Character
 	mana: 100;
     strength: 10;
     stamina: 9;
+    agility: 7;
+    attack_power: 50;
     
-    abilities: [Cure];
+    abilities: [Attack,Cure];
     behaviour: Smart;
     
     events +: [ForceHeal]; // Add to list
+}
+
+make Elf from Character
+{
+    name: "Hello Moron";
+    
+    health: 50;
+    mana: 250;
+    strength: 7;
+    stamina: 7;
+    agility: 25;
+    
+    abilities: [Attack,Cure];
+    behaviour: Smart;
 }

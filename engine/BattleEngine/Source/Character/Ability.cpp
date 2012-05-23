@@ -9,6 +9,15 @@
 
 namespace engine {
 
+Ability::Ability()
+{
+    this->_init();
+    
+    this->cost_health = this->cost_mana = 0;
+
+	this->name = this->get_default_name("Ability");
+}
+
 Ability::Ability(std::string name, float cost_health, float cost_mana) :
     Primarch(name)
 {
