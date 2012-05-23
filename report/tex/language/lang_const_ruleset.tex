@@ -6,24 +6,23 @@ An example is the health system of the revised Storyteller system from the \ac{w
 Simpler examples of rules are damage calculations in most video \ac{rpgs},
 where certain attributes will lower the damage sustained from specific categories of damage. In Final Fantasy I, which is the rule set used as a guide for character creation and damage calculations, physical attack damage is determined from two formulae depending on the active character's class. Below is the calculations implemented in the engine:
 
-\todo{FUKKEN FIIIIIX}
 \subsection{Implemented set}
 \label{language:implset}
 \begin{center}
-\begin{tabular}{|l l l|}
+\begin{tabular}{|l l|}
 \hline
-\multicolumn{3}{|c|}{\textbf{Attributes}}\\
+\multicolumn{2}{|c|}{\textbf{Attributes (manually set)}}\\
 \hline
-Strength: & Manually Set & (used for Damage calculations)\\
+Strength & (used for Damage calculations)\\
 \hline
-Agility: & Manually Set	 & (used for Defense calculations)\\
+Agility & (used for Defense calculations)\\
 \hline
-Intelligence: & Manually Set & (used for Mana calculations)\\
+Intelligence & (used for Mana calculations)\\
 \hline
-Stamina: & Manually Set & (used for HP and Defense calculations)\\
+Stamina & (used for HP and Defense calculations)\\
 \hline
 \end{tabular}\\
-\emph{All the above listed attributes are manually set by the programmer.\\ These initial values are fundamental for a character in the implemented world. If the programmer does not set these, they are initialized with the value 0.}
+\emph{All the above listed attributes are fundamental for a character in the implemented world. If the programmer does not set these, they are initialized with the value 0.}
 \end{center}
 
 \begin{center}
@@ -31,27 +30,31 @@ Stamina: & Manually Set & (used for HP and Defense calculations)\\
 \hline
 \multicolumn{2}{|c|}{\textbf{2nd Attributes (calculated)}}\\
 \hline
-Defense: & ((Stamina + Agility) / 3)\\
+Defense & ((Stamina + Agility) / 3)\\
 \hline
-Magic Defense: & ((Stamina + Intelligence) / 3)\\
-\hline	
+Magic Defense & ((Stamina + Intelligence) / 3)\\
+\hline
+Attack Power & (WeaponDmg + ((Strength / 2) + 1))\\
+\hline
+Magic Power & (Equipment bonus + ((Intelligence / 2) + 1))\\
+\hline
 \end{tabular}\\
-\emph{These second attributes are calculated with the given values of the initial attributes.\\ They serve as defense for the two damage types, by subtracting their calculated values from the damage taken.}
+\emph{These second attributes are calculated with the given values of the initial attributes.\\ The first two serve as defense for the two damage types that follow}
 \end{center}
-
+\begin{comment}
 \begin{center}
 \begin{tabular}{|l l|}
 \hline
 \multicolumn{2}{|c|}{\textbf{3rd Attributes}}\\
 \hline
-Attack Power: & (WeaponDmg + ((Strength / 2) + 1))\\
+Attack Power & (WeaponDmg + ((Strength / 2) + 1))\\
 \hline
-Magic Power: & (Equipment bonus + ((Intelligence / 2) + 1))\\
+Magic Power & (Equipment bonus + ((Intelligence / 2) + 1))\\
 \hline
 \end{tabular}\\
 \emph{These values are calculated from the manually set attributes and calculate damage.}
 \end{center}
-
+\end{comment}
 \begin{center}
 \begin{tabular}{|l l|}
 \hline
@@ -62,7 +65,7 @@ Health Points: & (Stamina * 20)\\
 Mana Points: & (Intelligence * 15)\\
 \hline
 \end{tabular}\\
-\emph{These are the Resources most often used in RPG systems. They represent physical health and magical energy respectively. Mana is the cost of Abilities.}
+\emph{These are resources often found in RPG systems. They represent physical health and magical energy respectively}
 \end{center}
 
 Due to the fact that Items were never included, Mana replenishing items such as Mana Potions are not available. This means that mana is a depleteable resource.

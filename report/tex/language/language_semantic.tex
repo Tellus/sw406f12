@@ -290,24 +290,25 @@ The pseudo-code is as follows \\\\
 %Behaviour description to come
 \textsc{Choose-Action}
 %\texttt{
-\begin{algorithm}%[mathescape]
+\begin{algorithm}
 actions := List of Action
 
-max\_piggy := - \infty
+max\_piggy := - $\infty$\;
 
-for each Action a \in actions{
+for each Action a $\in$ actions{
 
-    new GameState tmp\_state := a.execute()
+    new GameState tmp\_state := a.execute()\;
     
-    new\_piggy := tmp\_state.get\_piggy()
+    new\_piggy := tmp\_state.get\_piggy()\;
     
     if(new\_piggy > max\_piggy){
-        max\_piggy := new\_piggy
-        best\_action := a
+        max\_piggy := new\_piggy\;
+        best\_action := a\;
         }
     }
-return best\_action
+return best\_action\;
 \end{algorithm}
+
 The pseudo-code describes how every possible action is simulated, and based on the \texttt{piggy}-value, the best action is chosen and returned.
 
 
