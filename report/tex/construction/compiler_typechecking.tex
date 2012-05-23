@@ -1,8 +1,8 @@
 \subsection{Contextual Analysis}
 
-The implementation of type checking proved challenging given the constraints of the language. For example, the fact that the design had the same syntax for lists and pairs but with fundamentally different ways of working made type checking quite a hassle.
-\vspace{10pt}
-Type checking is done on the nodes of the AST via the visit function. The type checker checks that the statements given are valid in their context. The primary concern with the type checking of the language is scope checking, illustrated below with the visit function for the declaration node:
+The implementation of type- and scope checking proved challenging given the constraints of the language. For example, the fact that the design had the same syntax for lists and pairs but with fundamentally different ways of working made type checking quite a hassle.
+
+Contextual analysis is done on the nodes of the AST via the visit function. The primary concern with the contextual analysis of the language is scope checking, illustrated below with the visit function for the declaration node:
 
 \begin{lstlisting}[language = c++]
 void DeclarationNode::visit(typecheck::scope *current_scope)
@@ -35,10 +35,10 @@ void DeclarationNode::visit(typecheck::scope *current_scope)
 }
 \end{lstlisting}
 
-As shown, the function takes a scope as its parameter. It creates a reference to the symbols table with the handle function, and then performs a lookup to see, if the subclass declared is already in the symbol table. For example, the declaration "make Orc from Character" is checked to see, if the subclass "Orc" is already declared. If it is, it throws a duplicate error, telling the using that this subclass has already been defined. If the subclass check comes out clean it then checks the superclass, in this case "Character". If the superclass exists, the function adds the subclass to the declaration scope and for each child of the node runs a function to check if this is a unique assignment. The unique\_assignment function goes through the list of existing assignments and checks, if there are any duplicates. If not, it calls the visit function on each child.
-\vspace{10pt}
+As shown, the function takes a scope as its parameter. It creates a reference to the symbol table with the handle function, and then performs a lookup to see, if the subclass declared is already in the symbol table. For example, the declaration "make Orc from Character" is checked to see, if the subclass "Orc" is already declared. If it is, it throws a duplicate error, telling the user that this subclass has already been defined. If the subclass check comes out clean it then checks the superclass, in this case "Character". If the superclass exists, the function adds the subclass to the declaration scope and for each child of the node runs a function to check if this is a unique assignment. The unique\_assignment function goes through the list of existing assignments and checks, if there are any duplicates. If not, it calls the visit function on each child.
+
 Should the superclass not be found, e.g. if "make Orc from WrongSuperclass" is declared, the type check will throw an error, and tell the user this.
-\vspace{10pt}
+
 Checking that assignments are performed with the correct types is done in the assignment node with the following code:
 
 \begin{lstlisting}[language = c++]
@@ -76,6 +76,6 @@ void AssignmentNode::visit(typecheck::scope *current_scope)
 	return;
 }
 \end{lstlisting}
-The visit function here first checks if the identifier is in the current scope and throws an error if not. It then performs the visit function on the first (and only) child of this node. 
-\vspace{10pt}
+The visit function here first checks if the identifier is in the current scope and throws an error if not. It then performs the visit function on the first (and only) child of this node.
+
 Should the child be a pair, but not a list, the child is transformed into a list via bitwise-operations. The function then checks if the type of the child is the type the function would like to assign from. If these do not match, an "invalid assignment type"-error is thrown. Lastly the function checks to make sure that only events can be referenced through more than one reference operator.
