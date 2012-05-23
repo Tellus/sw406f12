@@ -82,11 +82,10 @@ With the Primarchs now described as classes for the \ac{api}, it is possible to 
 The engine will sequentially run turns for Characters that are still in play until the preset win condition is reached (this can result in an infinite execution loop). Roughly, the engine's main workflow can be described thus:
 
 \begin{algorithm}
-	\SetAlgoLined	
-	
+
 	\While{win condition not met}
 	{
-		max\_piggy = -\infty \;	
+		max\_piggy = -$\infty$ \;	
 		
 		best\_state = none\;
 	
