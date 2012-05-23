@@ -138,7 +138,7 @@ float AbilityTable::get_action_piggy(Action *a)
 std::vector<Action*> *AbilityTable::create_actions(Character *from)
 {
     // Get a short-hand.
-    std::map<std::string, Ability*> abils = from->get_abilities();
+    std::map<std::string, Ability*> abils = *from->get_abilities();
     
     // Initialize action list
     this->actions = new std::vector<Action*>();

@@ -15,6 +15,7 @@ Attribute::Attribute(std::string name, float initial) :
 {
 	this->name = name;
 	this->initial = initial;
+	this->current = initial;
 }
 
 Attribute::~Attribute()

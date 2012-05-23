@@ -11,7 +11,6 @@ namespace engine {
 
 Character::Character()
 {
-	// TODO Auto-generated constructor stub
 	this->name = "Noname";
 	_init();
 }
@@ -89,11 +88,6 @@ void Character::pretty_print()
     }
 }
 
-std::map<std::string, Attribute*> Character::get_attributes()
-{
-	return this->attributes;
-}
-
 void Character::add_resource(std::string name, Resource *res)
 {
 	if (this->has_resource(name))
@@ -107,13 +101,7 @@ void Character::add_resource(std::string name, Resource *res)
 
 void Character::add_resource(Resource* res)
 {
-	if (this->has_resource(res->name))
-		throw DuplicateKeyException("Character::resources already contains a key at " + res->name + ".");
-	else
-	{
-		this->resources[res->name] = res;
-		this->add_child(res);
-	}
+    this->add_resource(res->name, res);
 }
 
 void Character::add_attribute(std::string name, Attribute *att)
@@ -130,18 +118,9 @@ void Character::add_attribute(std::string name, Attribute *att)
 	}
 }
 
-void Character::add_attribute(Attribute *att)
+void Character::add_attribute(Attribute* att)
 {
-	if (this->has_attribute(att->name))
-	{
-		std::string tmp = "Character::attributes already contains a key at " + att->name + ".";
-		throw DuplicateKeyException(tmp);
-	}
-	else
-	{
-		this->attributes[att->name] = att;
-		this->add_child(att);
-	}
+    this->add_attribute(att->name, att);
 }
 
 void Character::add_ability(std::string name, Ability *abil)
@@ -160,16 +139,7 @@ void Character::add_ability(std::string name, Ability *abil)
 
 void Character::add_ability(Ability *abil)
 {
-    if (this->has_ability(abil->name))
-    {
-		std::string tmp = "Character::resources already contains a key at " + abil->name + ".";
-		throw DuplicateKeyException(tmp);
-    }
-    else
-    {
-        this->abilities[abil->name] = abil;
-		this->add_child(abil);
-    }
+    this->add_ability(abil->name, abil);
 }
 
 void Character::add_event(EventListener* ec)
@@ -177,10 +147,21 @@ void Character::add_event(EventListener* ec)
     this->events.push_back(ec);
 }
 
-std::map<std::string, Ability*> Character::get_abilities()
+std::map<std::string, Ability*>* Character::get_abilities()
 {
-	return this->abilities;
+	return &this->abilities;
 }
+
+std::map<std::string, Resource*>* Character::get_resources()
+{
+    return &this->resources;
+}
+
+std::map<std::string, Attribute*>* Character::get_attributes()
+{
+	return &this->attributes;
+}
+
 
 Resource* Character::get_resource(std::string name)
 {

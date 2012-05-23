@@ -75,18 +75,6 @@ public:
 	std::vector<int>::iterator current_turn;
 
 	/**
-	 * Adds another Character to the roster, on a new team (i.e. ENEMy to all).
-	 * \param to_add Character to add.
-	 * \note This method CLONES the Character, leaving the original untouched.
-	 */
-	void add_child(Primarch* to_add);
-
-	/**
-	 * Proxy call with more type safty for add_child(Primarch*).
-	 **/
-	void add_child(Character* to_add);
-
-	/**
 	 * Adds another Character to the roster, on a specific team.
 	 * \param to_add The Character to add.
 	 * \param team_id Team to add the Character to. If the Team does not exist,
@@ -127,6 +115,8 @@ public:
 	 */
 	Character* get_next_character();
 
+    void init_game();
+
 protected:
 	/**
 	 * Harvests events from the underlying current state's Primarch objects.
@@ -149,6 +139,18 @@ protected:
 	 * have been registered to specific callback functions.
 	 **/
 	std::map<std::string, std::list<callback> > registered_event_listeners;
+
+	/**
+	 * Adds another Character to the roster, on a new team (i.e. ENEMy to all).
+	 * \param to_add Character to add.
+	 * \note This method CLONES the Character, leaving the original untouched.
+	 */
+	void add_child(Primarch* to_add);
+
+	/**
+	 * Proxy call with more type safty for add_child(Primarch*).
+	 **/
+	void add_child(Character* to_add);
 
 private:
 	Character* _add_base_char(Character* to_add, int team_id = -1);

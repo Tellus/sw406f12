@@ -87,11 +87,16 @@ void Engine::add_character(Character* to_add)
     this->add_character(to_add, new_id);
 }
 
+void Engine::init_game()
+{
+	this->current_turn = this->turn_order.end();
+	this->current_state->current_char = this->get_next_character();
+}
+
 void Engine::run()
 {
 	// Reset turn order.
-	this->current_turn = this->turn_order.end();
-	this->current_state->current_char = this->get_next_character();
+    this->init_game();
 
 	/**
 	 * Engine cycle:

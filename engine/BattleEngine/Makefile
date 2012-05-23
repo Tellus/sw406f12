@@ -2,18 +2,18 @@
 CC=g++
 # Flags.
 # FLAGS=-ggdb -Wall -std=c++0x
-FLAGS=-Wall -std=c++0x
+FLAGS=-Wall -std=c++0x -DW_NCURSES -ggdb
 # Includes.
 INCS=-I. -IHeaders -IUser/Headers
 # Linker switches.
 #LIB=-lboost_regex
-LIB=-lboost_regex -lncurses
-SOURCES = $(CHARACTER_OBJECTS) $(SYSTEM_OBJECTS) $(EXCEPTION_OBJECTS) \
+LIB=-lboost_regex -lboost_program_options -lncurses -lpanel
+SOURCES = $(CHARACTER_SOURCES) $(SYSTEM_SOURCES) $(EXCEPTION_SOURCES) $(FRONTEND_SOURCES) \
 Source/program.cpp \
 Source/PrettyPrinter.cpp \
 Source/SimpleWinCondition.cpp
 
-CHARACTER_OBJECTS = \
+CHARACTER_SOURCES = \
 Source/Character/Character.cpp \
 Source/Character/Primarch.cpp \
 Source/Character/Ability.cpp \
@@ -21,7 +21,7 @@ Source/Character/Attribute.cpp \
 Source/Character/Resource.cpp \
 Source/Character/EventCondition.cpp \
 
-SYSTEM_OBJECTS = \
+SYSTEM_SOURCES = \
 Source/System/RGRIdentifier.cpp \
 Source/System/RGR_List.cpp \
 Source/System/ActionDefinition.cpp \
@@ -43,7 +43,7 @@ Source/System/GameState.cpp \
 Source/System/RGRIdentifier/EnemyIdentifier.cpp \
 Source/System/Team.cpp
 
-EXCEPTION_OBJECTS = \
+EXCEPTION_SOURCES = \
 Source/System/Exceptions/BaseException.cpp \
 Source/System/Exceptions/DuplicateKeyException.cpp \
 Source/System/Exceptions/PrimarchDoesNotExistException.cpp \
@@ -57,7 +57,13 @@ U_SOURCES = \
 User/Source/AttackAbility.cpp \
 User/Source/HealAbility.cpp \
 User/Source/HealEffect.cpp \
-User/Source/PhysicalDamageEffect.cpp
+User/Source/PhysicalDamageEffect.cpp \
+User/test_generated.cpp
+
+FRONTEND_SOURCES = \
+Source/Frontend/Curses/Entity.cpp \
+Source/Frontend/Curses/PlayerWindow.cpp \
+Source/Frontend/Curses/Label.cpp
 
 # Object versions of sources.
 OBJECTS=$(SOURCES:.cpp=.o)

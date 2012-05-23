@@ -132,13 +132,18 @@ public:
 	/**
 	 * Retrieves the ability list.
 	 **/
-	std::map<std::string, Ability*> get_abilities();
+	std::map<std::string, Ability*>* get_abilities();
 	
 	/**
 	 * Retrieves the map of Attributes.
 	 * \return Map<string,Attribute*) of the Attributes on the Character.
 	 */
-	std::map<std::string, Attribute*> get_attributes();
+	std::map<std::string, Attribute*>* get_attributes();
+	
+	/**
+	 * Retrieves the Character's Resource map.
+	 **/
+	std::map<std::string, Resource*>* get_resources();
 	
 	/**
 	 * Retrieves a resource on the character.
