@@ -12,8 +12,8 @@
 
 \lstdefinelanguage{ourlang}
 {
-	keywords = {[1]Character,Ability,Effect,Item,Attribute,Resource,Behaviour,Event,make,from,owner,this},
-	morekeywords = {[2]attributes,resources,effects,abilities,items,events,targets,cost,behaviour,team,enemy,ally,target},
+	keywords = {[1]Character,Ability,Effect,Item,Attribute,Resource,Behaviour,Event,make,from,owner,this,self,enemy},
+	morekeywords = {[2]attributes,resources,effects,abilities,items,events,targets,cost,behaviour,team,ally,target, mana_cost, positive, negative,name},
 	sensitive = true,
 	keywordstyle=\color{blue},          % keyword style
 	keywordstyle={[2]\color{dkgreen}},
@@ -29,6 +29,6 @@
 		% Attributes
 		strength,intelligence,defense,magic,agility,
 		%Resources
-		health,mana},
+		health,mana,PhysicalDamage,Heal},
 	keywordstyle={[20]\color{orange}}
 }
