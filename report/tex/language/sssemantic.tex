@@ -24,6 +24,7 @@ To keep track of the bindings of an ability, an \textit{ability environment} is 
 Given an ability name \textit{AName}, an ability environment must hold information about, targets, cost and effects. Therefore the definition of the set of ability environments \textbf{Ability} is:
 %
 $$\mathbf{Ability: \; AName \rightharpoonup \mathcal{P}(RGR) \times Integer \times Integer \times \mathcal{P}(Effect \times RGR \times Integer)}$$
+The Ability \textbf{Stm} is therefore: $\mathbf{AName \times \mathcal{P}(RGR) \times Integer \times Integer \times \mathcal{P}(Effect \times RGR \times Integer)}$
 \begin{comment}
 The transition system for ability declaration is 
 
@@ -36,29 +37,21 @@ $T_{DecA} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event}
 \\\\
 $\Rightarrow_{DecA}$ is defined by the rules in table \ref{tbl:decA}.\\\\
 \end{comment}
-\\\\
 \begin{table}[!h]
 \begin{tabular}{l l}
 \\ \hline \\
-\small{\textsc{[Ability-Dec]}}& \\
-\footnotesize{$\langle Char, Ability, Behaviour, Event; \; Ability AName,  RGR, Int, Int,$}
- & \footnotesize{$Effect_1, RGR_1, Integer_1$} \\
- &  \footnotesize{$Effect_2, RGR_2, Integer_2$}\\
- &  \footnotesize{$Effect_3, RGR_3, Integer_3$} \\
- &  \footnotesize{$\vdots$} \\
- &  \footnotesize{$Effect_n, RGR_n, Integer_n \rangle \; \Rightarrow$} \\
-\end{tabular}
-\begin{tabular}{l p{0.92\textwidth}}
- \footnotesize{$\langle Char, Ability[AName \mapsto (RGR, Integer, Integer, Effects)], Behaviour, Event; S \rangle$} \\
- \footnotesize{Where $Effects = $} 
- \footnotesize{${\bigcup^{n}_{i = 0}} (Effect_i, RGR_i, Integer_i)]$} \\
-\\ \hline
+\small{\textsc{[Ability-Dec]}} \\
+ & $\langle character, ability, behaviour, event, sto, aname, num_1, num_2, prgr, peffect \rangle \; \Rightarrow \; \langle character, ability', behaviour, event, sto$ \\
+ %& \footnotesize{} \\
+ \footnotesize{Where $Ability'=$} & \footnotesize{$Ability[aname \mapsto num_1, num_2, prgr, peffect]$}\\
+ \footnotesize{Where $Effects=$} & \footnotesize{${\bigcup^{n}_{i = 0}} (Effect_i, RGR_i, Integer_i)]$}\\
+ \\ \hline
 \end{tabular}
 \caption{Transition rules for $\Rightarrow_{DecA}$}
 \label{tbl:decA}
 \end{table}
-
-
+\todo{lists of rgr and effect}
+\\\\
 As mentioned, \ac{rgrs} are used for behaviour as well. A behaviour is declared by a name and it contains a list of 3-tuples (\textbf{\ac{rgr}}, \textbf{VName}, \textbf{Integer}), where \textbf{\ac{rgr}} is a reference to the involved character, \textbf{VName} is the name of the involved attribute and \textbf{Integer} is a value representing the priority of the attribute. To keep track of the bindings of a behaviour, a \textit{behaviour environment} is used. The set of behaviour environments is called \textbf{Behaviour}.
 A behaviour environment must, given a behaviour name \textit{BName}, hold information of the list of 3-tuples. Therefore the definition of the set of behaviour environments is:
 
@@ -68,7 +61,7 @@ The transition system for declaration of behaviour is
 
 \begin{tabular}{l l}
 $\Gamma_{DecB} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event \times}$ \\
- & $\mathbf{\times Name \times Type \times Stm}$ \\ %BName \times \mathcal{P}(RGR \times VName \times Integer)}$\\
+ & $\mathbf{\times BName \times \mathcal{P}(RGR \times VName \times Integer}$ \\ %BName \times \mathcal{P}(RGR \times VName \times Integer)}$\\
 $\Rightarrow_{DecB}$ & \\
 $T_{DecB} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event}$ \\
 \end{tabular}
@@ -79,22 +72,16 @@ $\Rightarrow_{DecB}$ is defined by the rules in table \ref{tbl:decB}.\\\\
 \begin{table}[!h]
 \begin{tabular}{l l l}
 \\ \hline \\
-\small{\textsc{[Behaviour-Dec]}} & \\
- & \footnotesize{$\langle Char, Ability, Behaviour, Event; Behaviour BName,$} & \footnotesize{$RGR_1, VName_1, Integer_1$} \\
- & & \footnotesize{$RGR_2, VName_2, Integer_2$}\\
- & & \footnotesize{$RGR_3, VName_3, Integer_3$} \\
- & & \footnotesize{$\vdots$} \\
- & & \footnotesize{$RGR_n, VName_n, Integer_n  \rangle ; S \; \Rightarrow$} \\
-\end{tabular}
-\begin{tabular}{l p{0.92\textwidth}}
- & \footnotesize{$\langle Char, Ability, Behaviour', Event \rangle; S$} \\ %& \color{white} \footnotesize{$RGR_1, VName_1, Integer_1 \Rightarrow$} \\
+\small{\textsc{[Behaviour-Dec]}} \\
+ & $\frac{ Character, Abitity, Behaviour, Event, sto \; \vdash \langle BName, RGR, VName, Integer \rangle \; \Rightarrow \; Behaviour', sto}{ Character, Abitity, Behaviour, Event, sto \; \vdash\langle \texttt{make }  BName \texttt{ from } Behaviour, \; BName, RGR, VName, Integer \rangle \Rightarrow Behaviour', sto}$ \\
+ %& \footnotesize{} \\
 \footnotesize{Where $Behaviour' = $} & \footnotesize{$Behaviour[BName \mapsto {\bigcup^{n}_{i = 0}} (RGR_i, VName_i, Integer_i)]$} \\
 \\  \hline 
 \end{tabular}
 \caption{Transition rules for $\Rightarrow_{DecB}$}
 \label{tbl:decB}
 \end{table}
-
+\todo{list of rgr vname int}
 %Event
 For declaring forced actions for a character, \langname{} makes it possible for a user to declare events, which contain a condition(health below 10\%) and an ability to execute when the conditions are met.
 A \textit{event environment} is used to keep track of the binding for events. The set of event environments is called \textbf{Event}.
@@ -117,10 +104,11 @@ $\Rightarrow_{DecE}$ is defined by the rules in table \ref{tbl:decE}.\\\\
 \\\\
 \begin{table}[!h]
 \begin{tabular}{l l}
- \\ \hline \\
- \small{\textsc{[Event-Dec]}} & \\
- & \footnotesize{$\langle Char ,Ability, Behaviour, Event; \; Event EName, Condition, AName \rangle ; \; S \Rightarrow$} \\
- & \footnotesize{$\langle Char, Ability, Behaviour, Event; Event[EName \mapsto (Condition, AName)]; S \rangle$} \\
+\\ \hline \\
+\small{\textsc{[Event-Dec]}} \\
+ & $\frac{ Character, Abitity, Behaviour, Event, sto \; \vdash \langle EName, Condition, AName \rangle \; \Rightarrow \; Event', sto}{ Character, Abitity, Behaviour, Event, sto \; \vdash\langle \texttt{make }  EName \texttt{ from } Event, \; EName, Condition, AName \rangle \Rightarrow Event', sto}$\\
+ %& \footnotesize{} \\
+ \footnotesize{Where} $Event'=$ &  \footnotesize{$Event[EName \mapsto (Condition, AName)]$} \\
  \\ \hline
 \end{tabular}
 \caption{Transition rules for $\Rightarrow_{DecE}$}
@@ -138,12 +126,11 @@ It is also required to keep track of the bindings of the character itself. To ke
 Given a character name \textit{CName}, a character environment must hold information about the behaviour, abilities, attributes, events and resources bound to the character. Therefore the definition of the set of character environments \textbf{Character} is:
 
 $$\mathbf{Character} : \; \mathbf{CName} \rightharpoonup \mathbf{BName} \times \mathbf{\mathcal{P}(AName)} \times \mathbf{Attributes} \times \mathcal{P}(\mathbf{EName}) \times \mathbf{Resource}$$
-
-
+\begin{comment}
 The transition system for declaration of character is 
 
 \begin{tabular}{l l}
-$\Gamma_{DecC} = $ & $\mathbf{Character \times Attributes \times Resource \times Ability \times Behaviour \times Event \times}$ \\
+$\Gamma_{DecC} = $ & $\mathbf{Character \times env \times Resource \times Ability \times Behaviour \times Event \times}$ \\
  & $\mathbf{CName \times BName \times \mathbf{\mathcal{P}(AName)} \times \mathcal{P}(\mathbf{EName}) \times Sto}$\\
 $\Rightarrow_{DecC}$ & \\
 $T_{DecC} = $ & $\mathbf{Character \times Sto}$ \\
@@ -151,13 +138,14 @@ $T_{DecC} = $ & $\mathbf{Character \times Sto}$ \\
 \\\\
 
 $\Rightarrow_{DecC}$ is defined by the rules in table \ref{tbl:decC}\\\\
+\end{comment}
 \pagebreak
 \begin{landscape}
 \begin{table}[!h]
 \begin{tabular}{l l}
 \\ \hline \\
 \small{\textsc{[Char-Dec]}} \\
- & $\frac{ Character, Abitity, Behaviour, Event, env, sto \; \vdash \langle A_D, R_D, ANames, BName, ENames \rangle \; \Rightarrow \; character', env', sto'}{ Character, Abitity, Behaviour, Event, env, sto \; \vdash\langle \texttt{make }  CName \texttt{ from } Character, \; CName, A_D, R_D, ANames, BName, ENames \rangle \Rightarrow character', env', sto'}$\\
+ & $\frac{ Character, Abitity, Behaviour, Event, env, sto \; \vdash \langle A_D, R_D, ANames, BName, ENames \rangle \; \Rightarrow \; Character', env', sto'}{ Character, Abitity, Behaviour, Event, env, sto \; \vdash\langle \texttt{make }  CName \texttt{ from } Character, \; CName, A_D, R_D, ANames, BName, ENames \rangle \Rightarrow Character', env', sto'}$\\
  %& \footnotesize{} \\
  \footnotesize{Where} $env'=$ &  \footnotesize{$env[health \mapsto l] [\texttt{next} \mapsto \texttt{new } l, sto \mapsto std]$} \\
  & \footnotesize{$env[mana \mapsto \texttt{new } l][\texttt{next } \mapsto \texttt{new new } l, sto \mapsto std]$} \\
@@ -198,9 +186,9 @@ The transition system for execution of a turn is
 
 %\todo{Write the last of it}
 \begin{tabular}{l l}
-$\Gamma_{TURN} = $ & $\mathbf{Character \times Sto}$ \\
+$\Gamma_{TURN} = $ & $\mathbf{Character \times Behaviour \times Ability \times Event \times Resource \times Sto \times Active \times Next}$ \\
 $\Rightarrow_{TURN}$ & \\
-$T_{TURN} = $ & $\mathbf{Character \times Sto}$ \\
+$T_{TURN} = $ & $\mathbf{Character \times Behaviour \times Ability \times Event \times Resource \times Sto \times Active \times Next}$ \\
 \end{tabular}
 \\\\
 $\Rightarrow_{TURN}$ is defined by the rules in table \ref{tbl:Turn}.\\\\
@@ -215,14 +203,14 @@ $\Rightarrow_{TURN}$ is defined by the rules in table \ref{tbl:Turn}.\\\\
 \footnotesize{And} & \footnotesize{$Env(Health) > 0$ (win-condition not met)} \\
  & \footnotesize{$\forall e \in EName, (Condition, Ability) = Event(e), Condition \rightarrow_b f \! \! f$} \\
  & \footnotesize{$Be = Behaviour(BName)$} \\
- & \footnotesize{$sto' = ChooseAction(Character, Active, Next, Be, sto)$} \\
+ & \footnotesize{$sto' = ChooseAbility(Character, Active, Next, Be, sto)$} \\
  \small{\textsc{[TURN$_2$]}} & \\
  & \footnotesize{$Character, Behaviour, Ability, Event, Resource \vdash \langle Active, Next, sto \rangle \Rightarrow_{TURN} \langle Next, Active, sto' \rangle$} \\
 % \\
 \footnotesize{Where} & \footnotesize{$Character(Active) = (BName, AName, env, EName, Resource)$} \\
 \footnotesize{And} & \footnotesize{$Env(Health) > 0$ (win-condition not met)} \\
   & \footnotesize{$\exists e \in EName, (Condition, Ability) = Event(e), Condition \rightarrow_b t \! \! t$} \\
- & \footnotesize{$Char_{Active}, Char_{Next}, Ability \vdash \langle Event(e)AName, sto \rangle \Rightarrow_{A\_exe} = sto'$} \\
+ & \footnotesize{$Active, Next, Ability \vdash \langle Event(e)AName, sto \rangle \Rightarrow_{A\_exe} = sto'$} \\
  \small{\textsc{[TURN$_3$]}} & \\
   & \footnotesize{$Character, Behaviour, Ability, Event, Resource \vdash \langle Active, Next, sto \rangle \Rightarrow_{TURN} \langle Next, \rangle$} \\
 %\\
@@ -238,7 +226,7 @@ All abilities have mana cost, default set to zero. When an ability is executed, 
 
 Transition rules for execution of an ability are of the form
 
-{\small $$Char_{Active}, Char_{Next}, Ability \vdash \langle AName, sto \rangle \Rightarrow_{A\_exe} \langle sto' \rangle$$}
+{\small $$Active, Next, Ability \vdash \langle AName, sto \rangle \Rightarrow_{A\_exe} \langle sto' \rangle$$}
 The transition system for execution of an ability is
 
 \begin{tabular}{l l}
@@ -339,6 +327,6 @@ Behaviour
 %
 %\todo{Not sure if this have to be in}
 %%%%%%%%%%%%%
-% Vi har nogle regler der skal beskrives med brï¿½dtekst.
-% Kan ikke lige huske hvilke der mangler lige nu.. Det hï¿½ber jeg at Danny kan hjï¿½lpe med at huske........
+% Vi har nogle regler der skal beskrives med brødtekst.
+% Kan ikke lige huske hvilke der mangler lige nu.. Det håber jeg at Danny kan hjælpe med at huske........
 %%%%%%%%%%%%%
