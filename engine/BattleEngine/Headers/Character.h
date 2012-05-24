@@ -229,12 +229,6 @@ public:
      * Resource).
      **/ 
 	void modify(float amount);
-private:
-
-    /**
-     * Initializer method.
-     **/
-    void _init();
 };
 
 } /* namespace engine */

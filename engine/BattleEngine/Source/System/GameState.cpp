@@ -120,14 +120,14 @@ bool GameState::set_team_aff(int t_id, Character* to_set)
 	Team* tp = NULL;
 
 	// Finding the correct team.
-	std::cout << "Running through teams.\n";
+	// std::cout << "Running through teams.\n";
 	for (iter = this->teams.begin();
 		 iter != this->teams.end();
 		 iter++)
 	{
 		if ((*iter)->id == t_id)
 		{
-			std::cout << "Found " << (*iter)->id << '\n';
+			// std::cout << "Found " << (*iter)->id << '\n';
 			tp = (*iter);
 			iter = this->teams.end();
 			break;

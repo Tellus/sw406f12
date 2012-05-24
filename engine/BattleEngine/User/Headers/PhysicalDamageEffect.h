@@ -46,7 +46,9 @@ public:
      * \param s Source of the damage (will be used for strength/ap).
      * \param t Target of the damage (will be used for defense).
      **/
-    virtual void execute(engine::Primarch* s, engine::Primarch* t);
+    void execute(Primarch* s, Primarch* t);
+    
+    virtual Primarch* clone(bool with_id = true);
 };
 
 }

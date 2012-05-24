@@ -103,7 +103,6 @@ OUT = ./libbattle_engine.a
 
 $(OUT): $(OBJECTS) $(U_OBJECTS)
 	ar rcs $(OUT) $(OBJECTS) $(U_OBJECTS)
-	ar d $(OUT) program.o
 
 depend: dep
 

@@ -82,6 +82,7 @@ public:
 		this->add_attribute(new Attribute("strength", 10));
 		this->add_attribute(new Attribute("stamina", 9));
 		this->add_attribute(new Attribute("agility", 7));
+		this->add_attribute(new Attribute("attack_power", 50));
 		this->add_ability(new Attack());
 		this->add_ability(new Cure());
 		this->behaviour = new Smart();
@@ -95,7 +96,6 @@ public:
 		this->add_attribute(new Attribute("magic_defense", (
 				this->get_attribute("stamina")->get_current() + 
 				this->get_attribute("intelligence")->get_current()) / 3));
-		this->add_attribute(new Attribute("attack_power", 50));
 		this->add_attribute(new Attribute("magic_power", (
 				this->get_attribute("intelligence")->get_current() / 2) + 1));
 	}

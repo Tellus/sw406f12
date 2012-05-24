@@ -50,7 +50,7 @@ public:
 	 * \param thru The GameState to run the execution through.
 	 * \return A (new) modified GameState.
 	 */
-	GameState* execute(GameState *thru);
+	virtual GameState* execute(GameState *thru);
 
     /**
      * Definition of the Action. This dictates the formal parameters, whlie 

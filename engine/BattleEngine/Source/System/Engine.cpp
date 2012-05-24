@@ -98,6 +98,9 @@ void Engine::run()
 	// Reset turn order.
     this->init_game();
 
+    std::cout << "Welcome to the battle. Let's see the contestants:\n";
+    this->current_state->pretty_print();
+
 	/**
 	 * Engine cycle:
 	 * 1. Check win condition (automatic).
@@ -134,7 +137,6 @@ Action* Engine::step()
 
     at = new AbilityTable(this->current_state);
 
-    // TODO: There's a malign health calculation here!
     this->current_state = at->get_next_state();
 
     return at->best_action->clone();

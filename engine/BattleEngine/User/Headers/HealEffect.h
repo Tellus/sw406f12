@@ -38,6 +38,10 @@ public:
      * \param amount Modifier to the base amount healed.
      **/
     HealEffect(engine::RGR_Enum s, engine::RGR_Enum t, float amount);
+    
+    void execute(Primarch* s, Primarch* t);
+    
+    virtual Primarch* clone(bool with_id = true);
 };
 
 }

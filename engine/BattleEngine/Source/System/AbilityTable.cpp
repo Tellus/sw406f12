@@ -94,7 +94,14 @@ GameState *AbilityTable::get_next_state()
 		GameState *tmp_state = tmp_a->execute(this->state);
 
 		float new_piggy = tmp_state->current_char->get_piggy(tmp_state);
-
+/*
+        std::cout << this->state->current_char->name
+                  << ": using "
+                  << tmp_a->action_def.ability->name
+                  << " results in a piggy value of "
+                  << new_piggy
+                  << '\n';
+*/
 		if (new_piggy > max_piggy)
 		{
 			// Better action found.
@@ -156,9 +163,24 @@ std::vector<Action*> *AbilityTable::create_actions(Character *from)
     {
         // Get abil. Test cost.
         abil = (iter->second);
+        /*
+        std::cout << abil->name
+                  << " costs ("
+                  << abil->cost_health
+                  << '/'
+                  << abil->cost_mana
+                  << ") - ";
+                  */
         if (abil->cost_health <= from->get_resource("health")->get_current() &&
             abil->cost_mana <= from->get_resource("mana")->get_current())
-                usable.push_back((iter->second));
+        {
+//            std::cout << "OK\n";
+            usable.push_back((iter->second));
+        }
+        else
+        {
+//            std::cout << "FAIL\n";
+        }
     }
     
     // Loop through each ability.

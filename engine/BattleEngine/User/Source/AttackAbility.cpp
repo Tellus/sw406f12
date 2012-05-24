@@ -13,7 +13,7 @@ namespace testbattle
 AttackAbility::AttackAbility() :
     Ability("Attack", 0, 0)
 {
-    this->effects.push_back(new PhysicalDamageEffect());
+    this->add_effect(new PhysicalDamageEffect());
     this->add_rgr(engine::ENEMY);
 }
 

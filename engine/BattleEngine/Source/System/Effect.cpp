@@ -47,6 +47,7 @@ void Effect::modify(float amount)
 
 void Effect::execute(Primarch* s, Primarch* t)
 {
+    std::cout << "WARNING! Base Effect class executed!\n";
 	t->get_child(this->member)->modify(this->amount);
 }
 
