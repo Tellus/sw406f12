@@ -21,11 +21,33 @@ namespace engine {
 class EventListener
 {
 public:
+    /**
+     * Creates an empty EventListener. Note you must set a condition and action
+     * before it can be used.
+     **/
 	EventListener();
+	
+	/**
+	 * Creates a new, ready, EventListener.
+	 * \param ec EventCondition object to use for conditions.
+	 * \param ac ActionDefinition to use for actions.
+	 **/
 	EventListener(EventCondition* ec, ActionDefinition* ac);
+	
+	/**
+	 * Destroys the conditoin and action along with it.
+	 **/
 	virtual ~EventListener();
 	
+	/**
+	 * Condition checked to see if the action should be executed on the owning
+	 * Character's next turn.
+	 **/
 	EventCondition* condition;
+	
+	/**
+	 * The action to perform if the condition holds at the start of a turn.
+	 **/
 	ActionDefinition* action;
 	
 	/**

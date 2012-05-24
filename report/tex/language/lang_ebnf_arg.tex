@@ -18,18 +18,18 @@ Translation:
 \end{comment}
 
 \pagebreak
-\section{\langname{} EBNF}
 \begin{comment}
 Two criteria were used to support the design of our language syntax, these are writability and readability. Writability is a measure for how convenient, for a programmer, a language is to write and readability is a measure for how easy a language is to understand and learn. These two have an extreme on each side of the scale, where a complex language can be extremely efficient due to type security, the number of operations and data structures, on the other side a simple one, made to be easy to use and learn often sacrifices some of the type security, operations and data structures to be more convenient for the user.
 \end{comment}
-%Here follows the \ac{ebnf} notation for \langname{}:
+\section{\langname{} EBNF}
+Below follows the \ac{ebnf} notation for \langname{}:
 {\begin{lstlisting}[numbers=none]
 
-program = "begin" , { declaration } , $ ;
+program = { declaration } , $ ;
 
 declaration = "make", identifier, "from",  identifier , "{", { assignment } , "}" ;
 
-assignment = identifier , ( ":" | "+:" | "-:" ) , value , ";" ;
+assignment = identifier , ( ":" | "+:" | "-:" | "*:" | "/:" ) , value , ";" ;
 
 value = expression | set | call;
 
@@ -41,7 +41,7 @@ factor = single_value | ( "(" , expression , ")" ) ;
 
 single_value = bool | number | string | class_member | value_keyword ;
 
-class_member = identifier | reference_keyword , { "." , identifier } ;
+class_member = ( value_keyword | identifier | reference_keyword ), { "." , identifier } ;
 
 set = "[" value , { "," , value } , "]" ;
 
@@ -51,9 +51,9 @@ value_keyword = "self" | "enemy" | "ally" | "team_ally" | "team_enemy" | "all" ;
 
 call = identifier , "(" , value , { "," , value } , ")" ;
 
-identifier = ( letter | "_" ), { letter | digit | "_" };
+identifier = letter , { letter | digit | "_" };
 
-string = '"'{ all_symbols }'"' ;
+string = '"' , { all_symbols } , '"' | ''' , { all_symbols } , ''';
 
 bool =  "true" | "false";
 
@@ -63,9 +63,10 @@ digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
 
 letter = ? A - Z and a - z ?
 
-all_symbols = ? all symbols besides " ?
+all_symbols = ? all symbols ?
 
 \end{lstlisting}}
+
 \pagebreak
 \begin{itemize}
 \item program is the code to be compiled, from the beginning statement to the end of input.
@@ -85,39 +86,36 @@ An assignment takes an identifier, an operator and a value, followed by the symb
 
 \item term is a factor, optionally followed by an operator and another term
 
-\item factor is either a single\_value or an expression
+\item factor is either a single\_value or an expression enclosed in parantheses. 
 
 \item single\_value can be a bool, number, string, class\_member or a value\_keyword
 
-\item class\_member is an identifier or a reference\_keyword, optionally followed
+\item class\_member is an identifier or a reference\_keyword or value\_keyword, optionally followed
 by the symbol . and another identifier. The optional identifier is to specifically access members
-of a given identifier
+of a given identifier.
 
 \item set is a list of values, contained within brackets "[" and "]"
 
 \item reference\_keyword is either "owner" or "this", for writability these reference keywords are included
-to make it easier for the user to refer to either a superclass (owner) or the active object (this)
+to make it easier for the user to refer to the owner or active object in the case of this.
 
-\item value\_keyword is much like reference\_keyword but has to be given definitions of each keyword.
-value\_keyword is can be "self", "enemy", "ally", "team\_ally", "team\_enemy" or "all".
-These keywords are included to make it easier to define who are effected by specific actions
+\item value\_keyword can be "self", "enemy", "ally", "team\_ally", "team\_enemy" or "all".
+These keywords are included to make it easier to define who are affected by specific actions
 
-\item call takes an identifier, followed by one or more value enclosed in parantheses "(" and ")"
+\item call takes an identifier, followed by one or more values enclosed in parantheses "(" and ")"
 
-\item identifier starts with either a letter or an underscore "\_", followed by either letter, digit or
-an underscore
+\item identifier starts with a letter followed by a series of either letters, digits or underscores
 
-\item string consists of all\_symbols enclosed in quotation marks '"'
+\item string consists of all\_symbols enclosed in quotation marks, either '"' or '''
 
 \item bool is a boolean expression which can be either false or true
 
-\item number is the only form for representing numbers in \langname{}, in a form of a decimal fraction
-this form is both more detailed than an integer and eliminates the need for casting when calculating
+\item number is any integer or decimal.
 
 \item digit represents one symbol from the decimal system, namely 0 - 9
 
 \item letter represents one symbol from the american alphabet, both uppercase and lowercase
 
-\item all\_symbols is every symbol in the ascii table, besides the quotation mark '"'
+\item all\_symbols is every symbol in the ascii table
 
 \end{itemize}

@@ -25,6 +25,10 @@ typedef void (*game_event_fp)(GameEvent*);
 
 typedef std::pair<void*, game_event_fp> callback;
 
+/** 
+ * A GameEvent is the event type we use in the signaling framework to pass
+ * events through a state between Characters. Superseded by EventCondition.
+ **/
 class GameEvent
 {
 public:

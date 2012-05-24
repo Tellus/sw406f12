@@ -20,9 +20,4 @@ InvalidRGRException::~InvalidRGRException() throw()
     // Empty, though defined.
 }
 
-const char* InvalidRGRException::what() const throw()
-{
-	return this->msg.c_str();
-}
-
 }

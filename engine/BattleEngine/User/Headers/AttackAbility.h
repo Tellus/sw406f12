@@ -13,11 +13,16 @@
 namespace testbattle
 {
 
+/**
+ * Basic attacking ability. Does PhysicalDamage.
+ **/
 class AttackAbility : public engine::Ability
 {
 public:
+    /**
+     * Initialises.
+     **/
     AttackAbility();
-    void execute();
 };
 
 };

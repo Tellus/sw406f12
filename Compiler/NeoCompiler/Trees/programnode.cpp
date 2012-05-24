@@ -81,7 +81,7 @@ void ProgramNode::emit(codegen::EmissionData *data)
 		DeclarationNode *dec = (DeclarationNode*)(*it);
 		if (dec->superclass == "Character")
 		{
-			em->stream << "\tgame->add_child(new " << dec->subclass << "());\n";
+			em->stream << "\tgame->add_character(new " << dec->subclass << "());\n";
 			if (++c == 2) // We're only dueling for now.
 				break;
 		}

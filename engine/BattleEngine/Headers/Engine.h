@@ -31,8 +31,23 @@ namespace engine
 class Engine : public PrimarchIndexer
 {
 public:
+    /**
+     * Creates and initialises a new Engine instance without Characters and a
+     * baseline win condition.
+     **/
 	Engine();
+	
+	/**
+	 * Creates and initialises a new Engine instance without Characters and a
+	 * custom WinCondition.
+	 * \param win The WinCondition object to use for checks.
+	 **/
 	Engine(WinCondition* win);
+	
+	/**
+	 * Destroys ALL the things!
+	 * \todo Implement.
+	 **/
 	virtual ~Engine();
 
 	/**
@@ -60,23 +75,20 @@ public:
 	std::vector<int>::iterator current_turn;
 
 	/**
-	 * Adds another Character to the roster, on a new team (i.e. ENEMy to all).
-	 * \param to_add Character to add.
-	 * \note This method CLONES the Character, leaving the original untouched.
-	 */
-	void add_child(Primarch* to_add);
-
-	/**
-	 * Proxy call with more type safty for add_child(Primarch*).
-	 **/
-	void add_child(Character* to_add);
-
-	/**
-	 * Adds another Character ot the roster, on a specific team.
+	 * Adds another Character to the roster, on a specific team.
 	 * \param to_add The Character to add.
+	 * \param team_id Team to add the Character to. If the Team does not exist,
+	 * it will be created.
 	 * \note This method CLONES the Character.
 	 */
 	void add_character(Character* to_add, int team_id);
+
+	/**
+	 * Adds another Character to the roster, on a new team.
+	 * \param to_add The Character to add.
+	 * \note This method CLONES the Character.
+	 */
+    void add_character(Character* to_add);
 
 	/**
 	 * Checks to see if the passed Character (by Primarch ID) is present in either
@@ -90,12 +102,20 @@ public:
 	 * Runs until a win condition is encountered.
 	 */
 	void run();
+	
+	/**
+	 * Performs a single Character turn and stops.
+	 * \return Action object that represents the action taken by the Character.
+	 **/
+	Action* step();
 
 	/**
 	 * Iterates the turn counter and returns the Character who is
 	 * up next.
 	 */
 	Character* get_next_character();
+
+    void init_game();
 
 protected:
 	/**
@@ -120,7 +140,17 @@ protected:
 	 **/
 	std::map<std::string, std::list<callback> > registered_event_listeners;
 
-	void get_callbacks();
+	/**
+	 * Adds another Character to the roster, on a new team (i.e. ENEMy to all).
+	 * \param to_add Character to add.
+	 * \note This method CLONES the Character, leaving the original untouched.
+	 */
+	void add_child(Primarch* to_add);
+
+	/**
+	 * Proxy call with more type safty for add_child(Primarch*).
+	 **/
+	void add_child(Character* to_add);
 
 private:
 	Character* _add_base_char(Character* to_add, int team_id = -1);

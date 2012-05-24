@@ -16,10 +16,21 @@
 
 namespace engine {
 
+/** 
+ * FullBehaviour does what Behaviour was intended to in langname. Using a set of
+ * ratios, it calculates the value of any game state.
+ **/
 class FullBehaviour : public engine::Behaviour
 {
 public:
+    /**
+     * Creates and initialises a new FullBehaviour object.
+     **/
 	FullBehaviour();
+	
+	/**
+	 * \todo Implement.
+	 **/
 	virtual ~FullBehaviour();
 	
 	/**
@@ -44,9 +55,17 @@ public:
 	 **/
 	void remove_ratio(std::string name);
 
+    /**
+     * Clones the FullBehaviour with all of its ratios.
+     * \return A new FullBehaviour instance with copies of all its contained
+     * BehaviourRatios.
+     **/
 	Behaviour* clone();
 
 private:
+    /**
+     * Private initialiser method.
+     **/
 	void _init();
 };
 

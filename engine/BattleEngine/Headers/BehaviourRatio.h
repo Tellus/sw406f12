@@ -26,10 +26,27 @@ namespace engine {
 class BehaviourRatio
 {
 public:
+    /**
+     * Creates a new BehaviourRatio.
+     * \param target The target to check a value on.
+     * \param name Name of the member on the target to measure.
+     * \param ratio The ratio to apply to the member.
+     **/
 	BehaviourRatio(RGR_Enum target, std::string name, float ratio);
 	
+	/**
+	 * Name of the Primarch member of the target to measure.
+	 **/
 	std::string name;
+	
+	/**
+	 * The ratio factor to use when calculating this one ratio's value.
+	 **/
 	float ratio;
+	
+	/**
+	 * The target of the ratio. 
+	 **/
 	RGR_Enum target;
 
 	/**
@@ -43,6 +60,9 @@ public:
 	 **/
 	virtual float calculate(GameState* from);
 
+    /**
+     * Clones the ratio, if needed. This is identical to a copy-constructor.
+     **/
 	virtual BehaviourRatio* clone();
 };
 

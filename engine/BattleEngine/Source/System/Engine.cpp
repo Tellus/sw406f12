@@ -81,11 +81,25 @@ Character* Engine::get_next_character()
 	return dynamic_cast<Character*>(this->get_child_by_id(*(this->current_turn)));
 }
 
+void Engine::add_character(Character* to_add)
+{
+    int new_id = this->current_state->max_team_id()+1;
+    this->add_character(to_add, new_id);
+}
+
+void Engine::init_game()
+{
+	this->current_turn = this->turn_order.end();
+	this->current_state->current_char = this->get_next_character();
+}
+
 void Engine::run()
 {
 	// Reset turn order.
-	this->current_turn = this->turn_order.end();
-	this->current_state->current_char = this->get_next_character();
+    this->init_game();
+
+    std::cout << "Welcome to the battle. Let's see the contestants:\n";
+    this->current_state->pretty_print();
 
 	/**
 	 * Engine cycle:
@@ -95,43 +109,37 @@ void Engine::run()
 	 * 4. Replace current_state with best state from AbilityTable.
 	 */
 
-	AbilityTable *at;
+    Action* last_action;
 
 	while (!this->win_condition->is_met(this->current_state))
 	{
-		// TODO: Add event condition handling.
+        last_action = this->step();
 
-		/*
-		std::cout << "*********************\n";
-		std::cout << "Pre-execution state:\n";
-		this->current_state->pretty_print();
-		std::cout << "*********************\n";
-		*/
-
-		this->current_state->current_char = dynamic_cast<Character*>(this->current_state->get_child_by_id(this->get_next_character()->id));
-
-		// Character* cur = this->current_state->current_char;
-		/*
-		std::cout << "*****\n";
-		std::cout << cur->name << "[" << cur << "] (" << cur->get_resource("Health")->get_current() << "/" << cur->get_resource("Mana")->get_current() << ") ponders their next move.\n";
-		std::cout << "*****\n";
-
-		this->current_state->pretty_print();
-		*/
-		at = new AbilityTable(this->current_state);
-    
-		// TODO: There's a malign health calculation here!
-		this->current_state = at->get_next_state();
-
-		std::cout << this->current_state->current_char->name << " used " << at->best_action->action_def.ability->name << " on " << RGR_List::to_string(at->best_action->action_def.target) << ".\n";
-
-		std::cout << "*********************\n";
-		std::cout << "Post-execution state:\n";
-		this->current_state->pretty_print();
-		std::cout << "*********************\n";
+        std::cout << this->current_state->current_char->name
+                  << " used "
+                  << last_action->action_def.ability->name
+                  << " on "
+                  << RGR_List::to_string(last_action->action_def.target)
+                  << ".\n";
+        this->current_state->pretty_print();
 	}
 
 	std::cout << "Game over! Thanks for playing. Insert Coin.\n";
+}
+
+Action* Engine::step()
+{
+    AbilityTable* at;
+
+    this->current_state->current_char = dynamic_cast<Character*>(
+        this->current_state->get_child_by_id(
+            this->get_next_character()->id));
+
+    at = new AbilityTable(this->current_state);
+
+    this->current_state = at->get_next_state();
+
+    return at->best_action->clone();
 }
 
 void Engine::harvest_events()
@@ -172,29 +180,6 @@ void Engine::raise_events()
 
 	// Kill.
 	this->pending_events.clear();
-}
-
-void Engine::get_callbacks()
-{
-	// Opposed to raised events, callbacks are more persistent.
-	// We can't simply purge the list every time, but must construct
-	// one hiarchially...billy...silly.
-
-	// We do start, however, by emptying it. We're working one-offs right now.
-	this->registered_event_listeners.clear();
-
-	for (std::list<Primarch*>::iterator iter = this->children.begin();
-		 iter != this->children.end();
-		 iter++)
-	{
-		std::map<std::string, std::list<callback>> tmp = (*iter)->get_callbacks();
-		for (std::map<std::string, std::list<callback>>::iterator cb_iter = tmp.begin();
-			 cb_iter != tmp.end();
-			 cb_iter++)
-		{
-			this->registered_event_listeners[(*cb_iter).first].merge((*cb_iter).second);
-		}
-	}
 }
 
 }

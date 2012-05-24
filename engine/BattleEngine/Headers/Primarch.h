@@ -37,6 +37,10 @@ public:
      **/
     Primarch(std::string name);
 
+    /**
+     * Destructor.
+     * \todo Implement this thing.
+     **/
     virtual ~Primarch();
 
 	/**
@@ -82,13 +86,6 @@ public:
      * the call.
      **/
     std::list<GameEvent*> get_pending_events();
-
-	/**
-	 * Should return a list of any callbacks that the object is interested in.
-	 * For example, this should for a Character Primarch return callbacks for
-	 * RESOURCE_DECREASE and the like.
-	 **/
-	std::map<std::string, std::list<callback> > get_callbacks();
 	
 	/**
 	 * Should return a float value representing the current value of the Primarch.
@@ -105,16 +102,20 @@ public:
 
 	/**
 	 * Adds a child Primarch.
+	 * \param c The child to add.
 	 **/
     void add_child(Primarch* c);
     
 	/**
 	 * Removes a child Primarch.
+	 * \param c Reference to the Primarch to remove. The Primarch's Id is used,
+	 * not the pointer reference.
 	 **/
     void remove_child(Primarch* c);
     
 	/**
 	 * Removes a child Primarch.
+	 * \param i Primarch Id of the Primarch to remove.
 	 **/
     void remove_child(int i);
 
@@ -127,6 +128,13 @@ public:
 	 **/
     bool has_child(int i, bool go_deep = false);
 
+	/**
+	 * Checks to see if a child exists in the Primarch.
+	 * \param name Primarch name of the Child to find.
+	 * \param deep True if the search should recurse into each child if not
+	 * found.
+	 * \note This is a breadth-first search.
+	 **/
 	bool has_child(std::string name, bool deep = false);
 
     /**
@@ -137,11 +145,26 @@ public:
      **/
     Primarch* get_child(int c_id, bool deep = false);
 
+    /**
+     * Retrieves a child Primarch from the object.
+     * \param name The Primarch name of the child to retrieve.
+     * \param deep True if this should be performed as a full depth
+     * breadth-first search.
+     **/
 	Primarch* get_child(std::string name, bool deep = false);
 
+    /**
+     * Returns all children tied to this Primarch.
+     * \return List of Primarch pointers.
+     **/
 	const std::list<Primarch*>* get_children();
 protected:
 
+    /**
+     * Map of callbacks. First value (key) is the name of the event to react
+     * to, the second (value) is the function pointer to invoke on raise.
+     * \note Currently unused.
+     **/
 	std::map<std::string, std::list<callback> > _callbacks;
 
     /**
@@ -157,6 +180,12 @@ protected:
      **/
     std::list<Primarch*> children;
 
+    /**
+     * Raises an event through the parent GameState to propagate through the
+     * game.
+     * \param type The name of the event type.
+     * \note Currently unused.
+     **/
     void raise_event(std::string type);
 
 	/**
@@ -166,6 +195,11 @@ protected:
 	 **/
 	std::string get_default_name(std::string type);
 private:
+
+    /**
+     * Static internal counter for number of active Primarchs. We use this to
+     * generate new Primarch Id values for new Primarchs.
+     **/
     static long _id_counter;
 };
 

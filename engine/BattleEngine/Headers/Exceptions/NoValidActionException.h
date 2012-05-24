@@ -8,18 +8,27 @@
 #ifndef NO_VALID_ACTION_H_
 #define NO_VALID_ACTION_H_
 
-#include <exception>
-#include <string>
+#include "BaseException.h"
  
 namespace engine {
-class NoValidActionException : public std::exception
+
+/**
+ * Thrown if AbilityTable reaches a juncture where no valid action was possible
+ * when going through the matrix of Ability*Target pairs.
+ **/
+class NoValidActionException : public BaseException
 {
 public:
-	std::string msg;
-
+    /**
+     * Creates a new instance with a specific message. For some
+     * reason, the compiler errors out if you concatenate in the call.
+     **/ 
 	NoValidActionException(std::string mess);
+	
+	/**
+	 * Destructor. Unimplemented, but necessary.
+	 **/
 	~NoValidActionException() throw();
-	virtual const char* what() const throw();
 };
 }
 

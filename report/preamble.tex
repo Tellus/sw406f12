@@ -15,6 +15,7 @@
 % \usepackage[latin1]{inputenc}
 \usepackage[latin1,utf8,ansinew]{inputenc}
 
+\usepackage{pdflscape}
 % Variable, neat, references.
 \usepackage{varioref}
 
@@ -34,13 +35,9 @@
 \bibliographystyle{plainnat}
 
 % Algorithm support.
-\usepackage{algorithmic}
-\usepackage{algorithm}
+\usepackage[lined,linesnumbered]{algorithm2e}
 \usepackage{lastpage}
-% Make algorithms appear as procedures instead.
-\floatname{algorithm}{Procedure}
-\renewcommand{\algorithmicrequire}{\textbf{Input:}}
-\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
 
 % Image frames.
 \setlength{\fboxsep}{0pt}

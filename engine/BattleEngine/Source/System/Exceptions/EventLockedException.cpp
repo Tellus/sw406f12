@@ -20,9 +20,4 @@ EventLockedException::~EventLockedException() throw()
 	// I'm doing nothing!
 }
 
-const char* EventLockedException::what() const throw()
-{
-	return this->msg.c_str();
-}
-
 }

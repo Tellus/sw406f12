@@ -8,18 +8,27 @@
 #ifndef INVALID_RGR_EXCEPTION_H_
 #define INVALID_RGR_EXCEPTION_H_
 
-#include <exception>
-#include <string>
- 
+#include "BaseException.h"
+
 namespace engine {
-class InvalidRGRException : public std::exception
+
+/**
+ * Thrown in contexts where an unknown (or invalid) RGR is requested.
+ * GameState will throw this if you try to use an unsupported RGR_Enum value.
+ **/
+class InvalidRGRException : public BaseException
 {
 public:
-	std::string msg;
-
+    /**
+     * Creates a new instance with a specific message. For some
+     * reason, the compiler errors out if you concatenate in the call.
+     **/ 
 	InvalidRGRException(std::string mess);
+	
+    /**
+	 * Destructor. Unimplemented, but necessary.
+	 **/
 	~InvalidRGRException() throw();
-	virtual const char* what() const throw();
 };
 }
 

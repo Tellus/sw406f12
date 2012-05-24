@@ -1,22 +1,24 @@
 \subsection{Relative Global References}
-RGR's are a set of keywords that correlate to a dynamic set of global references. these are \emph{owner} \emph{enemy} \emph{target} to name a few, and will always reference the respective entity from the perspective of the local scope. \emph{enemy}, for example, will always reference \textbf{another} Character in a battle when applied inside a Character subtype or its members, while \emph{owner} always references the topmost Character in a membership hierarchy. Consider the following code:
+\label{relative}
+Relative Global References are a set of keywords that correlate to a dynamic set of global references. These are \texttt{owner}, \texttt{enemy}, \texttt{target} to name a few, and will always reference the respective entity from the perspective of the local scope, \texttt{enemy}, for example, will always reference \textbf{another} Character in a battle when applied inside a Character subtype or its members, while \texttt{owner} always references the topmost Character in a membership hierarchy. Consider the following code:
 
 \begin{lstlisting}[language=fflang]
-make Fireball from Ability
+make Selfpreserving from Behaviour
 {
-	// Several mandatory members omitted for clarity.
-	cost: [[owner.Mana, 10]];
+	positive: [owner.health, 100];
+	negative: [enemy.health, 20];
 }
 
 make Wizard from Character
 {
-	abilities: [Fireball];
+	//Some code omitted for clarity
+	behaviour: Selfpreserving;
 }
 
-make Mage from Character
+make Dragon from Character
 {
-	abilities: [Fireball];
+	name: "Dagon";
 }
 \end{lstlisting}
 
-\emph{owner} when referenced in Fireball, will point to whichever Character is considering the ability. If it is the Wizard's turn and is calculating the use of the Fireball ability, \emph{owner} points to Wizard, not Mage. Essentially, this syntax approach wraps a parent-child relationship between objects (the hierarchy structural design pattern) without the programmer having to specify these relationships explicitly. All of the RGR's thus automatically represent this relationship model, allowing the programmer to focus purely on the subtype at hand rather than the larger class architecture and the implications of n-element aggregation chains.
+\texttt{owner} when referenced in Selfpreserving, will point to whichever Character is considering an action. Since the Wizard has the behaviour Selfpreserving, \texttt{owner} points to Wizard and \texttt{enemy} points to Dragon. All of the RGR's thus automatically represent a relationship model, allowing the programmer to focus purely on the subtype at hand rather than the larger class architecture and the implications of n-element aggregation chains.

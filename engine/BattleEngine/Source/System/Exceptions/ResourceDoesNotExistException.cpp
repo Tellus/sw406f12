@@ -9,20 +9,13 @@
  
 namespace engine {
 
-ResourceDoesNotExistException::ResourceDoesNotExistException(std::string msg)
-{
-	this->msg = msg;
-	this->what();
-}
+ResourceDoesNotExistException::ResourceDoesNotExistException(std::string msg) :
+    PrimarchDoesNotExistException(msg)
+{}
 
 ResourceDoesNotExistException::~ResourceDoesNotExistException() throw()
 {
     // Empty, though defined.
-}
-
-const char* ResourceDoesNotExistException::what() const throw()
-{
-	return this->msg.c_str();
 }
 
 }

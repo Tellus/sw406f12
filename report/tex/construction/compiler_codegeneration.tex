@@ -1,10 +1,10 @@
 \subsection{Code generation}
 
-The code generation implementation has been mainly hard-coded to fit the engine implementation. The process is very much like the type checking process: it is recursive throughout the \ac{ast}, starting from the root. For each node the overhead is printed via the emit function and then the function prints its children. 
+The code generation implementation has been mainly hard-coded to fit the engine implementation. The process is very much like the contextual analysis: it is recursive throughout the \ac{ast}, starting from the root. For each node the overhead is printed via the emit function and then the function prints its children. 
 
 The main concern when implementing the code generation phase was, that the generated code should be easy for the engine to use. This means that there is only one code file and one header file, so most of the generated code is in-line constructors in the header file. This means that only one traversal of the tree is necessary in order to generate the code.
 
-Every declaration in \langname{} results in a class in the engine that inherits from the primearchs, and every assignment is translated into one function call in C++. In lists every element is also a function call.
+Every declaration in \langname{} results in a class in the engine that inherits from the Primarchs, and every assignment is translated into one function call in C++. In lists every element is also a function call.
 
 On some nodes control structures have been employed to change them in accordance with their use in the engine. For example Health is most often an identifier in \langname{}. In the engine, however, it is treated as a string most of the time, and thus quotation marks are added when needed. The nodes that correspond to enums in C++ (such as owner, self, enemy etc) have been changed to all caps and some reference series in \langname{} have been translated to parameters for a function in C++. As an example, owner.health in behaviour ratios results in two different parameters for the ratio-function in C++. 
 
@@ -24,4 +24,6 @@ void IdentifierNode::emit(codegen::EmissionData *data)
 
 Control structures have also been heavily used in the assignment node to generate the correct C++ code, seeing as every possible case has to be evaluated.
 
-
+\section{Conclusion}
+At this point, the theoretical model of \langname{} compiler and engine has been implemented according to their respective designs.
+This implementation makes it possible to declare characters and simulate battles between them. Both compiler and engine are implemented in the same language, allowing for tight binary-level coupling.

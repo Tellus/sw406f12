@@ -15,6 +15,12 @@ class GameState;
 
 namespace engine {
 
+/**
+ * The Behaviour class is the super class of any sort of Behaviour. In its
+ * current form it's quite impotent, and you probably came here looking for
+ * FullBehaviour instead.
+ * \see FullBehaviour
+ **/
 class Behaviour
 {
 public:
@@ -28,6 +34,10 @@ public:
 	 **/
 	virtual float get_piggy(GameState* from) = 0;
 
+    /**
+     * Clones the Behaviour. Identical to using a copy-constructor (since no
+     * data is actually copied right now).
+     **/
 	virtual Behaviour* clone() = 0;
 };
 

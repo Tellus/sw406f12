@@ -12,7 +12,10 @@
 
 namespace engine {
 
-class Resource:public engine::Attribute
+/**
+ * The Resource Primarch extends Attributes by having a min and max value.
+ **/
+class Resource: public Attribute
 {
 protected:
     /**
@@ -26,18 +29,62 @@ protected:
     float maximum;
 
 public:
-	/* At maximum = -1, set it to value */
+	
+	/**
+	 * Creates a new Resource.
+	 * \param name Name of the resource. Used for all identification purposes in
+	 * the managed GameState.
+	 * \param min Minimum value.
+	 * \param max Maximum value.
+	 * \param init Initial value.
+	 **/
 	Resource(std::string name, float min, float max, float init);
+
+	/**
+	 * Creates a new Resource. Sets initial value to the maxiumum value.
+	 * \param name Name of the resource. Used for all identification purposes in
+	 * the managed GameState.
+	 * \param min Minimum value.
+	 * \param max Maximum value.
+	 **/
 	Resource(std::string name, float min, float max);
-	Resource(float min, float max, float init);
-	Resource(float min, float max);
+
+    /**
+     * Destructor.
+     * \todo Implement?
+     **/
 	virtual ~Resource();
 
+    /**
+     * Creates an exact clone of the Resource in its current state (i.e.
+     * current value intact).
+     **/
 	virtual Primarch *clone(bool with_id);
 	
+	/**
+	 * Resets the Resource to its initial value.
+	 **/
 	virtual void reset();
+	
+	/**
+	 * Modifies the Resource by an amount. Will not go beyond minimum or
+     * maximum values.
+	 * \param amount The amount to change the Resource's value by.
+	 **/
 	virtual void modify(float amount);
+	
+	/**
+	 * Decreases the Resource's value by a set amount. Will not go below
+     * minimum.
+	 * \param amount The amount to remove from the Resource.
+	 **/
 	void decrease(float amount);
+	
+	/**
+	 * Increases the Resource's value by a set amount. Will not go above
+     * minimum.
+	 * \param amount The amount to add to the Resource.
+	 **/
 	void increase(float amount);
 	
 	/**
@@ -52,8 +99,15 @@ public:
 	 **/
 	void modify_max(float value);
 	
+	/**
+	 * Prints the Resource's current status to stdout.
+	 **/
 	void pretty_print();
 private:
+
+    /**
+     * Initiates the object.
+     **/
 	void _init(float min, float max);
 };
 

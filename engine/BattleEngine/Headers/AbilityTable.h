@@ -20,6 +20,11 @@
 
 namespace engine {
 
+/** 
+ * AbilityTable is the proverbial meat 'n veg of the Engine. It handles the
+ * tough decision-making for a Character by examining all possible outcomes of
+ * using every possible Ability on every thinkable target.
+ **/
 class AbilityTable {
 private:
     /**
@@ -48,14 +53,21 @@ protected:
 	std::vector<Action*> *create_actions(Character *from);
 
 public:
+    /**
+     * Creates a new AbilityTable without a GameState to work on.
+     **/
 	AbilityTable();
+	
 	/**
 	 * Creates a new AbilityTable instance and have it instantly calculate the
 	 * highest valued action for a Character in a GameState.
 	 * \param f_state The GameState to pull data from.
-	 * \param f_char The Character to calculate on the basis of.
 	 **/
 	AbilityTable(GameState *f_state);
+	
+	/**
+	 * \todo Implement.
+	 **/
 	virtual ~AbilityTable();
 	
 	/**

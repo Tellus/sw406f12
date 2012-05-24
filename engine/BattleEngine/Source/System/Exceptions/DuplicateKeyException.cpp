@@ -18,9 +18,4 @@ DuplicateKeyException::DuplicateKeyException(std::string msg)
 DuplicateKeyException::~DuplicateKeyException() throw()
 {}
 
-const char* DuplicateKeyException::what() const throw()
-{
-	return this->msg.c_str();
-}
-
 }

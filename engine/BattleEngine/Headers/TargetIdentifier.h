@@ -15,10 +15,23 @@
 namespace engine
 {
 
+/** 
+ * RGRIdentifier responsible for resolving the TARGET RGR_Enum.
+ **/
 class TargetIdentifier : public RGRIdentifier
 {
 public:
+    /**
+     * Identifies the target from a GameState. Requires that set_target has
+     * been called on the GameState beforehand.
+     * \param from The GameState to analyse.
+     * \return The found Character or NULL.
+     **/
     Character *identify(GameState *from);
+    
+    /**
+     * Creates and initialises a new TargetIdentifier.
+     **/
     TargetIdentifier();
 };
 

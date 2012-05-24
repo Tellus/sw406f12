@@ -10,8 +10,8 @@
 namespace engine {
 
 EventListener::EventListener() {
-	// TODO Auto-generated constructor stub
-
+    this->condition = NULL;
+    this->action = NULL;
 }
 
 EventListener::EventListener(EventCondition* ec, ActionDefinition* ac)
@@ -21,7 +21,8 @@ EventListener::EventListener(EventCondition* ec, ActionDefinition* ac)
 }
 
 EventListener::~EventListener() {
-	// TODO Auto-generated destructor stub
+    delete this->condition;
+    delete this->action;
 }
 
 void EventListener::set_condition(RGR_Enum target, std::string member, COMPARISON_ENUM comp, float value)

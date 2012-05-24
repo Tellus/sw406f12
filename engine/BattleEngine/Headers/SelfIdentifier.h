@@ -17,10 +17,22 @@ d ../*
 namespace engine
 {
 
-class SelfIdentifier : public SelfIdentifier
+/**
+ * RGRIdentifier for the SELF RGR_Enum. Identical to OwnerIdentifier.
+ **/
+class SelfIdentifier
 {
 public:
+    /**
+     * Finds the SELF Character in a GameState.
+     * \param from The GameState to look through.
+     * \return from->current_character - always.
+     **/
     Character *identify(GameState *from);
+    
+    /**
+     * Creates and initialises a new SelfIdentifier.
+     **/
     SelfIdentifier();
 };
 

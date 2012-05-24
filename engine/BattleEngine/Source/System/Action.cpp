@@ -38,12 +38,23 @@ GameState* Action::execute(GameState *thru)
 	state->set_target(target);
 
 	std::vector<Effect*> *effects = this->generate_effects();
+	
+//    std::cout << "Applying " << effects->size() << " to targets.\n";
+	
 	for (std::vector<Effect*>::iterator iter = effects->begin(); iter != effects->end(); iter++)
 	{
-		Effect *ef = dynamic_cast<Effect*>(*iter);
+		Effect* ef = *iter;
+
+        std::cout << '\t' << ef->name << '\n';
 
 		ef->execute(source, target);
 	}
+
+//    std::cout << "Action execution done.\n";
+
+    // Remove the costs from resources.
+    source->get_resource("health")->decrease(this->action_def.ability->cost_health);
+    source->get_resource("mana")->decrease(this->action_def.ability->cost_mana);
 
 	return state;
 }
@@ -61,6 +72,13 @@ std::vector<Effect*> *Action::generate_effects()
 		out->push_back(dynamic_cast<Effect*>(ef->clone()));
 	}
 	return out;
+}
+
+Action* Action::clone()
+{
+    return new Action(
+                            this->action_def.source,this->action_def.target,
+                            dynamic_cast<Ability*>(this->action_def.ability->clone()));
 }
 
 } /* namespace engine */
