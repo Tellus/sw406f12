@@ -46,7 +46,7 @@ Prerequisites
 ^^^^^^^^^^^^^
 The Compiler uses boost's regex library, and has been succesfully compiled down
 to version 1.46. Also, a reasonably new C++ compiler is recommended - any
-compiler with C\+\+11 support since 2011 should be sufficient.
+compiler with C++ 11 support since 2011 should be sufficient.
 
 Compilation
 ^^^^^^^^^^^
@@ -97,6 +97,11 @@ Prerequisites
 The base engine requires the template containers from boost. The experimental
 ncurses frontend furthermore requires ncurses and panel (typically bundled with
 ncurses) as well as the program_options library from boost.
+
+The engin is written with several newer C++ features, so the newest version (at
+least with TR1) of C++ must be supported by the compiler. The engine has
+succesfully been built with gcc 4.6 and Microsoft's C++ compiler included with
+Visual Studio 2010.
 
 GNU make
 ^^^^^^^^
