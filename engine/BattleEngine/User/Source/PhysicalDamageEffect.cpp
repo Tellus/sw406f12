@@ -17,21 +17,21 @@ PhysicalDamageEffect::PhysicalDamageEffect(engine::RGR_Enum s, engine::RGR_Enum 
 
 void PhysicalDamageEffect::execute(Primarch* s, Primarch* t)
 {
-    std::cout << "PhysicalDamage calculation.\n";
+    // std::cout << "PhysicalDamage calculation.\n";
 
 	engine::Character *tchar = dynamic_cast<engine::Character*>(t);
 	engine::Character *schar = dynamic_cast<engine::Character*>(s);
 
-    std::cout << "Characters cast.\n";
+    // std::cout << "Characters cast.\n";
 
     float dam = std::max(schar->get_attribute("attack_power")->get_current() -
                 tchar->get_attribute("defense")->get_current(), 0.0f);
                 
-    std::cout << "Final Physical Damage: " << dam << '\n';
+    // std::cout << "Final Physical Damage: " << dam << '\n';
                 
     tchar->get_resource("health")->decrease(dam);
     
-    std::cout << "Applied.\n";
+    // std::cout << "Applied.\n";
 }
 
 PhysicalDamageEffect::PhysicalDamageEffect() :

@@ -20,7 +20,7 @@ HealEffect::HealEffect() :
 
 void HealEffect::execute(engine::Primarch* s, engine::Primarch* t)
 {
-    std::cout << "Heal calculation.\n";
+    // std::cout << "Heal calculation.\n";
     
     engine::Character* tc = dynamic_cast<engine::Character*>(t);
     tc->get_resource("health")->increase(this->amount);

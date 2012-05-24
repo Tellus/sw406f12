@@ -137,7 +137,6 @@ Action* Engine::step()
 
     at = new AbilityTable(this->current_state);
 
-    // TODO: There's a malign health calculation here!
     this->current_state = at->get_next_state();
 
     return at->best_action->clone();
