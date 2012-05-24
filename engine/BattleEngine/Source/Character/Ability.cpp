@@ -11,8 +11,6 @@ namespace engine {
 
 Ability::Ability()
 {
-    this->_init();
-    
     this->cost_health = this->cost_mana = 0;
 
 	this->name = this->get_default_name("Ability");
@@ -21,8 +19,6 @@ Ability::Ability()
 Ability::Ability(std::string name, float cost_health, float cost_mana) :
     Primarch(name)
 {
-    this->_init();
-    
     this->cost_health = cost_health;
     this->cost_mana = cost_mana;
 }
@@ -42,17 +38,12 @@ Primarch* Ability::clone(bool with_id)
 		{
 			throw "Bad Effect cast!";
 		}
-		to_ret->effects.push_back(new_eff);
+		to_ret->add_effect(new_eff);
     }
 
 	to_ret->rgr_list = this->rgr_list;
 
 	return to_ret;
-}
-
-void Ability::_init()
-{
-    this->effects = std::vector<engine::Effect*>();
 }
 
 Ability::~Ability()
@@ -100,7 +91,7 @@ void Ability::modify(float amount)
 
 void Ability::add_effect(Effect* to_add)
 {
-    this->add_child(to_add);
+    this->effects.push_back(to_add);
 }
 
 } /* namespace engine */

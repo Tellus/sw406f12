@@ -12,7 +12,6 @@ namespace engine {
 Character::Character()
 {
 	this->name = "Noname";
-	_init();
 }
 
 Character::~Character()
@@ -63,13 +62,6 @@ Primarch *Character::clone(bool with_id = true)
 	return new_char;
 }
 
-void Character::_init()
-{
-    this->resources = std::map<std::string,Resource*>();
-    this->abilities = std::map<std::string,Ability*>();
-    this->attributes = std::map<std::string,Attribute*>();
-}
-
 void Character::pretty_print()
 {
     std::cout << "Character(" << this << "): " << this->name << '\n';
@@ -85,6 +77,14 @@ void Character::pretty_print()
     for (std::map<std::string,Resource*>::iterator iter = res->begin(); iter != res->end(); iter++)
     {
         std::cout << '\t' << iter->first << '\t' << iter->second->get_current() << '\n';
+    }
+    
+    std::cout << "Abilities:\n";
+    
+    std::map<std::string,Ability*> *ab = &this->abilities;
+    for (std::map<std::string,Ability*>::iterator iter = ab->begin(); iter != ab->end(); iter++)
+    {
+        iter->second->pretty_print();
     }
 }
 

@@ -82,11 +82,6 @@ public:
      * the health cost or the effect magnitude.
      **/
 	void modify(float amount);
-private:
-    /**
-     * Used by constructors for the initializations shared between them all.
-     **/
-    void _init();
 };
 
 } /* namespace engine */

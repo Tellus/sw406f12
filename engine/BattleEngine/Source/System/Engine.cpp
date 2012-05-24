@@ -98,6 +98,9 @@ void Engine::run()
 	// Reset turn order.
     this->init_game();
 
+    std::cout << "Welcome to the battle. Let's see the contestants:\n";
+    this->current_state->pretty_print();
+
 	/**
 	 * Engine cycle:
 	 * 1. Check win condition (automatic).
