@@ -8,9 +8,9 @@ The semantics are split into two parts; declarations in \langname{}, and the inn
 The declarations in \langname{} have the same transition system.
 The transition system is as follows:\\\\
 \begin{tabular}{l l}
-$\Gamma_{Dec} = $ & $\mathbf{character \times ability \times behaviour \times event \times sto \times stm}$ \\
+$\Gamma_{Dec} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event \times Sto \times Stm}$ \\
 $\Rightarrow_{Dec}$ & \\
-$T_{Dec} = $ & $\mathbf{character \times ability \times behaviour \times event \times sto}$ \\
+$T_{Dec} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event \times Sto}$ \\
 \end{tabular}
 \\\\
 The \textbf{Stm} varies after what type is being declared. The statement (\textbf{Stm}) is described for each type of declaration before their rules are presented. Note that environments are updated according to the declaration type.
@@ -41,9 +41,9 @@ $\Rightarrow_{DecA}$ is defined by the rules in table \ref{tbl:decA}.\\\\
 \begin{tabular}{l l}
 \\ \hline \\
 \small{\textsc{[Ability-Dec]}}& \\
-\footnotesize{$\langle Char, Ability, Behaviour, Event; \; Ability AName,  RGR, Int, Int,$}
- & \footnotesize{$Effect_1, RGR_1, Integer_1$} \\
- &  \footnotesize{$Effect_2, RGR_2, Integer_2$}\\
+\footnotesize{$\langle Char, Ability, Behaviour, Event; \; Ability AName,  RGR, ManaCost, HealthCost,$}
+ & \footnotesize{$Effect_1, RGR_1, Magnitude_1$} \\
+ &  \footnotesize{$Effect_2, RGR_2, Magnitude_2$}\\
  &  \footnotesize{$Effect_3, RGR_3, Integer_3$} \\
  &  \footnotesize{$\vdots$} \\
  &  \footnotesize{$Effect_n, RGR_n, Integer_n \rangle \; \Rightarrow$} \\
@@ -339,6 +339,6 @@ Behaviour
 %
 %\todo{Not sure if this have to be in}
 %%%%%%%%%%%%%
-% Vi har nogle regler der skal beskrives med brï¿½dtekst.
-% Kan ikke lige huske hvilke der mangler lige nu.. Det hï¿½ber jeg at Danny kan hjï¿½lpe med at huske........
+% Vi har nogle regler der skal beskrives med brødtekst.
+% Kan ikke lige huske hvilke der mangler lige nu.. Det håber jeg at Danny kan hjælpe med at huske........
 %%%%%%%%%%%%%

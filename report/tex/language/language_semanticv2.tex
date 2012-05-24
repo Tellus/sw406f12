@@ -1,0 +1,340 @@
+\section{\langname{} Semantics}
+%I don't like this anymore :/ ~Hornbjerg
+
+%{\Large[The real stuff]}
+The semantics of \langname{} are based on the environment-store model, described in section \ref{subsec:env-sto}.
+The semantics are split into two parts; declarations in \langname{}, and the inner workings of the engine used to simulate a battle between two characters.
+\subsection*{Declaration Semantics}
+For the purpose of semantics, a simplified syntax is assumed, where every declaration follows a specific line ordering. This means that the line agnosticism mentioned before is ignored in this section.
+In the semantics of \langname{}, \ac{rgr} is a set of keywords used to refer to characters. These have been limited in contrast to the language's original syntax.\\ \textbf{RGR} is defined as follows;  
+%
+$$\mathbf{RGR} = \{\texttt{owner, target, enemy\}}$$
+%
+Relative Global References are used in the declaration of abilities and behaviour. An ability is declared by a name and contains the targets to be affected by the ability, effects carried out by the ability and three values. 
+ The first value in the Ability environment is a list of possible targets, followed by the \ac{hp} and Mana cost and finally a list of effects with their respective targets and magnitude.\\
+To keep track of the bindings of an ability, an \textit{ability environment} is used. The set of ability environments is called \textbf{Ability}. 
+Given an ability name \textit{AName} $\in$ \textbf{AName}, which is the set of legal ability names, an ability environment must hold information about, targets, costs and effects. Therefore the definition of the set of ability environments \textbf{Ability} is:
+%
+$$\mathbf{Ability: \; AName \rightharpoonup \mathcal{P}(RGR) \times Number \times Number \times \mathcal{P}(Effect \times RGR \times Number)}$$
+
+As mentioned, \ac{rgrs} are used for behaviour as well. A behaviour is declared by a name and it contains a list of 3-tuples ({\textit{RGR} $\in$ \textbf{RGR}}, \textit{VName} $\in$ \textbf{VName}, \textit{Num} $\in$ \textbf{Number}), where \textit{\ac{rgr}} is a reference to the involved character, \textit{VName} is the name of the involved attribute and \textit{Num} is a value representing the priority of the attribute. To keep track of the bindings of a behaviour, a \textit{behaviour environment} is used. The set of behaviour environments is called \textbf{Behaviour}.
+A behaviour environment must, given a legal behaviour name \textit{BName}, hold information of the list of 3-tuples. Therefore the definition of the set of behaviour environments is:
+
+$$\mathbf{Behaviour: \; BName \rightharpoonup \mathcal{P}(RGR \times VName \times Number)}$$
+%\\\\
+For declaring forced actions for a character, \langname{} makes it possible for a user to declare events, which contain a condition(health below 10\%), an ability to execute when the conditions are met and a target for this ability.
+An \textit{event environment} is used to keep track of the binding for events. The set of event environments is called \textbf{Event}.
+Given a legal event name, \textit{EName} the event environment must hold information about the condition, target and ability. Therefore the definition of the set of event environments is:
+
+$$\mathbf{Event : \; EName \rightharpoonup Condition \times RGR \times AName}$$
+
+%\\\\
+When a character is declared, they are declared with some resources, \ac{hp} and Mana. The resources have a maximum and current value that can be set, while the minimum is set to 0. A resource therefore has bindings for the two values. To keep track of these bindings a \textit{resource environment} is used.\\
+The set of resource environments is called \textbf{Resource}, and is defined as follows:
+
+$$\mathbf{Resource : \; RName \rightharpoonup Number \times Number}$$
+
+There are no written transition rules or systems for \textbf{Resource}, because resource is not declared standalone. Resources are declared as soon as a character is declared.
+It is also required to keep track of the bindings of the character itself. To keep track of the bindings a \textit{character environment} is used. The set of character environments is called \textbf{Character}.
+Given a character name \textit{CName} or an \textit{RGR}, a character environment must hold information about the behaviour, abilities, attributes, events and resources bound to the character. Therefore the definition of the set of character environments \textbf{Character} is:
+%
+$$\mathbf{Character} : \; \mathbf{CName} \cup \mathbf{RGR} \rightharpoonup \mathbf{BName} \times \mathbf{\mathcal{P}(AName)} \times \mathbf{Env} \times \mathcal{P}(\mathbf{EName}) \times \mathbf{Resource}$$
+
+\textbf{Env} is an environment used for keeping track of bindings between attributes and resources, and locations. \textbf{Env} is defined
+\[ 
+\mathbf{Env} = \mathbf{VName} \rightharpoonup \mathbf{Loc}
+\]
+
+All declarations, except character declaration, in \langname{} have the same transition system. 
+%All declaration in \langname{} have the same 
+%The declarations in \langname{} have the same transition system.
+The transition system is as follows:\\\\
+\begin{tabular}{l l}
+$\Gamma_{Dec} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event \times Sto \times Stm}$ \\
+$\Rightarrow_{Dec}$ & \\
+$T_{Dec} = $ & $\mathbf{Character \times Ability \times Behaviour \times Event \times Sto}$ \\
+\end{tabular}
+\\\\
+The \textbf{Stm} varies after what type is being declared. The statement (\textbf{Stm}) is described for each type of declaration before their rules are presented. Note that environments are updated according to the declaration type.\pagebreak
+
+The \textit{Stm} for an Ability declaration is $$\mathbf{AName \times \mathcal{P}(RGR) \times Number \times Number \times \mathcal{P}(Effect \times RGR \times Number)}$$
+
+\begin{table}[!h]
+\begin{tabular}{l l}
+\\ \hline \\
+\small{\textsc{[Ability-Dec]}}& \\
+\footnotesize{$\langle Character, Ability, Behaviour, Event; \; AName,  RGR, ManaCost, HealthCost,$}
+ & \footnotesize{$Effect_1, RGR_1, Magnitude_1$} \\
+ &  \footnotesize{$Effect_2, RGR_2, Magnitude_2$}\\
+ &  \footnotesize{$Effect_3, RGR_3, Magnitude_3$} \\
+ &  \footnotesize{$\vdots$} \\
+ &  \footnotesize{$Effect_n, RGR_n, Magnitude_n \rangle \; \Rightarrow$} \\
+\end{tabular}
+\begin{tabular}{l p{0.92\textwidth}}
+ \footnotesize{$\langle Character, Ability', Behaviour, Event \rangle$} \\
+ \footnotesize{Where $Effects = $} \footnotesize{${\bigcup^{n}_{i = 0}} (Effect_i, RGR_i, Number_i)]$} \\
+ \footnotesize{And} $Ability' =$ \footnotesize{$Ability[AName \mapsto (RGR, ManaCost, HealthCost, Effects)]$} \\
+\\ \hline
+\end{tabular}
+\caption{Transition rule for \texttt{make} $AName$ \texttt{from Ability}}
+\label{tbl:decA}
+\end{table}
+
+The \textit{Stm} for Behaviour is as follows: $$\mathbf{BName \times \mathcal{P}(RGR \times VName \times Number)}$$
+
+\begin{table}[!h]
+\begin{tabular}{l l l}
+\\ \hline \\
+\small{\textsc{[Behaviour-Dec]}} & \\
+ & \footnotesize{$\langle Character, Ability, Behaviour, Event; BName,$} & \footnotesize{$RGR_1, VName_1, Factor_1$} \\
+ & & \footnotesize{$RGR_2, VName_2, Factor_2$}\\
+ & & \footnotesize{$RGR_3, VName_3, Factor_3$} \\
+ & & \footnotesize{$\vdots$} \\
+ & & \footnotesize{$RGR_n, VName_n, Factor_n  \rangle \; \Rightarrow$} \\
+\end{tabular}
+\begin{tabular}{l p{0.85 \textwidth}}
+ & \footnotesize{$\langle Character, Ability, Behaviour', Event \rangle$} \\ %& \color{white} \footnotesize{$RGR_1, VName_1, Number_1 \Rightarrow$} \\
+\footnotesize{Where $Behaviour' = $} & \footnotesize{$Behaviour[BName \mapsto {\bigcup^{n}_{i = 0}} (RGR_i, VName_i, Factor_i)]$} \\
+\\  \hline 
+\end{tabular}
+\caption{Transition rule for \texttt{make} $BName$ \texttt{from Behaviour}}
+\label{tbl:decB}
+\end{table}
+
+The \textit{Stm} for Events is: $$\mathbf{EName \times Condition \times RGR \times AName}$$
+%Event
+\begin{table}[!h]
+\begin{tabular}{l l}
+ \\ \hline \\
+ \small{\textsc{[Event-Dec]}} & \\
+ & \footnotesize{$\langle Character ,Ability, Behaviour, Event; \; EName, Condition, RGR, AName \rangle \; \Rightarrow$} \\
+ & \footnotesize{$\langle Character, Ability, Behaviour, Event' \rangle$} \\
+\footnotesize{Where $Event' =$} & \footnotesize{$Event[EName \mapsto (Condition, RGR, AName)] $} \\
+ \\ \hline
+\end{tabular}
+\caption{Transition rule for \texttt{make} $EName$ \texttt{from Event}}
+\label{tbl:decE}
+\end{table}
+
+%Resource
+\pagebreak
+The transition system for declaration of character is: \\
+\\
+\begin{tabular}{l l}
+$\Gamma_{DecC} = $ & $\mathbf{Character \times Env \times Resource \times Ability \times Behaviour \times Event \times}$ \\
+ & $\mathbf{CName \times BName \times \mathbf{\mathcal{P}(AName)} \times \mathcal{P}(\mathbf{EName}) \times Sto \cup \texttt{\textbf{\{next\}}}}$\\
+$\Rightarrow_{DecC}$ & \\
+$T_{DecC} = $ & $\mathbf{Character \times Env \times Sto}$ \\
+\end{tabular}
+\\\\
+
+$\Rightarrow_{DecC}$ is defined by the rules in table \ref{tbl:decC}\\\\
+\pagebreak
+\begin{landscape}
+\begin{table}[!h]
+\begin{tabular}{l c}
+\\ \hline \\
+\small{\textsc{[Char-Dec]}} \\
+ & \footnotesize{$env', sto''' \vdash A_D \Rightarrow sto'' \;\;\;\; env', sto'' \vdash R_D \Rightarrow sto'$}\\
+  & $\frac{Character \vdash ANames, BName, ENames \Rightarrow Character'}{\langle Character, Abitity, Behaviour, Event, env, sto, \texttt{next} \; ; \; CName, A_D, R_D, ANames, BName, ENames \rangle \Rightarrow Character', env', sto'}$\\
+\end{tabular}
+\\
+\begin{tabular}{l p{1.14\textwidth}}
+\\
+ \footnotesize{Where} $env'=$ &  \footnotesize{$env[health \mapsto l, \texttt{next} \mapsto \texttt{new } l,$} \\
+ & \footnotesize{$mana \mapsto \texttt{new } l, \texttt{next } \mapsto \texttt{new (new } l),$} \\
+ & \footnotesize{etc.$]$} \\
+ \footnotesize{And} $sto''' =$ & \footnotesize{$sto[env'(health) \mapsto std,$}\\
+ & \footnotesize{$env'(mana) \mapsto std,$}\\
+ & \footnotesize{etc.$]$} \\
+ \footnotesize{And} $Character'=$ & \footnotesize{$Character[CName \mapsto ANames, BName, ENames, env', Resources]$}
+ \\ \hline
+\end{tabular}
+\caption{Transition rules for \texttt{make} $CName$ \texttt{from Character}. etc. stands for all Attributes for the character.}
+\label{tbl:decC}
+
+\end{table}	
+\end{landscape}
+The declaration of attributes and effects are not described above. As it can be seen i table \ref{tbl:decC} an environment $env$ is used, which is the environment used to keep track of bindings of attributes.
+
+It is not possible for a user to declare custom effects. The effects are hard-coded in the engine and therefore the declaration of effects is not described in the semantics of \langname{}.
+
+After all declarations have been performed, the battle-engine is started with the two declared characters set as opponents in a battle scenario.
+
+\subsection*{\langname{} battle-engine}
+
+The battle-engine for \langname{} runs in turns, each turn is executed if a certain win-condition is not met. 
+The win-condition is (like effects) hard-coded in the engine, and it is therefore not possible, for a user, to specify in the \langname{} language. In the current implementation, the win-condition is met if the enemy of the current character has zero or less \ac{hp}.
+
+At the start of each turn, the win-condition is checked. If it is met, the battle ends, else a turn is executed in the following way;
+
+\begin{description}
+\item[1] The character who is to be taking action the current turn is chosen.
+\item[2] It is checked whether an event is triggered, if not the turn continues to point \textbf{3}, else the forced action is executed and point \textbf{3} and \textbf{4} are skipped.
+\item[3] Based on the declared behaviour, the best action to execute is calculated and chosen, by simulating every possible action.
+\item[4] The chosen action is executed.
+\item[5] A new turn starts and the win-condition is checked.
+\item[5] If the win-condition is not met the turn continues from point \textbf{1}.
+\end{description}
+
+
+The transition system for execution of a turn is
+
+\begin{tabular}{l l}
+$\Gamma_{TURN} = $ & $\mathbf{Character \times Behaviour \times Ability \times Event \times Resource}$\\
+ & $\mathbf{\times CName \times CName \times Sto}$ \\
+$\Rightarrow_{TURN}$ & \\
+$T_{TURN} = $ & $\mathbf{(CName \times CName \times Sto) \cup \texttt{\{Abort\}}}$ \\
+\end{tabular}
+\\\\
+$\Rightarrow_{TURN}$ is defined by the rules in table \ref{tbl:Turn}.\\\\
+
+\begin{table}[!h]
+\begin{tabular}{l l}
+\\ \hline \\
+\small{\textsc{[Turn$_1$]}} & \\
+ & \footnotesize{$\langle Character, Behaviour, Ability, Event, Resource, Active, Next, sto \rangle \Rightarrow_{TURN} \langle Next, Active, sto' \rangle$} \\
+% \\
+\footnotesize{Where} & \footnotesize{$Character(Active) = (BName, AName, env, EName, Resource)$} \\
+\footnotesize{And} & \footnotesize{$env(Health) > 0$ (win-condition not met)} \\
+ & \footnotesize{$\forall e \in EName, (Condition, Ability) = Event(e), Condition \rightarrow_b f \! \! f$} \\
+ & \footnotesize{$Be = Behaviour(BName)$} \\
+ & \footnotesize{$sto' = ChooseAction(Character, Ability, Active, Next, Be, sto)$} \\
+ \small{\textsc{[TURN$_2$]}} & \\
+ & \footnotesize{$\frac{ \langle Character, Ability, Active, Event(e)RGR, Event(e)AName, sto \rangle \Rightarrow_{A\_exe} = sto' }{ \langle Character, Behaviour, Ability, Event, Resource, Active, Next, sto \rangle \Rightarrow_{TURN} \langle Next, Active, sto' \rangle}$} \\
+% \\
+\footnotesize{Where} & \footnotesize{$Character(Active) = (BName, AName, env, EName, Resource)$} \\
+\footnotesize{And} & \footnotesize{$Env(Health) > 0$ (win-condition not met)} \\
+  & \footnotesize{$\exists e \in EName, (Condition, Ability) = Event(e), Condition \rightarrow_b t \! \! t$} \\
+% & \footnotesize{$Character(Active), Character(Next), Ability \vdash \langle Event(e)AName, sto \rangle \Rightarrow_{A\_exe} = sto'$} \\
+ \small{\textsc{[TURN$_3$]}} & \\
+  & \footnotesize{$ \langle Character, Behaviour, Ability, Event, Resource, Active, Next, sto \rangle \Rightarrow_{TURN} \langle \texttt{Abort} \rangle$} \\
+%\\
+\footnotesize{Where} & \footnotesize{$Character(Active) = (BName, AName, env, EName, Resource)$} \\
+\footnotesize{And} & \footnotesize{$Env(Health) \leq 0$ (win-condition met)} \\
+\\ \hline
+\end{tabular}
+\caption{Transition rules for $\Rightarrow_{TURN}$}
+\label{tbl:Turn}
+\end{table}
+During a turn an ability is executed. The execution of an ability changes the values of the one (or both) of the involved characters .
+All abilities have Mana and \ac{hp} cost, default set to zero. When an ability is executed, the cost of that given ability is subtracted from the Mana and \ac{hp} pool of the executing character. \\
+
+The transition system for execution of an ability is
+
+\begin{tabular}{l l}
+$\Gamma_{A\_exe} = $ & $\mathbf{Character \times Ability \times CName \times RGR \times AName \times Sto}$ \\
+$\Rightarrow_{A\_exe}$ & \\
+$T_{A\_exe} = $ & $\mathbf{Sto}$ \\
+\end{tabular}
+\\\\
+$\Rightarrow_{A\_exe}$ is defined by the rules in table \ref{tbl:abi-exe}.
+\begin{table}[!h]
+\begin{tabular}{l l}
+\\ \hline \\
+\small{\textsc{[Ability-Exe]}} & \\
+& \footnotesize{$ \langle Character, Ability, Active, RGR, AName, sto \rangle \Rightarrow_{A\_exe} \langle sto' \rangle$} \\
+\footnotesize{Where $sto''=$} & \footnotesize{$sto[Character(Active)Health -= Ability(AName)HealthCost,$}\\
+ & \footnotesize{$Character(Active)Mana -= Ability(AName)ManaCost]$}\\
+\footnotesize{And $sto'=$} & \footnotesize{$\forall ef \in Ability(AName)Effects:$}\\
+ & \footnotesize{$ef(Character(Active), Character(ef.RGR), ef.Magnitude), sto''$}\\
+\\ \hline
+\end{tabular}
+\caption{Transition rules for $\Rightarrow_{A\_exe}$}
+\label{tbl:abi-exe}
+\end{table}
+
+Every ability causes an effect, these effects can not be defined in \langname{}. Instead the possible effects are predefined in the battle-engine. 
+The possible effects are \textit{physical damage} and \textit{heal}. The notation $Effect(Character_1, Character_2, Number)$ denotes a function call, applying the effect to the target($Character_2$), using the attributes of both characters and the magnitude ($Number$) for calculations, and returns the updated $sto$.\\
+\begin{comment}
+The transition rules for execution of an effect are of the form
+{\small $$EName \langle sto, l \rangle \Rightarrow_{eff} sto[l \mapsto x \pm i]$$}
+
+The transition system for execution of an effect is 
+
+\begin{tabular}{l l}
+$\Gamma_{eff} = $ & $ \mathbf{Sto \times RGR, \times RGR \times Number \times Character}$ \\
+$\Rightarrow_{eff}$ & \\
+$T_{eff} = $ & $\mathbf{Sto}$ \\
+\end{tabular}
+\\\\
+$\Rightarrow_{eff}$ are defined by the rules in table \ref{tbl:physical}.\\
+
+\begin{table}[!h]
+\begin{tabular}{l p{0.8\textwidth}}
+\\ \hline \\
+\small{[\textsc{Physical-Dmg}]} & \\
+ & \footnotesize{$Character, sto \vdash Physical \langle  source, target, i \rangle \Rightarrow_{eff} sto'$} \\ %[l \mapsto x - i]$} \\
+ \footnotesize{Where} & \footnotesize{$sto' = sto[target(Health) -\!\!= (source(attack\_power)- target(defense)) \times i]$} \\
+ \\
+\small{[\textsc{Heal}]} & \\
+ & \footnotesize{$Character, sto \vdash Heal \langle source, target, i \rangle \Rightarrow_{eff} sto'$} \\
+  \footnotesize{Where} & \footnotesize{$sto' = sto[target(Health) +\!\!=  i]$}
+ \\ \hline
+\end{tabular}
+\caption{Transition rule for $\Rightarrow_{eff}$}
+\label{tbl:physical}
+\end{table}
+\end{comment}
+
+If no event is triggered during a turn, the action to be executed has to be calculated based on the behaviour declared in \langname{}.
+The calculations are done by an algorithm that would turn into a long description if it was to be described by a semantic transition rule. It is instead described by pseudo-code.
+The algorithm calculates a value called \texttt{piggy}-value. The size of the \texttt{piggy}-value determines whether the action is good or not, the greater the value, the better the action.
+The size of the \texttt{piggy}-value is considered, based on the ratios declared in the behaviour of the character.\\
+The pseudo-code is as follows \\\\
+%Behaviour description to come
+\textsc{Choose-Action}\\
+%\texttt{
+\begin{algorithm}[H]
+\KwData{Character, Ability, Active, Next, Be, Sto}
+\KwResult{Updated Sto}
+
+actions := Character(Active)ANames\;
+
+max\_piggy := - $\infty$\;
+
+\ForEach {a $\in$ actions }{
+	\If{(Ability($a$).healthcost <= Character(Active).health \textbf{and} Ability($a$).manacost <= Character(Active).mana)}
+	{
+		\textbf{continue};
+	}
+
+    temp\_sto  := copy of Sto;
+    
+    temp\_sto := Ability-Exe(Character, Ability, Active, Ability($a$.RGR), $a$, temp\_sto);
+    
+    new\_piggy := 0;
+    
+    \ForEach{RGR, VName, Factor $\in$ Be }
+    {
+    	new\_piggy +=: Character(RGR).VName * Factor; Considering temp\_sto
+    }
+    
+    \If{(new\_piggy > max\_piggy)}{
+        max\_piggy := new\_piggy\;
+        best\_sto := temp\_sto;
+        }
+    }
+return best\_sto;
+\end{algorithm}
+
+The pseudo-code describes how every possible action is simulated, and based on the \texttt{piggy}-value, the best action is chosen and returned.
+
+
+%\todo{describe behaviour}
+%Test text..
+\begin{comment}
+Missing:
+Behaviour
+%Event/forced behaviour
+%Win-condition
+\end{comment}
+
+
+%\pagebreak
+%
+%\todo{Not sure if this have to be in}
+%%%%%%%%%%%%%
+% Vi har nogle regler der skal beskrives med brødtekst.
+% Kan ikke lige huske hvilke der mangler lige nu.. Det håber jeg at Danny kan hjælpe med at huske........
+%%%%%%%%%%%%%
