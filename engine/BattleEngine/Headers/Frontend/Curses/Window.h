@@ -32,7 +32,23 @@ public:
     
     void move_by(int x, int y);
     
+    int get_top();
+    int get_bottom();
+    int get_left();
+    int get_right();
+    
+    /**
+     * Clears the window's display.
+     * \param del If set to true, the window will be destroyed along with the
+     * buffer clearing.
+     **/
     void clear(bool del = false);
+
+    /**
+     * Scrolls the window. Proxy for wscrl(this->window, numlines).
+     * \param numlines The number of lines to scroll. Positive scrolls the window up one line, negative the other way.
+     **/
+    void do_scroll(int numlines);
     
 protected:
     void _window_move(int x, int y);
