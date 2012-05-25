@@ -11,7 +11,7 @@ Window::Window(int x, int y, int w, int h) :
     this->width = w;
     
     this->window = newwin(h, w, y, x);
-    this->panel = new_panel(this->window);
+//    this->panel = new_panel(this->window);
 }
 
 void Window::move_to(int x, int y)
@@ -32,6 +32,11 @@ void Window::_window_move(int x, int y)
     box(this->window, 0, 0);
 }
 
+void Window::do_scroll(int numlines)
+{
+    wscrl(this->window, numlines);
+}
+
 void Window::clear(bool del)
 {
     wborder(this->window, ' ', ' ', ' ',' ',' ',' ',' ',' ');
@@ -40,6 +45,26 @@ void Window::clear(bool del)
     {
         delwin(this->window);
     }
+}
+
+int Window::get_top()
+{
+    return this->y;
+}
+
+int Window::get_left()
+{
+    return this->x;
+}
+
+int Window::get_right()
+{
+    return this->get_left() + this->width;
+}
+
+int Window::get_bottom()
+{
+    return this->get_top() + this->height;
 }
 
 }}}

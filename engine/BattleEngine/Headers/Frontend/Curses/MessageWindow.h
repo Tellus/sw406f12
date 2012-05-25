@@ -1,8 +1,12 @@
 #pragma once
 
-#include "Window.h"
+#include "Headers/Frontend/Curses/Window.h"
 
-namespace engine { namespace frontend { namespace curses
+#include <list>
+
+namespace engine {
+    namespace frontend {
+        namespace curses {
 
 /**
  * Shows information in a scrolling window.
@@ -21,19 +25,19 @@ public:
     MessageWindow(int x, int y, int w, int h);
     
     /**
+     * Creates a new messaging window.
+     **/
+    MessageWindow();
+    
+    /**
      * Logs a new message.
      * \param msg Message to log.
      **/
     void log(std::string msg);
     
-    /**
-     * Scrolls the window.
-     * \param numlines Number of lines to scroll. Positive numbers scroll
-     * forward, negative numbers scroll backwards.
-     **/
-    void scroll(int numlines);
-    
     virtual void render();
+    
+    virtual void update();
     
 protected:
     /**

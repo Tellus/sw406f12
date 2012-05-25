@@ -30,6 +30,7 @@ using namespace testbattle;
 #include "Frontend/Curses/Entity.h"
 #include "Frontend/Curses/Label.h"
 #include "Frontend/Curses/PlayerWindow.h"
+#include "Frontend/Curses/MessageWindow.h"
 
 namespace po = boost::program_options;
 
@@ -91,30 +92,37 @@ int main_curses(int argc, char** argv)
 	game->win_condition = new SimpleWinCondition();
 	game->add_character(joe);
 	game->add_character(biggi);
-    
 
 	game->init_game();
     
     // Basic information.
     mvprintw(LINES-2, 1, "Press F1 to exit the application. Characters: ");
     printw(joe->name.c_str());
+    printw(biggi->name.c_str());
+
+    // Message window
+    MessageWindow* logger = new MessageWindow();
 
     // Move windows into position.
     joew->move_to(1,1);
-    biggiw->move_to(COLS/2+1, 1);
+    biggiw->move_to(joew->width+3, 1);
     
     // Action pointer.
     Action* last_action = NULL;
     
     // Reset terminal cursor.
     move(0,0);
-    
+    joew->player = dynamic_cast<Character*>(game->current_state->get_child_by_id(joew->player->id));
+    biggiw->player = dynamic_cast<Character*>(game->current_state->get_child_by_id(biggiw->player->id));
     // Start game loop.    
-    while ((ch = getch()) != KEY_F(1))
+    bool exit = false;
+    while ((ch = getch()) != KEY_F(1) && !exit)
     {
-        joew->player = dynamic_cast<Character*>(game->current_state->get_child_by_id(joew->player->id));
-        biggiw->player = dynamic_cast<Character*>(game->current_state->get_child_by_id(biggiw->player->id));
-        
+        if (game->win_condition->is_met(game->current_state))
+        {
+            exit = true;
+        }
+    
         if (last_action)
         {
             mvprintw(LINES - 3, 2, "Last action: %s", last_action->action_def.ability->name.c_str());
@@ -124,6 +132,10 @@ int main_curses(int argc, char** argv)
         {
             // Continue
             last_action = game->step();
+            biggiw->player =
+                dynamic_cast<Character*>(game->current_state->get_child_by_id(biggiw->player->id));
+            joew->player =
+                dynamic_cast<Character*>(game->current_state->get_child_by_id(joew->player->id));
         }
     
         // Update loop.
@@ -141,7 +153,6 @@ int main_curses(int argc, char** argv)
         {
             (*iter)->render();
         }
-        
         
         mvprintw(LINES - 2, COLS - 20, "Frame: %i", frame_count++);
         
@@ -176,9 +187,19 @@ int main(int argc, char** argv)
 {
     PrettyPrinter::print("BattleEngine v1 alpha.\n", FG_YELLOW);
 
-	// Uncomment to perform basic initialization, cloning and AI test.
-	// base_test();
-	
+    std::cout << "Press a key and enter to continue with ";
+
+    #ifdef W_NCURSES
+    std::cout << "curses";
+    #else
+    std::cout << "normal";
+    #endif
+
+    std::cout << " frontend.\n";
+
+    std::string ignore;
+    cin >> ignore;
+
 	#ifdef W_NCURSES
 	return main_curses(argc, argv);
 	#else
