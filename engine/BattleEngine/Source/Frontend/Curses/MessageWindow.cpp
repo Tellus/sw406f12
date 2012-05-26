@@ -19,7 +19,9 @@ MessageWindow::MessageWindow(int x, int y, int w, int h) :
  **/
 void MessageWindow::log(std::string msg)
 {
-
+    this->messages.push_back(msg);
+    
+    mvwprintw(this->window, this->messages.size(), 2, msg.c_str());
 }
 
 void MessageWindow::render()

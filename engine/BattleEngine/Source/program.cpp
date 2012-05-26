@@ -7,6 +7,7 @@
 
 // For program.cpp
 #include <iostream>
+#include <fstream>
 
 #include "Engine.h"
 #include "SimpleWinCondition.h"
@@ -39,6 +40,15 @@ using namespace curse;
 
 int main_curses(int argc, char** argv)
 {
+    // Redirect cerr
+    streambuf* saved_cerr = cerr.rdbuf();
+    
+    // Overwrite cerr
+    filebuf ferr;
+    ferr.open("engine.log", ios::out);
+    cerr.rdbuf(&ferr);
+    cerr << "---------------\nBattle Engine initialising.\n";
+
     // Program options.
     int fps;
     
@@ -79,13 +89,13 @@ int main_curses(int argc, char** argv)
     Character* joe = make_joe();
     PlayerWindow* joew = new PlayerWindow(joe);
     players.push_back(joew);
-    panels.push_back(new_panel(joew->window));
+    // panels.push_back(new_panel(joew->window));
     
     Character* biggi = make_joe();
     biggi->name = "Biggi";
     PlayerWindow* biggiw = new PlayerWindow(biggi);
     players.push_back(biggiw);
-    panels.push_back(new_panel(biggiw->window));
+    // panels.push_back(new_panel(biggiw->window));
     
     // Engine.
 	Engine* game = new Engine();
@@ -97,11 +107,12 @@ int main_curses(int argc, char** argv)
     
     // Basic information.
     mvprintw(LINES-2, 1, "Press F1 to exit the application. Characters: ");
-    printw(joe->name.c_str());
-    printw(biggi->name.c_str());
+    printw("%s, ", joe->name.c_str());
+    printw("%s.", biggi->name.c_str());
 
     // Message window
-    MessageWindow* logger = new MessageWindow();
+    MessageWindow* logger = new MessageWindow(5, 5, COLS / 2, LINES / 2 - 5);
+    logger->move_to(10, 10);
 
     // Move windows into position.
     joew->move_to(1,1);
@@ -115,27 +126,48 @@ int main_curses(int argc, char** argv)
     joew->player = dynamic_cast<Character*>(game->current_state->get_child_by_id(joew->player->id));
     biggiw->player = dynamic_cast<Character*>(game->current_state->get_child_by_id(biggiw->player->id));
     // Start game loop.    
+    
+    cerr << time(NULL) << ": Engine booting up.\n";
+    
     bool exit = false;
     while ((ch = getch()) != KEY_F(1) && !exit)
     {
         if (game->win_condition->is_met(game->current_state))
-        {
             exit = true;
-        }
     
         if (last_action)
-        {
-            mvprintw(LINES - 3, 2, "Last action: %s", last_action->action_def.ability->name.c_str());
-        }
+            // logger->log("Last action: " + last_action->action_def.ability->name);
+            logger->log("Yo dawg.");
     
-        if (ch == 'c')
+        switch (ch)
         {
-            // Continue
-            last_action = game->step();
-            biggiw->player =
-                dynamic_cast<Character*>(game->current_state->get_child_by_id(biggiw->player->id));
-            joew->player =
-                dynamic_cast<Character*>(game->current_state->get_child_by_id(joew->player->id));
+            case 'c':
+            {
+                last_action = game->step();
+                biggiw->player =
+                    dynamic_cast<Character*>(game->current_state->get_child_by_id(biggiw->player->id));
+                joew->player =
+                    dynamic_cast<Character*>(game->current_state->get_child_by_id(joew->player->id));
+                break;
+            }
+            case KEY_UP:
+            {
+                logger->move_by(0, -1);
+                break;            
+            }
+            case KEY_DOWN:
+            {
+                logger->move_by(0, 1);
+                break;            
+            }
+            case KEY_LEFT:
+            {
+                break;            
+            }
+            case KEY_RIGHT:
+            {
+                break;
+            }
         }
     
         // Update loop.
@@ -162,6 +194,13 @@ int main_curses(int argc, char** argv)
 
     // Clean up.
     endwin();
+    
+    cerr << time(NULL) << "Engine closed.\n-----------------------\n";
+    
+    // Reset cerr
+    cerr.rdbuf(saved_cerr);
+    ferr.close();
+    
     return 0;
 }
 

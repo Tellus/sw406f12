@@ -11,7 +11,7 @@ Window::Window(int x, int y, int w, int h) :
     this->width = w;
     
     this->window = newwin(h, w, y, x);
-//    this->panel = new_panel(this->window);
+    this->panel = new_panel(this->window);
 }
 
 void Window::move_to(int x, int y)
@@ -65,6 +65,12 @@ int Window::get_right()
 int Window::get_bottom()
 {
     return this->get_top() + this->height;
+}
+
+void Window::render()
+{
+    // Write coords.
+    mvwprintw(this->window, this->get_bottom(), this->get_left(), "Coords");
 }
 
 }}}

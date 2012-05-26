@@ -29,9 +29,9 @@ public:
     
     std::list<Entity*> children;
     
-    void render();
+    virtual void render();
     
-    void update();
+    virtual void update();
     
     virtual std::string to_string();
     

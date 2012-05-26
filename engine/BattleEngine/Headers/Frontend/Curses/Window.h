@@ -50,6 +50,8 @@ public:
      **/
     void do_scroll(int numlines);
     
+    virtual void render();
+    
 protected:
     void _window_move(int x, int y);
 
