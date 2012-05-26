@@ -26,8 +26,6 @@ public:
      **/
     WINDOW* window;
     
-    int width, height;
-    
     void move_to(int x, int y);
     
     void move_by(int x, int y);
@@ -52,8 +50,25 @@ public:
     
     virtual void render();
     
+    virtual void update();
+
+    int get_width();
+    int get_height();
+
+    virtual void pre_render();
+    
+    virtual void post_render();
+    
+    /**
+     * Title of the window. Will be shown near the top-left corner along the
+     * top border.
+     **/
+    std::string title;
+    
 protected:
     void _window_move(int x, int y);
+    
+    int width, height;
 
 private:
 };

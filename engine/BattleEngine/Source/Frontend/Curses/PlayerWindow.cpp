@@ -12,7 +12,7 @@ PlayerWindow::PlayerWindow(Character* p) :
     Window(0, 0, 30,
                     p->get_attributes()->size() +
                     p->get_resources()->size() +
-                    p->get_abilities()->size() + 7)
+                    p->get_abilities()->size() + 8)
 {
     this->_init(p);
 }
@@ -24,7 +24,8 @@ void PlayerWindow::_init(Character* c)
 
 void PlayerWindow::render()
 {
-    mvwprintw(this->window, 0, 3, this->player->name.c_str());
+    // Super first. The render hierarchy should go bottom-up.
+    Window::render();
     
     int lc = 1;
     
@@ -73,12 +74,14 @@ void PlayerWindow::render()
         lc++;
     }
     
-    lc++;
+//    wrefresh(this->window);
 }
 
 void PlayerWindow::update()
 {
-    // Stub for now.
+    // Call base.
+    Window::update();
+    // Reload character data. Inefficient, but effective.
     this->load_char(this->player);
 }
 
@@ -93,6 +96,7 @@ void PlayerWindow::load_char(Character* c)
     this->resources = &c->resources;
     this->attributes = &c->attributes;
     this->abilities = &c->abilities;
+    this->title = c->name;
 }
 
 int PlayerWindow::get_leftx()

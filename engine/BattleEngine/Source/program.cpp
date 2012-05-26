@@ -8,6 +8,7 @@
 // For program.cpp
 #include <iostream>
 #include <fstream>
+#include <map>
 
 #include "Engine.h"
 #include "SimpleWinCondition.h"
@@ -38,16 +39,30 @@ namespace po = boost::program_options;
 namespace curse = engine::frontend::curses;
 using namespace curse;
 
-int main_curses(int argc, char** argv)
+/**
+ * Saves pointer to the original stderr stream so we can restore it later.
+ **/
+streambuf* saved_cerr;
+
+/**
+ * Filebuffer we stream to instead of cerr.
+ **/
+filebuf ferr;
+
+enum ERROR_ENUM{ ERR_TERM_SIZE };
+
+/**
+ * All the global state setup in one function.
+ **/
+int setup(int argc, char** argv)
 {
     // Redirect cerr
-    streambuf* saved_cerr = cerr.rdbuf();
+    saved_cerr = cerr.rdbuf();
     
     // Overwrite cerr
-    filebuf ferr;
     ferr.open("engine.log", ios::out);
     cerr.rdbuf(&ferr);
-    cerr << "---------------\nBattle Engine initialising.\n";
+    cerr << "-----------------------\nBattle Engine initialising.\n";
 
     // Program options.
     int fps;
@@ -64,7 +79,7 @@ int main_curses(int argc, char** argv)
     if (vm.count("help"))
     {
         std::cout << desc << '\n';
-        return 0;
+        return -1;
     }
 
     // Calculate timeout based on desired fps. (1000/fps).
@@ -76,130 +91,187 @@ int main_curses(int argc, char** argv)
     noecho();
     keypad(stdscr, TRUE);
     timeout(timeout); // Timeout matches framerate to give a naturally bounded value.
-
-    int frame_count = 0.0; // Just to testify to running app.
-    int ch;
     
-    // Window panels.
-    list<PANEL*> panels;
-    
-    // Characters.
-    list<PlayerWindow*> players;
+    return 0;
+}
 
+/**
+ * Global teardown. Should be called after setup, before exiting.
+ **/ 
+void teardown()
+{
+    // Clean up.
+    endwin();
+    
+    cerr << "Engine closed.\n-----------------------\n";
+    
+    // Reset cerr
+    cerr.rdbuf(saved_cerr);
+    ferr.close();
+}
+
+int init_player_windows(std::list<PlayerWindow*>* ps, engine::Engine* engine)
+{
+    assert(ps);
+    assert(engine);
+    // Assertions.
+    if (ps == NULL) ps = new std::list<PlayerWindow*>();
+    if (engine == NULL)
+    {
+        engine = new engine::Engine();
+        engine->win_condition = new SimpleWinCondition();
+    }
+    
+    // Set up.
     Character* joe = make_joe();
-    PlayerWindow* joew = new PlayerWindow(joe);
-    players.push_back(joew);
-    // panels.push_back(new_panel(joew->window));
+    ps->push_back(new PlayerWindow(joe));
     
     Character* biggi = make_joe();
     biggi->name = "Biggi";
-    PlayerWindow* biggiw = new PlayerWindow(biggi);
-    players.push_back(biggiw);
-    // panels.push_back(new_panel(biggiw->window));
+    ps->push_back(new PlayerWindow(biggi));
+	
+    int cnt = 0;
+    int t_width = 0;
+    int max_window_height = 0;
+	
+	// Place the windows on a line.
+	for (list<PlayerWindow*>::iterator iter = ps->begin(); iter != ps->end(); iter++)
+	{
+	    // Add player to game.
+	    engine->add_character((*iter)->player);
+        // Move windows into position.
+        (*iter)->move_to(cnt++ * (*iter)->get_width() + 2, 1);
+        t_width += (*iter)->get_width();
+        max_window_height = std::max(max_window_height, (*iter)->get_bottom());
+	}
+	engine->init_game();
     
-    // Engine.
+    // Exit if the terminal does not support the width we need.
+    if (COLS < (t_width + 5))
+    {
+        cerr << "Terminal environment is not big enough. Requires at least "
+             << t_width + 5
+             << " columns.\n";
+        teardown();
+        exit(-1);
+    }
+    
+    return max_window_height;
+}
+
+int main_curses(int argc, char** argv)
+{
+    if (int v = setup(argc, argv) != 0) return v;
+
+    int frame_count = 0.0, ch, max_window_height;
+
+    std::list<PlayerWindow*>* players = new std::list<PlayerWindow*>();
 	Engine* game = new Engine();
-	game->win_condition = new SimpleWinCondition();
-	game->add_character(joe);
-	game->add_character(biggi);
+    max_window_height = init_player_windows(players, game);
+    cerr << "Player list initialised.\n";
+    cerr << "Engine initialised.\n";
 
-	game->init_game();
+    MessageWindow* logger = new MessageWindow(2, max_window_height+1, COLS / 2, LINES / 2 - 5);
+    logger->title = "Battle log";
     
-    // Basic information.
-    mvprintw(LINES-2, 1, "Press F1 to exit the application. Characters: ");
-    printw("%s, ", joe->name.c_str());
-    printw("%s.", biggi->name.c_str());
+    cerr << "Logger initialised.\n";
+    
+    // Hotkey window - just using a message window right now.
+    MessageWindow* information = new MessageWindow(logger->get_width()+3, logger->get_y(), COLS / 2 - 4, LINES / 3);
+    information->title = "Game information";
+    information->log("Players:");
 
-    // Message window
-    MessageWindow* logger = new MessageWindow(5, 5, COLS / 2, LINES / 2 - 5);
-    logger->move_to(10, 10);
+    for (std::list<PlayerWindow*>::iterator iter = players->begin();
+          iter != players->end();
+          iter++)
+    {
+        information->log("\t" + (*iter)->player->name);
+    }
 
-    // Move windows into position.
-    joew->move_to(1,1);
-    biggiw->move_to(joew->width+3, 1);
+    information->log("Hotkeys:");
+    information->log("[c] - single game step.");
+    information->log("[F1] - quit.");
+    
+    cerr << "Hotkey window initialised.\n";
     
     // Action pointer.
     Action* last_action = NULL;
     
     // Reset terminal cursor.
     move(0,0);
-    joew->player = dynamic_cast<Character*>(game->current_state->get_child_by_id(joew->player->id));
-    biggiw->player = dynamic_cast<Character*>(game->current_state->get_child_by_id(biggiw->player->id));
+    
+    cerr << "Recasting characters.\n";
+    
+    // Set character references anew.
+	for (list<PlayerWindow*>::iterator iter = players->begin(); iter != players->end(); iter++)
+	    (*iter)->player = dynamic_cast<Character*>(game->current_state->get_child_by_id((*iter)->player->id));
+    
     // Start game loop.    
+    cerr << "Engine booting up.\n";
     
-    cerr << time(NULL) << ": Engine booting up.\n";
-    
-    bool exit = false;
-    while ((ch = getch()) != KEY_F(1) && !exit)
+    bool done = false;
+    while ((ch = getch()) != KEY_F(1))
     {
-        if (game->win_condition->is_met(game->current_state))
-            exit = true;
+        if (game->win_condition->is_met(game->current_state) && !done)
+        {
+            logger->log("Game Over! Press F1 to quit.");
+            done = true;
+        }
+        else if (ch == 'c' && !done)
+        {
+            last_action = game->step();
+            // Set character references anew.
+            for (list<PlayerWindow*>::iterator iter = players->begin();
+                  iter != players->end();
+                  iter++)
+                (*iter)->player = dynamic_cast<Character*>(game->current_state->get_child_by_id((*iter)->player->id));
+        }
     
         if (last_action)
-            // logger->log("Last action: " + last_action->action_def.ability->name);
-            logger->log("Yo dawg.");
-    
-        switch (ch)
         {
-            case 'c':
-            {
-                last_action = game->step();
-                biggiw->player =
-                    dynamic_cast<Character*>(game->current_state->get_child_by_id(biggiw->player->id));
-                joew->player =
-                    dynamic_cast<Character*>(game->current_state->get_child_by_id(joew->player->id));
-                break;
-            }
-            case KEY_UP:
-            {
-                logger->move_by(0, -1);
-                break;            
-            }
-            case KEY_DOWN:
-            {
-                logger->move_by(0, 1);
-                break;            
-            }
-            case KEY_LEFT:
-            {
-                break;            
-            }
-            case KEY_RIGHT:
-            {
-                break;
-            }
+            logger->log(game->current_state->current_char->name + " used " + last_action->action_def.ability->name);
+            last_action = NULL;
         }
     
         // Update loop.
-        for (list<PlayerWindow*>::iterator iter = players.begin();
-             iter != players.end();
+        for (list<PlayerWindow*>::iterator iter = players->begin();
+             iter != players->end();
              iter++)
         {
             (*iter)->update();
         }
         
         // Render loop.
-        for (list<PlayerWindow*>::iterator iter = players.begin();
-             iter != players.end();
+        for (list<PlayerWindow*>::iterator iter = players->begin();
+             iter != players->end();
              iter++)
         {
+            (*iter)->pre_render();
             (*iter)->render();
         }
         
+        // Non-iterated loops.
+        logger->update();
+        logger->pre_render();
+        logger->render();
+        
+        information->update();
+        information->pre_render();
+        information->render();
+        
         mvprintw(LINES - 2, COLS - 20, "Frame: %i", frame_count++);
+        
+        // Framing lines.
+        mvhline(max_window_height, 0, 0, COLS);
+        
+        // Shove the cursor somewhere unobtrusive.
+        move(1, 1);
         
         update_panels();
         doupdate();
     }
 
-    // Clean up.
-    endwin();
-    
-    cerr << time(NULL) << "Engine closed.\n-----------------------\n";
-    
-    // Reset cerr
-    cerr.rdbuf(saved_cerr);
-    ferr.close();
+    teardown();
     
     return 0;
 }
@@ -225,19 +297,6 @@ int main_stdout(int argc, char** argv)
 int main(int argc, char** argv)
 {
     PrettyPrinter::print("BattleEngine v1 alpha.\n", FG_YELLOW);
-
-    std::cout << "Press a key and enter to continue with ";
-
-    #ifdef W_NCURSES
-    std::cout << "curses";
-    #else
-    std::cout << "normal";
-    #endif
-
-    std::cout << " frontend.\n";
-
-    std::string ignore;
-    cin >> ignore;
 
 	#ifdef W_NCURSES
 	return main_curses(argc, argv);

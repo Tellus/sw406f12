@@ -47,16 +47,6 @@ protected:
     int offset;
 
     std::list<std::string> messages;
-
-    /**
-     * Container for the window. Helps us to ease refreshes.
-     **/
-    PANEL* panel;
-    
-    /**
-     * The window that contains the goodness.
-     **/
-    WINDOW* window;
 private:
 
 };

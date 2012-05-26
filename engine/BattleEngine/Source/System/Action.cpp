@@ -39,18 +39,12 @@ GameState* Action::execute(GameState *thru)
 
 	std::vector<Effect*> *effects = this->generate_effects();
 	
-//    std::cout << "Applying " << effects->size() << " to targets.\n";
-	
 	for (std::vector<Effect*>::iterator iter = effects->begin(); iter != effects->end(); iter++)
 	{
 		Effect* ef = *iter;
 
-        std::cout << '\t' << ef->name << '\n';
-
 		ef->execute(source, target);
 	}
-
-//    std::cout << "Action execution done.\n";
 
     // Remove the costs from resources.
     source->get_resource("health")->decrease(this->action_def.ability->cost_health);

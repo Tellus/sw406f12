@@ -29,7 +29,6 @@ void Window::_window_move(int x, int y)
     this->clear(false);
     Entity::move_to(x,y);
     mvwin(this->window, this->y, this->x);
-    box(this->window, 0, 0);
 }
 
 void Window::do_scroll(int numlines)
@@ -64,13 +63,35 @@ int Window::get_right()
 
 int Window::get_bottom()
 {
+    // Calculation: y + height - 1
+    // The -1 is to get us within the window boundaries, if I calculate correctly.
     return this->get_top() + this->height;
 }
 
 void Window::render()
 {
-    // Write coords.
-    mvwprintw(this->window, this->get_bottom(), this->get_left(), "Coords");
+    // Make window box.
+    box(this->window, 0, 0);
+    mvwprintw(this->window, 0, 3, this->title.c_str());
+
+    /** Uncomment to show some debugging symbols on window corners.
+    mvwprintw(this->window, 0, 0, "*");
+    mvwprintw(this->window, this->get_height(), 0, "*");
+    mvwprintw(this->window, 0, this->get_width(), "*");
+    mvwprintw(this->window, this->get_height(), this->get_width(), "*");
+    **/
 }
+
+void Window::update()
+{
+    // Stub.
+}
+
+int Window::get_width() { return this->width - 1; }
+int Window::get_height() { return this->height - 1; }
+
+void Window::pre_render(){ wnoutrefresh(this->window); }
+    
+void Window::post_render(){ /* Stubbed */ }
 
 }}}

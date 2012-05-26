@@ -13,6 +13,7 @@ namespace engine
 Engine::Engine()
 {
 	this->_init();
+	this->win_condition = new SimpleWinCondition();
 }
 
 Engine::Engine(WinCondition* win)

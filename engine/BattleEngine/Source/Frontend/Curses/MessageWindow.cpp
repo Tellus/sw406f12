@@ -26,12 +26,12 @@ void MessageWindow::log(std::string msg)
 
 void MessageWindow::render()
 {
-   
+    Window::render();
 }
 
 void MessageWindow::update()
 {
-
+    Window::update();
 }
 
 }}} /** End namespaces. **/
