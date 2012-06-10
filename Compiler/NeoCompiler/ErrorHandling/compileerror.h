@@ -17,6 +17,13 @@ namespace errors
 class CompileError
 {
 public:
+    /**
+     * Creates a new CompilerError instance.
+     * \param type The type of error encountered.
+     * \param message Human-readable description of the error.
+     * \param file The file that the error occurred in.
+     * \param line The line in file that the error occurred in.
+     **/
 	CompileError(std::string type, std::string message, std::string file = "", int line = 0);
 	
 	/**

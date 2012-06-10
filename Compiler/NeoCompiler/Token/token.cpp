@@ -33,4 +33,4 @@ void Token::print()
 	}
 }
 
-} /* namespace ez_thread */
+} /* namespace tokens */

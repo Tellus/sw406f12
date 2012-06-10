@@ -4,7 +4,9 @@
 
 #pragma once
 
-// Types
+/**
+ * All types are simple represented as uints.
+ **/
 #define FORMAT_TOKENTYPE unsigned int
 
 namespace tokens

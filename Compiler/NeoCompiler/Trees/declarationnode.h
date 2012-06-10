@@ -11,7 +11,8 @@ namespace trees
 {
 
 /**
- *
+ * The DeclarationNode is the root of any declaration in the program. During
+ * parsing, this will consume all the tokens of an entire declaration.
  **/
 class DeclarationNode: public trees::AbstractSyntaxNode
 {
@@ -27,6 +28,12 @@ public:
 	 **/
 	virtual ~DeclarationNode();
 
+    /**
+     * Type checking visitor implementation (contrary to looks). Basically, it
+     * checks its own identifier and its superclass' existance, but leaves the
+     * remainders to its children.
+     * \param current_scope The scope we're in, currently.
+     **/
 	void visit(typecheck::scope *current_scope);
 	
 	/**

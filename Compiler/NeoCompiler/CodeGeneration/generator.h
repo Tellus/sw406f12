@@ -44,7 +44,10 @@ public:
 	void character_template(std::fstream &stream);
 	
 	/**
-	 * 
+	 * Emits boilerplate code into a stream based on passed assignments.
+	 * \param stream Where to emit C++ code.
+	 * \param assignments List of assignments.
+	 * \todo Figure out what assignments are used for.
 	 **/
 	void character_post(std::fstream &stream, std::list<std::string> &assignments);
 	
@@ -65,6 +68,10 @@ private:
 	bool list_contains(std::list<std::string> &list, std::string item);
 };
 
+/**
+ * Retrieves a singleton Generator.
+ * \return Reference to a persistent Generator instance.
+ **/
 Generator &Gen();
 
 } /* namespace codegen */
