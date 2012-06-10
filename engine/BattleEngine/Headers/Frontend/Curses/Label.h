@@ -17,9 +17,9 @@ public:
     
     std::string get_text();
     
-    void update();
+    virtual void update();
     
-    void render();
+    virtual void render();
     
     void move_to(int x, int y);
     

@@ -9,13 +9,12 @@
 # Compiler command.
 CC=g++
 # Flags.
-# FLAGS=-ggdb -Wall -std=c++0x
-FLAGS=-Wall -std=c++0x -ggdb
+FLAGS=-Wall -std=c++0x -ggdb -DW_NCURSES
 # Includes.
 INCS=-I. -IHeaders -IUser/Headers -I/usr/include -I/usr/local/include
 # Linker switches.
-LIB=-lboost_regex
-SOURCES = $(CHARACTER_SOURCES) $(SYSTEM_SOURCES) $(EXCEPTION_SOURCES) \
+LIB=-lboost_regex -lboost_program_options -lncurses -lpanel
+SOURCES = $(CHARACTER_SOURCES) $(SYSTEM_SOURCES) $(EXCEPTION_SOURCES) $(FRONTEND_SOURCES) \
 Source/program.cpp \
 Source/PrettyPrinter.cpp \
 Source/SimpleWinCondition.cpp
@@ -60,6 +59,13 @@ Source/System/Exceptions/InvalidRGRException.cpp \
 Source/System/Exceptions/NullParameterException.cpp \
 Source/System/Exceptions/ResourceDoesNotExistException.cpp
 
+FRONTEND_SOURCES = \
+Source/Frontend/Curses/Entity.cpp \
+Source/Frontend/Curses/Window.cpp \
+Source/Frontend/Curses/PlayerWindow.cpp \
+Source/Frontend/Curses/Label.cpp \
+Source/Frontend/Curses/MessageWindow.cpp
+
 U_SOURCES = \
 User/Source/AttackAbility.cpp \
 User/Source/HealAbility.cpp \
@@ -82,7 +88,7 @@ EXT=
 all: init $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS) $(U_OBJECTS)
-	$(CC) -o $@ $(INCS) $(OBJECTS) $(U_OBJECTS) $(LIB) 
+	$(CC) -o $@ $(FLAGS) $(INCS) $(OBJECTS) $(U_OBJECTS) $(LIB) 
 
 init:
 	if test ! -d $(OBJ_DIR); then mkdir $(OBJ_DIR); fi
@@ -103,6 +109,7 @@ OUT = ./libbattle_engine.a
 
 $(OUT): $(OBJECTS) $(U_OBJECTS)
 	ar rcs $(OUT) $(OBJECTS) $(U_OBJECTS)
+	ar d $(OUT) program.o
 
 depend: dep
 

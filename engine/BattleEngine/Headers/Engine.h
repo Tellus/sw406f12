@@ -14,6 +14,7 @@
 #include "GameState.h"
 #include "Character.h"
 #include "WinCondition.h"
+#include "SimpleWinCondition.h"
 #include "AbilityTable.h"
 
 #include "EnemyIdentifier.h"

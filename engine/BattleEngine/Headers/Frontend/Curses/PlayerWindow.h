@@ -18,6 +18,9 @@ namespace engine { namespace frontend { namespace curses {
 class PlayerWindow : public Window
 {
 public:
+    PlayerWindow(Character* p);
+    PlayerWindow(int x, int y, int w, int h, Character* p);
+
     Character* player;
     
     std::map<std::string, engine::Resource*>* resources;
@@ -26,12 +29,9 @@ public:
     
     std::list<Entity*> children;
     
-    PlayerWindow(Character* p);
-
+    virtual void render();
     
-    void render();
-    
-    void update();
+    virtual void update();
     
     virtual std::string to_string();
     
@@ -52,7 +52,7 @@ protected:
     void load_char(Character* c);
     
 private:
-    void _init();
+    void _init(Character* c);
 };
 
 }}}

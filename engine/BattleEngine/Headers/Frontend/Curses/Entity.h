@@ -30,7 +30,12 @@ public:
     virtual void update() = 0;
     
     virtual std::string to_string();
+
+    int get_x();
     
+    int get_y();
+
+protected:
     int x, y;
 };
 
