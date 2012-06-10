@@ -108,6 +108,8 @@ bool Generator::list_contains(std::list<std::string> &list, std::string item)
 {
 	std::list<std::string>::iterator it;
 
+    // Run through the passed list and see if any of them matches the passed
+    // string.
 	for (it = list.begin(); it != list.end(); it++)
 	{
 		if ((*it) == item)

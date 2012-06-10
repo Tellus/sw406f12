@@ -22,6 +22,10 @@ trees::AbstractSyntaxNode *Parser::parse(tokens::Token *stream)
 tokens::Token *Parser::advance(FORMAT_TOKENTYPE type)
 {
 	tokens::Token *temp;
+	// If type matches the default output of input (currently just
+	// this->current) - that is, if the input matches the advanced (expected),
+	// there are no problems. This is, as far as I can tell, how we check for
+	// proper rule productions. 
 	if ((this->input() & type) == this->input())
 	{
 		temp = this->current;

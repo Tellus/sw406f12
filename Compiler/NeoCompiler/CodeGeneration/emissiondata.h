@@ -11,6 +11,10 @@ namespace codegen
 
 #define FORMAT_EMISSIONDATA unsigned int
 
+/**
+ * Far as I can tell, denotes the type of data currently being emitted. It is
+ * used by AbstractNode subclasses to properly branch their emissions.
+ **/
 struct EmissionData
 {
 	std::fstream stream;
