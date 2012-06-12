@@ -23,7 +23,7 @@ void AssignmentNode::visit(typecheck::scope *current_scope)
 	if (s == NULL)
 		throw "Type Error: Invalid target of assignment";
 
-	std::cout << "  TC: Assigning " << this->identifier << std::endl;
+	std::cout << "  Type check: Assigning " << this->identifier << std::endl;
 
 	this->children.front()->visit(current_scope);
 

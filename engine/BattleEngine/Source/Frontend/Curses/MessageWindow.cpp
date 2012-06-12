@@ -1,6 +1,15 @@
 #include "Frontend/Curses/MessageWindow.h"
 
-MessageWindow::MessageWindow(int x, int y, int w, int h)
+namespace engine {
+    namespace frontend {
+        namespace curses {
+
+MessageWindow::MessageWindow() :
+    Window(0, 0, COLS - 4, (LINES / 2) - 3)
+{}
+
+MessageWindow::MessageWindow(int x, int y, int w, int h) :
+    Window(x, y, w, h)
 {
 
 }
@@ -10,20 +19,19 @@ MessageWindow::MessageWindow(int x, int y, int w, int h)
  **/
 void MessageWindow::log(std::string msg)
 {
-
-}
-
-/**
- * Scrolls the window.
- * \param numlines Number of lines to scroll. Positive numbers scroll
- * forward, negative numbers scroll backwards.
- **/
-void MessageWindow::scroll(int numlines)
-{
-
-}
-
-void render()
-{
+    this->messages.push_back(msg);
     
+    mvwprintw(this->window, this->messages.size(), 2, msg.c_str());
 }
+
+void MessageWindow::render()
+{
+    Window::render();
+}
+
+void MessageWindow::update()
+{
+    Window::update();
+}
+
+}}} /** End namespaces. **/

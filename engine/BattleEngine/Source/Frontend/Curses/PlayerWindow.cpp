@@ -1,18 +1,31 @@
 #include "Frontend/Curses/PlayerWindow.h"
 
 namespace engine { namespace frontend { namespace curses {
+ 
+PlayerWindow::PlayerWindow(int x, int y, int w, int h, Character* p) :
+    Window(x, y, w, h)
+{
+    this->_init(p);    
+}
     
 PlayerWindow::PlayerWindow(Character* p) :
-    Window(0, 0, (COLS-2) / 2, LINES - 20)
+    Window(0, 0, 30,
+                    p->get_attributes()->size() +
+                    p->get_resources()->size() +
+                    p->get_abilities()->size() + 8)
 {
-    this->_init();
-    this->player = p;
-    this->load_char(p);
+    this->_init(p);
+}
+
+void PlayerWindow::_init(Character* c)
+{
+    this->load_char(c);
 }
 
 void PlayerWindow::render()
 {
-    mvwprintw(this->window, 0, 3, this->player->name.c_str());
+    // Super first. The render hierarchy should go bottom-up.
+    Window::render();
     
     int lc = 1;
     
@@ -31,7 +44,7 @@ void PlayerWindow::render()
     }
     
     wattron(this->window, A_BOLD | A_UNDERLINE);
-    mvwprintw(this->window, ++lc, get_leftx(), "Attributes: %i", this->attributes->size());
+    mvwprintw(this->window, ++lc, get_leftx(), "Attributes: %5.2f", this->attributes->size());
     wattrset(this->window, A_NORMAL);
     lc++;
     
@@ -61,12 +74,15 @@ void PlayerWindow::render()
         lc++;
     }
     
-    lc++;
+//    wrefresh(this->window);
 }
 
 void PlayerWindow::update()
 {
-    // Stub for now.
+    // Call base.
+    Window::update();
+    // Reload character data. Inefficient, but effective.
+    this->load_char(this->player);
 }
 
 std::string PlayerWindow::to_string()
@@ -76,18 +92,11 @@ std::string PlayerWindow::to_string()
 
 void PlayerWindow::load_char(Character* c)
 {
+    this->player = c;
     this->resources = &c->resources;
     this->attributes = &c->attributes;
     this->abilities = &c->abilities;
-}
-
-void PlayerWindow::_init()
-{
-    this->window = newwin(
-        this->height,
-        this->width,
-        this->x,
-        this->y);
+    this->title = c->name;
 }
 
 int PlayerWindow::get_leftx()
