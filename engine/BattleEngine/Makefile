@@ -12,7 +12,7 @@ CC=g++
 # FLAGS=-ggdb -Wall -std=c++0x
 FLAGS=-Wall -std=c++0x -ggdb
 # Includes.
-INCS=-I. -IHeaders -IUser/Headers -I/usr/include -I/usr/local/include
+INCS=-I. -IHeaders -IUser/Headers
 # Linker switches.
 LIB=-lboost_regex
 SOURCES = $(CHARACTER_SOURCES) $(SYSTEM_SOURCES) $(EXCEPTION_SOURCES) \
@@ -26,7 +26,7 @@ Source/Character/Primarch.cpp \
 Source/Character/Ability.cpp \
 Source/Character/Attribute.cpp \
 Source/Character/Resource.cpp \
-Source/Character/EventCondition.cpp \
+Source/Character/EventCondition.cpp
 
 SYSTEM_SOURCES = \
 Source/System/RGRIdentifier.cpp \
@@ -76,8 +76,7 @@ OBJ_DIR=obj
 
 EXECUTABLE=engine
 
-# Extension
-EXT=
+.SUFFIXES: .cpp .o .dagor
 
 all: init $(SOURCES) $(EXECUTABLE)
 
@@ -86,10 +85,10 @@ $(EXECUTABLE): $(OBJECTS) $(U_OBJECTS)
 
 init:
 	if test ! -d $(OBJ_DIR); then mkdir $(OBJ_DIR); fi
-    
+	
 clean:
 	rm -rf $(OBJ_DIR)/*.o
-	if test -f $(EXECUTABLE)$(EXT); then rm $(EXECUTABLE)$(EXT); fi
+	if test -f $(EXECUTABLE); then rm $(EXECUTABLE); fi
 	if test -d $(OBJ_DIR); then rm -r $(OBJ_DIR); fi
 	rm $(OBJECTS)
 	rm $(U_OBJECTS)
@@ -99,15 +98,15 @@ clean:
 
 OUT = ./libbattle_engine.a
 
-.SUFFIXES: .cpp
-
 $(OUT): $(OBJECTS) $(U_OBJECTS)
 	ar rcs $(OUT) $(OBJECTS) $(U_OBJECTS)
 	ar d $(OUT) program.o
 
-depend: dep
+lib: $(OUT)
 
-dep:
-	makedepend -- $(FLAGS) -- $(INCS) $(SOURCES) $(U_SOURCES)
+DAGOR_CMD="../../Compiler/NeoCompiler/neocompiler"
 
-# DO NOT DELETE THIS LINE -- make depend depends on it.
+.dagor.cpp:
+	$(DAGOR_CMD) $<
+	mv generated.cpp $@
+	$(CC) -o generated_game $(INCS) -IUser $@ main.cpp -L. -lbattle_engine
